@@ -12,7 +12,7 @@ export const createPoseLandmarker = async () => {
 
     poseLandmarker = await PoseLandmarker.createFromOptions(vision, {
         baseOptions: {
-            modelAssetPath: `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task`,
+            modelAssetPath: `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task`,
             delegate: "GPU"
         },
         runningMode: "VIDEO",
@@ -23,9 +23,42 @@ export const createPoseLandmarker = async () => {
 }
 createPoseLandmarker();
 
-// Get canvas and context
-const canvas = document.getElementById("output") as HTMLCanvasElement;
-const ctx = canvas.getContext("2d");
+// Get unity things
+const canvas = document.querySelector("#unity-canvas") as HTMLCanvasElement;
+
+const buildUrl = "unity/Build";
+const loaderUrl = buildUrl + "/unity.loader.js";
+const config = {
+  dataUrl: buildUrl + "/unity.data",
+  frameworkUrl: buildUrl + "/unity.framework.js",
+  codeUrl: buildUrl + "/unity.wasm",
+  streamingAssetsUrl: "StreamingAssets",
+  companyName: "DefaultCompany",
+  productName: "plswork",
+  productVersion: "0.1",
+};
+
+canvas.style.width = "960px";
+canvas.style.height = "600px";
+
+const script = document.createElement("script");
+
+type UnityInstance = {
+    SendMessage: (gameObject: string, methodName: string, message: string) => void;
+};
+
+let unityInstance: UnityInstance = null;
+script.src = loaderUrl;
+script.onload = () => {
+  createUnityInstance(canvas, config, (progress: number) => {
+    console.log("progress", progress);
+        }).then((ui: UnityInstance) => {
+            unityInstance = ui;
+            console.log("unityInstance", unityInstance);
+        });
+      };
+
+document.body.appendChild(script);
 
 // Get video stream
 const video = document.getElementById("input") as HTMLVideoElement;
@@ -40,34 +73,14 @@ navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
 // Predict
 let lastTime = -1;
 async function predict() {
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-
     const start = performance.now();
-    if (lastTime !== video.currentTime) {
+    if (lastTime !== video.currentTime && unityInstance !== null) {
         lastTime = video.currentTime;
         poseLandmarker.detectForVideo(video, start, (result) => {
-            ctx.save();
-            // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-            result.landmarks.forEach((landmark) => {
-                landmark.forEach((point) => {
-                    ctx.beginPath();
-                    ctx.arc(
-                        point.x * canvas.width,
-                        point.y * canvas.height,
-                        4,
-                        0,
-                        2 * Math.PI);
-                    ctx.fill();
-                });
-            });
-            ctx.restore();
-
             // Convert result.worldLandmarks to a json {landmarks: [LandmarkList]} 
             const json = {landmarks: result.worldLandmarks[0]};
             const jsonStr = JSON.stringify(json);
-            console.log(jsonStr)
-
+            unityInstance.SendMessage("RINLBody", "SetBodyPosition", jsonStr);
         })
     }
 
