@@ -97,7 +97,6 @@ public class RINLBody : MonoBehaviour
 
     public void SetBodyPosition(string landmarks)
     {
-        Debug.Log(landmarks);
         Landmark[] landmarkArray =
             JsonUtility.FromJson<Landmarks>(landmarks).landmarks;
 

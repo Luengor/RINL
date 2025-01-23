@@ -251,8 +251,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.34603062, g: 0.764151, b: 0.7549615, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -318,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5827707005504302647}
   - component: {fileID: 7783228546682091730}
+  - component: {fileID: 7783228546682091731}
   m_Layer: 0
   m_Name: RINLBody
   m_TagString: Untagged
@@ -355,6 +356,20 @@ MonoBehaviour:
   bodyLandmarkPrefab: {fileID: 4278622603939499207, guid: 85bacdaabd5476df981ed3174082d2c1, type: 3}
   edgePrefab: {fileID: 852302528064290087, guid: 12deb1a14efc72fbcb28260549283e67, type: 3}
   positionScale: 4
+--- !u!114 &7783228546682091731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4252838933280664294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8003f2140fa373b3953253a9bfd0689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverIP: 127.0.0.1
+  serverPort: 8764
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

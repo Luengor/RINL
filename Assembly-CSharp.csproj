@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/RINLBody.cs" />
+    <Compile Include="Assets/Scripts/DebugServer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
