@@ -7,7 +7,7 @@ struct Landmark
     public float x;
     public float y;
     public float z;
-    public float visibility;
+    public float v;
 }
 
 struct Landmarks

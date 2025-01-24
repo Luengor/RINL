@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
 
@@ -9,7 +7,7 @@ public class DebugServer : MonoBehaviour
 
     public string serverIP = "127.0.0.1";
     public int serverPort = 8765;
-    private Socket socket;
+    private Socket socket, connection = null;
     private readonly byte[] buffer = new byte[8192];
 
     void Start()
@@ -31,16 +29,23 @@ public class DebugServer : MonoBehaviour
 
     void Update()
     {
-        if (socket.Poll(0, SelectMode.SelectRead))
+        // If we dont have a connection, check if we have a new one
+        connection ??= socket.Accept();
+
+        // If we have a connection, check if we have data
+        if (connection != null)
         {
-            Socket client = socket.Accept();
+            if (connection.Poll(0, SelectMode.SelectRead))
+            {
+                int bytesRead = connection.Receive(buffer);
+                string data = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-            int bytesRead = client.Receive(buffer);
-            string data = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead);
-
-            rINLBody.SetBodyPosition(data);
-
-            client.Close();
+                try {
+                    rINLBody.SetBodyPosition(data);
+                } catch (System.Exception e) {
+                    Debug.LogWarning(e);
+                }
+            }
         }
     }
 }
