@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [System.Serializable]
@@ -23,6 +20,7 @@ public class RINLBody : MonoBehaviour
 {
     public GameObject bodyLandmarkPrefab;
     public GameObject edgePrefab;
+    public Transform head;
     public float positionScale = 1.0f;
 
     private readonly bool[] landmarkHasTrail = new bool[33] {
@@ -100,6 +98,7 @@ public class RINLBody : MonoBehaviour
         Landmark[] landmarkArray =
             JsonUtility.FromJson<Landmarks>(landmarks).landmarks;
 
+        // Set the points
         for (int i = 0; i < Math.Min(33, landmarks.Length); i++)
         {
             bodyLandmarks[i].transform.position = new Vector3(
@@ -109,6 +108,13 @@ public class RINLBody : MonoBehaviour
             ) * positionScale;
         }
 
+        // Set the edges
         SetEdgePositions();
+
+        // Set the head position and scale
+        Vector3 headPos = (bodyLandmarks[7].transform.position + bodyLandmarks[8].transform.position) * .5f;
+        float headScale = Vector3.Distance(bodyLandmarks[7].transform.position, bodyLandmarks[8].transform.position);
+        head.position = headPos;
+        head.localScale = new Vector3(headScale, headScale, headScale);
     }
 }
