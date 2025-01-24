@@ -78,8 +78,17 @@ async function predict() {
         lastTime = video.currentTime;
         poseLandmarker.detectForVideo(video, start, (result) => {
             // Convert result.worldLandmarks to a json {landmarks: [LandmarkList]} 
-            const json = {landmarks: result.worldLandmarks[0]};
+            const worldLandmarks = result.worldLandmarks[0].map((landmark) => {
+                return {
+                    x: landmark.x.toFixed(4),
+                    y: landmark.y.toFixed(4),
+                    z: landmark.z.toFixed(4),
+                    v: landmark.visibility.toFixed(4)
+                }
+            });
+            const json = {landmarks: worldLandmarks};
             const jsonStr = JSON.stringify(json);
+
             unityInstance.SendMessage("RINLBody", "SetBodyPosition", jsonStr);
         })
     }
