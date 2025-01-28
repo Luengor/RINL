@@ -41,7 +41,8 @@ export default function Page() {
     // Create pose landmarker and start detecting
     useEffect(() => {
         if (videoStream && !!unityProvider) {
-            createPoseLandmarker("full").then((poseLandmarker) => {;
+            const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
+            createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {;
                 let lastTime = 0;
 
                 const predict = async () => {
