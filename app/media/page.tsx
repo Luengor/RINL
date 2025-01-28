@@ -1,15 +1,21 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-
-import {
-    PoseLandmarker,
-    FilesetResolver,
-} from '@mediapipe/tasks-vision';
+import { Unity, useUnityContext } from "react-unity-webgl";
+import { createPoseLandmarker } from "./mediapipe";
 
 export default function Page() {
     // Prepare video
     const [videoStream, setVideoStream] = useState<MediaStream>(null);
     const inputVideoRef = useRef<HTMLVideoElement>(null);
+
+    // Prepare unity
+    const unityCanvasRef = useRef<HTMLCanvasElement>(null);
+    const { unityProvider, sendMessage } = useUnityContext({
+        loaderUrl: "unity/Build/unity.loader.js",
+        dataUrl: "unity/Build/unity.data",
+        frameworkUrl: "unity/Build/unity.framework.js",
+        codeUrl: "unity/Build/unity.wasm",
+    });
 
     const getVideoStream = async () => {
         if (videoStream) return;
@@ -19,32 +25,19 @@ export default function Page() {
         });
 
         setVideoStream(stream);
+        unityCanvasRef.current.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
+        unityCanvasRef.current.style.height = stream.getVideoTracks()[0].getSettings().height + "px";
 
         if (inputVideoRef.current) {
             inputVideoRef.current.srcObject = stream;
         }
     }
 
-    const createPoseLandmarker = async () => {
-        const vision = await FilesetResolver.forVisionTasks(
-            "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
-        );
-
-        return PoseLandmarker.createFromOptions(vision, {
-            baseOptions: {
-                modelAssetPath: `https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_heavy/float16/1/pose_landmarker_heavy.task`,
-                delegate: "GPU"
-            },
-            runningMode: "VIDEO",
-            numPoses: 1
-        });
-    }
 
     useEffect(() => {
-        if (videoStream) {
-            console.log("video stream ready");
-            // Create pose landmarker
-            createPoseLandmarker().then((poseLandmarker) => {;
+        if (videoStream && !!unityProvider) {
+            // Create pose landmarker and start detecting
+            createPoseLandmarker("full").then((poseLandmarker) => {;
                 let lastTime = 0;
 
                 const predict = async () => {
@@ -68,6 +61,8 @@ export default function Page() {
                                 });
                                 const json = {landmarks: worldLandmarks};
                                 const jsonStr = JSON.stringify(json);
+
+                                sendMessage("RINLBody", "SetBodyPosition", jsonStr);
                             }
                         )
                     }
@@ -84,23 +79,36 @@ export default function Page() {
                 }
             });
         }
-    }, [videoStream]);
+    }, [videoStream, unityProvider, sendMessage]);
 
+
+    // Render
+    let videoButton;
+    if (!videoStream)
+        videoButton = (<button onClick={getVideoStream}>Get Video Stream</button>)
+    else
+        videoButton = (<></>)
 
     // This thing
     return (
         <>
+        <Unity
+            id="unity-canvas"
+            unityProvider={unityProvider}
+            ref={unityCanvasRef}
+            matchWebGLToCanvasSize={true}/>
+        <br />
         <video
             id="input"
             ref={(r) => {
                 inputVideoRef.current = r;
-                getVideoStream();
             }}
             width="640"
             height="480"
             autoPlay
             playsInline
             />
+            {videoButton}
         </>
     )
 }
