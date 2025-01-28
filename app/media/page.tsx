@@ -10,7 +10,7 @@ export default function Page() {
 
     // Prepare unity
     const unityCanvasRef = useRef<HTMLCanvasElement>(null);
-    const { unityProvider, sendMessage } = useUnityContext({
+    const { unityProvider, sendMessage  } = useUnityContext({
         loaderUrl: "unity/Build/unity.loader.js",
         dataUrl: "unity/Build/unity.data",
         frameworkUrl: "unity/Build/unity.framework.js",
@@ -25,18 +25,22 @@ export default function Page() {
         });
 
         setVideoStream(stream);
-        unityCanvasRef.current.style.width = stream.getVideoTracks()[0].getSettings().width + "px";
-        unityCanvasRef.current.style.height = stream.getVideoTracks()[0].getSettings().height + "px";
-
-        if (inputVideoRef.current) {
-            inputVideoRef.current.srcObject = stream;
-        }
     }
 
+    // Set the stream to the video when it is ready
+    if (!!inputVideoRef.current && !!videoStream) {
+        inputVideoRef.current.srcObject = videoStream;
+    }
 
+    // Change the size of the unity player when it its ready
+    if (!!unityCanvasRef.current && !!videoStream) {
+        unityCanvasRef.current.style.width = videoStream.getVideoTracks()[0].getSettings().width + "px";
+        unityCanvasRef.current.style.height = videoStream.getVideoTracks()[0].getSettings().height + "px";
+    }
+
+    // Create pose landmarker and start detecting
     useEffect(() => {
         if (videoStream && !!unityProvider) {
-            // Create pose landmarker and start detecting
             createPoseLandmarker("full").then((poseLandmarker) => {;
                 let lastTime = 0;
 
@@ -81,16 +85,12 @@ export default function Page() {
         }
     }, [videoStream, unityProvider, sendMessage]);
 
-
     // Render
-    let videoButton;
+    let content;
     if (!videoStream)
-        videoButton = (<button onClick={getVideoStream}>Get Video Stream</button>)
+        content = (<button onClick={getVideoStream}>Get Video Stream</button>)
     else
-        videoButton = (<></>)
-
-    // This thing
-    return (
+        content = (
         <>
         <Unity
             id="unity-canvas"
@@ -108,7 +108,12 @@ export default function Page() {
             autoPlay
             playsInline
             />
-            {videoButton}
+        </>)
+
+    // This thing
+    return (
+        <>
+        {content}
         </>
     )
 }

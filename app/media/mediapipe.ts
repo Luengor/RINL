@@ -5,7 +5,11 @@ import {
 
 type ModelType = "lite" | "full" | "heavy"
 
-export async function createPoseLandmarker(modelType: ModelType): Promise<PoseLandmarker> {
+export async function createPoseLandmarker(
+        modelType: ModelType,
+        minDetectionConfidence:number = 0.5,
+        minPresenceConfidence:number = 0.5,
+        minTrackingConfidence:number = 0.5): Promise<PoseLandmarker> {
     const vision = await FilesetResolver.forVisionTasks(
         "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.20/wasm"
     );
@@ -18,6 +22,9 @@ export async function createPoseLandmarker(modelType: ModelType): Promise<PoseLa
             delegate: "GPU"
         },
         runningMode: "VIDEO",
-        numPoses: 1
+        numPoses: 1,
+        minPoseDetectionConfidence: minDetectionConfidence,
+        minPosePresenceConfidence: minPresenceConfidence,
+        minTrackingConfidence: minTrackingConfidence
     });
 }
