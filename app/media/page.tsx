@@ -27,11 +27,6 @@ export default function Page() {
         setVideoStream(stream);
     }
 
-    // Set the stream to the video when it is ready
-    if (!!inputVideoRef.current && !!videoStream) {
-        inputVideoRef.current.srcObject = videoStream;
-    }
-
     // Change the size of the unity player when it its ready
     if (!!unityCanvasRef.current && !!videoStream) {
         unityCanvasRef.current.style.width = videoStream.getVideoTracks()[0].getSettings().width + "px";
@@ -103,6 +98,8 @@ export default function Page() {
             id="input"
             ref={(r) => {
                 inputVideoRef.current = r;
+                if (!!inputVideoRef.current)
+                    inputVideoRef.current.srcObject = videoStream;
             }}
             width="640"
             height="480"
