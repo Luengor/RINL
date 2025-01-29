@@ -3,6 +3,9 @@ import { useState, useRef, useEffect } from "react";
 import { createPoseLandmarker } from "../media/mediapipe";
 
 export default function Page() {
+    // Get a websocket
+    const [ws, setWs] = useState<WebSocket>(null);
+
     // Prepare video
     const [videoStream, setVideoStream] = useState<MediaStream>(null);
     const inputVideoRef = useRef<HTMLVideoElement>(null);
@@ -15,6 +18,7 @@ export default function Page() {
         });
 
         setVideoStream(stream);
+        setWs(new WebSocket("ws://localhost:8778"));
     }
 
     // Create pose landmarker and start detecting
@@ -23,7 +27,6 @@ export default function Page() {
             const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
             createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {;
                 let lastTime = 0;
-                const ws = new WebSocket("ws://localhost:8765");
 
                 const predict = async () => {
                     const start = performance.now();
@@ -44,8 +47,25 @@ export default function Page() {
                                         v: landmark.visibility.toFixed(4)
                                     }
                                 });
+                                const hipRight = result.landmarks[0][23];
+                                const hipLeft = result.landmarks[0][24];
 
-                                const json = {landmarks: worldLandmarks};
+                                const json = {
+                                    landmarks: worldLandmarks,
+                                    hipRight: {
+                                        x: hipRight.x.toFixed(4),
+                                        y: hipRight.y.toFixed(4),
+                                        z: hipRight.z.toFixed(4),
+                                        v: hipRight.visibility.toFixed(4)
+                                    },
+                                    hipLeft: {
+                                        x: hipLeft.x.toFixed(4),
+                                        y: hipLeft.y.toFixed(4),
+                                        z: hipLeft.z.toFixed(4),
+                                        v: hipLeft.visibility.toFixed(4)
+                                    }
+                                };
+
                                 const jsonStr = JSON.stringify(json);
 
                                 ws.send(jsonStr);
@@ -62,8 +82,8 @@ export default function Page() {
 
                 return () => {
                     poseLandmarker.close();
-                    if (ws)
-                        ws.close();
+                    // if (ws)
+                    //     ws.close();
                 }
             });
         }

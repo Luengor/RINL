@@ -59,7 +59,24 @@ export default function Page() {
                                         v: landmark.visibility.toFixed(4)
                                     }
                                 });
-                                const json = {landmarks: worldLandmarks};
+                                const hipRight = result.landmarks[0][23];
+                                const hipLeft = result.landmarks[0][24];
+
+                                const json = {
+                                    landmarks: worldLandmarks,
+                                    hipRight: {
+                                        x: hipRight.x.toFixed(4),
+                                        y: hipRight.y.toFixed(4),
+                                        z: hipRight.z.toFixed(4),
+                                        v: hipRight.visibility.toFixed(4)
+                                    },
+                                    hipLeft: {
+                                        x: hipLeft.x.toFixed(4),
+                                        y: hipLeft.y.toFixed(4),
+                                        z: hipLeft.z.toFixed(4),
+                                        v: hipLeft.visibility.toFixed(4)
+                                    }
+                                };
                                 const jsonStr = JSON.stringify(json);
 
                                 sendMessage("RINLBody", "SetBodyPosition", jsonStr);
