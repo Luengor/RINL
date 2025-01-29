@@ -50,33 +50,27 @@ export default function Page() {
                             (result) => {
                                 if (!result.worldLandmarks || !result.worldLandmarks.length) return;
 
-                                // Convert result.worldLandmarks to a json {landmarks: [LandmarkList]} 
+                                // Convert to a json
                                 const worldLandmarks = result.worldLandmarks[0].map((landmark) => {
                                     return {
-                                        x: landmark.x.toFixed(4),
-                                        y: landmark.y.toFixed(4),
-                                        z: landmark.z.toFixed(4),
-                                        v: landmark.visibility.toFixed(4)
+                                        x: landmark.x.toFixed(3),
+                                        y: landmark.y.toFixed(3),
+                                        z: landmark.z.toFixed(3),
                                     }
                                 });
-                                const hipRight = result.landmarks[0][23];
-                                const hipLeft = result.landmarks[0][24];
+                                const imageLandmarks = result.landmarks[0].map((landmark) => {
+                                    return {
+                                        x: landmark.x.toFixed(3),
+                                        y: landmark.y.toFixed(3),
+                                        z: landmark.z.toFixed(3),
+                                    }
+                                });
 
                                 const json = {
-                                    landmarks: worldLandmarks,
-                                    hipRight: {
-                                        x: hipRight.x.toFixed(4),
-                                        y: hipRight.y.toFixed(4),
-                                        z: hipRight.z.toFixed(4),
-                                        v: hipRight.visibility.toFixed(4)
-                                    },
-                                    hipLeft: {
-                                        x: hipLeft.x.toFixed(4),
-                                        y: hipLeft.y.toFixed(4),
-                                        z: hipLeft.z.toFixed(4),
-                                        v: hipLeft.visibility.toFixed(4)
-                                    }
+                                    world: worldLandmarks,
+                                    image: imageLandmarks
                                 };
+
                                 const jsonStr = JSON.stringify(json);
 
                                 sendMessage("RINLBody", "SetBodyPosition", jsonStr);
