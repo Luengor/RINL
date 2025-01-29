@@ -1,16 +1,16 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
-import { createPoseLandmarker } from "./mediapipe";
+import { createPoseLandmarker, predict } from "./mediapipe";
 
 export default function Page() {
     // Prepare video
     const [videoStream, setVideoStream] = useState<MediaStream>(null);
     const inputVideoRef = useRef<HTMLVideoElement>(null);
 
-    // Prepare unity
+    // Prepare unity if not on debug
     const unityCanvasRef = useRef<HTMLCanvasElement>(null);
-    const { unityProvider, sendMessage  } = useUnityContext({
+    const { unityProvider, sendMessage, isLoaded } = useUnityContext({
         loaderUrl: "unity/Build/unity.loader.js",
         dataUrl: "unity/Build/unity.data",
         frameworkUrl: "unity/Build/unity.framework.js",
@@ -27,70 +27,21 @@ export default function Page() {
         setVideoStream(stream);
     }
 
-    // Change the size of the unity player when it its ready
-    if (!!unityCanvasRef.current && !!videoStream) {
-        unityCanvasRef.current.style.width = videoStream.getVideoTracks()[0].getSettings().width + "px";
-        unityCanvasRef.current.style.height = videoStream.getVideoTracks()[0].getSettings().height + "px";
-    }
-
     // Create pose landmarker and start detecting
     useEffect(() => {
-        if (videoStream && !!unityProvider) {
+        if (videoStream && !!unityProvider && isLoaded) {
             const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
             createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {;
-                let lastTime = 0;
-
-                const predict = async () => {
-                    const start = performance.now();
-                    if (lastTime !== inputVideoRef.current.currentTime) {
-                        lastTime = inputVideoRef.current.currentTime;
-                        poseLandmarker.detectForVideo(
-                            inputVideoRef.current,
-                            start,
-                            (result) => {
-                                if (!result.worldLandmarks || !result.worldLandmarks.length) return;
-
-                                // Convert to a json
-                                const worldLandmarks = result.worldLandmarks[0].map((landmark) => {
-                                    return {
-                                        x: landmark.x.toFixed(3),
-                                        y: landmark.y.toFixed(3),
-                                        z: landmark.z.toFixed(3),
-                                    }
-                                });
-                                const imageLandmarks = result.landmarks[0].map((landmark) => {
-                                    return {
-                                        x: landmark.x.toFixed(3),
-                                        y: landmark.y.toFixed(3),
-                                        z: landmark.z.toFixed(3),
-                                    }
-                                });
-
-                                const json = {
-                                    world: worldLandmarks,
-                                    image: imageLandmarks
-                                };
-
-                                const jsonStr = JSON.stringify(json);
-
-                                sendMessage("RINLBody", "SetBodyPosition", jsonStr);
-                            }
-                        )
-                    }
-
-                    if (inputVideoRef.current.srcObject) {
-                        requestAnimationFrame(predict);
-                    }
-                }
-
-                predict();
+                predict(poseLandmarker, inputVideoRef, (result) => {
+                    sendMessage("RINLBody", "SetBodyPosition", result);
+                });
 
                 return () => {
                     poseLandmarker.close();
                 }
             });
         }
-    }, [videoStream, unityProvider, sendMessage]);
+    }, [videoStream, unityProvider, sendMessage, isLoaded]);
 
     // Render
     let content;
@@ -101,12 +52,14 @@ export default function Page() {
         <>
         <Unity
             id="unity-canvas"
+            className="unity"
             unityProvider={unityProvider}
             ref={unityCanvasRef}
             matchWebGLToCanvasSize={true}/>
         <br />
         <video
             id="input"
+            className="input"
             ref={(r) => {
                 inputVideoRef.current = r;
                 if (!!inputVideoRef.current)
