@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -10,14 +8,12 @@ struct Landmark
     public float x;
     public float y;
     public float z;
-    public float v;
 }
 
 struct Landmarks
 {
-    public Landmark[] landmarks;
-    public Landmark hipRight;
-    public Landmark hipLeft;
+    public Landmark[] world;
+    public Landmark[] image;
 }
 
 
@@ -55,6 +51,9 @@ public class RINLBody : MonoBehaviour
 
     private float lowestY = 0.0f, ground = 0;
 
+    // Distance between the hips in the landmark data and the hips in the image 
+    private float hipDistanceRatio = 1.0f;
+
 
     private void Start()
     {
@@ -79,18 +78,15 @@ public class RINLBody : MonoBehaviour
     private void FixedUpdate()
     {
         string debugString = "";
+        debugString += "hip distance ratio: " + Math.Round(hipDistanceRatio, 2) + "\n";
 
         GetGroundHeight();
-        debugString += "ground: " + ground + "\n";
 
         if (hasData)
         {
             MoveBody();
 
             MoveHip();
-
-            debugString += "hip right: " + new Vector3(lastLandmarks.hipRight.x, lastLandmarks.hipRight.y, lastLandmarks.hipRight.z).ToString() + "\n";
-            debugString += "hip left: " + new Vector3(lastLandmarks.hipLeft.x, lastLandmarks.hipLeft.y, lastLandmarks.hipLeft.z).ToString() + "\n";
         }
 
         debugText.text = debugString;
@@ -157,12 +153,11 @@ public class RINLBody : MonoBehaviour
         {
             Vector3 lastPos = bodyLandmarks[i].transform.position;
             Vector3 landmarkPos = new Vector3(
-                lastLandmarks.landmarks[i].x,
-                lastLandmarks.landmarks[i].y,
-                lastLandmarks.landmarks[i].z
+                lastLandmarks.world[i].x,
+                lastLandmarks.world[i].y,
+                lastLandmarks.world[i].z
             ) * positionScale;
 
-            // TODO: Take visibility into account
             Vector3 newPos = Vector3.Lerp(lastPos, landmarkPos, lerpSpeed);
             bodyLandmarks[i].transform.localPosition = newPos;
 
@@ -174,7 +169,7 @@ public class RINLBody : MonoBehaviour
     private void MoveHip()
     {
         // Get the average x position of the hips
-        float landmarkHipX = ((lastLandmarks.hipRight.x + lastLandmarks.hipLeft.x) * 0.5f - 0.5f) * positionScale;
+        float landmarkHipX = ((lastLandmarks.image[23].x + lastLandmarks.image[24].x) * 0.5f - 0.5f) * positionScale * hipDistanceRatio;
         // float newHipX = landmarkHipX *  lerpSpeed + hips.position.x * (1 - lerpSpeed);
 
         // Set the height of the hips to the ground + the lowest Y position
@@ -189,20 +184,29 @@ public class RINLBody : MonoBehaviour
         lastLandmarks = JsonUtility.FromJson<Landmarks>(landmarkString);
 
         // Invert X, Y and Z
-        for (int i = 0; i < lastLandmarks.landmarks.Length; i++)
+        for (int i = 0; i < lastLandmarks.world.Length; i++)
         {
-            lastLandmarks.landmarks[i].x *= -1;
-            lastLandmarks.landmarks[i].y *= -1;
-            lastLandmarks.landmarks[i].z *= -1;
+            lastLandmarks.world[i].x *= -1;
+            lastLandmarks.world[i].y *= -1;
+            lastLandmarks.world[i].z *= -1;
+
+            // For the image landmarks, X and Y are in the range 0-1 and Z is the same as on the other landmarks
+            lastLandmarks.image[i].x = 1 - lastLandmarks.image[i].x;
+            lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
+            lastLandmarks.image[i].z *= -1;
         }
+    }
 
-        // For the hips, X and Y are in the range 0-1 and Z is the same as on the other landmarks
-        lastLandmarks.hipRight.x = 1 - lastLandmarks.hipRight.x; 
-        lastLandmarks.hipRight.y = 1 - lastLandmarks.hipRight.y;
-        lastLandmarks.hipRight.z *= -1; 
+    public void Calibrate()
+    {
+        SetHipRatio();
+    }
 
-        lastLandmarks.hipLeft.x = 1 - lastLandmarks.hipLeft.x;
-        lastLandmarks.hipLeft.y = 1 - lastLandmarks.hipLeft.y;
-        lastLandmarks.hipLeft.z *= -1;
+    private void SetHipRatio()
+    {
+        // Set the hip distance ratio
+        float realHipDistance = Math.Abs(lastLandmarks.image[23].x - lastLandmarks.image[24].x);
+        float weirdHipDistance = Math.Abs(lastLandmarks.world[23].x - lastLandmarks.world[24].x);
+        hipDistanceRatio = weirdHipDistance / realHipDistance;
     }
 }
