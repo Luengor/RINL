@@ -80,7 +80,7 @@ export default function Page() {
                 }
             });
         }
-    }, [videoStream]);
+    }, [videoStream, ws]);
 
     // Render
     let content;
