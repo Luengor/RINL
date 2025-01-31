@@ -24,10 +24,10 @@ export default function Page() {
     // Create pose landmarker and start detecting
     useEffect(() => {
         if (videoStream) {
-            alert("Ready to send data");
             const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
             createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {;
                 predict(poseLandmarker, inputVideoRef, (result) => {
+                    // Send result to websocket
                     if (ws.readyState === ws.OPEN)
                         ws.send(result);
                 });
