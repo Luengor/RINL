@@ -1,18 +1,4 @@
 /* Global styles for the application */
-
-/* The unity canvas should take up the entire screen */
-canvas.unity {
-    width: 100%;
-    height: 100%;
-}
-
-/* The video player is positioned with absolute positioning by js, hidden by default */
-video.input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-
-    display: none;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

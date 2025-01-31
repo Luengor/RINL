@@ -47,10 +47,9 @@ export default function Page() {
         content = (<button onClick={getVideoStream}>Get Video Stream</button>)
     else
         content = (
-        <>
         <video
             id="input"
-            className=""
+            className="flex-auto"
             ref={(r) => {
                 inputVideoRef.current = r;
                 if (!!inputVideoRef.current)
@@ -61,12 +60,12 @@ export default function Page() {
             autoPlay
             playsInline
             />
-        </>)
+        )
 
     // This thing
     return (
-        <>
-        {content}
-        </>
+        <div>
+            {content}
+        </div>
     )
 }

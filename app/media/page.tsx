@@ -52,14 +52,14 @@ export default function Page() {
         <>
         <Unity
             id="unity-canvas"
-            className="unity"
+            className="flex-auto"
             unityProvider={unityProvider}
             ref={unityCanvasRef}
             matchWebGLToCanvasSize={true}/>
         <br />
         <video
             id="input"
-            className="input"
+            className="hidden"
             ref={(r) => {
                 inputVideoRef.current = r;
                 if (!!inputVideoRef.current)
@@ -74,8 +74,8 @@ export default function Page() {
 
     // This thing
     return (
-        <>
-        {content}
-        </>
+        <div className="flex items-center">
+            {content}
+        </div>
     )
 }
