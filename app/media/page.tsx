@@ -43,6 +43,22 @@ export default function Page() {
         }
     }, [videoStream, unityProvider, sendMessage, isLoaded]);
 
+    // Unity messages
+    useEffect(() => {
+        // Subscribe to unity events
+        const callback = (e: Event) => {
+            // Do smth with the event 
+            // console.log(e);
+        };
+
+        window.addEventListener("unity2react", callback);
+
+        return () => {
+            // Remove event listener
+            window.removeEventListener("unity2react", callback);
+        }
+    });
+
     // Render
     let content;
     if (!videoStream)
