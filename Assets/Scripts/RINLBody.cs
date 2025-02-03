@@ -21,12 +21,13 @@ public class RINLBody : MonoBehaviour
 {
     [Header("Transforms")]
     public Transform hips;
+    public Transform points;
+    public Transform head;
 
     [Header("Settings")]
     public float positionScale = 1.0f;
     [Range(0.0f, 1.0f)]
     public float lerpSpeed = 0.8f;
-    public float groundOffset = 0.1f;
 
     [Header("Prefabs")]
     public GameObject bodyLandmarkPrefab;
@@ -53,6 +54,7 @@ public class RINLBody : MonoBehaviour
 
     // Distance between the hips in the landmark data and the hips in the image 
     private float hipDistanceRatio = 1.0f;
+    private Vector3 hipPosition = Vector3.zero;
 
 
     private void Start()
@@ -60,7 +62,7 @@ public class RINLBody : MonoBehaviour
         // Instantiate 33 spheres for the body landmarks
         for (int i = 0; i < 33; i++)
         {
-            bodyLandmarks[i] = Instantiate(bodyLandmarkPrefab, hips);
+            bodyLandmarks[i] = Instantiate(bodyLandmarkPrefab, points);
             bodyLandmarks[i].name = "BodyLandmark" + i;
 
             // Enable trail renderer for some landmarks
@@ -87,6 +89,8 @@ public class RINLBody : MonoBehaviour
             MoveBody();
 
             MoveHip();
+
+            MoveBodyParts();
         }
 
         debugText.text = debugString;
@@ -97,6 +101,16 @@ public class RINLBody : MonoBehaviour
         // Draw the hips
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(hips.position, 0.1f);
+        Gizmos.DrawLine(hips.position, hips.position + hips.up * 0.5f);
+        Gizmos.DrawLine(hips.position, hips.position + hips.right * 0.5f);
+        Gizmos.DrawLine(hips.position, hips.position + hips.forward * 0.5f);
+
+        // Draw the head
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(head.position, 0.1f);
+        Gizmos.DrawLine(head.position, head.position + head.up * 0.5f);
+        Gizmos.DrawLine(head.position, head.position + head.right * 0.5f);
+        Gizmos.DrawLine(head.position, head.position + head.forward * 0.5f);
 
         // Draw the ground
         Gizmos.color = Color.red;
@@ -106,21 +120,6 @@ public class RINLBody : MonoBehaviour
         float y = hips.position.y + lowestY; 
         Gizmos.color = Color.green;
         Gizmos.DrawLine(new Vector3(-0.5f, y, 0), new Vector3(0.5f, y, 0));
-
-        // Draw a point on the locations near the lowest Y position
-        if (!Application.isPlaying)
-            return;
-
-        for (int i = 0; i < bodyLandmarks.Length; i++)
-        {
-            Vector3 pos = bodyLandmarks[i].transform.position;
-            if (pos.y < y + groundOffset && pos.y > y - groundOffset)
-            {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawSphere(pos, 0.30f);
-            }
-        }
-
     }
 
 
@@ -156,7 +155,7 @@ public class RINLBody : MonoBehaviour
                 lastLandmarks.world[i].x,
                 lastLandmarks.world[i].y,
                 lastLandmarks.world[i].z
-            ) * positionScale;
+            ) * positionScale + hipPosition;
 
             Vector3 newPos = Vector3.Lerp(lastPos, landmarkPos, lerpSpeed);
             bodyLandmarks[i].transform.localPosition = newPos;
@@ -175,7 +174,30 @@ public class RINLBody : MonoBehaviour
         // Set the height of the hips to the ground + the lowest Y position
         float newHipY = ground - lowestY;
 
-        hips.position = new Vector3(landmarkHipX, newHipY, 0); 
+        hipPosition = new Vector3(landmarkHipX, newHipY, 0);
+    }
+
+    private void MoveBodyParts()
+    {
+        // Move and rotate the hips
+        hips.position = hipPosition;
+
+        Vector3 shoulderCenter = (bodyLandmarks[11].transform.position + bodyLandmarks[12].transform.position) * 0.5f;
+        Vector3 hipUp = shoulderCenter - hipPosition;
+        Vector3 hipRight = bodyLandmarks[24].transform.position - bodyLandmarks[23].transform.position;
+
+        // ah yes, math
+        Vector3 forward = Vector3.Cross(hipRight, hipUp); 
+
+        hips.LookAt(hips.position + forward, hipUp);
+
+        // Move and rotate the head 
+        head.position = (bodyLandmarks[7].transform.position + bodyLandmarks[8].transform.position) * 0.5f;
+        Vector3 headForward = bodyLandmarks[0].transform.position - head.position;
+        Vector3 headRight = bodyLandmarks[8].transform.position - bodyLandmarks[7].transform.position;
+        Vector3 headUp = Vector3.Cross(headForward, headRight);
+
+        head.LookAt(head.position + headForward, headUp);
     }
 
     public void SetBodyPosition(string landmarkString)
