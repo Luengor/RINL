@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 
@@ -55,6 +56,9 @@ public class RINLBody : MonoBehaviour
     // Distance between the hips in the landmark data and the hips in the image 
     private float hipDistanceRatio = 1.0f;
     private Vector3 hipPosition = Vector3.zero;
+
+    [DllImport("__Internal")]
+    private static extern void sendToReact(string message);
 
 
     private void Start()
