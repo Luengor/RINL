@@ -20,31 +20,19 @@ struct Landmarks
 public class RINLBody : MonoBehaviour
 {
     [Header("Transforms")]
+    public Transform head;
+    public Transform rightHand, leftHand;
     public Transform hips;
     public Transform points;
-    public Transform head;
 
     [Header("Settings")]
     public float positionScale = 1.0f;
     [Range(0.0f, 1.0f)]
     public float lerpSpeed = 0.8f;
-
-    [Header("Prefabs")]
-    public GameObject bodyLandmarkPrefab;
-    public GameObject edgePrefab;
-
-    [Header("Other things")]
-    public Material leftMaterial;
-    public Material rightMaterial;
-
-    private readonly bool[] landmarkHasTrail = new bool[33] {
-        false, false, false, false, false, false, false, false, false, false,
-        false, false, false, false, false, false, false, false, false, true,
-        true, false, false, false, false, false, false, false, false, false,
-        false, true, true
-    };
     
-    private readonly GameObject[] bodyLandmarks = new GameObject[33];
+
+    /// Private
+    private readonly Transform[] bodyLandmarks = new Transform[33];
 
     private bool hasData = false;
     private Landmarks lastLandmarks = new();
@@ -59,21 +47,10 @@ public class RINLBody : MonoBehaviour
 
     private void Start()
     {
-        // Instantiate 33 spheres for the body landmarks
+        // Get the 33 body landmarks from the points object 
         for (int i = 0; i < 33; i++)
         {
-            bodyLandmarks[i] = Instantiate(bodyLandmarkPrefab, points);
-            bodyLandmarks[i].name = "BodyLandmark" + i;
-
-            // Enable trail renderer for some landmarks
-            if (landmarkHasTrail[i])
-                bodyLandmarks[i].transform.GetChild(0).GetComponent<TrailRenderer>().enabled = true;
-            
-            // Set the material for the left and right side
-            if (PointSide(i) == 1)
-                bodyLandmarks[i].transform.GetChild(0).GetComponent<MeshRenderer>().material = rightMaterial;
-            else if (PointSide(i) == -1)
-                bodyLandmarks[i].transform.GetChild(0).GetComponent<MeshRenderer>().material = leftMaterial;
+            bodyLandmarks[i] = points.GetChild(i);
         }
     }
 
@@ -109,30 +86,14 @@ public class RINLBody : MonoBehaviour
 
         // Draw the ground
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(new Vector3(hips.position.x, ground, hips.position.z), new Vector3(0.5f, 0.02f, 0.5f));
-
-        // Draw the lowest Y position
-        float y = hips.position.y + lowestY; 
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(new Vector3(-0.5f, y, 0), new Vector3(0.5f, y, 0));
+        Gizmos.DrawCube(new Vector3(hips.localPosition.x, ground, hips.localPosition.z), new Vector3(0.5f, 0.02f, 0.5f));
     }
 
-
-    private int PointSide(int p)
-    {
-        return p switch
-        {
-            0 => 0,
-            2 => 1,
-            5 => -1,
-            _ => p % 2 == 0 ? 1 : -1,
-        };
-    }
 
     private void GetGroundHeight()
     {
         // Raycast from the hips to the lowest Y position
-        if (Physics.Raycast(hips.position, Vector3.down, out RaycastHit hit))
+        if (Physics.Raycast(hips.localPosition, Vector3.down, out RaycastHit hit))
         {
             ground = hit.point.y;
         }
@@ -145,7 +106,7 @@ public class RINLBody : MonoBehaviour
 
         for (int i = 0; i < 33; i++)
         {
-            Vector3 lastPos = bodyLandmarks[i].transform.position;
+            Vector3 lastPos = bodyLandmarks[i].localPosition;
             Vector3 landmarkPos = new Vector3(
                 lastLandmarks.world[i].x,
                 lastLandmarks.world[i].y,
@@ -153,7 +114,7 @@ public class RINLBody : MonoBehaviour
             ) * positionScale + hipPosition;
 
             Vector3 newPos = Vector3.Lerp(lastPos, landmarkPos, lerpSpeed);
-            bodyLandmarks[i].transform.localPosition = newPos;
+            bodyLandmarks[i].localPosition = newPos;
 
             if (newPos.y < lowestY)
                 lowestY = newPos.y;
@@ -164,36 +125,50 @@ public class RINLBody : MonoBehaviour
     {
         // Get the average x position of the hips
         float landmarkHipX = ((lastLandmarks.image[23].x + lastLandmarks.image[24].x) * 0.5f - 0.5f) * positionScale;
-        // float newHipX = landmarkHipX *  lerpSpeed + hips.position.x * (1 - lerpSpeed);
+        // float newHipX = landmarkHipX *  lerpSpeed + hips.localPosition.x * (1 - lerpSpeed);
 
         // Set the height of the hips to the ground + the lowest Y position
         float newHipY = ground - lowestY;
 
         hipPosition = new Vector3(landmarkHipX, newHipY, 0);
-        points.position = hipPosition;
+        points.localPosition = hipPosition;
     }
 
     private void MoveBodyParts()
     {
         // Move and rotate the hips
-        hips.position = hipPosition;
+        hips.localPosition = (bodyLandmarks[24].localPosition + bodyLandmarks[23].localPosition) * 0.5f + points.localPosition;
 
-        Vector3 shoulderCenter = (bodyLandmarks[11].transform.position + bodyLandmarks[12].transform.position) * 0.5f;
+        Vector3 shoulderCenter = (bodyLandmarks[11].localPosition + bodyLandmarks[12].localPosition) * 0.5f;
         Vector3 hipUp = shoulderCenter - hipPosition;
-        Vector3 hipRight = bodyLandmarks[24].transform.position - bodyLandmarks[23].transform.position;
+        Vector3 hipRight = bodyLandmarks[24].localPosition - bodyLandmarks[23].localPosition;
 
         // ah yes, math
         Vector3 forward = Vector3.Cross(hipRight, hipUp); 
 
-        hips.LookAt(hips.position + forward, hipUp);
+        hips.LookAt(hips.localPosition + forward, hipUp);
 
         // Move and rotate the head 
-        head.position = (bodyLandmarks[7].transform.position + bodyLandmarks[8].transform.position) * 0.5f;
-        Vector3 headForward = bodyLandmarks[0].transform.position - head.position;
-        Vector3 headRight = bodyLandmarks[8].transform.position - bodyLandmarks[7].transform.position;
+        Vector3 headCenter = (bodyLandmarks[7].localPosition + bodyLandmarks[8].localPosition) * 0.5f;
+        head.localPosition = headCenter + points.localPosition;
+        Vector3 headForward = bodyLandmarks[0].localPosition - headCenter;
+        Vector3 headRight = bodyLandmarks[8].localPosition - bodyLandmarks[7].localPosition;
         Vector3 headUp = Vector3.Cross(headForward, headRight);
 
-        head.LookAt(head.position + headForward, headUp);
+        head.LookAt(head.localPosition + headForward, headUp);
+
+        // Move and rotate the hands
+        rightHand.localPosition = bodyLandmarks[16].localPosition + points.localPosition;
+        Vector3 rhBack = bodyLandmarks[14].localPosition - bodyLandmarks[16].localPosition;
+        Vector3 rhForward = bodyLandmarks[20].localPosition - bodyLandmarks[16].localPosition;
+        Vector3 rhAvgForward = (-rhBack.normalized + rhForward.normalized) / 2;
+        rightHand.LookAt(rightHand.localPosition + rhAvgForward, Vector3.up);
+
+        leftHand.localPosition = bodyLandmarks[15].localPosition + points.localPosition;
+        Vector3 lhBack = bodyLandmarks[13].localPosition - bodyLandmarks[15].localPosition;
+        Vector3 lhForward = bodyLandmarks[19].localPosition - bodyLandmarks[15].localPosition;
+        Vector3 lhAvgForward = (-lhBack.normalized + lhForward.normalized) / 2;
+        leftHand.LookAt(leftHand.localPosition + lhAvgForward, Vector3.up);
     }
 
     public void SetBodyPosition(string landmarkString)
