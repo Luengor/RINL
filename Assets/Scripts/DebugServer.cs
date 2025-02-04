@@ -7,7 +7,7 @@ public class DebugServer : MonoBehaviour
     private RINLBody rINLBody;
 
     public string serverIP = "127.0.0.1";
-    public int serverPort = 8765;
+    public int serverPort = 8764;
     private Socket socket;
     private readonly byte[] buffer = new byte[8192];
 

@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using TMPro;
 using UnityEngine;
 
 [Serializable]
@@ -37,7 +36,6 @@ public class RINLBody : MonoBehaviour
     [Header("Other things")]
     public Material leftMaterial;
     public Material rightMaterial;
-    public TextMeshProUGUI debugText;
 
     private readonly bool[] landmarkHasTrail = new bool[33] {
         false, false, false, false, false, false, false, false, false, false,
@@ -53,8 +51,6 @@ public class RINLBody : MonoBehaviour
 
     private float lowestY = 0.0f, ground = 0;
 
-    // Distance between the hips in the landmark data and the hips in the image 
-    private float hipDistanceRatio = 1.0f;
     private Vector3 hipPosition = Vector3.zero;
 
     [DllImport("__Internal")]
@@ -83,9 +79,6 @@ public class RINLBody : MonoBehaviour
 
     private void FixedUpdate()
     {
-        string debugString = "";
-        debugString += "hip distance ratio: " + Math.Round(hipDistanceRatio, 2) + "\n";
-
         GetGroundHeight();
 
         if (hasData)
@@ -96,8 +89,6 @@ public class RINLBody : MonoBehaviour
 
             MoveBodyParts();
         }
-
-        debugText.text = debugString;
     }
 
     private void OnDrawGizmos()
@@ -172,7 +163,7 @@ public class RINLBody : MonoBehaviour
     private void MoveHip()
     {
         // Get the average x position of the hips
-        float landmarkHipX = ((lastLandmarks.image[23].x + lastLandmarks.image[24].x) * 0.5f - 0.5f) * positionScale * hipDistanceRatio;
+        float landmarkHipX = ((lastLandmarks.image[23].x + lastLandmarks.image[24].x) * 0.5f - 0.5f) * positionScale;
         // float newHipX = landmarkHipX *  lerpSpeed + hips.position.x * (1 - lerpSpeed);
 
         // Set the height of the hips to the ground + the lowest Y position
@@ -221,18 +212,5 @@ public class RINLBody : MonoBehaviour
             lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
             lastLandmarks.image[i].z *= -1;
         }
-    }
-
-    public void Calibrate()
-    {
-        SetHipRatio();
-    }
-
-    private void SetHipRatio()
-    {
-        // Set the hip distance ratio
-        float realHipDistance = Math.Abs(lastLandmarks.image[23].x - lastLandmarks.image[24].x);
-        float weirdHipDistance = Math.Abs(lastLandmarks.world[23].x - lastLandmarks.world[24].x);
-        hipDistanceRatio = weirdHipDistance / realHipDistance;
     }
 }
