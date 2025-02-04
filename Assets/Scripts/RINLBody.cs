@@ -27,6 +27,7 @@ public class RINLBody : MonoBehaviour
 
     [Header("Settings")]
     public float positionScale = 1.0f;
+    public bool flipX = true;
     [Range(0.0f, 1.0f)]
     public float lerpSpeed = 0.8f;
     
@@ -144,7 +145,7 @@ public class RINLBody : MonoBehaviour
         Vector3 hipRight = bodyLandmarks[24].localPosition - bodyLandmarks[23].localPosition;
 
         // ah yes, math
-        Vector3 forward = Vector3.Cross(hipRight, hipUp); 
+        Vector3 forward = Vector3.Cross(hipRight, hipUp) * (flipX ? 1 : -1); 
 
         hips.LookAt(hips.localPosition + forward, hipUp);
 
@@ -153,7 +154,7 @@ public class RINLBody : MonoBehaviour
         head.localPosition = headCenter + points.localPosition;
         Vector3 headForward = bodyLandmarks[0].localPosition - headCenter;
         Vector3 headRight = bodyLandmarks[8].localPosition - bodyLandmarks[7].localPosition;
-        Vector3 headUp = Vector3.Cross(headForward, headRight);
+        Vector3 headUp = Vector3.Cross(headForward, headRight) * (flipX ? 1 : -1);
 
         head.LookAt(head.localPosition + headForward, headUp);
 
@@ -179,12 +180,15 @@ public class RINLBody : MonoBehaviour
         // Invert X, Y and Z
         for (int i = 0; i < lastLandmarks.world.Length; i++)
         {
-            lastLandmarks.world[i].x *= -1;
+            if (flipX)
+                lastLandmarks.world[i].x *= -1;
+
             lastLandmarks.world[i].y *= -1;
             lastLandmarks.world[i].z *= -1;
 
             // For the image landmarks, X and Y are in the range 0-1 and Z is the same as on the other landmarks
-            lastLandmarks.image[i].x = 1 - lastLandmarks.image[i].x;
+            if (flipX)
+                lastLandmarks.image[i].x = 1 - lastLandmarks.image[i].x;
             lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
             lastLandmarks.image[i].z *= -1;
         }
