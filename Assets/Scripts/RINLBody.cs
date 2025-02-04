@@ -109,7 +109,7 @@ public class RINLBody : MonoBehaviour
 
         // Draw the ground
         Gizmos.color = Color.red;
-        Gizmos.DrawCube(new Vector3(0, ground, 0), new Vector3(0.5f, 0.02f, 0.5f));
+        Gizmos.DrawCube(new Vector3(hips.position.x, ground, hips.position.z), new Vector3(0.5f, 0.02f, 0.5f));
 
         // Draw the lowest Y position
         float y = hips.position.y + lowestY; 
@@ -170,6 +170,7 @@ public class RINLBody : MonoBehaviour
         float newHipY = ground - lowestY;
 
         hipPosition = new Vector3(landmarkHipX, newHipY, 0);
+        points.position = hipPosition;
     }
 
     private void MoveBodyParts()
