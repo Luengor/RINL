@@ -30,7 +30,14 @@ public class RINLBody : MonoBehaviour
     public bool flipX = true;
     [Range(0.0f, 1.0f)]
     public float lerpSpeed = 0.8f;
+    public LayerMask groundLayer;
     
+    /// Properties
+    public Bounds Bounds {
+        get {
+            return bounds;
+        }
+    }
 
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[33];
@@ -41,10 +48,10 @@ public class RINLBody : MonoBehaviour
     private float lowestY = 0.0f, ground = 0;
 
     private Vector3 hipPosition = Vector3.zero;
+    private Bounds bounds = new();
 
     [DllImport("__Internal")]
     private static extern void sendToReact(string message);
-
 
     private void Start()
     {
@@ -75,26 +82,28 @@ public class RINLBody : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(hips.position, 0.1f);
         Gizmos.DrawLine(hips.position, hips.position + hips.up * 0.5f);
-        Gizmos.DrawLine(hips.position, hips.position + hips.right * 0.5f);
         Gizmos.DrawLine(hips.position, hips.position + hips.forward * 0.5f);
 
         // Draw the head
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(head.position, 0.1f);
         Gizmos.DrawLine(head.position, head.position + head.up * 0.5f);
-        Gizmos.DrawLine(head.position, head.position + head.right * 0.5f);
         Gizmos.DrawLine(head.position, head.position + head.forward * 0.5f);
 
         // Draw the ground
         Gizmos.color = Color.red;
         Gizmos.DrawCube(new Vector3(hips.localPosition.x, ground, hips.localPosition.z), new Vector3(0.5f, 0.02f, 0.5f));
+
+        // Draw the bounds
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(bounds.center + transform.position, bounds.size);
     }
 
 
     private void GetGroundHeight()
     {
         // Raycast from the hips to the lowest Y position
-        if (Physics.Raycast(hips.localPosition, Vector3.down, out RaycastHit hit))
+        if (Physics.Raycast(hips.localPosition, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer))
         {
             ground = hit.point.y;
         }
@@ -119,6 +128,10 @@ public class RINLBody : MonoBehaviour
 
             if (newPos.y < lowestY)
                 lowestY = newPos.y;
+            
+            // Only update the bounds if the landmark is on the image
+            if (lastLandmarks.image[i].x > 0 && lastLandmarks.image[i].x < 1 && lastLandmarks.image[i].y > 0 && lastLandmarks.image[i].y < 1)
+                bounds.Encapsulate(newPos + points.localPosition);
         }
     }
 
@@ -126,7 +139,6 @@ public class RINLBody : MonoBehaviour
     {
         // Get the average x position of the hips
         float landmarkHipX = ((lastLandmarks.image[23].x + lastLandmarks.image[24].x) * 0.5f - 0.5f) * positionScale;
-        // float newHipX = landmarkHipX *  lerpSpeed + hips.localPosition.x * (1 - lerpSpeed);
 
         // Set the height of the hips to the ground + the lowest Y position
         float newHipY = ground - lowestY;
