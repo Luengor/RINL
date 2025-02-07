@@ -96,9 +96,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4197072813166762738}
   - component: {fileID: 6441720316727061854}
-  - component: {fileID: 6477906486851089124}
+  - component: {fileID: 2004883644881869957}
   m_Layer: 0
-  m_Name: RINLBody
+  m_Name: RINLImageBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,11 +117,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2491329252193308261}
-  - {fileID: 7316003749467568303}
   - {fileID: 1761182277647760526}
   - {fileID: 4207743180618860296}
   - {fileID: 9138927585827505832}
+  - {fileID: 2491329252193308261}
+  - {fileID: 7316003749467568303}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6441720316727061854
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverIP: 127.0.0.1
   serverPort: 8764
---- !u!114 &6477906486851089124
+--- !u!114 &2004883644881869957
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 403684905780244027}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ead7e10e9f66e3a869931a4e61125970, type: 3}
+  m_Script: {fileID: 11500000, guid: 905d7b6da4ba6715195d3723a2872f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   head: {fileID: 1761182277647760526}
@@ -156,7 +156,12 @@ MonoBehaviour:
   hips: {fileID: 2491329252193308261}
   points: {fileID: 7316003749467568303}
   positionScale: 4
-  lerpSpeed: 0.6
+  flipX: 1
+  lerpSpeed: 0.8
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  zScale: 0.2
 --- !u!1 &420362409469445653
 GameObject:
   m_ObjectHideFlags: 0

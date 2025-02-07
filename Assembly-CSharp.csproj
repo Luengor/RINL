@@ -68,9 +68,11 @@
     <Compile Include="Assets/Scripts/Ballons/BallonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BallonPopper.cs" />
     <Compile Include="Assets/Scripts/Generic/GrowWithBounds.cs" />
-    <Compile Include="Assets/Scripts/RINLBody.cs" />
-    <Compile Include="Assets/Scripts/DebugServer.cs" />
+    <Compile Include="Assets/Scripts/Body/RINL3DBody.cs" />
+    <Compile Include="Assets/Scripts/Body/RINLImageBody.cs" />
     <Compile Include="Assets/Scripts/Generic/RotateAround.cs" />
+    <Compile Include="Assets/Scripts/Body/RINLBody.cs" />
+    <Compile Include="Assets/Scripts/Body/DebugServer.cs" />
     <Compile Include="Assets/Scripts/Ballons/Ballon.cs" />
   </ItemGroup>
   <ItemGroup>
