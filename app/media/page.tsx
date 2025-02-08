@@ -43,12 +43,21 @@ export default function Page() {
         }
     }, [videoStream, unityProvider, sendMessage, isLoaded]);
 
+    // Custom event type expanding Event
+    interface UnityEvent extends Event {
+        data: {
+            type: string;
+            payload: object;
+        };
+    }
+
     // Unity messages
     useEffect(() => {
         // Subscribe to unity events
         const callback = (e: Event) => {
             // Do smth with the event 
-            // console.log(e);
+            const {type: t, payload: p} = (e as UnityEvent).data;
+            console.log(t, p);
         };
 
         window.addEventListener("unity2react", callback);
