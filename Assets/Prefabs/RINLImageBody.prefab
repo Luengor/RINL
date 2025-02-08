@@ -155,13 +155,13 @@ MonoBehaviour:
   leftHand: {fileID: 9138927585827505832}
   hips: {fileID: 2491329252193308261}
   points: {fileID: 7316003749467568303}
-  positionScale: 4
-  flipX: 1
-  lerpSpeed: 0.8
+  positionScale: 6
+  flipX: 0
+  lerpSpeed: 10
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  zScale: 0.2
+  zScale: 0.1
 --- !u!1 &420362409469445653
 GameObject:
   m_ObjectHideFlags: 0

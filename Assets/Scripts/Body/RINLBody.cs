@@ -1,6 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 [Serializable]
@@ -16,7 +15,6 @@ public struct Landmarks
     public Landmark[] world;
     public Landmark[] image;
 }
-
 
 public abstract class RINLBody : MonoBehaviour
 {
