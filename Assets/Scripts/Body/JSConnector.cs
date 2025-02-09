@@ -8,4 +8,9 @@ public class JSConnector : MonoBehaviour
     {
         body.SetBodyPosition(landmarkString);
     }
+
+    public void SetImageSize(string sizeString)
+    {
+        body.SetImageSize(sizeString);
+    }
 }

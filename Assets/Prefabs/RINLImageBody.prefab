@@ -142,11 +142,16 @@ MonoBehaviour:
   points: {fileID: 7316003749467568303}
   positionScale: 6
   flipX: 0
-  lerpSpeed: 10
+  lerpSpeed: 18
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  zScale: 0.1
+  zScale: 1
+  x1: 1
+  x2: 1
+  x3: 1
+  calibration_m: 1
+  calibration_b: 0
 --- !u!1 &420362409469445653
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,13 @@ public struct Landmark
     public float z;
 }
 
+[Serializable]
+public struct ImageSize
+{
+    public int width;
+    public int height;
+}
+
 public struct Landmarks
 {
     public Landmark[] world;
@@ -47,6 +54,7 @@ public abstract class RINLBody : MonoBehaviour
     protected Vector3 hipPosition = Vector3.zero;
     protected Bounds bounds = new();
 
+    protected ImageSize imageSize = new() { width = 640, height = 480 };
 
     protected virtual void Start()
     {
@@ -134,10 +142,18 @@ public abstract class RINLBody : MonoBehaviour
             lastLandmarks.world[i].z *= -1;
 
             // For the image landmarks, X and Y are in the range 0-1 and Z is the same as on the other landmarks
+            float aspect = (float)imageSize.width / imageSize.height;
+            lastLandmarks.image[i].x = lastLandmarks.image[i].x * aspect * 2 - aspect;
             if (flipX)
                 lastLandmarks.image[i].x = 1 - lastLandmarks.image[i].x;
+
             lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
-            lastLandmarks.image[i].z *= -1;
+            lastLandmarks.image[i].z *= -aspect;
         }
+    }
+
+    public void SetImageSize(string sizeString)
+    {
+        imageSize = JsonUtility.FromJson<ImageSize>(sizeString);
     }
 }

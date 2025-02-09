@@ -1,13 +1,32 @@
+using System;
 using UnityEngine;
 
 public class RINLImageBody : RINLBody 
 {
     public float zScale = 0.2f;
 
+    public float x1 = 1, x2 = 1, x3 = 1;
+    public float calibration_m = 1, calibration_b = 0;
+
     protected override void Start()
     {
         // Init landmarks
         base.Start();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+            x1 = lastLandmarks.image[23].x;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            x2 = lastLandmarks.image[24].x;
+            x3 = lastLandmarks.image[23].x;
+
+            calibration_m = 2 * x1 / (x3 - x2);
+            calibration_b = x1 * (1 - calibration_m);
+        }
     }
 
     protected override void UpdateGroundHeight()
@@ -50,10 +69,12 @@ public class RINLImageBody : RINLBody
     {
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newPos = new Vector3(
-            lastLandmarks.image[index].x * 2 - 1,
+            lastLandmarks.image[index].x,
             lastLandmarks.image[index].y,
             lastLandmarks.image[index].z * zScale
-        ) * positionScale + hipPosition;
+        ) * positionScale;
+
+        newPos.x = Math.Sign(newPos.x) * (calibration_m * Math.Abs(newPos.x) + calibration_b);
 
         return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);
     }
