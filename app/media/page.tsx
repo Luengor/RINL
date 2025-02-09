@@ -33,7 +33,7 @@ export default function Page() {
             const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
             createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {;
                 predict(poseLandmarker, inputVideoRef, (result) => {
-                    sendMessage("RINLBody", "SetBodyPosition", result);
+                    sendMessage("JSConnector", "SetBodyPosition", result);
                 });
 
                 return () => {
