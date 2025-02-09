@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DebugServer : MonoBehaviour
 {
-    private RINLBody rINLBody;
+    public RINLBody rINLBody;
 
     public string serverIP = "127.0.0.1";
     public int serverPort = 8764;
@@ -19,8 +19,6 @@ public class DebugServer : MonoBehaviour
             Destroy(this);
             return;
         }
-
-        rINLBody = gameObject.GetComponent<RINLBody>();
 
         socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
         socket.Bind(new System.Net.IPEndPoint(System.Net.IPAddress.Parse(serverIP), serverPort));

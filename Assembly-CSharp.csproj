@@ -72,6 +72,7 @@
     <Compile Include="Assets/Scripts/Body/RINLImageBody.cs" />
     <Compile Include="Assets/Scripts/Generic/RotateAround.cs" />
     <Compile Include="Assets/Scripts/Body/RINLBody.cs" />
+    <Compile Include="Assets/Scripts/Body/JSConnector.cs" />
     <Compile Include="Assets/Scripts/Body/DebugServer.cs" />
     <Compile Include="Assets/Scripts/Ballons/Ballon.cs" />
   </ItemGroup>

@@ -48,9 +48,6 @@ public abstract class RINLBody : MonoBehaviour
     protected Vector3 hipPosition = Vector3.zero;
     protected Bounds bounds = new();
 
-    [DllImport("__Internal")]
-    protected static extern void sendToReact(string message);
-
 
     protected virtual void Start()
     {
@@ -134,7 +131,6 @@ public abstract class RINLBody : MonoBehaviour
     protected abstract void UpdateGroundHeight();
 
     protected abstract void MoveBodyParts();
-
 
     public void SetBodyPosition(string landmarkString)
     {
