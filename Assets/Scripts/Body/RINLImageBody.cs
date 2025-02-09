@@ -50,10 +50,10 @@ public class RINLImageBody : RINLBody
     {
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newPos = new Vector3(
-            (lastLandmarks.image[index].x * 2 - 1) * positionScale,
-            lastLandmarks.image[index].y * positionScale,
-            (lastLandmarks.image[index].z * 2 - 1) * zScale
-        ) + hipPosition;
+            lastLandmarks.image[index].x * 2 - 1,
+            lastLandmarks.image[index].y,
+            lastLandmarks.image[index].z * zScale
+        ) * positionScale + hipPosition;
 
         return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);
     }
