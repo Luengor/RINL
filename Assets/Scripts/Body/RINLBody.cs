@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 [Serializable]
@@ -72,18 +71,6 @@ public abstract class RINLBody : MonoBehaviour
 
     protected virtual void OnDrawGizmos()
     {
-        // Draw the hips
-        Gizmos.color = Color.blue;
-        Gizmos.DrawSphere(hips.position, 0.1f);
-        Gizmos.DrawLine(hips.position, hips.position + hips.up * 0.5f);
-        Gizmos.DrawLine(hips.position, hips.position + hips.forward * 0.5f);
-
-        // Draw the head
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(head.position, 0.1f);
-        Gizmos.DrawLine(head.position, head.position + head.up * 0.5f);
-        Gizmos.DrawLine(head.position, head.position + head.forward * 0.5f);
-
         // Draw the ground
         Gizmos.color = Color.red;
         Gizmos.DrawCube(new Vector3(hips.localPosition.x, ground, hips.localPosition.z), new Vector3(0.5f, 0.02f, 0.5f));
