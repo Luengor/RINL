@@ -1,28 +1,6 @@
-using System;
 using UnityEngine;
 
-[Serializable]
-public struct Landmark
-{
-    public float x;
-    public float y;
-    public float z;
-}
-
-[Serializable]
-public struct ImageSize
-{
-    public int width;
-    public int height;
-}
-
-public struct Landmarks
-{
-    public Landmark[] world;
-    public Landmark[] image;
-}
-
-public abstract class RINLBody : MonoBehaviour
+public class RINLBody : MonoBehaviour
 {
     [Header("Transforms")]
     public Transform head;
@@ -30,33 +8,28 @@ public abstract class RINLBody : MonoBehaviour
     public Transform hips;
     public Transform points;
 
-    [Header("Settings")]
-    public float positionScale = 1.0f;
-    public bool flipX = true;
-    public float lerpSpeed = 0.8f;
+    [Header("Point transformation settings")]
+    public bool flipX = false;
+    public float pointScale = 1f;
+    public bool fixedPosition = false;
+
+    [Header("Other settings")]
     public LayerMask groundLayer;
+    public float lerpSpeed = 15f;
     
-    /// Properties
-    public Bounds Bounds {
-        get {
-            return bounds;
-        }
-    }
+    /// Private
+    private readonly Transform[] bodyLandmarks = new Transform[33];
 
-    /// Privatee
-    protected readonly Transform[] bodyLandmarks = new Transform[33];
+    private readonly BodyCalibration calibration = new();
 
-    protected bool hasData = false;
-    protected Landmarks lastLandmarks = new();
+    private bool hasData = false;
+    private Landmarks lastLandmarks = new();
+    private ImageSize imageSize = new() { width = 640, height = 480 };
 
-    protected float lowestY = 0.0f, ground = 0;
+    // The position of the hip calculated from the image landmarks
+    private Vector3 worldHipPosition = new();
 
-    protected Vector3 hipPosition = Vector3.zero;
-    protected Bounds bounds = new();
-
-    protected ImageSize imageSize = new() { width = 640, height = 480 };
-
-    protected virtual void Start()
+    private void Start()
     {
         // Get the 33 body landmarks from the points object 
         for (int i = 0; i < 33; i++)
@@ -65,90 +38,99 @@ public abstract class RINLBody : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateGroundHeight();
+        if (Input.GetMouseButtonDown(0))
+            calibration.InitialT(lastLandmarks);
 
         if (hasData)
         {
+            // Calculate the hip position from the image landmarks
+            CalulateHipPosition();
+
+            // Move all body points using the landmarks and the hip position
             MoveBody();
-
-            MoveHip();
-
-            MoveBodyParts();
         }
     }
 
-    protected virtual void OnDrawGizmos()
+    private void CalulateHipPosition()
     {
-        // Draw the ground
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(new Vector3(hips.localPosition.x, ground, hips.localPosition.z), new Vector3(0.5f, 0.02f, 0.5f));
+        if (fixedPosition)
+        {
+            worldHipPosition = Vector3.zero;
+            return;
+        }
 
-        // Draw the bounds
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(bounds.center + transform.position, bounds.size);
+        Vector2 leftHip = new (
+            lastLandmarks.image[23].x,
+            lastLandmarks.image[23].y
+        );
+        Vector2 rightHip = new (
+            lastLandmarks.image[24].x,
+            lastLandmarks.image[24].y
+        );
+
+        Vector2 imageHipPosition = (leftHip + rightHip) / 2;
+        imageHipPosition.y -= calibration.data.imageGroundHeight;
+
+        worldHipPosition = new (
+            imageHipPosition.x * calibration.data.worldImageRatio.x,
+            imageHipPosition.y * calibration.data.worldImageRatio.y,
+            0
+        );
     }
 
-
-    protected virtual void MoveHip()
+    private void MoveBody()
     {
-        // Get the average x position of the hips
-        float landmarkHipX = ((lastLandmarks.image[23].x + lastLandmarks.image[24].x) * 0.5f - 0.5f) * positionScale;
-
-        // Set the height of the hips to the ground + the lowest Y position
-        float newHipY = ground - lowestY;
-
-        hipPosition = new Vector3(landmarkHipX, newHipY, 0);
-        points.localPosition = hipPosition;
-    }
-
-    protected void MoveBody()
-    {
-        // Get z average of the hips
-        lowestY = float.MaxValue; 
-
         for (int i = 0; i < 33; i++)
         {
             Vector3 newPos = GetLandmarkPosition(i);
             bodyLandmarks[i].localPosition = newPos;
-
-            if (newPos.y < lowestY)
-                lowestY = newPos.y;
-            
-            // Only update the bounds if the landmark is on the image
-            if (lastLandmarks.image[i].x > 0 && lastLandmarks.image[i].x < 1 && lastLandmarks.image[i].y > 0 && lastLandmarks.image[i].y < 1)
-                bounds.Encapsulate(newPos + points.localPosition);
         }
     }
 
+    private Vector3 GetLandmarkPosition(int index)
+    {
+        Vector3 lastPos = bodyLandmarks[index].localPosition;
+        Vector3 newWorldPos = new Vector3(
+            lastLandmarks.world[index].x,
+            lastLandmarks.world[index].y,
+            lastLandmarks.world[index].z
+        );
+        Vector3 newPos = (newWorldPos + worldHipPosition) * pointScale;
 
-    protected abstract Vector3 GetLandmarkPosition(int index);
+        return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);
+    }
 
-    protected abstract void UpdateGroundHeight();
+    private Bounds GetWorldBounds()
+    {
+        Bounds bounds = new();
+        for (int i = 0; i < 33; i++)
+            bounds.Encapsulate(new Vector3(lastLandmarks.world[i].x, lastLandmarks.world[i].y, lastLandmarks.world[i].z));
+        return bounds;
+    }
 
-    protected abstract void MoveBodyParts();
-
-    public void SetBodyPosition(string landmarkString)
+    public void UpdateBodyLandmarks(string landmarkString)
     {
         hasData = true;
         lastLandmarks = JsonUtility.FromJson<Landmarks>(landmarkString);
 
-        // Invert X, Y and Z
+        // Convert the landmarks
         for (int i = 0; i < lastLandmarks.world.Length; i++)
         {
-            if (flipX)
-                lastLandmarks.world[i].x *= -1;
-
+            // Flip the 3D landmarks
+            lastLandmarks.world[i].x *= flipX ? -1 : 1;
             lastLandmarks.world[i].y *= -1;
             lastLandmarks.world[i].z *= -1;
 
-            // For the image landmarks, X and Y are in the range 0-1 and Z is the same as on the other landmarks
+            // Calculate aspect ratio
             float aspect = (float)imageSize.width / imageSize.height;
+
+            // Flip and change the range of the image landmarks
             lastLandmarks.image[i].x = lastLandmarks.image[i].x * aspect * 2 - aspect;
             if (flipX)
                 lastLandmarks.image[i].x = 1 - lastLandmarks.image[i].x;
-
             lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
-            lastLandmarks.image[i].z *= -aspect;
+
+            // lastLandmarks.image[i].z *= -aspect;
         }
     }
 

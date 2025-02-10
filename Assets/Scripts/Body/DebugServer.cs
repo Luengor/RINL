@@ -33,7 +33,7 @@ public class DebugServer : MonoBehaviour
             string data = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
             try {
-                rINLBody.SetBodyPosition(data);
+                rINLBody.UpdateBodyLandmarks(data);
             } catch (Exception e) {
                 Debug.LogWarning(e);
             }

@@ -6,7 +6,7 @@ public class JSConnector : MonoBehaviour
 
     public void SetBodyPosition(string landmarkString)
     {
-        body.SetBodyPosition(landmarkString);
+        body.UpdateBodyLandmarks(landmarkString);
     }
 
     public void SetImageSize(string sizeString)

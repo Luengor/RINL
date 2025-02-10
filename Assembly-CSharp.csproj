@@ -59,17 +59,15 @@
     <UnityVersion>6000.0.34f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="/home/tino/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.0.5/Analyzers/Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="/home/tino/.vscode/extensions/visualstudiotoolsforunity.vstuc-1.1.0/Analyzers/Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="/home/tino/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/home/tino/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/home/tino/Unity/Hub/Editor/6000.0.34f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/Ballons/BallonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BallonPopper.cs" />
-    <Compile Include="Assets/Scripts/Generic/GrowWithBounds.cs" />
-    <Compile Include="Assets/Scripts/Body/RINL3DBody.cs" />
-    <Compile Include="Assets/Scripts/Body/RINLImageBody.cs" />
+    <Compile Include="Assets/Scripts/Body/BodyCalibration.cs" />
+    <Compile Include="Assets/Scripts/Body/RINLDataClasses.cs" />
     <Compile Include="Assets/Scripts/Generic/RotateAround.cs" />
     <Compile Include="Assets/Scripts/Body/RINLBody.cs" />
     <Compile Include="Assets/Scripts/Body/JSConnector.cs" />
