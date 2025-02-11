@@ -332,7 +332,6 @@ GameObject:
   - component: {fileID: 1239235169}
   - component: {fileID: 1239235168}
   - component: {fileID: 1239235167}
-  - component: {fileID: 1239235170}
   m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
@@ -429,24 +428,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1239235165}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1239235170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1239235165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d8a3d7153d562e9a6f98af3b4c1a6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  body: {fileID: 4197072814743625543}
-  extra: 0.5
-  scaleX: 0
-  scaleY: 0
-  scaleZ: 0
-  smoothTime: 0.3
 --- !u!1 &1501986902
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,7 +470,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1717194758}
-  - component: {fileID: 1717194759}
   m_Layer: 0
   m_Name: BallonCreator
   m_TagString: Untagged
@@ -512,21 +492,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1501986903}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1717194759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1717194757}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aaa82891118a56c5a82795d4d62e622, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballonPrefab: {fileID: 563906824405421342, guid: 1c329a0fc3f88c288bf1e79e68a4dac2, type: 3}
-  spawnRate: 1
-  body: {fileID: 0}
 --- !u!1 &2082049235
 GameObject:
   m_ObjectHideFlags: 0

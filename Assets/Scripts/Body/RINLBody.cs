@@ -48,6 +48,9 @@ public class RINLBody : MonoBehaviour
 
             // Move all body points using the landmarks and the hip position
             MoveBody();
+
+            // Move the body parts
+            MoveBodyParts();
         }
     }
 
@@ -100,12 +103,26 @@ public class RINLBody : MonoBehaviour
         return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);
     }
 
-    private Bounds GetWorldBounds()
+    private void MoveBodyParts()
     {
-        Bounds bounds = new();
-        for (int i = 0; i < 33; i++)
-            bounds.Encapsulate(new Vector3(lastLandmarks.world[i].x, lastLandmarks.world[i].y, lastLandmarks.world[i].z));
-        return bounds;
+        // Head
+        head.localPosition = (bodyLandmarks[7].localPosition + bodyLandmarks[8].localPosition) / 2; 
+        Vector3 headUp = Vector3.Cross(bodyLandmarks[8].localPosition - bodyLandmarks[7].localPosition, bodyLandmarks[0].localPosition - head.localPosition);
+        head.LookAt(bodyLandmarks[0], headUp * -1);
+
+        // Hips
+        hips.localPosition = (bodyLandmarks[23].localPosition + bodyLandmarks[24].localPosition) / 2;
+        Vector3 shoulderAvg = (bodyLandmarks[11].localPosition + bodyLandmarks[12].localPosition) / 2;
+        Vector3 hipUp = shoulderAvg - hips.localPosition;
+        Vector3 hipForward = Vector3.Cross(bodyLandmarks[24].localPosition - bodyLandmarks[23].localPosition, shoulderAvg - hips.localPosition);
+        hips.LookAt(hipForward + hips.localPosition, hipUp);
+
+        // Hands
+        leftHand.localPosition = (bodyLandmarks[15].localPosition + bodyLandmarks[17].localPosition + bodyLandmarks[19].localPosition) / 3;
+        rightHand.localPosition = (bodyLandmarks[16].localPosition + bodyLandmarks[18].localPosition + bodyLandmarks[20].localPosition) / 3;
+
+        leftHand.LookAt((bodyLandmarks[17].localPosition + bodyLandmarks[19].localPosition) / 2);
+        rightHand.LookAt((bodyLandmarks[18].localPosition + bodyLandmarks[20].localPosition) / 2);
     }
 
     public void UpdateBodyLandmarks(string landmarkString)

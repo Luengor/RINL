@@ -73,6 +73,7 @@
     <Compile Include="Assets/Scripts/Body/JSConnector.cs" />
     <Compile Include="Assets/Scripts/Body/DebugServer.cs" />
     <Compile Include="Assets/Scripts/Ballons/Ballon.cs" />
+    <Compile Include="Assets/Scripts/Generic/KeepUpWith.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
