@@ -127,7 +127,7 @@ public class RINLBody : MonoBehaviour
             // Flip and change the range of the image landmarks
             lastLandmarks.image[i].x = lastLandmarks.image[i].x * aspect * 2 - aspect;
             if (flipX)
-                lastLandmarks.image[i].x = 1 - lastLandmarks.image[i].x;
+                lastLandmarks.image[i].x *= -1;
             lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
 
             // lastLandmarks.image[i].z *= -aspect;
