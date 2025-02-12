@@ -5,6 +5,7 @@ using UnityEngine;
 public class BalloonPopper : MonoBehaviour
 {
     public int type = -1;
+    public GameObject explosionPrefab;
 
     void OnTriggerEnter(Collider other)
     {
@@ -12,6 +13,8 @@ public class BalloonPopper : MonoBehaviour
         {
             if (balloon.ballonType == type)
             {
+                var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                explosion.GetComponent<ParticleSystemRenderer>().material = balloon.GetComponent<Renderer>().material;
                 Destroy(other.gameObject);
             }
         }
