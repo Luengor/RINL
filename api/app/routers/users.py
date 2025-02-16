@@ -27,3 +27,7 @@ async def verify_user(verification_code: str, user: UserBase = Depends(get_curre
 async def get_me(user: UserBase = Depends(get_current_user)) -> UserBase:
     return user
 
+@router.delete("/me")
+async def delete_me(user: UserBase = Depends(get_current_user)):
+    UserDAO.delete_user(user.email)
+    return Response(status_code=200, content="User deleted")
