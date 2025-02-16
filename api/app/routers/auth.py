@@ -5,7 +5,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 from schemas.auth import Token
-from core.auth import authenticate_user, create_access_token
+from core.auth import authenticate_user
+from core.auth_utils import create_access_token
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 

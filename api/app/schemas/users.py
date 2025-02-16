@@ -1,9 +1,18 @@
 from pydantic import BaseModel
 
-class User(BaseModel):
+class UserBase(BaseModel):
     email: str
     verified: bool
-    verification_code: str
     name: str
     year_of_birth: int
+
+class RegisterUser(BaseModel):
+    email: str
+    password: str
+    name: str
+    year_of_birth: int
+
+class FullUser(UserBase):
+    password: str
+    verification_code: str
 
