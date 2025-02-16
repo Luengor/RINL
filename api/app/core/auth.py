@@ -1,5 +1,6 @@
 from datetime import timedelta, datetime, timezone
 from typing import Annotated
+from os import environ
 
 import jwt
 from jwt.exceptions import InvalidTokenError 
@@ -7,11 +8,13 @@ from fastapi import Depends
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
-from schemas.auth import Token, UserAuth
+from schemas.auth import UserAuth
+from schemas.users import User
 from dao.auth import AuthDAO
+from dao.users import UserDAO 
 
 # Some constants
-SECRET_KEY = "b8c535ae0987b4c49278ffb46ef76f4d3eddc380a6019e89ca3e74e61d42f9ab"
+SECRET_KEY = environ["JWT_SECRET"]
 ALGORITHM = "HS256"
 
 ## Dependencies
@@ -48,7 +51,7 @@ def authenticate_user(email: str, password: str) -> UserAuth | None:
         return None
     return user
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> UserAuth:
+async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)]) -> UserAuth:
     try:
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
@@ -58,6 +61,20 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
         raise Exception("Invalid token")
 
     user = AuthDAO.get_user(email)
+    if user is None:
+        raise Exception("User not found")
+    return user
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> User:
+    try:
+        payload = decode_token(token)
+        email:str = payload.get("sub")  # type: ignore
+        if email is None:
+            raise Exception("Invalid token")
+    except InvalidTokenError:
+        raise Exception("Invalid token")
+
+    user = UserDAO.get_user(email)
     if user is None:
         raise Exception("User not found")
     return user

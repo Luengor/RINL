@@ -8,7 +8,8 @@ class User(Base):
 
     email = mapped_column(String, primary_key=True)
     hashed_password = mapped_column(String)
-    verified_email = mapped_column(Boolean, default=False)
+    verified = mapped_column(Boolean, default=False)
+    verification_code = mapped_column(String)
     name = mapped_column(String)
     year_of_birth = mapped_column(Integer)
 
