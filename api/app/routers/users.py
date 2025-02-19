@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, HTTPException
 
 from core.auth import get_current_user
 from dao.users import UserDAO
@@ -10,8 +10,9 @@ router = APIRouter(prefix="/users")
 async def create_user(user: RegisterUser):
     if (new_user := UserDAO.create_user(user)):
         return new_user
-    
-    return Response(status_code=400, content="User already exists")
+
+    print(new_user)
+    raise HTTPException(status_code=400, detail="User already exists")
 
 @router.post("/verify/{verification_code}")
 async def verify_user(verification_code: str, user: UserBase = Depends(get_current_user)):
