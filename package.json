@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@fontsource/roboto": "^5.1.1",
     "@mediapipe/tasks-vision": "^0.10.20",
+    "@mui/material": "^6.4.4",
     "next": "15.1.5",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-unity-webgl": "^9.7.0"
