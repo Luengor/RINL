@@ -1,16 +1,27 @@
 import * as React from 'react';
 import {
+  Alert,
   Box,
   Button,
   TextField
 } from '@mui/material';
 
 import { login } from '../utils/login';
+import { useSearchParams } from 'next/navigation'    
 
 export function LoginForm() {
+  // Check if it failed
+  const searchParams = useSearchParams();
+  let failed = false
+
+  if (searchParams.get('failed'))
+    failed = true;
+  
   // Component
   return (
     <Box component={"form"} action={login} className='flex flex-col w-64 space-y-4 items-center content-stretch'>
+      {failed && <Alert severity="error">Login failed</Alert>}
+
       <div className='mb-2'>
         <h1 className='text-2xl'>Log In</h1>
       </div>
