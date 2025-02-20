@@ -45,6 +45,34 @@ export async function login(data: FormData) {
   redirect('/media');
 }
 
+export async function register(data: FormData) {
+  const username: string = data.get("username") as string;
+  const password: string = data.get("password") as string;
+  const fullname: string = data.get("fullname") as string;
+  const yearBorn: number = parseInt(data.get("yearborn") as string);
+
+  // Register
+  const request_options: RequestInit = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: username,
+      password: password,
+      name: fullname,
+      year_of_birth: yearBorn
+    })
+  };
+
+  const response: Response = await fetch(API_URL + 'users', request_options);
+  if (!response.ok) {
+    redirect('/register?failed=true');
+  }
+
+  redirect('/login');
+}
+
 export async function logout() {
   (await cookies()).delete('access_token');
   redirect('/login');

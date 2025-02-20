@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getTokenSession } from './app/utils/login'
  
-const openRoutes = ['/login']
+const openRoutes = ['/login', '/register']
 
 export async function middleware(request: NextRequest) {
   // Get the session
