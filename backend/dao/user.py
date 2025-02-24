@@ -4,7 +4,7 @@ from core.auth_utils import get_password_hash
 from core.db import engine
 from sqlalchemy.orm import Session
 
-from models.users import User as UserModel
+from models.user import User as UserModel
 from schemas.users import UserBase as UserSchema
 from schemas.users import RegisterUser as RegisterUserSchema 
 

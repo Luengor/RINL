@@ -1,7 +1,7 @@
 from core.db import engine 
 from sqlalchemy.orm import Session
 
-from models.users import User
+from models.user import User
 from schemas.auth import UserAuth
 
 class AuthDAO:

@@ -5,13 +5,14 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import OAuth2PasswordRequestForm
 
 from schemas.auth import Token
-from core.auth import authenticate_user, oauth2_scheme
+from core.auth import authenticate_user
 from core.auth_utils import create_access_token, get_expire_time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 router = APIRouter(
-    prefix="/token",
+    prefix="/login",
+    tags=["login"],
 )
 
 @router.post("/", response_model=Token)
@@ -40,8 +41,4 @@ async def login_for_token(
         expires=get_expire_time(access_token_expires),
     )
     return Token(access_token=access_token, token_type="bearer")
-
-@router.post("/verify")
-async def verify_token(token: str = Depends(oauth2_scheme)):
-    return {"token": token}
 

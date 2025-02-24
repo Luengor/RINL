@@ -6,7 +6,7 @@ from fastapi import Depends
 from schemas.auth import UserAuth
 from schemas.users import UserBase
 from dao.auth import AuthDAO
-from dao.users import UserDAO 
+from dao.user import UserDAO 
 from core.auth_utils import verify_password, oauth2_scheme, decode_token
 
 # Authentication

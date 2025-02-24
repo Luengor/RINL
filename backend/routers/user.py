@@ -1,10 +1,13 @@
 from fastapi import APIRouter, Depends, Response, HTTPException
 
 from core.auth import get_current_user
-from dao.users import UserDAO
+from dao.user import UserDAO
 from schemas.users import UserBase, RegisterUser 
 
-router = APIRouter(prefix="/users")
+router = APIRouter(
+    prefix="/user",
+    tags=["user"],
+)
 
 @router.post("/", response_model=UserBase)
 async def create_user(user: RegisterUser):
@@ -25,7 +28,7 @@ async def verify_user(verification_code: str, user: UserBase = Depends(get_curre
     return Response(status_code=400, content="Invalid verification code")
 
 @router.get("/me", response_model=UserBase)
-async def get_me(user: UserBase = Depends(get_current_user)) -> UserBase:
+async def get_me(user: UserBase = Depends(get_current_user)):
     return user
 
 @router.delete("/me")
