@@ -1,7 +1,9 @@
-from typing import List
-from sqlalchemy import Integer, String, Boolean
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import Integer, String, Boolean 
+from sqlalchemy.orm import mapped_column, relationship, Mapped
 from core.db import Base
+from typing import List
+
+from .activity import Activity
 
 class User(Base):
     __tablename__ = 'users'
@@ -13,5 +15,5 @@ class User(Base):
     name = mapped_column(String)
     year_of_birth = mapped_column(Integer)
 
-    # activities : Mapped[List["Activity"]] = relationship(back_populates='user_email') # type: ignore
+    activities: Mapped[List["Activity"]] = relationship("Activity") # type: ignore
 
