@@ -1,7 +1,7 @@
 from typing import Annotated
 from datetime import timedelta
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import OAuth2PasswordRequestForm
 
 from schemas.auth import Token
@@ -10,11 +10,14 @@ from core.auth_utils import create_access_token
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/token",
+)
 
-@router.post("/token", response_model=Token)
+@router.post("/", response_model=Token)
 async def login_for_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()]
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    response: Response
 ) -> Token:
     user = authenticate_user(form_data.username, form_data.password) 
     if not user:
@@ -28,8 +31,11 @@ async def login_for_token(
     access_token = create_access_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
+
+    response.set_cookie(key="access_token", value=access_token, httponly=True)
     return Token(access_token=access_token, token_type="bearer")
 
-@router.post("/token/verify")
+@router.post("/verify")
 async def verify_token(token: str = Depends(oauth2_scheme)):
     return {"token": token}
+
