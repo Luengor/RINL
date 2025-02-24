@@ -10,8 +10,12 @@ import {
 import { useForm, isEmail, hasLength } from '@mantine/form'
 
 import { ReactElement } from 'react';
+
+import { login } from '../utils/session';
+import { useNavigate } from 'react-router-dom';
   
 export function LoginForm({ registrationLink }: { registrationLink: ReactElement }) {
+  const navigate = useNavigate(); 
   const form = useForm({
     mode: 'uncontrolled',
     validate: {
@@ -21,7 +25,9 @@ export function LoginForm({ registrationLink }: { registrationLink: ReactElement
   })
 
   function handleSubmit() {
-    console.log(form.getValues())
+    const { email, password } = form.getValues();
+    login(email as string, password as string);
+    navigate('/');
   }
 
   return (
