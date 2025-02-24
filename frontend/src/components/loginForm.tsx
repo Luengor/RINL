@@ -24,10 +24,14 @@ export function LoginForm({ registrationLink }: { registrationLink: ReactElement
     }
   })
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const { email, password } = form.getValues();
-    login(email as string, password as string);
-    navigate('/');
+    const token = await login(email as string, password as string);
+    if (token) {
+      navigate('/');
+    } else {
+      form.setErrors({ email: 'Credenciales inválidas' });
+    }
   }
 
   return (

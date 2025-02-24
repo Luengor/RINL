@@ -1,4 +1,4 @@
-import { LoginForm } from "./loginForm"
+import { LoginForm } from "../components/loginForm"
 import { Link } from "react-router-dom"
 import { Center } from "@mantine/core"
 
