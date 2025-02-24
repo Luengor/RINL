@@ -21,12 +21,12 @@ def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 # Tokens
+def get_expire_time(expires_delta: timedelta | None = None) -> datetime:
+    return datetime.now(timezone.utc) + expires_delta if expires_delta else datetime.now(timezone.utc)
+
 def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.now(timezone.utc) + expires_delta
-    else:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    expire = get_expire_time(expires_delta) if expires_delta else get_expire_time(timedelta(minutes=15))
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt

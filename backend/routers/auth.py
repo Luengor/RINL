@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from schemas.auth import Token
 from core.auth import authenticate_user, oauth2_scheme
-from core.auth_utils import create_access_token
+from core.auth_utils import create_access_token, get_expire_time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
@@ -32,7 +32,13 @@ async def login_for_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
 
-    response.set_cookie(key="session", value=access_token, httponly=True)
+    response.set_cookie(
+        key="session",
+        value=access_token,
+        httponly=True,
+        secure=True,
+        expires=get_expire_time(access_token_expires),
+    )
     return Token(access_token=access_token, token_type="bearer")
 
 @router.post("/verify")
