@@ -32,7 +32,7 @@ async def login_for_token(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
 
-    response.set_cookie(key="access_token", value=access_token, httponly=True)
+    response.set_cookie(key="session", value=access_token, httponly=True)
     return Token(access_token=access_token, token_type="bearer")
 
 @router.post("/verify")
