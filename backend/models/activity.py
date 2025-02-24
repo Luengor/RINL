@@ -11,3 +11,5 @@ class Activity(Base):
     duration = mapped_column(Float)
     activity_points = mapped_column(Float)
     extra_data = mapped_column(String)  # JSON
+
+    user = relationship('User', back_populates='activities')
