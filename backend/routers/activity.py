@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from core.auth import get_current_user, get_current_verified_user
-from schemas.activity import ActivityCreate, ActivityFull, ActivityBase, ActivityUUID
+from core.auth import get_current_verified_user
+from schemas.activity import ActivityFull, ActivityBase, ActivityUUID
 from schemas.users import UserBase
 from dao.activity import ActivityDAO
 
@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=ActivityFull)
-async def create_activity(activity: ActivityCreate, user: UserBase = Depends(get_current_verified_user)):
+async def create_activity(activity: ActivityBase, user: UserBase = Depends(get_current_verified_user)):
     # Create activity
     if (new_activity := ActivityDAO.create_activity(activity, user)):
         return new_activity

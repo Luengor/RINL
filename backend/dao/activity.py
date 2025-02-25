@@ -2,13 +2,13 @@ from sqlalchemy.orm import Session
 from core.db import engine
 
 from models.activity import Activity as ActivityModel
-from schemas.activity import ActivityCreate, ActivityFull
+from schemas.activity import ActivityFull, ActivityBase
 from schemas.users import UserBase
-from datetime import datetime, timezone
+from datetime import datetime
 
 class ActivityDAO:
     @staticmethod
-    def create_activity(activity: ActivityCreate, user: UserBase) -> ActivityFull | None:
+    def create_activity(activity: ActivityBase, user: UserBase) -> ActivityFull | None:
         with Session(engine) as session:
             activity_model = ActivityModel(
                 date=activity.date,

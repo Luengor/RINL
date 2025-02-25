@@ -12,9 +12,6 @@ class ActivityBase(BaseModel):
     activity_points: float
     extra_data: str 
 
-class ActivityCreate(ActivityBase):
-    user_email: str
-
 class ActivityUUID(ActivityBase):
     uuid: int
 
