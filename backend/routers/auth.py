@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import OAuth2PasswordRequestForm
 
 from schemas.auth import Token
-from core.auth import authenticate_user
+from core.auth import authenticate_user, oauth2_scheme
 from core.auth_utils import create_access_token, get_expire_time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
@@ -40,5 +40,23 @@ async def login_for_token(
         secure=True,
         expires=get_expire_time(access_token_expires),
     )
+    return Token(access_token=access_token, token_type="bearer")
+
+@router.post("/refresh", response_model=Token)
+async def refresh_token(old_token: Annotated[str, Depends(oauth2_scheme)], response: Response) -> Token:
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": old_token}, expires_delta=access_token_expires
+    )
+
+    response.delete_cookie("access_token")
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+        secure=True,
+        expires=get_expire_time(access_token_expires),
+    )
+
     return Token(access_token=access_token, token_type="bearer")
 
