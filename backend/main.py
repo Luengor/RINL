@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from routers.auth import router as auth_router
 from routers.user import router as users_router
+from routers.activity import router as activity_router
 from core.db import Base, engine
 
 
@@ -35,4 +36,5 @@ app.add_middleware(
 
 app.include_router(auth_router)
 app.include_router(users_router)
+app.include_router(activity_router)
 

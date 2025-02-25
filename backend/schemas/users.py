@@ -14,7 +14,7 @@ class RegisterUser(BaseModel):
     name: str
     year_of_birth: int
 
-class FullUser(UserBase):
+class UserFull(UserBase):
     password: str
     verification_code: str
 
