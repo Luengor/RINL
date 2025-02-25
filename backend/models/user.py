@@ -15,6 +15,6 @@ class User(Base):
     name = mapped_column(String)
     year_of_birth = mapped_column(Integer)
 
-    activities: Mapped[List["Activity"]] = relationship("Activity") # type: ignore
-    shapes: Mapped[List["Shape"]] = relationship("Shape") # type: ignore
+    activities: Mapped[List["Activity"]] = relationship("Activity", cascade="all, delete") # type: ignore
+    shapes: Mapped[List["Shape"]] = relationship("Shape", cascade="all, delete") # type: ignore
 
