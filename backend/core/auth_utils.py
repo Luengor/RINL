@@ -10,7 +10,7 @@ SECRET_KEY = environ["JWT_SECRET"]
 ALGORITHM = "HS256"
 
 ## Dependencies
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Passwords

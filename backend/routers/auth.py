@@ -34,7 +34,7 @@ async def login_for_token(
     )
 
     response.set_cookie(
-        key="session",
+        key="access_token",
         value=access_token,
         httponly=True,
         secure=True,

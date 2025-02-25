@@ -34,4 +34,6 @@ async def get_me(user: UserBase = Depends(get_current_user)):
 @router.delete("/me")
 async def delete_me(user: UserBase = Depends(get_current_user)):
     UserDAO.delete_user(user.email)
-    return Response(status_code=200, content="User deleted")
+    response = Response(status_code=200, content="User deleted")
+    response.delete_cookie("access_token")
+    return response 

@@ -14,7 +14,7 @@ export async function login(email: string, password: string) {
     })
   }
 
-  const response = await fetch(`${API_URL}/token`, request_options);
+  const response = await fetch(`${API_URL}/login`, request_options);
   const data = await response.json();
 
   if (!response.ok) {
