@@ -9,6 +9,18 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432" 
+  
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    restart: always
+    env_file:
+      - .env 
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
 
 volumes:
   db_data:

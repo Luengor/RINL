@@ -1,0 +1,15 @@
+FROM python:3.11-slim
+
+# Create a directory for the app
+WORKDIR /app
+
+# Add everything in the current directory to the app directory 
+ADD . /app
+
+# Install the requirements
+RUN pip install -r requirements.txt
+
+# Run the app
+WORKDIR /app/backend
+CMD ["python3", "-m", "fastapi", "run", "--workers", "2", "main.py"]
+
