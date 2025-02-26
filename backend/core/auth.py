@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from jwt.exceptions import InvalidTokenError 
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 
 from schemas.auth import UserAuth
 from schemas.users import UserBase
@@ -23,31 +23,30 @@ async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)]) -
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
         if email is None:
-            raise Exception("Invalid token")
+            raise HTTPException(status_code=400, detail="Invalid token")
     except InvalidTokenError:
-        raise Exception("Invalid token")
+        raise HTTPException(status_code=400, detail="Invalid token")
 
     user = AuthDAO.get_user(email)
     if user is None:
-        raise Exception("User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     return user
 
-# TODO: better exceptions
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> UserBase:
     try:
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
         if email is None:
-            raise Exception("Invalid token")
+            raise HTTPException(status_code=400, detail="Invalid token")
     except InvalidTokenError:
-        raise Exception("Invalid token")
+        raise HTTPException(status_code=400, detail="Invalid token")
 
     user = UserDAO.get_user(email)
     if user is None:
-        raise Exception("User not found")
+        raise HTTPException(status_code=404, detail="User not found")
     return user
 
 async def get_current_verified_user(user: UserBase = Depends(get_current_user)) -> UserBase:
     if not user.verified:
-        raise Exception("User not verified")
+        raise HTTPException(status_code=400, detail="User not verified")
     return user
