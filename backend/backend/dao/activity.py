@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from core.db import engine
 
+from fastapi import HTTPException
 from models.activity import Activity as ActivityModel
 from schemas.activity import ActivityFull, ActivityBase
 from schemas.users import UserBase
@@ -8,20 +10,27 @@ from datetime import datetime
 
 class ActivityDAO:
     @staticmethod
-    def create_activity(activity: ActivityBase, user: UserBase) -> ActivityFull | None:
-        with Session(engine) as session:
-            activity_model = ActivityModel(
-                date=activity.date,
-                user_email=user.email,
-                minigame=activity.minigame,
-                duration=activity.duration,
-                activity_points=activity.activity_points,
-                extra_data=activity.extra_data)
-            
-            session.add(activity_model)
-            session.commit()
+    def create_activity(activity: ActivityBase, user: UserBase) -> ActivityFull:
+        try:
+            with Session(engine) as session:
+                activity_model = ActivityModel(
+                    date=activity.date,
+                    user_email=user.email,
+                    minigame=activity.minigame,
+                    duration=activity.duration,
+                    activity_points=activity.activity_points,
+                    extra_data=activity.extra_data)
+                
+                session.add(activity_model)
+                session.commit()
 
-            return ActivityFull.model_validate(activity_model)
+                return ActivityFull.model_validate(activity_model)
+
+        except IntegrityError:
+            raise HTTPException(status_code=400, detail="Invalid activity")
+        
+        except Exception:
+            raise HTTPException(status_code=500, detail="Internal server error")
         
     @staticmethod
     def get_activities(email: str, minigame_filter: str | None, from_date: datetime, to_date: datetime) -> list[ActivityFull]:
@@ -50,8 +59,9 @@ class ActivityDAO:
                 .filter(ActivityModel.uuid == activity_id) \
                 .filter(ActivityModel.user_email == user_email) \
                 .first()
+            
             if activity is None:
-                return None
+                raise HTTPException(status_code=404, detail="Activity not found")
 
             model = ActivityFull.model_validate(activity)
             session.delete(activity)

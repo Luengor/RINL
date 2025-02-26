@@ -15,10 +15,7 @@ router = APIRouter(
 @router.post("/", response_model=ActivityFull)
 async def create_activity(activity: ActivityBase, user: UserBase = Depends(get_current_verified_user)):
     # Create activity
-    if (new_activity := ActivityDAO.create_activity(activity, user)):
-        return new_activity
-
-    raise HTTPException(status_code=400, detail="Invalid activity")
+    return ActivityDAO.create_activity(activity, user)
 
 @router.get("/", response_model=list[ActivityUUID])
 async def get_activities(user: UserBase = Depends(get_current_verified_user), minigame_filter: str | None = None, from_date: str | None = None, to_date: str | None = None):
@@ -31,8 +28,5 @@ async def get_activities(user: UserBase = Depends(get_current_verified_user), mi
 @router.delete("/{activity_id}", response_model=ActivityBase)
 async def delete_activity(activity_id: int, user: UserBase = Depends(get_current_verified_user)):
     # Delete activity
-    if (deleted_activity := ActivityDAO.delete_activity(activity_id, user.email)):
-        return deleted_activity
-
-    raise HTTPException(status_code=400, detail="Invalid activity")
+    return ActivityDAO.delete_activity(activity_id, user.email)
 
