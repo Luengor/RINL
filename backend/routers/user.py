@@ -11,11 +11,7 @@ router = APIRouter(
 
 @router.post("/", response_model=UserBase)
 async def create_user(user: RegisterUser):
-    if (new_user := UserDAO.create_user(user)):
-        return new_user
-
-    print(new_user)
-    raise HTTPException(status_code=400, detail="User already exists")
+    return UserDAO.create_user(user)
 
 @router.post("/verify/{verification_code}")
 async def verify_user(verification_code: str, user: UserBase = Depends(get_current_user)):

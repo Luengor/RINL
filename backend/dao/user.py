@@ -1,7 +1,9 @@
 from random import choices
+from fastapi import HTTPException
 
 from core.auth_utils import get_password_hash
 from core.db import engine
+from core.mail import send_email
 from sqlalchemy.orm import Session
 
 from models.user import User as UserModel
@@ -13,10 +15,18 @@ def create_verification_code() -> str:
 
 class UserDAO:
     @staticmethod
-    def create_user(user: RegisterUserSchema) -> UserSchema | None:
+    def create_user(user: RegisterUserSchema) -> UserSchema:
         # Check if user already exists
         if UserDAO.get_user(user.email):
-            return None
+            raise HTTPException(status_code=400, detail="User already exists")
+
+        # Send verification email
+        verification_code = create_verification_code()
+        if not send_email(
+                email=user.email,
+                subject="Verify your email",
+                content=f"Your verification code is {verification_code}"):
+            raise HTTPException(status_code=500, detail="Failed to send verification email")
 
         # Create user
         with Session(engine) as session:
@@ -25,12 +35,12 @@ class UserDAO:
                 hashed_password=get_password_hash(user.password),
                 name=user.name,
                 year_of_birth=user.year_of_birth,
-                verification_code=create_verification_code())
+                verification_code=verification_code)
             
             session.add(user_model)
             session.commit()
-
-            return UserSchema.model_validate(user_model)
+            user_schema = UserSchema.model_validate(user_model)
+            return user_schema
 
     @staticmethod
     def get_user(email: str) -> UserSchema | None:
