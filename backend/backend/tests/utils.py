@@ -12,9 +12,11 @@ def db():
     Base.metadata.create_all(test_engine)
     test_db = Session(test_engine)
 
-    print("hola", flush=True)
     try:
         yield test_db
+    except Exception as e:
+        test_db.rollback()
+        raise e
     finally:
         test_db.close()
         Base.metadata.drop_all(test_engine)
@@ -25,8 +27,5 @@ def client():
     # Database setup
     app.dependency_overrides[get_db] = db 
 
-    # Remove lifespan
-
     # Create client
-    with TestClient(app) as client:
-        yield client
+    return TestClient(app)
