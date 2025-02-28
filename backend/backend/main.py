@@ -1,5 +1,3 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -7,24 +5,9 @@ from routers.auth import router as auth_router
 from routers.user import router as users_router
 from routers.activity import router as activity_router
 from routers.shape import router as shape_router
-from core.db import Base, engine
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    ## Startup
-    # Create database tables
-    Base.metadata.create_all(engine)
-
-    yield
-
-    ## Shutdown
-    pass
-
 
 app = FastAPI(
     title="RINL",
-    lifespan=lifespan,
 )
 
 app.add_middleware(

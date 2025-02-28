@@ -6,6 +6,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from schemas.auth import Token
 from core.auth import authenticate_user, oauth2_scheme
+from core.db import get_db
 from core.auth_utils import create_access_token, get_expire_time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
@@ -18,9 +19,10 @@ router = APIRouter(
 @router.post("/", response_model=Token)
 async def login_for_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    response: Response
+    response: Response,
+    session: Annotated = Depends(get_db)
 ) -> Token:
-    user = authenticate_user(form_data.username, form_data.password) 
+    user = authenticate_user(form_data.username, form_data.password, session) 
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
