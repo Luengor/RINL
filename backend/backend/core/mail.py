@@ -1,10 +1,14 @@
 import smtplib
+from typing import Callable
 from email.message import EmailMessage
 from os import environ
 
 EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_USER = environ.get('EMAIL_USER')
 EMAIL_PASSWORD = environ.get('EMAIL_PASSWORD')
+
+def get_send_email() -> Callable[[str, str, str], bool]:
+    return send_email
 
 def send_email(email: str, subject: str, content: str) -> bool:
     # Create the email

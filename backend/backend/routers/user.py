@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, Response, HTTPException
 
 from core.auth import get_current_user
+from core.mail import get_send_email
 from core.db import get_db
 from dao.user import UserDAO
 from schemas.users import UserBase, RegisterUser 
@@ -11,8 +12,8 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=UserBase)
-async def create_user(user: RegisterUser, session=Depends(get_db)):
-    return UserDAO.create_user(user, session)
+async def create_user(user: RegisterUser, session=Depends(get_db), send_email=Depends(get_send_email)):
+    return UserDAO.create_user(user, session, send_email)
 
 @router.post("/verify/{verification_code}")
 async def verify_user(verification_code: str, user: UserBase = Depends(get_current_user), session=Depends(get_db)):

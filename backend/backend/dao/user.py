@@ -1,8 +1,8 @@
 from random import choices
 from fastapi import HTTPException
+from typing import Callable
 
 from core.auth_utils import get_password_hash
-from core.mail import send_email
 from sqlalchemy.orm import Session
 
 from models.user import User as UserModel
@@ -14,7 +14,7 @@ def create_verification_code() -> str:
 
 class UserDAO:
     @staticmethod
-    def create_user(user: RegisterUserSchema, session: Session) -> UserSchema:
+    def create_user(user: RegisterUserSchema, session: Session, send_email: Callable[[str, str, str], bool]) -> UserSchema:
         # Check if user already exists
         if UserDAO.get_user(user.email, session):
             raise HTTPException(status_code=400, detail="User already exists")
@@ -22,9 +22,9 @@ class UserDAO:
         # Send verification email
         verification_code = create_verification_code()
         if not send_email(
-                email=user.email,
-                subject="Verify your email",
-                content=f"Your verification code is {verification_code}"):
+                user.email,
+                "Verify your email",
+                f"Your verification code is {verification_code}"):
             raise HTTPException(status_code=500, detail="Failed to send verification email")
 
         # Create user
