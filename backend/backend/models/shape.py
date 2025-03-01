@@ -1,12 +1,13 @@
-from sqlalchemy.orm import mapped_column, relationship
-from sqlalchemy import Date, Integer, String, Float, ForeignKey
+from sqlalchemy.orm import mapped_column, relationship, Mapped
+from sqlalchemy import Integer, String, Float, ForeignKey
 from core.db import Base
+from datetime import datetime
 
 class Shape(Base):
     __tablename__ = 'shapes'
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)
-    date = mapped_column(Date)
+    date: Mapped[datetime] = mapped_column()
     weight = mapped_column(Float)
     height = mapped_column(Float)
     sex_math = mapped_column(Float)
