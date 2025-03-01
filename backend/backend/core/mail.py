@@ -11,6 +11,9 @@ def get_send_email() -> Callable[[str, str, str], bool]:
     return send_email
 
 def send_email(email: str, subject: str, content: str) -> bool:
+    if environ.get('SKIP_EMAIL', False):
+        return True
+
     # Create the email
     msg = EmailMessage()
     msg['Subject'] = subject 
