@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { createPoseLandmarker, predict } from "../utils/mediapipe";
+import { createPoseLandmarker, predict } from "../../utils/mediapipe";
 
 export default function MediaDebug() {
     // Get a websocket

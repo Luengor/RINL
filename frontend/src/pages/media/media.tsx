@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
-import { createPoseLandmarker, predict } from "../utils/mediapipe";
+import { createPoseLandmarker, predict } from "../../utils/mediapipe";
 
 export default function Media() {
     // Prepare video
