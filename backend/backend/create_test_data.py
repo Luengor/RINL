@@ -27,7 +27,7 @@ if __name__ == "__main__":
         # Create test user 
         user = User(
             email="test@test.com",
-            hashed_password=get_password_hash("test"),
+            hashed_password=get_password_hash("123456"),
             verified=True,
             verification_code="123456",
             name="Test Testo Test",
