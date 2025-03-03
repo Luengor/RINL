@@ -1,74 +1,135 @@
 import {
   Button,
+  Collapse,
   Container,
+  Group,
+  NumberInput,
   Paper,
   PasswordInput,
+  Stack,
   Text,
   TextInput,
   Title,
 } from '@mantine/core';
 import { useForm, isEmail, hasLength } from '@mantine/form'
+import { useDisclosure } from '@mantine/hooks';
 
-import { ReactElement } from 'react';
-
-import { login } from '../utils/session';
+import { Form } from '@mantine/form';
+import { login, register as register_func } from '../utils/session';
 import { useNavigate } from 'react-router-dom';
+import type { HttpValidationError } from '../client';
+import { has_token } from '../utils/session';
   
-export function LoginForm({ registrationLink }: { registrationLink: ReactElement }) {
+export function LoginForm() {
   const navigate = useNavigate(); 
+
+  const [register, { toggle }] = useDisclosure(false) // State for the registration form;
+
+  // Go to /my if we have a token
+  if (has_token())
+    navigate('/my/data');
+
+  // Form validation
   const form = useForm({
     mode: 'uncontrolled',
     validate: {
       email: isEmail('Correo inválido'),
-      password: hasLength({ min: 6 }, 'La contraseña debe tener al menos 6 caracteres'),
-    }
+      password: hasLength({ min: 6 }, 'La contraseña debe tener al menos 6 caracteres')
+    },
+    initialValues : {
+      email: '',
+      password: '',
+      name: '',
+      birthYear: ''
+    },
   })
 
+  // Form submission
   async function handleSubmit() {
-    const { email, password } = form.getValues();
-    const token = await login(email as string, password as string);
-    if (token) {
+    const { email, password, name, birthYear } = form.getValues();
+
+    try {
+      if (register)
+        await register_func(email as string, password as string, name as string, birthYear as unknown as number)
+      else
+        await login(email as string, password as string);
+
       navigate('/');
-    } else {
-      form.setErrors({ email: 'Credenciales inválidas' });
+    } catch (err) {
+      if ((err as HttpValidationError).detail) {
+        const error = ((err as HttpValidationError).detail ?? 'Error desconocido') as string;
+        form.setErrors({ email: error });
+      }
     }
   }
 
+  // Actual form
   return (
-    <Container size={420} my={40}>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+    <Container miw="350" w='25%' my={40}>
+      <Form form={form} onSubmit={handleSubmit}>
         <Title ta="center">
-          Inicia sesión
+          {register ? 'Regístrate' : 'Inicia sesión'}
         </Title>
-        <Text c="dimmed" size="sm" ta="center" mt={5}>
-          ¿No tienes cuenta?{' '}
-          { registrationLink }
-        </Text>
+        <Group justify='center' gap='xs' align='center'>
+          <Text c="dimmed" size="sm" ta="center" mt={5}>
+            {register ? '¿Ya tienes una cuenta?' : '¿No tienes una cuenta?'}
+          </Text>
+          <Text c="blue" size="sm" ta="center" mt={5} onClick={toggle} style={{ cursor: 'pointer' }}>
+            {register ? 'Inicia sesión' : 'Regístrate'}
+          </Text>
+        </Group>
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput
-            name='email'
-            key={form.key('email')}
-            label="Correo"
-            placeholder="correo@corr.eo"
-            required
-            {...form.getInputProps('email')}
-          />
+          <Stack gap='md'>
+            <TextInput
+              name='email'
+              key={form.key('email')}
+              label="Correo"
+              placeholder="correo@corr.eo"
+              required
+              {...form.getInputProps('email')}
+            />
 
-          <PasswordInput
-            name="password"
-            key={form.key('password')}
-            label="Contraseña"
-            placeholder="Contraseña"
-            required
-            mt="md"
-            {...form.getInputProps('password')}
-          />
+            <PasswordInput
+              name="password"
+              key={form.key('password')}
+              label="Contraseña"
+              placeholder="Contraseña"
+              {...form.getInputProps('password')}
+            />
+
+            <Collapse in={register} onTransitionEnd={form.clearErrors}>
+              <Stack gap='md'>
+                <TextInput
+                  name='name'
+                  key={form.key('name')}
+                  label="Nombre"
+                  placeholder="Nombre"
+                  required
+                  disabled={!register}
+                  {...form.getInputProps('name')}
+                />
+
+                <NumberInput
+                  name='birthYear'
+                  key={form.key('birthYear')}
+                  label="Año de nacimiento"
+                  placeholder="2000"
+                  min={1900}
+                  max={new Date().getFullYear()}
+                  required
+                  disabled={!register}
+                  {...form.getInputProps('birthYear')}
+                />
+              </Stack>
+            </Collapse>
+          </Stack>
+
           <Button type="submit" fullWidth mt="xl">
-            Iniciar sesión
+            {register ? 'Registrarse' : 'Iniciar sesión'}
           </Button>
         </Paper>
-      </form>
+      </Form>
     </Container>
   );
 }
