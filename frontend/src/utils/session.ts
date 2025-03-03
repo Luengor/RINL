@@ -1,20 +1,6 @@
-// const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
-const API_URL = 'http://localhost:8000';
-
 import { loginForTokenLoginPost } from "../client"; 
 
 export async function login(email: string, password: string) {
-  const request_options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({
-      grant_type: 'password',
-      username: email,
-      password: password
-    })
-  }
   const response = await loginForTokenLoginPost({
     body: {
       grant_type: 'password',
@@ -27,4 +13,9 @@ export async function login(email: string, password: string) {
 
   console.log(response);
   return response.data;
+}
+
+export function is_logged_in() {
+  // Check if we have an access token
+  return localStorage.getItem('access_token') !== null;
 }
