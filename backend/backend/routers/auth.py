@@ -9,7 +9,7 @@ from core.auth import authenticate_user, oauth2_scheme
 from core.db import get_db
 from core.auth_utils import create_access_token, get_expire_time
 
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+ACCESS_TOKEN_EXPIRE_MINUTES = 180 
 
 router = APIRouter(
     prefix="/login",
@@ -55,10 +55,10 @@ async def refresh_token(old_token: Annotated[str, Depends(oauth2_scheme)], respo
     response.set_cookie(
         key="access_token",
         value=access_token,
-        httponly=True,
-        secure=True,
-        expires=get_expire_time(access_token_expires),
     )
 
     return Token(access_token=access_token, token_type="bearer")
 
+@router.get("/", response_model=dict)
+async def check_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict:
+    return {"token": token}
