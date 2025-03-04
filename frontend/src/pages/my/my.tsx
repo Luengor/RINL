@@ -1,10 +1,12 @@
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { Navbar } from "../../components/navbar";
-import { logout } from "../../utils/session";
-import { useState, useEffect } from 'react';
 import { IconDeviceDesktopAnalytics, IconDeviceGamepad, IconLogout, IconUser, Icon123 } from '@tabler/icons-react';
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import { AppShell } from '@mantine/core';
 import Media from "../../components/media/media";
+import { Navbar } from "../../components/navbar";
+import { logout } from "../../utils/session";
+import Data from "./data";
+import Stats from "./stats";
 
 export default function My() {
   // Current page
@@ -63,9 +65,9 @@ export default function My() {
 
       <AppShell.Main>
         <Routes>
-          <Route index path="" element={<div>data</div>} />
-          <Route path="data" element={<div>data</div>} />
-          <Route path="stats" element={<div>stats</div>} />
+          <Route index path="" element={<Data />} />
+          <Route path="data" element={<Data />} />
+          <Route path="stats" element={<Stats />} />
           <Route path="jugar" element={<Media />} />
           <Route path="*" element={<div>404</div>} />
         </Routes>

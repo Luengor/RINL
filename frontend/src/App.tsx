@@ -1,14 +1,16 @@
 import { Route, Routes } from "react-router-dom"
 import { PrivateRoutes } from "./components/PrivateRoutes"
 
+import My from "./pages/my/my"
 import Login from "./pages/login"
+import Dashboard from "./pages/dashboard"
 import Media from "./components/media/media" 
 import MediaDebug from "./components/media/mediadebug"
-import My from "./pages/my/my"
 
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Dashboard />} />
       <Route element={<PrivateRoutes login={false} route={"/my/data"}/>}>
         <Route path="/login" element={<Login />} />
       </Route>
