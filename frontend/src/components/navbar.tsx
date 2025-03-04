@@ -1,16 +1,9 @@
-import { useState } from 'react';
-import {
-  IconDeviceDesktopAnalytics,
-  IconHome2,
-  IconLogout,
-  IconUser,
-  IconDeviceGamepad
-} from '@tabler/icons-react';
 import { Stack, Tooltip, UnstyledButton } from '@mantine/core';
+import { Icon } from '@tabler/icons-react';
 import classes from './navbar.module.css';
 
 interface NavbarLinkProps {
-  icon: typeof IconHome2;
+  icon: Icon;
   label: string;
   active?: boolean;
   onClick?: () => void;
@@ -25,12 +18,6 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
     </Tooltip>
   );
 }
-
-const mockdata = [
-  { icon: IconUser, label: 'Account' },
-  { icon: IconDeviceGamepad, label: 'Home' },
-  { icon: IconDeviceDesktopAnalytics, label: 'Analytics' },
-];
 
 interface NavbarProps {
   topLink: NavbarLinkProps;
