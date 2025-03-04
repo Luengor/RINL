@@ -2,8 +2,8 @@ import { Route, Routes } from "react-router-dom"
 import { PrivateRoutes } from "./components/PrivateRoutes"
 
 import Login from "./pages/login"
-import Media from "./pages/media/media" 
-import MediaDebug from "./pages/media/mediadebug"
+import Media from "./components/media/media" 
+import MediaDebug from "./components/media/mediadebug"
 import My from "./pages/my/my"
 
 function App() {

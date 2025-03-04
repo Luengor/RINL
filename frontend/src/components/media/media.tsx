@@ -10,10 +10,10 @@ export default function Media() {
     // Prepare unity if not on debug
     const unityCanvasRef = useRef<HTMLCanvasElement>(null);
     const { unityProvider, sendMessage, isLoaded } = useUnityContext({
-        loaderUrl: "unity/Build/unity.loader.js",
-        dataUrl: "unity/Build/unity.data",
-        frameworkUrl: "unity/Build/unity.framework.js",
-        codeUrl: "unity/Build/unity.wasm",
+        loaderUrl: "/unity/Build/unity.loader.js",
+        dataUrl: "/unity/Build/unity.data",
+        frameworkUrl: "/unity/Build/unity.framework.js",
+        codeUrl: "/unity/Build/unity.wasm",
     });
 
     const getVideoStream = async () => {

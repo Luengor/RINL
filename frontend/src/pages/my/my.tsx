@@ -1,16 +1,75 @@
-import { Routes, Route } from "react-router-dom";
-import { refresh_token } from "../../utils/session";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Navbar } from "../../components/navbar";
+import { logout } from "../../utils/session";
+import { useState, useEffect } from 'react';
+import { IconDeviceDesktopAnalytics, IconDeviceGamepad, IconLogout, IconUser, Icon123 } from '@tabler/icons-react';
+import { AppShell } from '@mantine/core';
+import Media from "../../components/media/media";
 
 export default function My() {
-    refresh_token(); 
+  // Current page
+  const location = useLocation();
+  const [active, setActive] = useState("data");
 
-    return (
-        <>
-        <div>My</div>
+  useEffect(() => {
+    switch (location.pathname) {
+      case '/my':
+      case '/my/data':
+        setActive('data');
+        break;
+      
+      case '/my/stats':
+        setActive('stats');
+        break;
+      
+      case '/my/jugar':
+        setActive('jugar');
+        break;
+      
+      default:
+        setActive('other');
+        break;
+    }
+  }, [location, active]);
+
+  // Logout
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const navigate = useNavigate();
+  return (
+      <AppShell
+        navbar={{
+          width: 100,
+          breakpoint: 'sm'
+        }}
+        padding="md"
+      >
+      <AppShell.Navbar p="md">
+        <Navbar 
+          topLink={{ icon: Icon123, label: 'Dashboard', onClick: () => navigate('/') }}
+          mainLinks={[
+            { icon: IconUser, label: 'Cuenta', active: 'data' === active, onClick: () => navigate('/my/data') },
+            { icon: IconDeviceDesktopAnalytics, active: 'stats' === active, label: 'Stats', onClick: () => navigate('/my/stats') },
+            { icon: IconDeviceGamepad, label: 'Jugar', active: 'jugar' === active, onClick: () => navigate('/my/jugar') },
+          ]}
+          bottomLinks={[
+            { icon: IconLogout, label: 'Salir', onClick: handleLogout},
+          ]}
+        />
+      </AppShell.Navbar>
+
+      <AppShell.Main>
         <Routes>
-            <Route index path="data" element={<div>data</div>} />
-            <Route path="stats" element={<div>stats</div>} />
+          <Route index path="" element={<div>data</div>} />
+          <Route path="data" element={<div>data</div>} />
+          <Route path="stats" element={<div>stats</div>} />
+          <Route path="jugar" element={<Media />} />
+          <Route path="*" element={<div>404</div>} />
         </Routes>
-        </>
-    );
+      </AppShell.Main>
+    </AppShell>
+  );
 }

@@ -17,6 +17,7 @@
     "@mantine/form": "^7.17.0",
     "@mantine/hooks": "^7.17.0",
     "@mediapipe/tasks-vision": "^0.10.21",
+    "@tabler/icons-react": "^3.30.0",
     "@types/node": "^22.13.5",
     "path": "^0.12.7",
     "postcss": "^8.5.3",
