@@ -40,7 +40,7 @@ export function LoginForm() {
       email: '',
       password: '',
       name: '',
-      birthYear: ''
+      birthYear: 2000 
     },
   })
 
@@ -50,9 +50,9 @@ export function LoginForm() {
 
     try {
       if (register)
-        await register_func(email as string, password as string, name as string, birthYear as unknown as number)
+        await register_func(email, password, name, birthYear)
       else
-        await login(email as string, password as string);
+        await login(email, password);
 
       navigate('/');
     } catch (err) {
