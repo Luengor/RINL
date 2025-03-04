@@ -1,7 +1,7 @@
 import { IconDeviceDesktopAnalytics, IconDeviceGamepad, IconLogout, IconUser, Icon123 } from '@tabler/icons-react';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import { AppShell } from '@mantine/core';
+import { AppShell, Button, Modal, Stack } from '@mantine/core';
 import Media from "../../components/Media/Media";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { logout } from "../../utils/session";
@@ -35,6 +35,7 @@ export default function My() {
   }, [location, active]);
 
   // Logout
+  const [logoutModal, setLogoutModal] = useState(false);
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -42,6 +43,14 @@ export default function My() {
 
   const navigate = useNavigate();
   return (
+    <>
+      <Modal opened={logoutModal} onClose={() => setLogoutModal(false)} title="Cerrar sesión" centered>
+        <Stack>
+          {`¿Estás seguro de que deseas cerrar sesión?`}
+          <Button onClick={handleLogout} color="red">Cerrar sesión</Button>
+        </Stack>
+      </Modal>
+
       <AppShell
         navbar={{
           width: 100,
@@ -58,7 +67,7 @@ export default function My() {
             { icon: IconDeviceGamepad, label: 'Jugar', active: 'jugar' === active, onClick: () => navigate('/my/jugar') },
           ]}
           bottomLinks={[
-            { icon: IconLogout, label: 'Salir', onClick: handleLogout},
+            { icon: IconLogout, label: 'Salir', onClick: () => setLogoutModal(true) },
           ]}
         />
       </AppShell.Navbar>
@@ -73,5 +82,6 @@ export default function My() {
         </Routes>
       </AppShell.Main>
     </AppShell>
+    </>
   );
 }
