@@ -2,8 +2,8 @@ import { IconDeviceDesktopAnalytics, IconDeviceGamepad, IconLogout, IconUser, Ic
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { AppShell } from '@mantine/core';
-import Media from "../../components/media/media";
-import { Navbar } from "../../components/navbar";
+import Media from "../../components/media/Media";
+import { Navbar } from "../../components/Navbar/Navbar";
 import { logout } from "../../utils/session";
 import Data from "./data";
 import Stats from "./stats";

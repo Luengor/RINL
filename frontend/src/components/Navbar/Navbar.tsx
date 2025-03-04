@@ -1,6 +1,6 @@
 import { Stack, Tooltip, UnstyledButton } from '@mantine/core';
 import { Icon } from '@tabler/icons-react';
-import classes from './navbar.module.css';
+import classes from './Navbar.module.css';
 
 interface NavbarLinkProps {
   icon: Icon;

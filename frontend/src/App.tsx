@@ -4,8 +4,8 @@ import { PrivateRoutes } from "./components/PrivateRoutes"
 import My from "./pages/my/my"
 import Login from "./pages/login"
 import Dashboard from "./pages/dashboard"
-import Media from "./components/media/media" 
-import MediaDebug from "./components/media/mediadebug"
+import Media from "./components/media/Media" 
+import MediaDebug from "./components/media/MediaDebug"
 
 function App() {
   return (
