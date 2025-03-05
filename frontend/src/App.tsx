@@ -1,11 +1,11 @@
-import { Route, Routes } from "react-router-dom"
-import { PrivateRoutes } from "./components/PrivateRoutes"
+import { Route, Routes } from "react-router-dom";
+import { PrivateRoutes } from "./components/PrivateRoutes";
 
-import My from "./pages/my/my"
-import Login from "./pages/login"
-import Dashboard from "./pages/dashboard"
-import Media from "./components/Media/Media" 
-import MediaDebug from "./components/Media/MediaDebug"
+import My from "./pages/my/my";
+import Login from "./pages/login";
+import Dashboard from "./pages/dashboard";
+import Media from "./components/Media/Media";
+import MediaDebug from "./components/Media/MediaDebug";
 
 function App() {
   return (

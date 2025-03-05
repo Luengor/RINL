@@ -54,7 +54,7 @@ export default function My() {
       <AppShell
         navbar={{
           width: 100,
-          breakpoint: 'sm'
+          breakpoint: '100px'
         }}
         padding="md"
       >
