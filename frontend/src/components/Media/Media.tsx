@@ -1,103 +1,108 @@
 import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
+import { Center, Loader } from "@mantine/core";
 
 export default function Media() {
-    // Prepare video
-    const [videoStream, setVideoStream] = useState<MediaStream>(null);
-    const inputVideoRef = useRef<HTMLVideoElement>(null);
+  // Prepare video
+  const [videoStream, setVideoStream] = useState<MediaStream>(null);
+  const inputVideoRef = useRef<HTMLVideoElement>(null);
 
-    // Prepare unity if not on debug
-    const unityCanvasRef = useRef<HTMLCanvasElement>(null);
-    const { unityProvider, sendMessage, isLoaded } = useUnityContext({
-        loaderUrl: "/unity/Build/unity.loader.js",
-        dataUrl: "/unity/Build/unity.data",
-        frameworkUrl: "/unity/Build/unity.framework.js",
-        codeUrl: "/unity/Build/unity.wasm",
+  // Prepare unity if not on debug
+  const unityCanvasRef = useRef<HTMLCanvasElement>(null);
+  const { unityProvider, sendMessage, isLoaded } = useUnityContext({
+    loaderUrl: "/unity/Build/unity.loader.js",
+    dataUrl: "/unity/Build/unity.data",
+    frameworkUrl: "/unity/Build/unity.framework.js",
+    codeUrl: "/unity/Build/unity.wasm",
+  });
+
+  const getVideoStream = async () => {
+    if (videoStream) return;
+
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true
     });
 
-    const getVideoStream = async () => {
-        if (videoStream) return;
+    setVideoStream(stream);
+  }
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-            video: true
+  useEffect(() => {
+    getVideoStream();
+  })
+
+  // Create pose landmarker and start detecting
+  useEffect(() => {
+    if (videoStream && !!unityProvider && isLoaded) {
+      const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
+      createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {
+        predict(poseLandmarker, inputVideoRef, (result) => {
+          sendMessage("JSConnector", "SetBodyPosition", result);
         });
 
-        setVideoStream(stream);
-    }
-
-    // Create pose landmarker and start detecting
-    useEffect(() => {
-        if (videoStream && !!unityProvider && isLoaded) {
-            const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
-            createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {
-                predict(poseLandmarker, inputVideoRef, (result) => {
-                    sendMessage("JSConnector", "SetBodyPosition", result);
-                });
-
-                return () => {
-                    poseLandmarker.close();
-                }
-            });
-        }
-    }, [videoStream, unityProvider, sendMessage, isLoaded]);
-
-    // Custom event type expanding Event
-    interface UnityEvent extends Event {
-        data: {
-            type: string;
-            payload: object;
-        };
-    }
-
-    // Unity messages
-    useEffect(() => {
-        // Subscribe to unity events
-        const callback = (e: Event) => {
-            // Do smth with the event 
-            const {type: t, payload: p} = (e as UnityEvent).data;
-            console.log(t, p);
-        };
-
-        window.addEventListener("unity2react", callback);
-
         return () => {
-            // Remove event listener
-            window.removeEventListener("unity2react", callback);
+          poseLandmarker.close();
         }
-    });
+      });
+    }
+  }, [videoStream, unityProvider, sendMessage, isLoaded]);
 
-    // Render
-    let content;
-    if (!videoStream)
-        content = (<button onClick={getVideoStream}>Get Video Stream</button>)
-    else
-        content = (
-        <>
-        <Unity
-            id="unity-canvas"
-            unityProvider={unityProvider}
-            ref={unityCanvasRef}
-            matchWebGLToCanvasSize={true}/>
-        <br />
-        <video
-            id="input"
-            ref={(r) => {
-                inputVideoRef.current = r;
-                if (inputVideoRef.current)
-                    inputVideoRef.current.srcObject = videoStream;
-            }}
-            width="640"
-            height="480"
-            autoPlay
-            playsInline
-            />
-        </>)
+  // Custom event type expanding Event
+  interface UnityEvent extends Event {
+    data: {
+      type: string;
+      payload: object;
+    };
+  }
 
-    // This thing
-    return (
-        <div>
-            {content}
-        </div>
-    )
+  // Unity messages
+  useEffect(() => {
+    // Subscribe to unity events
+    const callback = (e: Event) => {
+      // Do smth with the event 
+      const {type: t, payload: p} = (e as UnityEvent).data;
+      console.log(t, p);
+    };
+
+    window.addEventListener("unity2react", callback);
+
+    return () => {
+      // Remove event listener
+      window.removeEventListener("unity2react", callback);
+    }
+  });
+
+  // Render
+  let content = <Loader type="dots" size="xl"/>;
+  if (videoStream)
+    content = (
+    <>
+    <Unity
+      id="unity-canvas"
+      unityProvider={unityProvider}
+      ref={unityCanvasRef}
+      style={{ width: "100%", height: "100%" }}
+      matchWebGLToCanvasSize={true}/>
+    <br />
+    <video
+      id="input"
+      ref={(r) => {
+        inputVideoRef.current = r;
+        if (inputVideoRef.current)
+          inputVideoRef.current.srcObject = videoStream;
+      }}
+      width="640"
+      height="480"
+      hidden
+      autoPlay
+      playsInline
+      />
+    </>)
+
+  // This thing
+  return (
+    <Center h="100%">
+      {content}
+    </Center>
+  )
 }

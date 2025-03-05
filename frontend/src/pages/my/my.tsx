@@ -1,7 +1,7 @@
 import { IconDeviceDesktopAnalytics, IconDeviceGamepad, IconLogout, IconUser, Icon123 } from '@tabler/icons-react';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
-import { AppShell, Button, Modal, Stack } from '@mantine/core';
+import { AppShell, Button, Center, Flex, Loader, Modal, Stack } from '@mantine/core';
 import Media from "../../components/Media/Media";
 import { Navbar } from "../../components/Navbar/Navbar";
 import { logout } from "../../utils/session";
@@ -72,7 +72,7 @@ export default function My() {
         />
       </AppShell.Navbar>
 
-      <AppShell.Main>
+      <AppShell.Main h="69px">
         <Routes>
           <Route index path="" element={<Data />} />
           <Route path="data" element={<Data />} />

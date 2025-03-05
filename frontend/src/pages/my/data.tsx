@@ -12,14 +12,14 @@ import {
   Title
 } from '@mantine/core';
 
-import { useQuery } from '@tanstack/react-query';
-import { getMeUserMeGet } from '../../client';
-import { IconMail, IconUser, IconCalendar } from '@tabler/icons-react';
 import { useState } from 'react';
+import { getMeUserMeGet } from '../../client';
+import { useQuery } from '@tanstack/react-query';
+import { IconMail, IconUser, IconCalendar } from '@tabler/icons-react';
 
 export default function Data() {
   // Data
-  const { isPending, isError, data } = useQuery({
+  const { isPending, data } = useQuery({
     queryKey: ['user-data'],
     queryFn: async () => {
       const req = await getMeUserMeGet();
@@ -62,18 +62,20 @@ export default function Data() {
             label="Correo electrónico"
             leftSection={<IconMail />}
             rightSection={
-              <Chip readOnly checked={data.verified}>Verficado</Chip>
+              <Chip readOnly checked={data.verified}>
+                { data.verified ? 'Verificado' : 'Sin verificar' }
+              </Chip>
             }
-            rightSectionWidth={110}
+            rightSectionWidth={data.verified ? 110 : 125}
             placeholder='ejemplo@ejemp.lo'
             value={data.email}
             readOnly
           />
           <Collapse in={!data.verified}>
-              <Text c="dimmed" span>
+              <Text c="dimmed" size="sm" span>
                 Verifica tu correo electrónico
               </Text>
-              <Text style={{ cursor: 'pointer' }} span c="blue" onClick={() => setVerifing(true)}>{' aquí.'}</Text>
+              <Text style={{ cursor: 'pointer' }} size="sm" span c="blue" onClick={() => setVerifing(true)}>{' aquí.'}</Text>
           </Collapse>
         </Stack>
         <Modal opened={verifing} title="Verificar correo electrónico" onClose={() => setVerifing(false)} centered>
