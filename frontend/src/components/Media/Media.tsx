@@ -9,7 +9,6 @@ export default function Media() {
   const inputVideoRef = useRef<HTMLVideoElement>(null);
 
   // Prepare unity if not on debug
-  const unityCanvasRef = useRef<HTMLCanvasElement>(null);
   const { unityProvider, sendMessage, isLoaded } = useUnityContext({
     loaderUrl: "/unity/Build/unity.loader.js",
     dataUrl: "/unity/Build/unity.data",
@@ -74,32 +73,28 @@ export default function Media() {
 
   // Render
   let content = <Loader type="dots" size="xl"/>;
-  if (videoStream)
+  if (videoStream) {
     content = (
     <>
     <Unity
-      id="unity-canvas"
       unityProvider={unityProvider}
-      ref={unityCanvasRef}
       style={{ width: "100%", height: "100%" }}
-      matchWebGLToCanvasSize={true}/>
-    <br />
+      matchWebGLToCanvasSize={true}
+    />
     <video
-      id="input"
       ref={(r) => {
         inputVideoRef.current = r;
         if (inputVideoRef.current)
           inputVideoRef.current.srcObject = videoStream;
       }}
-      width="640"
-      height="480"
       hidden
       autoPlay
-      playsInline
-      />
-    </>)
+      playsInline />
+    </>
+    );
 
-  // This thing
+  }
+
   return (
     <Center h="100%">
       {content}
