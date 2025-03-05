@@ -4,8 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx'
 
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 
 import { MantineProvider } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const queryClient = new QueryClient()
@@ -15,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <MantineProvider>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
+          <Notifications />
           <App />
         </QueryClientProvider>
       </BrowserRouter>
