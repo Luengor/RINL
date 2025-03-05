@@ -1,4 +1,5 @@
 import { loginForTokenLoginPost, refreshTokenLoginRefreshPost, createUserUserPost } from "../client"; 
+import { client } from "../client/client.gen";
 
 export async function login(email: string, password: string) {
   const response = await loginForTokenLoginPost({
@@ -13,11 +14,18 @@ export async function login(email: string, password: string) {
     throw response.error;
 
   localStorage.setItem('access_token', response.data.access_token);
+  client.setConfig({
+    headers: {
+      "Authorization": `Bearer ${response.data.access_token}`
+    }
+  })
 }
 
 export function logout() {
   // Remove the access token
   localStorage.removeItem('access_token');
+
+  client.setConfig( { headers: { "Authorization": "" } } )
 }
 
 export async function register(email: string, password: string, name: string, birthYear: number) {
