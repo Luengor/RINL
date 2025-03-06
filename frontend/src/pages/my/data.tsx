@@ -13,7 +13,7 @@ import {
   Title
 } from '@mantine/core';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getMeUserMeGet } from '../../client';
 import { useQuery } from '@tanstack/react-query';
 import { IconMail, IconUser, IconCalendar, IconCheck, IconX } from '@tabler/icons-react';
@@ -23,7 +23,7 @@ import { notifications } from '@mantine/notifications';
 
 export default function Data() {
   // Data
-  const { isPending, data, refetch } = useQuery({
+  const { data, refetch, status } = useQuery({
     queryKey: ['user-data'],
     queryFn: async () => {
       const req = await getMeUserMeGet();
@@ -77,11 +77,6 @@ export default function Data() {
   const dataForm = useForm({
     name: 'data-form',
     mode: 'uncontrolled',
-    initialValues: {
-      name: data.name,
-      email: data.email,
-      year_of_birth: data.year_of_birth,
-    },
     validate: {
       name: hasLength({ min: 1, max: 255 }, 'Nombre no puede estar vacío'),
       email: hasLength({ min: 1, max: 255 }, 'Correo no puede estar vacío'),
@@ -95,12 +90,32 @@ export default function Data() {
     alert("There is no endpoint to update the user data yet :)");
   }
 
+  useEffect(() => {
+    if (data) {
+      dataForm.setValues({
+        name: data.name,
+        email: data.email,
+        year_of_birth: data.year_of_birth,
+      });
+      dataForm.setInitialValues({
+        name: data.name,
+        email: data.email,
+        year_of_birth: data.year_of_birth,
+      });
+    }
+  }, [status])
+
   let dataTsx;
-  if (isPending) {
+  if (status === 'pending') {
     dataTsx = (
       <Loader type="dots" size="xl"/>
     );
-  } else {
+  }
+  else if (status === 'error') {
+    dataTsx = (
+      <Text>Error al cargar los datos</Text>
+    );
+  } else if (status === 'success') {
     dataTsx = (
       <>
       <Form form={dataForm} onSubmit={handleModify}>
