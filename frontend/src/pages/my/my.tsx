@@ -56,7 +56,6 @@ export default function My() {
           width: 100,
           breakpoint: '100px'
         }}
-        padding="md"
         padding="xl"
       >
       <AppShell.Navbar p="md">
