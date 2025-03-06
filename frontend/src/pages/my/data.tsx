@@ -171,7 +171,7 @@ export default function Data() {
 
   return (
     <>
-    <Stack py="xl" align='stretch'>
+    <Stack maw="50em" align='stretch'>
       <Title order={1}>Mis datos</Title>
       <Text >
         Aquí puedes ver y modificar tus datos.
