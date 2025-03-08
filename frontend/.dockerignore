@@ -1,0 +1,6 @@
+.vite
+node_modules
+.gitignore
+bun.lockdb
+dockerfile
+openapi.json
