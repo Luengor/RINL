@@ -1,8 +1,8 @@
-import { Grid, Loader, SegmentedControl, Title } from "@mantine/core";
+import { Center, Grid, Group, Loader, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { getActivitiesActivityGet, getShapesShapeGet } from "../../client";
 import { ActivityUuid, ShapeUuid } from "../../client";
-import { LineChart, LineChartProps } from "@mantine/charts";
+import { BarChart, BarChartProps, DonutChart, DonutChartCell, LineChart, LineChartProps } from "@mantine/charts";
 import { useEffect, useState } from "react";
 
 interface Data {
@@ -10,7 +10,7 @@ interface Data {
   shape: ShapeUuid[];
 }
 
-export function Col({ children }: { children: React.ReactNode }) {
+function Col({ children }: { children: React.ReactNode }) {
   return (
     <Grid.Col span={{sm: 12, lg: 6}} px={{sm: 'sm', lg: 'md'}}>
       {children}
@@ -18,7 +18,7 @@ export function Col({ children }: { children: React.ReactNode }) {
   )
 }
 
-const defaultChartConfig: LineChartProps = {
+const defaultLineChartConfig: LineChartProps = {
   data: [],
   series: [],
 
@@ -34,6 +34,39 @@ const defaultChartConfig: LineChartProps = {
   }
 };
 
+const Colors = [
+  "blue",
+  "orange",
+  "purple",
+  "cyan",
+  "pink",
+  "gray"
+]
+
+const defaultBarChartConfig: BarChartProps = {
+  data: [],
+  series: [],
+
+  h: "25vh",
+  dataKey: "date",
+  xAxisProps: {
+    padding: {
+      left: 10,
+      right: 20,
+    }
+  }
+};
+
+function Card({ title, children }: { title: string, children: React.ReactNode }) {
+  return (
+    <Col>
+      <Paper shadow="md" p="md">
+        <Title order={3} mb="xl">{title}</Title>
+        {children}
+      </Paper>
+    </Col>
+  )
+}
 
 export default function Stats() {
   // Get activity and shape data
@@ -48,11 +81,14 @@ export default function Stats() {
         shape: data[1].data,
       } as Data;
     },
+    placeholderData: { activity: [], shape: [] },
     staleTime: 1000 * 60 * 10,
   })
 
   const [dataRange, setDataRange] = useState("week");
   const [chartData, setChartData] = useState(data);
+  const [countDistributionData, setCountDistributionData] = useState<DonutChartCell[]>([]);
+  const [timeDistributionData, setTimeDistributionData] = useState<DonutChartCell[]>([]);
 
   useEffect(() => {
     if (status !== 'success') return;
@@ -63,13 +99,14 @@ export default function Stats() {
     const yearAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 365);
 
     const filteredData: Data = {
+      // TODO: We should not sort the data here, but in the backend
       activity: data.activity.filter((activity) => {
         const date = new Date(activity.date);
         return dataRange === "week" ? date >= weekAgo :
                dataRange === "month" ? date >= monthAgo :
                dataRange === "year" ? date >= yearAgo :
                true;
-      }).map((activity) => {
+      }).sort((a, b) => a.date > b.date ? 1 : 0).map((activity) => {
         const date = new Date(activity.date);
         activity.date = date.toISOString().split('T')[0];
         return activity;
@@ -87,7 +124,33 @@ export default function Stats() {
       })
     };
     setChartData(filteredData);
-  }, [dataRange, status]);
+
+    const countDistributionData: { [key: string]: DonutChartCell} = {};
+    const timeDistributionData: { [key: string]: DonutChartCell} = {};
+
+    filteredData.activity.forEach((activity) => {
+      if (activity.minigame in countDistributionData) {
+        countDistributionData[activity.minigame].value += 1;
+        timeDistributionData[activity.minigame].value += activity.duration;
+      } else {
+        const distributionDataKeys = Object.keys(countDistributionData).length;
+        countDistributionData[activity.minigame] = {
+          name: activity.minigame,
+          value: 1,
+          color: Colors[distributionDataKeys % Colors.length], 
+        }
+        timeDistributionData[activity.minigame] = {
+          name: activity.minigame,
+          value: activity.duration,
+          color: Colors[distributionDataKeys % Colors.length]
+        }
+      }
+    });
+
+    setCountDistributionData(Object.values(countDistributionData));
+    setTimeDistributionData(Object.values(timeDistributionData));
+
+  }, [dataRange, status, data]);
 
   // Loading and error
   if (status === 'pending') {
@@ -98,8 +161,8 @@ export default function Stats() {
   }
 
   // Data
-  const minWeight = Math.min(...data.shape.map((shape) => shape.weight));
-  const maxWeight = Math.max(...data.shape.map((shape) => shape.weight));
+  const minWeight = Math.min(...chartData.shape.map((shape) => shape.weight));
+  const maxWeight = Math.max(...chartData.shape.map((shape) => shape.weight));
 
   // Render
   return (
@@ -122,28 +185,60 @@ export default function Stats() {
       <Grid.Col span={12}>
         <Title order={2}>Actividades</Title>
       </Grid.Col>
+      <Card title="Puntos de actividad">
+        <BarChart
+          {...defaultBarChartConfig}
+          data={chartData.activity}
+          series={[{ name: "activity_points", label: "Puntos de actividad" }]}
+        />
+      </Card>
+      <Card title="Tiempo jugado">
+        <BarChart
+          {...defaultBarChartConfig}
+          data={chartData.activity}
+          series={[{ name: "duration", label: "Tiempo jugado" }]}
+        />
+      </Card>
+      <Card title="Distribución de minijuegos">
+        <Group justify="space-between" grow>
+          <Stack align="center">
+            <Title order={4}>Veces jugado</Title>
+            <DonutChart
+              startAngle={180}
+              withLabels
+              labelsType="value"
+              endAngle={0}
+              data={countDistributionData}
+              />
+          </Stack>
+          <Stack align="center">
+            <Title order={4}>Tiempo jugado</Title>
+            <DonutChart
+              startAngle={180}
+              withLabels
+              labelsType="value"
+              endAngle={0}
+              data={timeDistributionData}
+              />
+          </Stack>
+        </Group>
+      </Card>
       
       <Grid.Col span={12}>
         <Title order={2}>Forma física</Title>
       </Grid.Col>
-      <Col>
-        <Title order={3} mb="xs">Peso</Title>
+      <Card title="Peso">
         <LineChart
-          {...defaultChartConfig}
+          {...defaultLineChartConfig}
 
           data={chartData.shape}
-          yAxisProps={{ 
-            domain: [minWeight - 5, maxWeight + 5],
-          }}
-          series={[
-            { name: "weight", label: "Peso" },
-          ]}
+          yAxisProps={{domain: [minWeight - 5, maxWeight + 5]}}
+          series={[{ name: "weight", label: "Peso" }]}
         />
-      </Col>
-      <Col>
-        <Title order={3} mb="xs">IMC</Title>
+      </Card>
+      <Card title="IMC">
         <LineChart
-          {...defaultChartConfig}
+          {...defaultLineChartConfig}
 
           data={chartData.shape.map((shape) => {
             return {
@@ -151,14 +246,10 @@ export default function Stats() {
               bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
             }
           })}
-          yAxisProps={{
-            domain: [0, 40],
-          }}
-          series={[
-            { name: "bmi", label: "BMI" },
-          ]}
+          yAxisProps={{ domain: [0, 40] }}
+          series={[{ name: "bmi", label: "BMI" }]}
         />
-      </Col>
+      </Card>
     </Grid>
   )
 }
