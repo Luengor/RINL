@@ -15,8 +15,8 @@ import random
 ENGINE_PATH = f"postgresql://{environ.get('POSTGRES_USER')}:{environ.get('POSTGRES_PASSWORD')}@{environ.get('POSTGRES_HOST')}:5432"
 engine = create_engine(ENGINE_PATH)
 
-ACTIVITY_COUNT = 20
-ACTIVITIES_FROM = 6 
+ACTIVITY_COUNT = 2000
+ACTIVITIES_FROM = 100 
 MINIGAMES = ["test1", "test2"]
 
 if __name__ == "__main__":
