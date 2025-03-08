@@ -62,8 +62,12 @@ if __name__ == "__main__":
 
         # Add some activities to the user
         for i in range(ACTIVITY_COUNT):
+            date = now - timedelta(days=random.randint(0, ACTIVITIES_FROM), hours=random.randint(-12, 12))
+            while (date > now):
+                date = now - timedelta(days=random.randint(0, ACTIVITIES_FROM), hours=random.randint(-12, 12))
+
             session.add(Activity(
-                date=now - timedelta(days=random.randint(0, ACTIVITIES_FROM), hours=random.randint(-12, 12)),
+                date=date,
                 user_email="test@test.com",
                 duration=random.randint(60, 120),
                 activity_points=random.randint(100, 200),
