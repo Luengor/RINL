@@ -1,13 +1,26 @@
-import { Center, Grid, Group, Loader, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
+import { ActionIcon, Center, Grid, Group, Loader, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { getActivitiesActivityGet, getShapesShapeGet } from "../../client";
 import { ActivityUuid, ShapeUuid } from "../../client";
 import { BarChart, BarChartProps, DonutChart, DonutChartCell, LineChart, LineChartProps } from "@mantine/charts";
 import { useEffect, useState } from "react";
 
-interface Data {
+interface ApiData {
   activity: ActivityUuid[];
   shape: ShapeUuid[];
+}
+
+interface PreprocessedData {
+  activities: ActivityUuid[]; 
+  shapes: ShapeUuid[];
+  groupedData: {
+    date: string;
+    count: number;
+    points: number;
+    duration: number;
+  }[];
+  playCount: DonutChartCell[];
+  playTime: DonutChartCell[];
 }
 
 function Col({ children }: { children: React.ReactNode }) {
@@ -79,16 +92,20 @@ export default function Stats() {
       return {
         activity: data[0].data,
         shape: data[1].data,
-      } as Data;
+      } as ApiData;
     },
     placeholderData: { activity: [], shape: [] },
     staleTime: 1000 * 60 * 10,
   })
 
   const [dataRange, setDataRange] = useState("week");
-  const [chartData, setChartData] = useState(data);
-  const [countDistributionData, setCountDistributionData] = useState<DonutChartCell[]>([]);
-  const [timeDistributionData, setTimeDistributionData] = useState<DonutChartCell[]>([]);
+  const [chartData, setChartData] = useState<PreprocessedData>({
+    activities: [],
+    shapes: [],
+    groupedData: [],
+    playCount: [],
+    playTime: [],
+  });
 
   useEffect(() => {
     if (status !== 'success') return;
@@ -98,37 +115,79 @@ export default function Stats() {
     const monthAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 30);
     const yearAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 365);
 
-    const filteredData: Data = {
-      // TODO: We should not sort the data here, but in the backend
-      activity: data.activity.filter((activity) => {
-        const date = new Date(activity.date);
-        return dataRange === "week" ? date >= weekAgo :
-               dataRange === "month" ? date >= monthAgo :
-               dataRange === "year" ? date >= yearAgo :
-               true;
-      }).sort((a, b) => a.date > b.date ? 1 : 0).map((activity) => {
-        const date = new Date(activity.date);
-        activity.date = date.toISOString().split('T')[0];
-        return activity;
-      }),
-      shape: data.shape.filter((shape) => {
-        const date = new Date(shape.date);
-        return dataRange === "week" ? date >= weekAgo :
-               dataRange === "month" ? date >= monthAgo :
-               dataRange === "year" ? date >= yearAgo :
-               true;
-      }).map((shape) => {
-        const date = new Date(shape.date);
-        shape.date = date.toISOString().split('T')[0];
-        return shape;
-      })
+    const filteredData: PreprocessedData = {
+      activities: [],
+      shapes: [],
+      groupedData: [],
+      playCount: [],
+      playTime: [],
     };
-    setChartData(filteredData);
+
+    filteredData.shapes = data.shape.filter((shape) => {
+      const date = new Date(shape.date);
+      return dataRange === "week" ? date >= weekAgo :
+             dataRange === "month" ? date >= monthAgo :
+             dataRange === "year" ? date >= yearAgo :
+             true;
+    }).sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }).map((shape) => {
+      const date = new Date(shape.date);
+      shape.date = date.toISOString().split('T')[0];
+      return shape;
+    });
+
+    filteredData.activities = data.activity.filter((activity) => {
+      const date = new Date(activity.date);
+      return dataRange === "week" ? date >= weekAgo :
+             dataRange === "month" ? date >= monthAgo :
+             dataRange === "year" ? date >= yearAgo :
+             true;
+    }).sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    }).map((activity) => {
+      const date = new Date(activity.date);
+      activity.date = date.toISOString().split('T')[0];
+      return activity;
+    });
+
+    filteredData.activities.forEach((activity) => {
+      if (filteredData.groupedData.length === 0) {
+        filteredData.groupedData.push({
+          date: activity.date,
+          points: activity.activity_points,
+          duration: activity.duration,
+          count: 1,
+        });
+      } else {
+        const lastDate = filteredData.groupedData[filteredData.groupedData.length - 1].date;
+        const thisDate = activity.date;
+
+        // Merge the activities of the same day if showing week or month data, otherwise merge the activities of the same month 
+        if (dataRange === "week" || dataRange === "month" ? lastDate === thisDate : lastDate.slice(0, 7) === thisDate.slice(0, 7)) {
+          filteredData.groupedData[filteredData.groupedData.length - 1].points += activity.activity_points;
+          filteredData.groupedData[filteredData.groupedData.length - 1].duration += activity.duration;
+          filteredData.groupedData[filteredData.groupedData.length - 1].count += 1;
+        } else {
+          filteredData.groupedData.push({
+            date: activity.date,
+            points: activity.activity_points,
+            duration: activity.duration,
+            count: 1,
+          });
+        }
+      }
+    });
+
+    filteredData.groupedData = filteredData.groupedData.map((group) => {
+      group.date = dataRange === "week" || dataRange === "month" ? group.date.slice(8) : group.date.slice(0, 7);
+      return group;
+    });
 
     const countDistributionData: { [key: string]: DonutChartCell} = {};
     const timeDistributionData: { [key: string]: DonutChartCell} = {};
 
-    filteredData.activity.forEach((activity) => {
+    filteredData.activities.forEach((activity) => {
       if (activity.minigame in countDistributionData) {
         countDistributionData[activity.minigame].value += 1;
         timeDistributionData[activity.minigame].value += activity.duration;
@@ -147,9 +206,11 @@ export default function Stats() {
       }
     });
 
-    setCountDistributionData(Object.values(countDistributionData));
-    setTimeDistributionData(Object.values(timeDistributionData));
+    filteredData.playCount = Object.values(countDistributionData);
+    filteredData.playTime = Object.values(timeDistributionData);
 
+    setChartData(filteredData);
+    console.log(filteredData);
   }, [dataRange, status, data]);
 
   // Loading and error
@@ -161,8 +222,8 @@ export default function Stats() {
   }
 
   // Data
-  const minWeight = Math.min(...chartData.shape.map((shape) => shape.weight));
-  const maxWeight = Math.max(...chartData.shape.map((shape) => shape.weight));
+  const minWeight = Math.min(...chartData.shapes.map((shape) => shape.weight));
+  const maxWeight = Math.max(...chartData.shapes.map((shape) => shape.weight));
 
   // Render
   return (
@@ -188,14 +249,14 @@ export default function Stats() {
       <Card title="Puntos de actividad">
         <BarChart
           {...defaultBarChartConfig}
-          data={chartData.activity}
-          series={[{ name: "activity_points", label: "Puntos de actividad" }]}
+          data={chartData.groupedData}
+          series={[{ name: "points", label: "Puntos de actividad" }]}
         />
       </Card>
       <Card title="Tiempo jugado">
         <BarChart
           {...defaultBarChartConfig}
-          data={chartData.activity}
+          data={chartData.groupedData}
           series={[{ name: "duration", label: "Tiempo jugado" }]}
         />
       </Card>
@@ -208,7 +269,7 @@ export default function Stats() {
               withLabels
               labelsType="value"
               endAngle={0}
-              data={countDistributionData}
+              data={chartData.playCount}
               />
           </Stack>
           <Stack align="center">
@@ -218,7 +279,7 @@ export default function Stats() {
               withLabels
               labelsType="value"
               endAngle={0}
-              data={timeDistributionData}
+              data={chartData.playTime}
               />
           </Stack>
         </Group>
@@ -231,7 +292,7 @@ export default function Stats() {
         <LineChart
           {...defaultLineChartConfig}
 
-          data={chartData.shape}
+          data={chartData.shapes}
           yAxisProps={{domain: [minWeight - 5, maxWeight + 5]}}
           series={[{ name: "weight", label: "Peso" }]}
         />
@@ -240,7 +301,7 @@ export default function Stats() {
         <LineChart
           {...defaultLineChartConfig}
 
-          data={chartData.shape.map((shape) => {
+          data={chartData.shapes.map((shape) => {
             return {
               date: shape.date,
               bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
