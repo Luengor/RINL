@@ -1,4 +1,4 @@
-import { ActionIcon, Center, Grid, Group, Loader, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
+import { Grid, Group, Loader, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { getActivitiesActivityGet, getShapesShapeGet } from "../../client";
 import { ActivityUuid, ShapeUuid } from "../../client";
@@ -111,6 +111,7 @@ export default function Stats() {
     if (status !== 'success') return;
 
     const now = new Date();
+    now.setHours(0, 0, 0, 0);
     const weekAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 7);
     const monthAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 30);
     const yearAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 365);
@@ -180,7 +181,15 @@ export default function Stats() {
     });
 
     filteredData.groupedData = filteredData.groupedData.map((group) => {
-      group.date = dataRange === "week" || dataRange === "month" ? group.date.slice(8) : group.date.slice(0, 7);
+      if (dataRange === "week") {
+        group.date = new Date(group.date).toLocaleDateString('es-ES', { weekday: 'long' });
+      } else if (dataRange === "month") {
+        group.date = new Date(group.date).toLocaleDateString('es-ES', { day: 'numeric' });
+      } else if (dataRange === "year" || dataRange === "all") {
+        group.date = new Date(group.date).toLocaleDateString('es-ES', { month: 'long' });
+      } else {
+        group.date = group.date.slice(0, 7);
+      }
       return group;
     });
 
@@ -210,7 +219,6 @@ export default function Stats() {
     filteredData.playTime = Object.values(timeDistributionData);
 
     setChartData(filteredData);
-    console.log(filteredData);
   }, [dataRange, status, data]);
 
   // Loading and error
