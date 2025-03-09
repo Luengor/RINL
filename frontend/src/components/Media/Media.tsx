@@ -71,6 +71,39 @@ export default function Media() {
     }
   });
 
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    let timeout_id: NodeJS.Timeout = null;
+
+    const sendVideoSize = () => {
+      if (inputVideoRef.current) {
+        const msg = {
+          width: inputVideoRef.current.videoWidth,
+          height: inputVideoRef.current.videoHeight
+        };
+
+        if (msg.width === 0 || msg.height === 0) {
+          timeout_id = setTimeout(sendVideoSize, 5000);
+          return;
+        }
+
+        console.log("Sending video size", msg);
+        sendMessage("JSConnector", "SetVideoSize", JSON.stringify(msg));
+        timeout_id = setTimeout(sendVideoSize, 5000);
+      }
+    }
+
+    sendVideoSize();
+
+    return () => {
+      // Cancel the interval
+      if (timeout_id !== null) {
+        clearTimeout(timeout_id);
+      }
+    }
+  });
+
   // Render
   let content = <Loader type="dots" size="xl"/>;
   if (videoStream) {
