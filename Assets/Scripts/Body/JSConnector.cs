@@ -9,8 +9,8 @@ public class JSConnector : MonoBehaviour
         body.UpdateBodyLandmarks(landmarkString);
     }
 
-    public void SetImageSize(string sizeString)
+    public void SetVideoSize(string sizeString)
     {
-        body.SetImageSize(sizeString);
+        body.SetVideoSize(sizeString);
     }
 }

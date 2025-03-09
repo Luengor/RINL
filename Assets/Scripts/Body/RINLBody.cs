@@ -151,7 +151,7 @@ public class RINLBody : MonoBehaviour
         }
     }
 
-    public void SetImageSize(string sizeString)
+    public void SetVideoSize(string sizeString)
     {
         imageSize = JsonUtility.FromJson<ImageSize>(sizeString);
     }
