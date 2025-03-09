@@ -35,6 +35,8 @@ export async function predict(
     inputVideoRef: React.RefObject<HTMLVideoElement>,
     resultFunc: (result: string) => void,
 ) {
+    if (!inputVideoRef.current) return;
+
     const start = performance.now();
     if (lastTime !== inputVideoRef.current.currentTime) {
         lastTime = inputVideoRef.current.currentTime;
