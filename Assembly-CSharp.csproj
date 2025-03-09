@@ -75,6 +75,7 @@
     <Compile Include="Assets/Scripts/Ballons/BalloonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonPopper.cs" />
     <Compile Include="Assets/Scripts/Generic/KeepUpWith.cs" />
+    <Compile Include="Assets/Scripts/Body/Calibrator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

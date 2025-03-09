@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 
 [System.Serializable]
-public struct CalibrationData
+public class CalibrationData
 {
-    public float imageGroundHeight;
+    public float imageGroundHeight = 0;
     public Vector2 worldImageRatio;
 
-    public CalibrationData(float groundHeight)
+    public CalibrationData()
     {
         imageGroundHeight = 0;
         worldImageRatio = Vector2.zero;
@@ -20,7 +20,7 @@ public class BodyCalibration
 
     public BodyCalibration()
     {
-        data = new CalibrationData(0.0f);
+        data = new CalibrationData();
     }
 
     public void InitialT(Landmarks landmarks)

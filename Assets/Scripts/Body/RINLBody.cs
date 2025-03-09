@@ -17,6 +17,14 @@ public class RINLBody : MonoBehaviour
     public LayerMask groundLayer;
     public float lerpSpeed = 15f;
     
+    public Landmarks Landmakrs
+    {
+        get
+        {
+            return lastLandmarks;
+        }
+    }
+
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[33];
 
@@ -38,9 +46,6 @@ public class RINLBody : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
-            calibration.InitialT(lastLandmarks);
-
         if (hasData)
         {
             // Calculate the hip position from the image landmarks
@@ -123,6 +128,11 @@ public class RINLBody : MonoBehaviour
 
         leftHand.LookAt((bodyLandmarks[17].localPosition + bodyLandmarks[19].localPosition) / 2);
         rightHand.LookAt((bodyLandmarks[18].localPosition + bodyLandmarks[20].localPosition) / 2);
+    }
+
+    public void UpdateCalibration(CalibrationData data)
+    {
+        calibration.data = data;
     }
 
     public void UpdateBodyLandmarks(string landmarkString)
