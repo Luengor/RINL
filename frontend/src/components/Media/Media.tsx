@@ -3,6 +3,8 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
 import { Center, Loader } from "@mantine/core";
 
+const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
+
 export default function Media() {
   // Prepare video
   const [videoStream, setVideoStream] = useState<MediaStream>(null);
@@ -14,6 +16,9 @@ export default function Media() {
     dataUrl: "/unity/Build/unity.data",
     frameworkUrl: "/unity/Build/unity.framework.js",
     codeUrl: "/unity/Build/unity.wasm",
+    webglContextAttributes: {
+      powerPreference: isOnMobile ? 1 : 2,
+    }
   });
 
   const getVideoStream = async () => {
@@ -33,8 +38,7 @@ export default function Media() {
   // Create pose landmarker and start detecting
   useEffect(() => {
     if (videoStream && !!unityProvider && isLoaded) {
-      const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
-      createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {
+      createPoseLandmarker(isOnMobile ? "lite" : "heavy").then((poseLandmarker) => {
         predict(poseLandmarker, inputVideoRef, (result) => {
           sendMessage("JSConnector", "SetBodyPosition", result);
         });

@@ -74,7 +74,7 @@ function Card({ title, children }: { title: string, children: React.ReactNode })
   return (
     <Col>
       <Paper shadow="md" p="md">
-        <Title order={3} mb="xl">{title}</Title>
+          <Title order={3} mb="xl" fw="inherit">{title}</Title>
         {children}
       </Paper>
     </Col>
