@@ -1,30 +1,55 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 enum CalibrationState
 {
     TPose,
-    Done
+    Bounds,
+    Done,
+    Exit
 }
 
 public class Calibrator : MonoBehaviour
 {
     public RINLBody body;
     public float stillTime = 3f, stillThreshold = 0.1f;
+    public TextMeshProUGUI infoText;
 
     private CalibrationState state = CalibrationState.TPose;
-    private BodyCalibration calibration = new BodyCalibration();
-    private Landmarks lastLandmarks = new();
+    private readonly BodyCalibration calibration = new();
+    private Landmarks lastLandmarks;
     private float timeLeft;
 
     private void Start()
     {
-        lastLandmarks = body.Landmakrs;
         timeLeft = stillTime;
+
+        // Change body settings
+        body.useGroundHeight = false;
+        body.fixedPosition = true;
+
+        // Set the camera position to have the body in the right
+        Camera cam = Camera.main;
+        float camWidth = cam.orthographicSize * cam.aspect;
+        cam.transform.position = new Vector3(camWidth * 0.6f, 0, 10);
+
+
+        // Set the info text
+        infoText.text = "Colócate justo enfrente de la cámara, lo suficientemente lejos como para que se vea tu cuerpo al completo.\nExtiende los brazos y pon las piernas a la altura de los hombros, haciendo una T con tu cuerpo.\nMantén la posición unos segundos.";
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(calibration.data.bounds.center * body.pointScale, calibration.data.bounds.size * body.pointScale);
     }
 
     void FixedUpdate()
     {
+        if (state == CalibrationState.Exit)
+            return;
+
         Landmarks newLandmarks = body.Landmakrs;
 
         if (lastLandmarks.world == null)
@@ -39,7 +64,12 @@ public class Calibrator : MonoBehaviour
                 TPoseCalibration(newLandmarks);
                 break;
             
+            case CalibrationState.Bounds:
+                BoundsCalibration(newLandmarks);
+                break;
+            
             case CalibrationState.Done:
+                body.UpdateCalibration(calibration.data);
                 break;
         }
 
@@ -56,14 +86,7 @@ public class Calibrator : MonoBehaviour
         }
 
         // Check if the body is still
-        float diff = 0;
-        for (int i = 0; i < 33; i++)
-        {
-            diff += Vector3.SqrMagnitude(
-                new Vector3(newLandmarks.world[i].x - lastLandmarks.world[i].x,
-                            newLandmarks.world[i].y - lastLandmarks.world[i].y,
-                            newLandmarks.world[i].z - lastLandmarks.world[i].z));
-        }
+        float diff = newLandmarks.SqrDistance3(lastLandmarks);
 
         if (diff > stillThreshold * 33)
         {
@@ -75,7 +98,32 @@ public class Calibrator : MonoBehaviour
         if (timeLeft <= 0)
         {
             calibration.InitialT(newLandmarks);
+
+            state = CalibrationState.Bounds;
+            timeLeft = stillTime;
+            infoText.text = "Muevete hacia la derecha y la izquierda hasta donde puedas sin salir de la cámara.\nCuando acabes, mantén la posición unos segundos.";
+        }
+    }
+
+    private void BoundsCalibration(Landmarks newLandmarks)
+    {
+        // Add the landmarks to the bounds
+        if (calibration.GrowBounds(newLandmarks))
+            timeLeft = stillTime;
+        
+        // Check if the body is still
+        float diff = newLandmarks.SqrDistance3(lastLandmarks);
+        if (diff > stillThreshold * 33)
+        {
+            timeLeft = stillTime;
+            return;
+        }
+        
+        timeLeft -= Time.fixedDeltaTime;
+        if (timeLeft <= 0)
+        {
             state = CalibrationState.Done;
+            infoText.text = "Calibración completada.";
         }
     }
 
