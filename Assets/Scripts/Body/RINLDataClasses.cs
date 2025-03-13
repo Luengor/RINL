@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public static class Constants
@@ -70,3 +71,12 @@ public struct ImageSize
     public int height;
 }
 
+[System.Serializable]
+public struct Activity
+{
+    public DateTime date;
+    public string minigame;
+    public int duration;
+    public int activity_points;
+    public string extra_data;
+}
