@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
 import { Center, Loader } from "@mantine/core";
+import { ActivityBase, createActivityActivityPost } from "../../client";
 
 const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
 
@@ -53,7 +54,7 @@ export default function Media() {
   // Custom event type expanding Event
   interface UnityEvent extends Event {
     data: {
-      type: string;
+      type: "activity";
       payload: object;
     };
   }
@@ -64,7 +65,18 @@ export default function Media() {
     const callback = (e: Event) => {
       // Do smth with the event 
       const {type: t, payload: p} = (e as UnityEvent).data;
-      console.log(t, p);
+
+      switch (t) {
+        // Handle activity event
+        case "activity":
+          createActivityActivityPost({
+            body: p as ActivityBase
+          })
+          break;
+
+        default:
+          console.log("Unknown event", t, p);
+      }
     };
 
     window.addEventListener("unity2react", callback);
