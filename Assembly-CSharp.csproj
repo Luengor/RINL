@@ -73,6 +73,7 @@
     <Compile Include="Assets/Scripts/Body/RINLBody.cs" />
     <Compile Include="Assets/Scripts/Body/JSConnector.cs" />
     <Compile Include="Assets/Scripts/Body/DebugServer.cs" />
+    <Compile Include="Assets/Scripts/Body/BodyPart.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonPopper.cs" />
     <Compile Include="Assets/Scripts/Generic/KeepUpWith.cs" />

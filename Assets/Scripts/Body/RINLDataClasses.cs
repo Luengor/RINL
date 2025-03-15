@@ -7,6 +7,28 @@ public static class Constants
 }
 
 [System.Serializable]
+public enum LandmarkNames
+{
+    Nose = 0,
+    LeftEye = 2,
+    RightEye = 5,
+    LeftEar = 8,
+    RightEar = 7,
+    LeftShoulder = 11,
+    RightShoulder = 12,
+    LeftElbow = 13,
+    RightElbow = 14,
+    LeftWrist = 15,
+    RightWrist = 16,
+    LeftHip = 23,
+    RightHip = 24,
+    LeftKnee = 25,
+    RightKnee = 26,
+    LeftAnkle = 27,
+    RightAnkle = 28
+}
+
+[System.Serializable]
 public struct Landmark
 {
     public float x;

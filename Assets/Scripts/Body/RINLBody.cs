@@ -1,12 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RINLBody : MonoBehaviour
 {
     [Header("Transforms")]
-    public Transform head;
-    public Transform rightHand, leftHand;
-    public Transform hips;
     public Transform points;
+
+    [Header("Body parts")]
+    public Transform bodyParent;
+    public GameObject bodySegmentPrefab, bodyJointPrefab;
+    public BodyPart[] bodyParts;
+    private List<GameObject[]> bodyPartObjects;
 
     [Header("Point transformation settings")]
     [Tooltip("Flip the x-axis of the points")]
@@ -47,6 +51,41 @@ public class RINLBody : MonoBehaviour
         // Get the body landmarks from the points object 
         for (int i = 0; i < Constants.LANDMARKS; i++)
             bodyLandmarks[i] = points.GetChild(i);
+
+        // Create the body parts
+        bodyPartObjects = new List<GameObject[]>();
+        foreach (BodyPart part in bodyParts)
+        {
+            GameObject[] segmentObjects = new GameObject[part.segments.Length * 2];
+
+            // Instantiate the segments and joints
+            for (int i = 0; i < part.segments.Length; i++)
+            {
+                segmentObjects[i] = Instantiate(bodySegmentPrefab, bodyParent);
+                segmentObjects[i].name = part.name + " Segment " + i;
+                segmentObjects[i].transform.localScale = new Vector3(part.segments[i].width, 1, part.segments[i].width);
+
+                segmentObjects[i + part.segments.Length] = Instantiate(bodyJointPrefab, bodyParent);
+                segmentObjects[i + part.segments.Length].name = part.name + " Joint " + i;
+                segmentObjects[i + part.segments.Length].transform.localScale = Vector3.one * part.segments[i].jointSize;
+            }
+
+            // If end object is set, set it as a child of the last joint 
+            if (!string.IsNullOrEmpty(part.moveEndObject))
+            {
+                Transform endObject = transform.Find(part.moveEndObject);
+                if (endObject != null)
+                {
+                    endObject.SetParent(segmentObjects[part.segments.Length * 2 - 1].transform);
+                    endObject.localPosition = Vector3.zero;
+                } else {
+                    Debug.LogError("End object not found: " + part.moveEndObject);
+                }
+            }
+
+            bodyPartObjects.Add(segmentObjects);
+        }
+        
     }
 
     private void FixedUpdate()
@@ -117,24 +156,48 @@ public class RINLBody : MonoBehaviour
 
     private void MoveBodyParts()
     {
-        // Head
-        head.localPosition = (bodyLandmarks[7].localPosition + bodyLandmarks[8].localPosition) / 2; 
-        Vector3 headUp = Vector3.Cross(bodyLandmarks[8].localPosition - bodyLandmarks[7].localPosition, bodyLandmarks[0].localPosition - head.localPosition);
-        head.LookAt(bodyLandmarks[0], headUp * -1);
+        // Body parts
+        for (int i = 0; i < bodyParts.Length; i++)
+        {
+            BodyPart part = bodyParts[i];
+            GameObject[] objects = bodyPartObjects[i];
 
-        // Hips
-        hips.localPosition = (bodyLandmarks[23].localPosition + bodyLandmarks[24].localPosition) / 2;
-        Vector3 shoulderAvg = (bodyLandmarks[11].localPosition + bodyLandmarks[12].localPosition) / 2;
-        Vector3 hipUp = shoulderAvg - hips.localPosition;
-        Vector3 hipForward = Vector3.Cross(bodyLandmarks[24].localPosition - bodyLandmarks[23].localPosition, shoulderAvg - hips.localPosition);
-        hips.LookAt(hipForward + hips.localPosition, hipUp);
+            for (int j = 0; j < part.segments.Length; j++)
+            {
+                Transform segment = objects[j].transform;
 
-        // Hands
-        leftHand.localPosition = (bodyLandmarks[15].localPosition + bodyLandmarks[17].localPosition + bodyLandmarks[19].localPosition) / 3;
-        rightHand.localPosition = (bodyLandmarks[16].localPosition + bodyLandmarks[18].localPosition + bodyLandmarks[20].localPosition) / 3;
+                // Calculate the real start and end positions
+                Vector3 start = bodyLandmarks[(int)part.segments[j].start].localPosition;
+                Vector3 end = bodyLandmarks[(int)part.segments[j].end].localPosition;
+                float distance = Vector3.Distance(start, end);
+                Vector3 header = (end - start) / distance;
 
-        leftHand.LookAt((bodyLandmarks[17].localPosition + bodyLandmarks[19].localPosition) / 2);
-        rightHand.LookAt((bodyLandmarks[18].localPosition + bodyLandmarks[20].localPosition) / 2);
+                // Set the end joint position
+                Transform endJoint = objects[j + part.segments.Length].transform;
+                endJoint.localPosition = end;
+
+                // Offset by the end joint
+                distance -= part.segments[j].jointSize / 2 + part.jointGap;
+
+                // Offset by the previous joint
+                if (j != 0)
+                {
+                    Vector3 offset = header * (part.segments[j - 1].jointSize / 2 + part.jointGap);
+                    start += offset;
+                    distance -= part.segments[j - 1].jointSize / 2 + part.jointGap;
+                }
+
+                // Set the segment position and scale
+                segment.localScale = new Vector3(
+                    part.segments[j].width,
+                    distance / 2,
+                    part.segments[j].width
+                );
+
+                segment.up = header;
+                segment.localPosition = start;
+            }
+        }
     }
 
     public void UpdateCalibration(CalibrationData data)
