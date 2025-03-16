@@ -39,4 +39,12 @@ public class DebugServer : MonoBehaviour
             }
         }
     }
+
+    void OnDestroy()
+    {
+        if (socket != null)
+        {
+            socket.Close();
+        }
+    }
 }

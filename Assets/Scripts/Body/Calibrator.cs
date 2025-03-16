@@ -32,7 +32,9 @@ public class Calibrator : MonoBehaviour
         // Set the camera position to have the body in the right
         Camera cam = Camera.main;
         float camWidth = cam.orthographicSize * cam.aspect;
+        cam.orthographic = true;
         cam.transform.position = new Vector3(camWidth * 0.6f, 0, 10);
+        cam.transform.eulerAngles = new Vector3(0, 180, 0);
 
 
         // Set the info text
@@ -70,6 +72,10 @@ public class Calibrator : MonoBehaviour
             
             case CalibrationState.Done:
                 body.UpdateCalibration(calibration.data);
+
+                GameController.CalibrationData = calibration.data;
+                SceneScript.Instance.SetBool("Calibrated", true);
+                Debug.Log(SceneScript.Instance);
                 break;
         }
 

@@ -48,6 +48,10 @@ public class RINLBody : MonoBehaviour
 
     private void Start()
     {
+        // Get the calibration data from the game controller
+        if (GameController.CalibrationData != null)
+            calibration = GameController.CalibrationData;
+
         // Get the body landmarks from the points object 
         for (int i = 0; i < Constants.LANDMARKS; i++)
             bodyLandmarks[i] = points.GetChild(i);

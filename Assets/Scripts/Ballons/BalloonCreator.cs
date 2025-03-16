@@ -12,8 +12,13 @@ public class BalloonCreator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (GameController.CalibrationData == null)
+            return;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(b.center, b.size);
+
+        var bounds = GameController.CalibrationData.bounds;
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
 
     private void Start()
