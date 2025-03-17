@@ -8,6 +8,7 @@ public class BalloonCreator : MonoBehaviour
     public AnimationCurve spawnTimeCurve;
 
     private float spawnTimer, startTime;
+    private bool gaming = false;
 
 
     private void OnDrawGizmos()
@@ -21,20 +22,34 @@ public class BalloonCreator : MonoBehaviour
         Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
 
-    private void Start()
-    {
-        startTime = Time.time;
-        spawnTimer = GetSpawnTime();
-    }
-
     private float GetSpawnTime()
     {
         return spawnTimeCurve.Evaluate(Time.time - startTime);
     }
 
+    public void StartGame()
+    {
+        startTime = Time.time;
+        spawnTimer = GetSpawnTime();
+        gaming = true;
+
+        if (GameController.CalibrationData != null)
+        {
+            b = GameController.CalibrationData.bounds;
+        }
+    }
+
+    public void StopGame()
+    {
+        gaming = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (!gaming)
+            return;
+
         spawnTimer -= Time.deltaTime;
 
         if (spawnTimer <= 0)

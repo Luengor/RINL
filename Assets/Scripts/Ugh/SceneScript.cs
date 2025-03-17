@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SceneScript : MonoBehaviour
 {
+    public GameObject[] objects;
+
     public static SceneScript Instance { get; private set; }
     private Animator animator;
 
