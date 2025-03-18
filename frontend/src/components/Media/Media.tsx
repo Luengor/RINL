@@ -41,7 +41,7 @@ export default function Media() {
     if (videoStream && !!unityProvider && isLoaded) {
       createPoseLandmarker(isOnMobile ? "lite" : "heavy").then((poseLandmarker) => {
         predict(poseLandmarker, inputVideoRef, (result) => {
-          sendMessage("JSConnector", "SetBodyPosition", result);
+          sendMessage("GameController", "SetBodyPosition", result);
         });
 
         return () => {
