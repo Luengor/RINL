@@ -66,7 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/Scripts/Ballons/BallonGame.cs" />
+    <Compile Include="Assets/Scripts/Ugh/JSConnector.cs" />
     <Compile Include="Assets/Scenes/MainMenu/Calibrate.cs" />
+    <Compile Include="Assets/Scripts/Ugh/DebugServer.cs" />
     <Compile Include="Assets/Scripts/Generic/MouseThing.cs" />
     <Compile Include="Assets/Scenes/MainMenu/CheckCalibration.cs" />
     <Compile Include="Assets/Scripts/Ugh/SceneScript.cs" />
@@ -76,8 +78,6 @@
     <Compile Include="Assets/Scripts/Ballons/Balloon.cs" />
     <Compile Include="Assets/Scripts/Generic/RotateAround.cs" />
     <Compile Include="Assets/Scripts/Body/RINLBody.cs" />
-    <Compile Include="Assets/Scripts/Body/JSConnector.cs" />
-    <Compile Include="Assets/Scripts/Body/DebugServer.cs" />
     <Compile Include="Assets/Scripts/Body/BodyPart.cs" />
     <Compile Include="Assets/Scripts/Ugh/GameController.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonCreator.cs" />
