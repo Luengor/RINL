@@ -239,4 +239,15 @@ public class RINLBody : MonoBehaviour
     {
         imageSize = JsonUtility.FromJson<ImageSize>(sizeString);
     }
+
+    public void ResetActivityPoints()
+    {
+        // TODO
+    }
+
+    public int GetActivityPoints()
+    {
+        // TODO
+        return 100;
+    }
 }

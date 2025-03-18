@@ -371,6 +371,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  balloonsPopped: 0
 --- !u!1 &1054374694
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,7 +985,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A
+  m_text: hola
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -993,7 +994,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 150994943
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 0.03137255}
   m_enableVertexGradient: 0
   m_colorMode: 3

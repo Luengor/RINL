@@ -15,6 +15,14 @@ public class SetText : MonoBehaviour
     {
         ObjText data = JsonUtility.FromJson<ObjText>(jsonData);
         GameObject obj = GameObject.Find(data.obj);
-        obj.GetComponent<TextMeshProUGUI>().text = data.text;
+
+        Activity activity = GameController.Instance.GetActivityData();
+        string formatedText = data.text
+            .Replace("//score", GameController.Instance.GetScore().ToString())
+            .Replace("//activity_points", activity.activity_points.ToString())
+            .Replace("//duration", activity.duration.ToString())
+            .Replace("//extra_data", activity.extra_data);
+
+        obj.GetComponent<TextMeshProUGUI>().text = formatedText;
     }
 }

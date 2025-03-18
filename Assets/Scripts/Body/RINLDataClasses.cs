@@ -6,7 +6,7 @@ public static class Constants
     public const int LANDMARKS = 33;
 }
 
-[System.Serializable]
+[Serializable]
 public enum LandmarkNames
 {
     Nose = 0,
@@ -28,7 +28,7 @@ public enum LandmarkNames
     RightAnkle = 28
 }
 
-[System.Serializable]
+[Serializable]
 public struct Landmark
 {
     public float x;
@@ -59,7 +59,7 @@ public struct Landmarks
     public Landmark[] world;
     public Landmark[] image;
     
-    private int size;
+    private readonly int size;
 
     public Landmarks(int size)
     {
@@ -86,14 +86,14 @@ public struct Landmarks
     }
 }
 
-[System.Serializable]
+[Serializable]
 public struct ImageSize
 {
     public int width;
     public int height;
 }
 
-[System.Serializable]
+[Serializable]
 public struct Activity
 {
     public DateTime date;

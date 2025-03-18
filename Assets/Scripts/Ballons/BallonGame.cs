@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BallonGame : StateMachineBehaviour
 {
+    public int score = 0;
     public int gameDuration = 60;
     public Color timerColor = new(1, 1, 1, 0.5f);
     private float timer = 0;
@@ -19,7 +20,7 @@ public class BallonGame : StateMachineBehaviour
         var timerObj = SceneScript.Instance.objects[2].GetComponent<TMPro.TextMeshProUGUI>();
         timerObj.color = timerColor; 
         timerObj.enableAutoSizing = true;
-        timerObj.autoSizeTextContainer = true;
+        // timerObj.autoSizeTextContainer = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -37,6 +38,9 @@ public class BallonGame : StateMachineBehaviour
 
             // Stop the game
             SceneScript.Instance.objects[1].GetComponent<BalloonCreator>().StopGame();
+
+            // Deactivate the scene
+            SceneScript.Instance.objects[0].SetActive(false);
         }
     }
 

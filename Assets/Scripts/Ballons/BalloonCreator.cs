@@ -7,6 +7,9 @@ public class BalloonCreator : MonoBehaviour
     public GameObject balloonPrefab;
     public AnimationCurve spawnTimeCurve;
 
+    [HideInInspector]
+    public int balloonsPopped = 0;
+
     private float spawnTimer, startTime;
     private bool gaming = false;
 
@@ -42,6 +45,7 @@ public class BalloonCreator : MonoBehaviour
     public void StopGame()
     {
         gaming = false;
+        GameController.Instance.SetScore(balloonsPopped, 60, "{\"score\": " + balloonsPopped + "}");    
     }
 
     // Update is called once per frame
