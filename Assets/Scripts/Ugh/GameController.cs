@@ -5,6 +5,18 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public static CalibrationData CalibrationData = null;
 
+    public RINLBody Body {
+        get {
+            if (body == null || !body.gameObject.activeInHierarchy)
+                body = FindFirstObjectByType<RINLBody>(FindObjectsInactive.Exclude);
+
+            if (body == null)
+                body = FindFirstObjectByType<RINLBody>(FindObjectsInactive.Include);
+
+            return body;
+        }
+    }
+
     private RINLBody body = null;
     private Activity activityData = new();
     private int score = 0;
@@ -19,6 +31,7 @@ public class GameController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
+
     public void ChangeScene(string sceneName)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);

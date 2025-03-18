@@ -20,7 +20,6 @@ public class BallonGame : StateMachineBehaviour
         var timerObj = SceneScript.Instance.objects[2].GetComponent<TMPro.TextMeshProUGUI>();
         timerObj.color = timerColor; 
         timerObj.enableAutoSizing = true;
-        // timerObj.autoSizeTextContainer = true;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

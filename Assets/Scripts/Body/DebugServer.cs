@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DebugServer : MonoBehaviour
 {
-    public RINLBody rINLBody;
-
     public string serverIP = "127.0.0.1";
     public int serverPort = 8764;
     private Socket socket;
@@ -33,7 +31,7 @@ public class DebugServer : MonoBehaviour
             string data = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
             try {
-                rINLBody.UpdateBodyLandmarks(data);
+                GameController.Instance.Body.UpdateBodyLandmarks(data);
             } catch (Exception e) {
                 Debug.LogWarning(e);
             }
