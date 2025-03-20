@@ -93,10 +93,7 @@ public class RINLBody : MonoBehaviour
     private void FixedUpdate()
     {
         // Get the landmarks from the JS connector and convert them
-        if (GameController.Instance.JsConnector.hasNewData)
-        {
-            lastLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
-        }
+        lastLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
 
         if (lastLandmarks.image == null)
             return;

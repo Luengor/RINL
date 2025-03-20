@@ -3,25 +3,11 @@ using UnityEngine;
 
 public class JSConnector : MonoBehaviour
 {
-    public bool hasNewData { get; private set; } = false;
-    public Landmarks LatestLandmarks
-    {
-        get
-        {
-            hasNewData = false;
-            return latestLandmarks;
-        }
-        private set
-        {
-            latestLandmarks = value;
-            hasNewData = true;
-        }
-    }
+    public Landmarks LatestLandmarks { get; private set; }
 
     [DllImport("__Internal")]
     private static extern void SendToReact(string message);
     private ImageSize imageSize = new() { width = 640, height = 480 };
-    private Landmarks latestLandmarks = new();
 
     public void SetBodyPosition(string landmarkString)
     {
