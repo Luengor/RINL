@@ -150,7 +150,7 @@ public class RINLBody : MonoBehaviour
     {
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newWorldPos = new Vector3(
-            lastLandmarks.world[index].x,
+            lastLandmarks.world[index].x * (flipX ? -1 : 1),
             lastLandmarks.world[index].y,
             lastLandmarks.world[index].z
         );
