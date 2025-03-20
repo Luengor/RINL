@@ -39,9 +39,7 @@ public class RINLBody : MonoBehaviour
 
     private CalibrationData calibration = new();
 
-    private bool hasData = false;
     private Landmarks lastLandmarks = new();
-    private ImageSize imageSize = new() { width = 640, height = 480 };
 
     // The position of the hip calculated from the image landmarks
     private Vector3 worldHipPosition = new();
@@ -94,17 +92,23 @@ public class RINLBody : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (hasData)
+        // Get the landmarks from the JS connector and convert them
+        if (GameController.Instance.JsConnector.hasNewData)
         {
-            // Calculate the hip position from the image landmarks
-            CalulateHipPosition();
-
-            // Move all body points using the landmarks and the hip position
-            MoveBody();
-
-            // Move the body parts
-            MoveBodyParts();
+            lastLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
         }
+
+        if (lastLandmarks.image == null)
+            return;
+
+        // Calculate the hip position from the image landmarks
+        CalulateHipPosition();
+
+        // Move all body points using the landmarks and the hip position
+        MoveBody();
+
+        // Move the body parts
+        MoveBodyParts();
     }
 
     private void CalulateHipPosition()
@@ -207,37 +211,6 @@ public class RINLBody : MonoBehaviour
     public void UpdateCalibration(CalibrationData data)
     {
         calibration = data;
-    }
-
-    public void UpdateBodyLandmarks(string landmarkString)
-    {
-        hasData = true;
-        lastLandmarks = JsonUtility.FromJson<Landmarks>(landmarkString);
-
-        // Convert the landmarks
-        for (int i = 0; i < lastLandmarks.world.Length; i++)
-        {
-            // Flip the 3D landmarks
-            lastLandmarks.world[i].x *= flipX ? -1 : 1;
-            lastLandmarks.world[i].y *= -1;
-            lastLandmarks.world[i].z *= -1;
-
-            // Calculate aspect ratio
-            float aspect = (float)imageSize.width / imageSize.height;
-
-            // Flip and change the range of the image landmarks
-            lastLandmarks.image[i].x = lastLandmarks.image[i].x * aspect * 2 - aspect;
-            if (flipX)
-                lastLandmarks.image[i].x *= -1;
-            lastLandmarks.image[i].y = 1 - lastLandmarks.image[i].y;
-
-            // lastLandmarks.image[i].z *= -aspect;
-        }
-    }
-
-    public void SetVideoSize(string sizeString)
-    {
-        imageSize = JsonUtility.FromJson<ImageSize>(sizeString);
     }
 
     public void ResetActivityPoints()

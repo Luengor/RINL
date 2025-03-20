@@ -31,7 +31,7 @@ public class DebugServer : MonoBehaviour
             string data = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
             try {
-                GameController.Instance.Body.UpdateBodyLandmarks(data);
+                GameController.Instance.JsConnector.SetBodyPosition(data);
             } catch (Exception e) {
                 Debug.LogWarning(e);
             }
@@ -40,9 +40,6 @@ public class DebugServer : MonoBehaviour
 
     void OnDestroy()
     {
-        if (socket != null)
-        {
-            socket.Close();
-        }
+        socket?.Close();
     }
 }

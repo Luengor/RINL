@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
     public static CalibrationData CalibrationData = null;
+    public JSConnector JsConnector { get; private set; }
 
     public RINLBody Body {
         get {
@@ -30,7 +32,12 @@ public class GameController : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
-    
+
+    private void Start()
+    {
+        JsConnector = GetComponent<JSConnector>(); 
+    }
+
 
     public void ChangeScene(string sceneName)
     {
