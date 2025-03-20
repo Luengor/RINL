@@ -16,7 +16,7 @@ public class BalloonCreator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (GameController.CalibrationData == null)
+        if (GameController.CalibrationData.calibrated == false)
             return;
 
         Gizmos.color = Color.red;
@@ -36,7 +36,7 @@ public class BalloonCreator : MonoBehaviour
         spawnTimer = GetSpawnTime();
         gaming = true;
 
-        if (GameController.CalibrationData != null)
+        if (GameController.CalibrationData.calibrated == false)
         {
             b = GameController.CalibrationData.bounds;
         }

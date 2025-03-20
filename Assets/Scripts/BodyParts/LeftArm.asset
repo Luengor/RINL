@@ -17,10 +17,10 @@ MonoBehaviour:
   segments:
   - start: 11
     end: 13
-    width: 0.2
-    jointSize: 0.2
+    width: 0.1
+    jointSize: 0.1
   - start: 13
     end: 15
-    width: 0.15
-    jointSize: 0.2
+    width: 0.075
+    jointSize: 0.1
   moveEndObject: LeftHand

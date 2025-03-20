@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
-    public static CalibrationData CalibrationData = null;
+    public static CalibrationData CalibrationData = new();
     public JSConnector JsConnector { get; private set; }
 
     public RINLBody Body {

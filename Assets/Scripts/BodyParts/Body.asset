@@ -17,17 +17,18 @@ MonoBehaviour:
   segments:
   - start: 12
     end: 11
-    width: 0.15
+    width: 0.075
     jointSize: 0
   - start: 11
     end: 23
-    width: 0.15
+    width: 0.075
     jointSize: 0
   - start: 23
     end: 24
-    width: 0.15
+    width: 0.075
     jointSize: 0
   - start: 24
     end: 12
-    width: 0.15
+    width: 0.075
     jointSize: 0
+  moveEndObject: 

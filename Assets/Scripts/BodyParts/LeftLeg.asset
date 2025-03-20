@@ -17,9 +17,10 @@ MonoBehaviour:
   segments:
   - start: 23
     end: 25
-    width: 0.25
-    jointSize: 0.25
+    width: 0.125
+    jointSize: 0.125
   - start: 25
     end: 27
-    width: 0.2
-    jointSize: 0.2
+    width: 0.1
+    jointSize: 0.1
+  moveEndObject: 

@@ -18,7 +18,7 @@ public class Calibrator : MonoBehaviour
 
     private CalibrationState state = CalibrationState.TPose;
     private readonly BodyCalibration calibration = new();
-    private Landmarks lastLandmarks;
+    private RawLandmarks lastLandmarks;
     private float timeLeft;
 
     private void Start()
@@ -26,7 +26,6 @@ public class Calibrator : MonoBehaviour
         timeLeft = stillTime;
 
         // Change body settings
-        body.useGroundHeight = false;
         body.fixedPosition = true;
 
         // Set the camera position to have the body in the right
@@ -44,7 +43,7 @@ public class Calibrator : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(calibration.data.bounds.center * body.pointScale, calibration.data.bounds.size * body.pointScale);
+        Gizmos.DrawWireCube(calibration.data.bounds.center, calibration.data.bounds.size);
     }
 
     void FixedUpdate()
@@ -52,7 +51,7 @@ public class Calibrator : MonoBehaviour
         if (state == CalibrationState.Exit)
             return;
 
-        Landmarks newLandmarks = body.Landmakrs;
+        RawLandmarks newLandmarks = GameController.Instance.JsConnector.RawLandmarks;
 
         if (lastLandmarks.world == null)
         {
@@ -71,8 +70,6 @@ public class Calibrator : MonoBehaviour
                 break;
             
             case CalibrationState.Done:
-                body.UpdateCalibration(calibration.data);
-
                 GameController.CalibrationData = calibration.data;
                 SceneScript.Instance.SetBool("Calibrated", true);
                 Debug.Log(SceneScript.Instance);
@@ -82,7 +79,7 @@ public class Calibrator : MonoBehaviour
         lastLandmarks = newLandmarks;
     }
 
-    private void TPoseCalibration(Landmarks newLandmarks)
+    private void TPoseCalibration(RawLandmarks newLandmarks)
     {
         // Check if the body is in a T pose
         if (!IsTPose(newLandmarks))
@@ -104,6 +101,7 @@ public class Calibrator : MonoBehaviour
         if (timeLeft <= 0)
         {
             calibration.InitialT(newLandmarks);
+            GameController.CalibrationData = calibration.data;
 
             state = CalibrationState.Bounds;
             timeLeft = stillTime;
@@ -111,7 +109,7 @@ public class Calibrator : MonoBehaviour
         }
     }
 
-    private void BoundsCalibration(Landmarks newLandmarks)
+    private void BoundsCalibration(RawLandmarks newLandmarks)
     {
         // Add the landmarks to the bounds
         if (calibration.GrowBounds(newLandmarks))
@@ -133,7 +131,7 @@ public class Calibrator : MonoBehaviour
         }
     }
 
-    private bool IsTPose(Landmarks landmarks)
+    private bool IsTPose(RawLandmarks landmarks)
     {
         // Left hand and right hand are at the same height
         if (Mathf.Abs(landmarks.image[15].y - landmarks.image[16].y) > 0.1f)

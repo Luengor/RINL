@@ -4,9 +4,29 @@ using UnityEngine;
 [Serializable]
 public class CalibrationData
 {
-    public float imageGroundHeight = 0;
-    public Vector2 worldImageRatio = Vector2.zero;
+    public bool calibrated = false;
+    public float groundHeight = 0;
+    public float realOverImageRatio = 1;
     public Bounds bounds = new();
+
+    public Landmarks TransformLandmarks(RawLandmarks rawLandmarks)
+    {
+        // Apply the calibration data to the landmarks
+        Landmarks landmarks = new()
+        {
+            points = new Landmark[33]
+        };
+
+        for (int i = 0; i < 33; i++)
+        {
+            landmarks.points[i].point = rawLandmarks.image[i].ToVector2() * this.realOverImageRatio;
+            landmarks.points[i].inImage = rawLandmarks.image[i].InImage();
+        }
+
+        landmarks.groundHeight = this.groundHeight;
+
+        return landmarks;
+    }
 };
 
 public class BodyCalibration
@@ -18,31 +38,32 @@ public class BodyCalibration
         data = new CalibrationData();
     }
 
-    public BodyCalibration(CalibrationData data)
+    public void InitialT(RawLandmarks landmarks)
     {
-        this.data = data;
-    }
-
-    public void InitialT(Landmarks landmarks)
-    {
-        // Calculate the ratio between the image and world coordinates
-        data.worldImageRatio = CalculateWorldImage(landmarks);
-        Debug.Log(data.worldImageRatio);
+        // Calculate the ratio between the image and the real world using the height
+        data.realOverImageRatio = GetRealOverImage(landmarks); 
+        Debug.Log("Real / Image = " + data.groundHeight);
 
         // Calculate the ground height using the image landmarks
-        data.imageGroundHeight = CalculateGroundHeight(landmarks);
-        Debug.Log(data.imageGroundHeight);
+        data.groundHeight = CalculateGroundHeight(landmarks);
+        Debug.Log("Ground height = " + data.groundHeight);
+    }
+
+    public bool GrowBounds(RawLandmarks landmarks)
+    {
+        return GrowBounds(data.TransformLandmarks(landmarks));
     }
 
     public bool GrowBounds(Landmarks landmarks)
     {
         bool grown = false;
+
         // Only grow the bounds if the landmark is in the image
         for (int i = 0; i < 33; i++)
-            if (landmarks.image[i].InImage())
+            if (landmarks.points[i].inImage)
             {
-                Vector3 point = GetCombinedWorldLandmark(landmarks, i);
-                if (point.y > data.imageGroundHeight * data.worldImageRatio.y && !data.bounds.Contains(point))
+                Vector2 point = landmarks.points[i].point;
+                if (point.y > data.groundHeight && !data.bounds.Contains(point))
                 {
                     data.bounds.Encapsulate(point);
                     grown = true;
@@ -53,44 +74,37 @@ public class BodyCalibration
         return grown;
     }
 
-    public Vector3 GetCombinedWorldLandmark(Landmarks landmarks, int index)
-    {
-        return landmarks.world[index].ToVector3() + new Vector3(
-            landmarks.image[index].x * data.worldImageRatio.x,
-            landmarks.image[index].y * data.worldImageRatio.y,
-            0
-        );
-    }
-
-    public bool IsFloating(Landmarks landmarks)
+    public bool IsFloating(RawLandmarks landmarks)
     {
         // Check if the body is floating
         for (int i = 0; i < 33; i++)
             if (landmarks.image[i].InImage())
-                if (landmarks.image[i].y < data.imageGroundHeight) 
+                if (landmarks.image[i].y < data.groundHeight) 
                     return false;
 
         return true;
     }
 
-    private float CalculateGroundHeight(Landmarks landmarks)
+    private float CalculateGroundHeight(RawLandmarks landmarks)
     {
         // Calculate the ground height using the image landmarks
-        float leftFootHeight = landmarks.image[29].y;
-        float rightFootHeight = landmarks.image[30].y;
+        float leftFootHeight = landmarks.image[(int)LandmarkNames.LeftAnkle].y;
+        float rightFootHeight = landmarks.image[(int)LandmarkNames.RightAnkle].y;
 
         return (leftFootHeight + rightFootHeight) / 2;
     }
 
-    private Vector2 CalculateWorldImage(Landmarks landmarks)
+    private float GetRealOverImage(RawLandmarks landmarks)
     {
-        // Using the hips and shoulders to calculate the ratio
-        float imageHipDistance = Math.Abs(landmarks.image[24].x - landmarks.image[23].x); 
-        float imageShoulderDistance = Math.Abs(landmarks.image[11].y - landmarks.image[23].y); 
+        // Get the height of the person in the image
+        float height = GameController.Instance.JsConnector.CurrentShape.height;
 
-        float worldHipDistance = Math.Abs(landmarks.world[24].x - landmarks.world[23].x);
-        float worldShoulderDistance = Math.Abs(landmarks.world[11].y - landmarks.world[23].y);
+        // Calculate the ratio between the image and the real world using the height
+        float rightHeight = Math.Abs(landmarks.image[(int)LandmarkNames.RightEar].y - landmarks.image[(int)LandmarkNames.RightAnkle].y);
+        float leftHeight = Math.Abs(landmarks.image[(int)LandmarkNames.LeftEar].y - landmarks.image[(int)LandmarkNames.LeftAnkle].y);
+        float avgHeight = (rightHeight + leftHeight) / 2;
 
-        return new (worldHipDistance / imageHipDistance, worldShoulderDistance / imageShoulderDistance);
+        // Asume the height from the ear to the top of the head is 15cm
+        return (height - .15f) / avgHeight;
     }
 }

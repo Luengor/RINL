@@ -30,11 +30,7 @@ public class DebugServer : MonoBehaviour
             int bytesRead = socket.Receive(buffer);
             string data = System.Text.Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-            try {
-                GameController.Instance.JsConnector.SetBodyPosition(data);
-            } catch (Exception e) {
-                Debug.LogWarning(e);
-            }
+            GameController.Instance.JsConnector.SetBodyPosition(data);
         }
     }
 
