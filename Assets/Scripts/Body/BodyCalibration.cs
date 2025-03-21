@@ -38,7 +38,7 @@ public class BodyCalibration
     {
         bool grown = false;
         // Only grow the bounds if the landmark is in the image
-        for (int i = 0; i < 33; i++)
+        for (int i = 0; i < Constants.LANDMARKS; i++)
             if (landmarks.image[i].InImage())
             {
                 Vector3 point = GetCombinedWorldLandmark(landmarks, i);
@@ -75,11 +75,7 @@ public class BodyCalibration
 
     private float CalculateGroundHeight(Landmarks landmarks)
     {
-        // Calculate the ground height using the image landmarks
-        float leftFootHeight = landmarks.image[29].y;
-        float rightFootHeight = landmarks.image[30].y;
-
-        return (leftFootHeight + rightFootHeight) / 2;
+        return (landmarks.image[(int)LandmarkNames.LeftAnkle].y + landmarks.image[(int)LandmarkNames.RightAnkle].y) / 2;
     }
 
     private Vector2 CalculateWorldImage(Landmarks landmarks)

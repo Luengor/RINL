@@ -26,14 +26,6 @@ public class RINLBody : MonoBehaviour
     [Tooltip("The speed of the lerp between the points")]
     public float lerpSpeed = 15f;
     
-    public Landmarks Landmakrs
-    {
-        get
-        {
-            return lastLandmarks;
-        }
-    }
-
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[Constants.LANDMARKS];
 
@@ -149,7 +141,7 @@ public class RINLBody : MonoBehaviour
     private Vector3 GetLandmarkPosition(int index)
     {
         Vector3 lastPos = bodyLandmarks[index].localPosition;
-        Vector3 newWorldPos = new Vector3(
+        Vector3 newWorldPos = new(
             lastLandmarks.world[index].x * (flipX ? -1 : 1),
             lastLandmarks.world[index].y,
             lastLandmarks.world[index].z

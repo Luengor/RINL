@@ -52,7 +52,7 @@ public class Calibrator : MonoBehaviour
         if (state == CalibrationState.Exit)
             return;
 
-        Landmarks newLandmarks = body.Landmakrs;
+        Landmarks newLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
 
         if (lastLandmarks.world == null)
         {
@@ -75,7 +75,6 @@ public class Calibrator : MonoBehaviour
 
                 GameController.CalibrationData = calibration.data;
                 SceneScript.Instance.SetBool("Calibrated", true);
-                Debug.Log(SceneScript.Instance);
                 break;
         }
 
