@@ -16,7 +16,7 @@ import {
 import { useEffect, useState } from 'react';
 import { getMeUserMeGet } from '../../client';
 import { useQuery } from '@tanstack/react-query';
-import { IconMail, IconUser, IconCalendar, IconCheck, IconX } from '@tabler/icons-react';
+import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
 import { client } from '../../client/client.gen';
 import { notifications } from '@mantine/notifications';
@@ -57,7 +57,7 @@ export default function Data() {
         title: 'Error',
         message: 'No se ha podido verificar tu correo electrónico',
         color: 'red',
-        icon: <IconX />
+        icon: <TbX />
       });
       verifyForm.setErrors({ pin: 'Código incorrecto' });
       return;
@@ -67,7 +67,7 @@ export default function Data() {
       title: 'Correo verificado',
       message: 'Tu correo electrónico ha sido verificado correctamente',
       color: 'green',
-      icon: <IconCheck/>
+      icon: <TbCheck/>
     });
     setVerifing(false);
     refetch();
@@ -125,7 +125,7 @@ export default function Data() {
             label="Nombre"
             key={dataForm.key('name')}
             {...dataForm.getInputProps('name')}
-            leftSection={<IconUser />}
+            leftSection={<TbUser />}
             placeholder='Nombre'
             readOnly={!data.verified}
           />
@@ -133,7 +133,7 @@ export default function Data() {
             label="Año de nacimiento"
             key={dataForm.key('year_of_birth')}
             {...dataForm.getInputProps('year_of_birth')}
-            leftSection={<IconCalendar />}
+            leftSection={<TbCalendar />}
             placeholder='2000'
             readOnly={!data.verified}
           />
@@ -142,7 +142,7 @@ export default function Data() {
               label="Correo electrónico"
               key={dataForm.key('email')}
               {...dataForm.getInputProps('email')}
-              leftSection={<IconMail />}
+              leftSection={<TbMail />}
               rightSection={
                 <Chip readOnly checked={data.verified}>
                   { data.verified ? 'Verificado' : 'Sin verificar' }

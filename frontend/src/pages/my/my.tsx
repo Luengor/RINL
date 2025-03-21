@@ -1,4 +1,4 @@
-import { IconDeviceDesktopAnalytics, IconDeviceGamepad, IconLogout, IconUser, Icon123 } from '@tabler/icons-react';
+import { TbDeviceDesktopAnalytics, TbDeviceGamepad, TbLogout, TbUser, TbAB } from 'react-icons/tb';
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { AppShell, Button, Modal, Stack } from '@mantine/core';
@@ -60,14 +60,14 @@ export default function My() {
       >
       <AppShell.Navbar p="md">
         <Navbar 
-          topLink={{ icon: Icon123, label: 'Dashboard', onClick: () => navigate('/') }}
+          topLink={{ icon: TbAB, label: 'Dashboard', onClick: () => navigate('/') }}
           mainLinks={[
-            { icon: IconUser, label: 'Cuenta', active: 'data' === active, onClick: () => navigate('/my/data') },
-            { icon: IconDeviceDesktopAnalytics, active: 'stats' === active, label: 'Stats', onClick: () => navigate('/my/stats') },
-            { icon: IconDeviceGamepad, label: 'Jugar', active: 'jugar' === active, onClick: () => navigate('/my/jugar') },
+            { icon: TbUser, label: 'Cuenta', active: 'data' === active, onClick: () => navigate('/my/data') },
+            { icon: TbDeviceDesktopAnalytics, active: 'stats' === active, label: 'Stats', onClick: () => navigate('/my/stats') },
+            { icon: TbDeviceGamepad, label: 'Jugar', active: 'jugar' === active, onClick: () => navigate('/my/jugar') },
           ]}
           bottomLinks={[
-            { icon: IconLogout, label: 'Salir', onClick: () => setLogoutModal(true) },
+            { icon: TbLogout, label: 'Salir', onClick: () => setLogoutModal(true) },
           ]}
         />
       </AppShell.Navbar>

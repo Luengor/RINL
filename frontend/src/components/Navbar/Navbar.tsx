@@ -1,9 +1,9 @@
 import { Stack, Tooltip, UnstyledButton } from '@mantine/core';
-import { Icon } from '@tabler/icons-react';
+import { IconType } from 'react-icons/lib';
 import classes from './Navbar.module.css';
 
 interface NavbarLinkProps {
-  icon: Icon;
+  icon: IconType;
   label: string;
   active?: boolean;
   onClick?: () => void;
@@ -13,7 +13,7 @@ function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
   return (
     <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
       <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
-        <Icon size={20} stroke={1.5} />
+        <Icon size={20} strokeWidth={1.5}/>
       </UnstyledButton>
     </Tooltip>
   );
