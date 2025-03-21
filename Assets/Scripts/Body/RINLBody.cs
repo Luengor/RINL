@@ -29,17 +29,11 @@ public class RINLBody : MonoBehaviour
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[Constants.LANDMARKS];
 
-    private CalibrationData calibration = new();
-
     private Landmarks landmarks;
 
 
     private void Start()
     {
-        // Get the calibration data from the game controller
-        if (GameController.CalibrationData.calibrated)
-            calibration = GameController.CalibrationData;
-
         // Get the body landmarks from the points object 
         for (int i = 0; i < Constants.LANDMARKS; i++)
             bodyLandmarks[i] = points.GetChild(i);
@@ -88,7 +82,7 @@ public class RINLBody : MonoBehaviour
         if (rawLandmarks.image == null)
             return;
 
-        landmarks = calibration.TransformLandmarks(rawLandmarks);
+        landmarks = GameController.CalibrationData.TransformLandmarks(rawLandmarks);
 
         // Move all body points using the landmarks and the hip position
         MoveBody();
@@ -110,9 +104,13 @@ public class RINLBody : MonoBehaviour
     {
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newWorldPos = landmarks.points[index];
+
+        if (!fixedPosition)
+            newWorldPos += landmarks.hipPosition;
+
         if (flipX) newWorldPos.x *= -1;
 
-        Vector3 newPos = (newWorldPos + worldHipPosition) * pointScale;
+        Vector3 newPos = newWorldPos * pointScale;
 
         return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);
     }
@@ -161,11 +159,6 @@ public class RINLBody : MonoBehaviour
                 segment.localPosition = start;
             }
         }
-    }
-
-    public void UpdateCalibration(CalibrationData data)
-    {
-        calibration = data;
     }
 
     public void ResetActivityPoints()

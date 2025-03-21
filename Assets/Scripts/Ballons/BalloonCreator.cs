@@ -45,7 +45,7 @@ public class BalloonCreator : MonoBehaviour
     public void StopGame()
     {
         gaming = false;
-        GameController.Instance.SetScore(balloonsPopped, 60, ssssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaaaaaaaadsaasdasdasdjjjïï{\"score\": " + balloonsPopped + "}");    
+        GameController.Instance.SetScore(balloonsPopped, 60, "{\"score\": " + balloonsPopped + "}");    
     }
 
     // Update is called once per frame

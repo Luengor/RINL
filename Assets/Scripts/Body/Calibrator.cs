@@ -72,7 +72,6 @@ public class Calibrator : MonoBehaviour
             
             case CalibrationState.Done:
                 calibration.data.calibrated = true;
-                body.UpdateCalibration(calibration.data);
 
                 GameController.CalibrationData = calibration.data;
                 SceneScript.Instance.SetBool("Calibrated", true);

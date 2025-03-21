@@ -96,7 +96,7 @@ public struct Landmarks
     public Vector3[] points;
 
     public float groundHeight;
-    public Vector2 hipPosition;
+    public Vector3 hipPosition;
 }
 
 [Serializable]

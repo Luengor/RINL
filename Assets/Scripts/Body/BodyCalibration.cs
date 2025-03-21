@@ -17,15 +17,15 @@ public class CalibrationData
         };
 
         for (int i = 0; i < Constants.LANDMARKS; i++)
-        {
-            landmarks.points[i] = rawLandmarks.world[i].ToVector3() + new Vector3(
-                rawLandmarks.image[i].x * worldImageRatio.x,
-                rawLandmarks.image[i].y * worldImageRatio.y,
-                rawLandmarks.world[i].z
-            );
-        }
+            landmarks.points[i] = rawLandmarks.world[i].ToVector3();
 
-        landmarks.hipPosition = (landmarks.points[(int)LandmarkNames.LeftHip] + landmarks.points[(int)LandmarkNames.RightHip]) / 2;
+        // Calculate the hip position
+        Vector2 imageHipPosition = (rawLandmarks.image[(int)LandmarkNames.LeftHip].ToVector2() + rawLandmarks.image[(int)LandmarkNames.RightHip].ToVector2()) / 2;
+        landmarks.hipPosition = new Vector3(
+            imageHipPosition.x * worldImageRatio.x,
+            imageHipPosition.y * worldImageRatio.y,
+            0
+        );
 
         return landmarks;
     }
