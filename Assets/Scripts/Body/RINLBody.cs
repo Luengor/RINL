@@ -31,15 +31,13 @@ public class RINLBody : MonoBehaviour
 
     private CalibrationData calibration = new();
 
-    private Landmarks lastLandmarks = new();
+    private Landmarks landmarks;
 
-    // The position of the hip calculated from the image landmarks
-    private Vector3 worldHipPosition = new();
 
     private void Start()
     {
         // Get the calibration data from the game controller
-        if (GameController.CalibrationData != null)
+        if (GameController.CalibrationData.calibrated)
             calibration = GameController.CalibrationData;
 
         // Get the body landmarks from the points object 
@@ -85,48 +83,18 @@ public class RINLBody : MonoBehaviour
     private void FixedUpdate()
     {
         // Get the landmarks from the JS connector and convert them
-        lastLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
+        RawLandmarks rawLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
 
-        if (lastLandmarks.image == null)
+        if (rawLandmarks.image == null)
             return;
 
-        // Calculate the hip position from the image landmarks
-        CalulateHipPosition();
+        landmarks = calibration.TransformLandmarks(rawLandmarks);
 
         // Move all body points using the landmarks and the hip position
         MoveBody();
 
         // Move the body parts
         MoveBodyParts();
-    }
-
-    private void CalulateHipPosition()
-    {
-        if (fixedPosition)
-        {
-            worldHipPosition = Vector3.zero;
-            return;
-        }
-
-        Vector2 leftHip = new (
-            lastLandmarks.image[23].x,
-            lastLandmarks.image[23].y
-        );
-        Vector2 rightHip = new (
-            lastLandmarks.image[24].x,
-            lastLandmarks.image[24].y
-        );
-
-        Vector2 imageHipPosition = (leftHip + rightHip) / 2;
-
-        if (useGroundHeight)
-            imageHipPosition.y -= calibration.imageGroundHeight;
-
-        worldHipPosition = new (
-            imageHipPosition.x * calibration.worldImageRatio.x,
-            imageHipPosition.y * calibration.worldImageRatio.y,
-            0
-        );
     }
 
     private void MoveBody()
@@ -141,11 +109,9 @@ public class RINLBody : MonoBehaviour
     private Vector3 GetLandmarkPosition(int index)
     {
         Vector3 lastPos = bodyLandmarks[index].localPosition;
-        Vector3 newWorldPos = new(
-            lastLandmarks.world[index].x * (flipX ? -1 : 1),
-            lastLandmarks.world[index].y,
-            lastLandmarks.world[index].z
-        );
+        Vector3 newWorldPos = landmarks.points[index];
+        if (flipX) newWorldPos.x *= -1;
+
         Vector3 newPos = (newWorldPos + worldHipPosition) * pointScale;
 
         return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);

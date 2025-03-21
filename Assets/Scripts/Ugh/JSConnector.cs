@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class JSConnector : MonoBehaviour
 {
-    public Landmarks LatestLandmarks { get; private set; }
+    public RawLandmarks LatestLandmarks { get; private set; }
 
     [DllImport("__Internal")]
     private static extern void SendToReact(string message);
@@ -11,13 +11,12 @@ public class JSConnector : MonoBehaviour
 
     public void SetBodyPosition(string landmarkString)
     {
-        LatestLandmarks = JsonUtility.FromJson<Landmarks>(landmarkString);
+        LatestLandmarks = JsonUtility.FromJson<RawLandmarks>(landmarkString);
 
         // Convert the landmarks
         for (int i = 0; i < LatestLandmarks.world.Length; i++)
         {
-            // // Flip the 3D landmarks
-            // LatestLandmarks.world[i].x *= flipX ? -1 : 1;    Flipping is not done here 
+            // Flip the 3D landmarks
             LatestLandmarks.world[i].y *= -1;
             LatestLandmarks.world[i].z *= -1;
 
@@ -26,12 +25,6 @@ public class JSConnector : MonoBehaviour
 
             // Flip and change the range of the image landmarks
             LatestLandmarks.image[i].x = LatestLandmarks.image[i].x * aspect * 2 - aspect;
-
-            /*
-            if (flipX)
-                LatestLandmarks.image[i].x *= -1;
-            */
-
             LatestLandmarks.image[i].y = 1 - LatestLandmarks.image[i].y;
         }
     }

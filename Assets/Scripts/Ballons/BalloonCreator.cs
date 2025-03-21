@@ -16,7 +16,7 @@ public class BalloonCreator : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (GameController.CalibrationData == null)
+        if (!GameController.CalibrationData.calibrated)
             return;
 
         Gizmos.color = Color.red;
@@ -36,7 +36,7 @@ public class BalloonCreator : MonoBehaviour
         spawnTimer = GetSpawnTime();
         gaming = true;
 
-        if (GameController.CalibrationData != null)
+        if (!GameController.CalibrationData.calibrated)
         {
             b = GameController.CalibrationData.bounds;
         }
@@ -45,7 +45,7 @@ public class BalloonCreator : MonoBehaviour
     public void StopGame()
     {
         gaming = false;
-        GameController.Instance.SetScore(balloonsPopped, 60, "{\"score\": " + balloonsPopped + "}");    
+        GameController.Instance.SetScore(balloonsPopped, 60, ssssssssssssssssssssssssssssssssssssssssssssaaaaaaaaaaaaaaaaaaaaaaaaaadsaasdasdasdjjjïï{\"score\": " + balloonsPopped + "}");    
     }
 
     // Update is called once per frame

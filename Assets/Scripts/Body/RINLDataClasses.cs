@@ -28,8 +28,11 @@ public enum LandmarkNames
     RightAnkle = 28
 }
 
+
+// The Landmarks as received from the JS side
+
 [Serializable]
-public struct Landmark
+public struct RawLandmark
 {
     public float x;
     public float y;
@@ -38,12 +41,12 @@ public struct Landmark
     public readonly Vector2 ToVector2() { return new (x, y); }
     public readonly Vector3 ToVector3() { return new (x, y, z); }
 
-    public readonly float SqrDistance2(Landmark other)
+    public readonly float SqrDistance2(RawLandmark other)
     {
         return Vector2.SqrMagnitude(ToVector2() - other.ToVector2());
     }
 
-    public readonly float SqrDistance3(Landmark other)
+    public readonly float SqrDistance3(RawLandmark other)
     {
         return Vector3.SqrMagnitude(ToVector3() - other.ToVector3());
     }
@@ -54,22 +57,22 @@ public struct Landmark
     }
 }
 
-public struct Landmarks
+public struct RawLandmarks
 {
-    public Landmark[] world;
-    public Landmark[] image;
+    public RawLandmark[] world;
+    public RawLandmark[] image;
     
     private readonly int size;
 
-    public Landmarks(int size)
+    public RawLandmarks(int size)
     {
-        world = new Landmark[size];
-        image = new Landmark[size];
+        world = new RawLandmark[size];
+        image = new RawLandmark[size];
 
         this.size = size;
     }
 
-    public readonly float SqrDistance2(Landmarks other)
+    public readonly float SqrDistance2(RawLandmarks other)
     {
         float diff = 0;
         for (int i = 0; i < size; i++)
@@ -77,13 +80,23 @@ public struct Landmarks
         return diff;
     }
 
-    public readonly float SqrDistance3(Landmarks other)
+    public readonly float SqrDistance3(RawLandmarks other)
     {
         float diff = 0;
         for (int i = 0; i < size; i++)
             diff += world[i].SqrDistance3(other.world[i]);
         return diff;
     }
+}
+
+// The Landmarks as used by the body
+
+public struct Landmarks
+{
+    public Vector3[] points;
+
+    public float groundHeight;
+    public Vector2 hipPosition;
 }
 
 [Serializable]

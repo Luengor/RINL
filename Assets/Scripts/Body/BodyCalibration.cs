@@ -4,9 +4,31 @@ using UnityEngine;
 [Serializable]
 public class CalibrationData
 {
+    public bool calibrated = false;
     public float imageGroundHeight = 0;
     public Vector2 worldImageRatio = Vector2.zero;
     public Bounds bounds = new();
+
+    public Landmarks TransformLandmarks(RawLandmarks rawLandmarks)
+    {
+        Landmarks landmarks = new() {
+            points = new Vector3[Constants.LANDMARKS],
+            groundHeight = imageGroundHeight * worldImageRatio.y
+        };
+
+        for (int i = 0; i < Constants.LANDMARKS; i++)
+        {
+            landmarks.points[i] = rawLandmarks.world[i].ToVector3() + new Vector3(
+                rawLandmarks.image[i].x * worldImageRatio.x,
+                rawLandmarks.image[i].y * worldImageRatio.y,
+                rawLandmarks.world[i].z
+            );
+        }
+
+        landmarks.hipPosition = (landmarks.points[(int)LandmarkNames.LeftHip] + landmarks.points[(int)LandmarkNames.RightHip]) / 2;
+
+        return landmarks;
+    }
 };
 
 public class BodyCalibration
@@ -23,7 +45,7 @@ public class BodyCalibration
         this.data = data;
     }
 
-    public void InitialT(Landmarks landmarks)
+    public void InitialT(RawLandmarks landmarks)
     {
         // Calculate the ratio between the image and world coordinates
         data.worldImageRatio = CalculateWorldImage(landmarks);
@@ -34,7 +56,7 @@ public class BodyCalibration
         Debug.Log(data.imageGroundHeight);
     }
 
-    public bool GrowBounds(Landmarks landmarks)
+    public bool GrowBounds(RawLandmarks landmarks)
     {
         bool grown = false;
         // Only grow the bounds if the landmark is in the image
@@ -53,7 +75,7 @@ public class BodyCalibration
         return grown;
     }
 
-    public Vector3 GetCombinedWorldLandmark(Landmarks landmarks, int index)
+    public Vector3 GetCombinedWorldLandmark(RawLandmarks landmarks, int index)
     {
         return landmarks.world[index].ToVector3() + new Vector3(
             landmarks.image[index].x * data.worldImageRatio.x,
@@ -62,7 +84,7 @@ public class BodyCalibration
         );
     }
 
-    public bool IsFloating(Landmarks landmarks)
+    public bool IsFloating(RawLandmarks landmarks)
     {
         // Check if the body is floating
         for (int i = 0; i < 33; i++)
@@ -73,12 +95,12 @@ public class BodyCalibration
         return true;
     }
 
-    private float CalculateGroundHeight(Landmarks landmarks)
+    private float CalculateGroundHeight(RawLandmarks landmarks)
     {
         return (landmarks.image[(int)LandmarkNames.LeftAnkle].y + landmarks.image[(int)LandmarkNames.RightAnkle].y) / 2;
     }
 
-    private Vector2 CalculateWorldImage(Landmarks landmarks)
+    private Vector2 CalculateWorldImage(RawLandmarks landmarks)
     {
         // Using the hips and shoulders to calculate the ratio
         float imageHipDistance = Math.Abs(landmarks.image[24].x - landmarks.image[23].x); 
