@@ -41,12 +41,6 @@ public class Calibrator : MonoBehaviour
         infoText.text = "Colócate justo enfrente de la cámara, lo suficientemente lejos como para que se vea tu cuerpo al completo.\nExtiende los brazos y pon las piernas a la altura de los hombros, haciendo una T con tu cuerpo.\nMantén la posición unos segundos.";
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(calibration.data.bounds.center * body.pointScale, calibration.data.bounds.size * body.pointScale);
-    }
-
     void FixedUpdate()
     {
         if (state == CalibrationState.Exit)

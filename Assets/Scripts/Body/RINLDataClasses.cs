@@ -93,9 +93,13 @@ public struct RawLandmarks
 
 public struct Landmarks
 {
+    // The points in world coordinates WITH THE HIP POSITION BEING THE ORIGIN
     public Vector3[] points;
 
+    // The height of the ground in world coordinates (notice that in the points the hip position is the origin)
     public float groundHeight;
+
+    // The hip position in world coordinates. This is the origin of the points
     public Vector3 hipPosition;
 }
 

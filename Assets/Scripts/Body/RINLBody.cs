@@ -29,8 +29,17 @@ public class RINLBody : MonoBehaviour
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[Constants.LANDMARKS];
 
-    private Landmarks landmarks;
+    private Landmarks landmarks = new();
 
+
+    private void OnDrawGizmos()
+    {
+        if (landmarks.points == null)
+            return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(GameController.CalibrationData.bounds.center * pointScale + transform.position, GameController.CalibrationData.bounds.size * pointScale);
+    }
 
     private void Start()
     {
@@ -159,6 +168,16 @@ public class RINLBody : MonoBehaviour
                 segment.localPosition = start;
             }
         }
+    }
+
+    public Bounds GetBounds()
+    {
+        Bounds bounds = GameController.CalibrationData.bounds;
+
+        bounds.center = bounds.center * pointScale + transform.position;
+        bounds.size *= pointScale;
+
+        return bounds;
     }
 
     public void ResetActivityPoints()

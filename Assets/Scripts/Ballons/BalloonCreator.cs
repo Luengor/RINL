@@ -14,17 +14,6 @@ public class BalloonCreator : MonoBehaviour
     private bool gaming = false;
 
 
-    private void OnDrawGizmos()
-    {
-        if (!GameController.CalibrationData.calibrated)
-            return;
-
-        Gizmos.color = Color.red;
-
-        var bounds = GameController.CalibrationData.bounds;
-        Gizmos.DrawWireCube(bounds.center, bounds.size);
-    }
-
     private float GetSpawnTime()
     {
         return spawnTimeCurve.Evaluate(Time.time - startTime);
@@ -36,10 +25,7 @@ public class BalloonCreator : MonoBehaviour
         spawnTimer = GetSpawnTime();
         gaming = true;
 
-        if (!GameController.CalibrationData.calibrated)
-        {
-            b = GameController.CalibrationData.bounds;
-        }
+        b = GameController.Instance.Body.GetBounds();
     }
 
     public void StopGame()

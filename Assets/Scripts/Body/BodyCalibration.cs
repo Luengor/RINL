@@ -56,15 +56,17 @@ public class BodyCalibration
         Debug.Log(data.imageGroundHeight);
     }
 
-    public bool GrowBounds(RawLandmarks landmarks)
+    public bool GrowBounds(RawLandmarks rawLandmarks)
     {
+        Landmarks landmarks = data.TransformLandmarks(rawLandmarks);
         bool grown = false;
+
         // Only grow the bounds if the landmark is in the image
         for (int i = 0; i < Constants.LANDMARKS; i++)
-            if (landmarks.image[i].InImage())
+            if (rawLandmarks.image[i].InImage())
             {
-                Vector3 point = GetCombinedWorldLandmark(landmarks, i);
-                if (point.y > data.imageGroundHeight * data.worldImageRatio.y && !data.bounds.Contains(point))
+                Vector3 point = landmarks.points[i] + landmarks.hipPosition;
+                if (point.y > landmarks.groundHeight && !data.bounds.Contains(point))
                 {
                     data.bounds.Encapsulate(point);
                     grown = true;
@@ -75,13 +77,9 @@ public class BodyCalibration
         return grown;
     }
 
-    public Vector3 GetCombinedWorldLandmark(RawLandmarks landmarks, int index)
+    public Vector3 GetCombinedWorldLandmark(Landmarks landmarks, int index)
     {
-        return landmarks.world[index].ToVector3() + new Vector3(
-            landmarks.image[index].x * data.worldImageRatio.x,
-            landmarks.image[index].y * data.worldImageRatio.y,
-            0
-        );
+        return landmarks.points[index] + landmarks.hipPosition; 
     }
 
     public bool IsFloating(RawLandmarks landmarks)
