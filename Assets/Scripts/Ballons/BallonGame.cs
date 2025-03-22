@@ -1,12 +1,13 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class BallonGame : StateMachineBehaviour
 {
-    public int score = 0;
     public int gameDuration = 60;
-    public Color timerColor = new(1, 1, 1, 0.5f);
-    private float timer = 0;
+    public string timerObjectName = "Timer";
+
+    private TextMeshProUGUI timerText;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -17,37 +18,26 @@ public class BallonGame : StateMachineBehaviour
         // Start the game
         SceneScript.Instance.objects[1].GetComponent<BalloonCreator>().StartGame();
 
-        var timerObj = SceneScript.Instance.objects[2].GetComponent<TMPro.TextMeshProUGUI>();
-        timerObj.color = timerColor; 
-        timerObj.enableAutoSizing = true;
+        // Set the timer
+        timerText = SceneScript.Instance.GetObject(timerObjectName).GetComponent<TextMeshProUGUI>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timer += Time.deltaTime;
-
         // Update the timer
-        var timerObj = SceneScript.Instance.objects[2].GetComponent<TMPro.TextMeshProUGUI>();
-        timerObj.text = Math.Max(gameDuration - (int)timer, 0).ToString();
-
-        if (timer >= gameDuration)
-        {
-            animator.SetTrigger("GameDone");
-
-            // Stop the game
-            SceneScript.Instance.objects[1].GetComponent<BalloonCreator>().StopGame();
-
-            // Deactivate the scene
-            SceneScript.Instance.objects[0].SetActive(false);
-        }
+        timerText.text = Math.Max(Math.Ceiling(stateInfo.length * (1 - stateInfo.normalizedTime)), 0).ToString();
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        // Stop the game
+        SceneScript.Instance.objects[1].GetComponent<BalloonCreator>().StopGame();
+
+        // Deactivate the scene
+        SceneScript.Instance.objects[0].SetActive(false);
+    }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -20,6 +20,22 @@ public class SceneScript : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    public GameObject GetObject(int index)
+    {
+        return objects[index];
+    }
+
+    public GameObject GetObject(string name)
+    {
+        foreach (var obj in objects)
+        {
+            if (obj.name == name)
+                return obj;
+        }
+
+        Debug.LogError("Object not found: " + name);
+        return null;
+    }
 
     public void SetBool(string trigger, bool value)
     {
