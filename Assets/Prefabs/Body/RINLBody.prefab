@@ -94,6 +94,8 @@ MonoBehaviour:
   fixedPosition: 0
   useGroundHeight: 1
   lerpSpeed: 17
+  pointSmoothTime: 0.04
+  pointMaxSpeed: 100
 --- !u!1 &917839809860843971
 GameObject:
   m_ObjectHideFlags: 0

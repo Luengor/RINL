@@ -23,11 +23,14 @@ public class RINLBody : MonoBehaviour
     public bool useGroundHeight = true;
 
     [Header("Other settings")]
-    [Tooltip("The speed of the lerp between the points")]
-    public float lerpSpeed = 15f;
+    [Tooltip("Smooth time for the point movement")]
+    public float pointSmoothTime = 0.1f;
+    [Tooltip("Max speed for the point movement (scaled by pointScale)")]
+    public float pointMaxSpeed = 10f;
     
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[Constants.LANDMARKS];
+    private readonly Vector3[] bodyLandmarkSpeeds = new Vector3[Constants.LANDMARKS];
 
     private Landmarks landmarks = new();
 
@@ -121,7 +124,7 @@ public class RINLBody : MonoBehaviour
 
         Vector3 newPos = newWorldPos * pointScale;
 
-        return Vector3.Lerp(lastPos, newPos, Time.deltaTime * lerpSpeed);
+        return Vector3.SmoothDamp(lastPos, newPos, ref bodyLandmarkSpeeds[index], pointSmoothTime, pointMaxSpeed * pointScale, Time.fixedDeltaTime);
     }
 
     private void MoveBodyParts()
