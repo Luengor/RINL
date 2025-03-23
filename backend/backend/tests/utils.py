@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Engine
 from sqlalchemy.orm import Session
 from typing import Generator
 import pytest
@@ -11,14 +11,18 @@ from core.auth_utils import get_password_hash, create_access_token
 from models.user import User
 from .data import test_user
 
-@pytest.fixture()
-def session() -> Generator[Session, None, None]:
+@pytest.fixture(scope="session", autouse=True)
+def engine() -> Engine:
     engine = create_engine("sqlite:///./test.db")
-    Base.metadata.create_all(engine)
+    Base.metadata.drop_all(engine)
 
+    return engine
+
+@pytest.fixture()
+def session(engine) -> Generator[Session, None, None]:
+    Base.metadata.create_all(engine)
     with Session(engine) as session:
         yield session
-
     Base.metadata.drop_all(engine)
 
 @pytest.fixture()

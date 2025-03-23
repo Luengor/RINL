@@ -1,4 +1,4 @@
-from .utils import client, session, login_token
+from .utils import client, session, login_token, engine
 from .data import test_user
 from models.user import User
 

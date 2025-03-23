@@ -1,4 +1,4 @@
-from .utils import client, login_token, session
+from .utils import client, login_token, session, engine
 from .data import test_user
 from datetime import datetime 
 from schemas.users import UserBase
