@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from models.user import User as UserModel
 from schemas.users import UserBase as UserSchema
+from schemas.users import ModifyUser as ModifyUserSchema
 from schemas.users import RegisterUser as RegisterUserSchema 
 
 def create_verification_code() -> str:
@@ -39,6 +40,32 @@ class UserDAO:
         session.commit()
         user_schema = UserSchema.model_validate(user_model)
         return user_schema
+
+    @staticmethod
+    def update_user(base_user: UserSchema, modify: ModifyUserSchema, session: Session) -> UserSchema:
+        # Check the user exists
+        if not UserDAO.get_user(base_user.email, session):
+            raise HTTPException(status_code=400, detail="User does not exist")
+        
+        # Check if email is already taken
+        if modify.email and modify.email != base_user.email and UserDAO.get_user(modify.email, session):
+            raise HTTPException(status_code=400, detail="Email already taken")
+
+        # Update user
+        user = session.query(UserModel).filter(UserModel.email == base_user.email).first()
+        assert user is not None
+        user.name = modify.name or user.name
+        user.year_of_birth = modify.year_of_birth or user.year_of_birth
+
+        if modify.email:
+            user.email = modify.email
+            user.verified = False
+            user.verification_code = create_verification_code()
+            # TODO: Send verification email
+        
+        session.commit()
+
+        return UserSchema.model_validate(user)
 
     @staticmethod
     def get_user(email: str, session: Session) -> UserSchema | None:

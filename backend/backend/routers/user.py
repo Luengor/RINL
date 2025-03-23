@@ -4,7 +4,7 @@ from core.auth import get_current_user
 from core.mail import get_send_email
 from core.db import get_db
 from dao.user import UserDAO
-from schemas.users import UserBase, RegisterUser 
+from schemas.users import UserBase, RegisterUser, ModifyUser
 
 router = APIRouter(
     prefix="/user",
@@ -28,6 +28,10 @@ async def verify_user(verification_code: str, user: UserBase = Depends(get_curre
 @router.get("/me", response_model=UserBase)
 async def get_me(user: UserBase = Depends(get_current_user)):
     return user
+
+@router.put("/me", response_model=UserBase)
+async def update_me(modifications: ModifyUser, user: UserBase = Depends(get_current_user), session=Depends(get_db)):
+    return UserDAO.update_user(user, modifications, session)
 
 @router.delete("/me")
 async def delete_me(user: UserBase = Depends(get_current_user), session=Depends(get_db)):
