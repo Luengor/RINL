@@ -16,6 +16,7 @@ class ActivityDAO:
                 user_email=user.email,
                 minigame=activity.minigame,
                 duration=activity.duration,
+                score=activity.score,
                 activity_points=activity.activity_points,
                 extra_data=activity.extra_data)
             

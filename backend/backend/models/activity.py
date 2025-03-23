@@ -11,6 +11,7 @@ class Activity(Base):
     user_email = mapped_column(String, ForeignKey('users.email'))
     minigame = mapped_column(String)
     duration = mapped_column(Float)
+    score = mapped_column(Float)
     activity_points = mapped_column(Float)
     extra_data = mapped_column(String, default="{}")  # JSON
 

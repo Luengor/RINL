@@ -70,6 +70,7 @@ if __name__ == "__main__":
                 date=date,
                 user_email="test@test.com",
                 duration=random.randint(60, 120),
+                score=random.randint(1, 20),
                 activity_points=random.randint(100, 200),
                 minigame=random.choice(MINIGAMES),
                 extra_data="{}"

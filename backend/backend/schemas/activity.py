@@ -9,6 +9,7 @@ class ActivityBase(BaseModel):
     date: datetime
     minigame: str
     duration: float
+    score: float
     activity_points: float
     extra_data: str 
 

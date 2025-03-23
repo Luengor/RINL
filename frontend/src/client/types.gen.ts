@@ -4,6 +4,7 @@ export type ActivityBase = {
     date: string;
     minigame: string;
     duration: number;
+    score: number;
     activity_points: number;
     extra_data: string;
 };
@@ -12,6 +13,7 @@ export type ActivityFull = {
     date: string;
     minigame: string;
     duration: number;
+    score: number;
     activity_points: number;
     extra_data: string;
     uuid: number;
@@ -22,6 +24,7 @@ export type ActivityUuid = {
     date: string;
     minigame: string;
     duration: number;
+    score: number;
     activity_points: number;
     extra_data: string;
     uuid: number;
