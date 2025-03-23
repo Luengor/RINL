@@ -1,4 +1,4 @@
-from .utils import client, login_token
+from .utils import client, login_token, session
 from .data import test_user
 from datetime import datetime 
 from schemas.users import UserBase
@@ -18,6 +18,7 @@ def create_activity(client, login_token):
             "date": d, 
             "minigame": "test",
             "duration": 100,
+            "score": 100,
             "activity_points": 100,
             "extra_data": "{}"
         }
@@ -39,6 +40,7 @@ def test_create_activity(client, login_token):
             "date": d, 
             "minigame": "test",
             "duration": 100,
+            "score": 100,
             "activity_points": 100,
             "extra_data": "{}"
         }
@@ -51,6 +53,7 @@ def test_create_activity(client, login_token):
         "uuid": 1,
         "minigame": "test",
         "duration": 100,
+        "score": 100,
         "activity_points": 100,
         "extra_data": "{}",
         "user": UserBase(**test_user.model_dump()).model_dump()

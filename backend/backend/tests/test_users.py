@@ -2,7 +2,7 @@ from .utils import client, session, login_token
 from .data import test_user
 from models.user import User
 
-def test_create_user(client):
+def test_create_user(client, session):
     # Create a user
     response = client.post(
         "/user/",
@@ -26,7 +26,7 @@ def test_create_user(client):
     # Check user in database
     assert session.query(User).filter(User.email == test_user.email).first()
 
-def test_get_me(client, login_token):
+def test_get_me(client, login_token, session):
     # Get user
     response = client.get(
         "/user/me",

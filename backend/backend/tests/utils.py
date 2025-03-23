@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
+from typing import Generator
 import pytest
 
 from backend.main import app
@@ -10,34 +11,32 @@ from core.auth_utils import get_password_hash, create_access_token
 from models.user import User
 from .data import test_user
 
-# Database setup
-engine = create_engine("sqlite:///./test.db")
-session = Session(engine)
-
-@pytest.fixture
-def client():
-    global session, engine
-
-    def db():
-        return session
-
-    # I don't like this
-    session.close()
-    Base.metadata.drop_all(engine)
+@pytest.fixture()
+def session() -> Generator[Session, None, None]:
+    engine = create_engine("sqlite:///./test.db")
     Base.metadata.create_all(engine)
-    session = Session(engine)
 
+    with Session(engine) as session:
+        yield session
+
+    Base.metadata.drop_all(engine)
+
+@pytest.fixture()
+def client(session: Session):
     # Database setup
-    app.dependency_overrides[get_db] = db 
+    app.dependency_overrides[get_db] = lambda: session
 
     # Mail setup
     app.dependency_overrides[get_send_email] = lambda: lambda to, subject, content: True
 
     # Create client
-    return TestClient(app)
+    client = TestClient(app)
+    yield client
+
+    app.dependency_overrides.clear()
 
 @pytest.fixture
-def login_token(client):
+def login_token(session: Session):
     # Add user to database
     test_user_dict = test_user.model_dump()
     test_user_dict["hashed_password"] = get_password_hash(test_user.password) 
