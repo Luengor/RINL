@@ -34,6 +34,7 @@ class ShapeDAO:
             .filter(ShapeModel.user_email == email) \
             .filter(ShapeModel.date >= from_date) \
             .filter(ShapeModel.date <= to_date) \
+            .order_by(ShapeModel.date) \
             .all()
         return [ShapeFull.model_validate(shape) for shape in shapes]
     

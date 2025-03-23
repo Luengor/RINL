@@ -130,8 +130,6 @@ export default function Stats() {
              dataRange === "month" ? date >= monthAgo :
              dataRange === "year" ? date >= yearAgo :
              true;
-    }).sort((a, b) => {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
     }).map((shape) => {
       const date = new Date(shape.date);
       shape.date = date.toISOString().split('T')[0];
@@ -144,8 +142,6 @@ export default function Stats() {
              dataRange === "month" ? date >= monthAgo :
              dataRange === "year" ? date >= yearAgo :
              true;
-    }).sort((a, b) => {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
     }).map((activity) => {
       const date = new Date(activity.date);
       activity.date = date.toISOString().split('T')[0];

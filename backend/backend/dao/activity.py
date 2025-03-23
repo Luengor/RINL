@@ -38,6 +38,7 @@ class ActivityDAO:
                 .filter(ActivityModel.user_email == email) \
                 .filter(ActivityModel.date >= from_date) \
                 .filter(ActivityModel.date <= to_date) \
+                .order_by(ActivityModel.date) \
                 .all()
             return [ActivityFull.model_validate(activity) for activity in activities]
         else:
@@ -46,6 +47,7 @@ class ActivityDAO:
                 .filter(ActivityModel.minigame == minigame_filter) \
                 .filter(ActivityModel.date >= from_date) \
                 .filter(ActivityModel.date <= to_date) \
+                .order_by(ActivityModel.date) \
                 .all()
 
         return [ActivityFull.model_validate(activity) for activity in activities]
