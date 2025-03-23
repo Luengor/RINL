@@ -43,6 +43,12 @@ export type HttpValidationError = {
     detail?: Array<ValidationError>;
 };
 
+export type ModifyUser = {
+    email?: string | null;
+    name?: string | null;
+    year_of_birth?: number | null;
+};
+
 export type RegisterUser = {
     email: string;
     password: string;
@@ -230,6 +236,31 @@ export type GetMeUserMeGetResponses = {
 };
 
 export type GetMeUserMeGetResponse = GetMeUserMeGetResponses[keyof GetMeUserMeGetResponses];
+
+export type UpdateMeUserMePutData = {
+    body: ModifyUser;
+    path?: never;
+    query?: never;
+    url: '/user/me';
+};
+
+export type UpdateMeUserMePutErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type UpdateMeUserMePutError = UpdateMeUserMePutErrors[keyof UpdateMeUserMePutErrors];
+
+export type UpdateMeUserMePutResponses = {
+    /**
+     * Successful Response
+     */
+    200: UserBase;
+};
+
+export type UpdateMeUserMePutResponse = UpdateMeUserMePutResponses[keyof UpdateMeUserMePutResponses];
 
 export type GetActivitiesActivityGetData = {
     body?: never;
