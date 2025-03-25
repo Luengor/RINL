@@ -114,14 +114,6 @@ export default function Data() {
         color: 'green',
         icon: <TbCheck/>
       });
-
-      dataForm.setInitialValues({
-        name: data.name,
-        email: data.email,
-        year_of_birth: data.year_of_birth,
-      });
-
-      dataForm.setDirty(false);
     }
   }
 
@@ -137,8 +129,9 @@ export default function Data() {
         email: data.email,
         year_of_birth: data.year_of_birth,
       });
+      dataForm.setDirty(false);
     }
-  }, [status])
+  }, [status, data])
 
   let dataTsx;
   if (status === 'pending') {
