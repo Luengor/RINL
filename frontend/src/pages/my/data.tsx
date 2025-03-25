@@ -14,7 +14,7 @@ import {
 } from '@mantine/core';
 
 import { useEffect, useState } from 'react';
-import { getMeUserMeGet } from '../../client';
+import { getMeUserMeGet, updateMeUserMePut } from '../../client';
 import { useQuery } from '@tanstack/react-query';
 import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
@@ -86,9 +86,43 @@ export default function Data() {
   const [updating, setUpdating] = useState(false);
   const handleModify = async () => {
     const {name, email, year_of_birth} = dataForm.getValues();
-    console.log(name, email, year_of_birth);
     setUpdating(true);
-    alert("There is no endpoint to update the user data yet :)");
+    const response = await updateMeUserMePut({
+      body: {
+        name: name === data.name ? null : name as string,
+        email: email === data.email ? null : email as string,
+        year_of_birth: year_of_birth === data.year_of_birth ? null : year_of_birth as number,
+      }
+    })
+
+    setUpdating(false);
+
+    if (response.error) {
+      notifications.show({
+        title: 'Error',
+        message: 'No se ha podido modificar tus datos',
+        color: 'red',
+        icon: <TbX />
+      });
+      return;
+    } else {
+      // Refetch user data
+      refetch();
+      notifications.show({
+        title: 'Datos modificados',
+        message: 'Tus datos han sido modificados correctamente',
+        color: 'green',
+        icon: <TbCheck/>
+      });
+
+      dataForm.setInitialValues({
+        name: data.name,
+        email: data.email,
+        year_of_birth: data.year_of_birth,
+      });
+
+      dataForm.setDirty(false);
+    }
   }
 
   useEffect(() => {
