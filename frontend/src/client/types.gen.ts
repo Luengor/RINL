@@ -72,14 +72,6 @@ export type ShapeFull = {
     user: UserBase;
 };
 
-export type ShapeUuid = {
-    date: string;
-    weight: number;
-    height: number;
-    sex_math: number;
-    uuid: number;
-};
-
 export type Token = {
     access_token: string;
     token_type: string;
@@ -366,7 +358,7 @@ export type GetShapesShapeGetResponses = {
     /**
      * Successful Response
      */
-    200: Array<ShapeUuid>;
+    200: Array<ShapeFull>;
 };
 
 export type GetShapesShapeGetResponse = GetShapesShapeGetResponses[keyof GetShapesShapeGetResponses];
@@ -395,6 +387,22 @@ export type CreateShapeShapePostResponses = {
 };
 
 export type CreateShapeShapePostResponse = CreateShapeShapePostResponses[keyof CreateShapeShapePostResponses];
+
+export type GetCurrentShapeShapeCurrentGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/shape/current';
+};
+
+export type GetCurrentShapeShapeCurrentGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: ShapeFull;
+};
+
+export type GetCurrentShapeShapeCurrentGetResponse = GetCurrentShapeShapeCurrentGetResponses[keyof GetCurrentShapeShapeCurrentGetResponses];
 
 export type DeleteShapeShapeShapeIdDeleteData = {
     body?: never;
