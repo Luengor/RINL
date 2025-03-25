@@ -6,13 +6,14 @@ interface NavbarLinkProps {
   icon: IconType;
   label: string;
   active?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
-function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
+function NavbarLink({ icon: Icon, label, active, disabled, onClick }: NavbarLinkProps) {
   return (
     <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
-      <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
+      <UnstyledButton onClick={onClick} className={classes.link} disabled={disabled ?? false} data-active={active || undefined}>
         <Icon size={20} strokeWidth={1.5}/>
       </UnstyledButton>
     </Tooltip>
@@ -26,7 +27,7 @@ interface NavbarProps {
 }
 
 export function Navbar({topLink, mainLinks, bottomLinks} : NavbarProps) {
-  const mlinks = mainLinks.map((link) => (
+  const mlinks = mainLinks.filter((link) => !link.disabled).map((link) => (
     <NavbarLink
       {...link}
       key={link.label}

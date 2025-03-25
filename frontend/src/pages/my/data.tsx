@@ -20,13 +20,19 @@ import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useClient } from '../../hooks/useClient';
+import { UserBase } from '../../client';
 
 export default function Data() {
   const { client } = useClient();
 
   // Data
-  const { data, refetch, status } = useQuery({
+  const { data, refetch, status } = useQuery<UserBase>({
     queryKey: ['user-data'],
+    queryFn: async () => {
+      const req = await getMeUserMeGet({client: client});
+      return req.data;
+    },
+    staleTime: 1000 * 60 * 5,
   })
 
   // Verify form

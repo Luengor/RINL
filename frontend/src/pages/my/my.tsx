@@ -15,7 +15,7 @@ export default function My() {
   const { logout, client } = useClient();
 
   // Get user data
-  const { data, refetch, status } = useQuery({
+  const { data, status } = useQuery({
     queryKey: ['user-data'],
     queryFn: async () => {
       const req = await getMeUserMeGet({client: client});
@@ -23,6 +23,7 @@ export default function My() {
     },
     staleTime: 1000 * 60 * 5,
   })
+  const verified = status === 'success' ? data.verified : false;
 
   // Current page
   const location = useLocation();
@@ -30,28 +31,32 @@ export default function My() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    if (status === 'success' && data.verified === false && location.pathname !== '/my/data') {
-      navigate('/my/data');
-    }
+    let active;
 
     switch (location.pathname) {
       case '/my':
       case '/my/data':
-        setActive('data');
+        active = 'data';
         break;
       
       case '/my/stats':
-        setActive('stats');
+        active = 'stats';
         break;
       
       case '/my/jugar':
-        setActive('jugar');
+        active = 'jugar';
         break;
       
       default:
-        setActive('other');
+        active = 'other';
         break;
     }
+
+    if (status === 'success' && data.verified === false && active !== 'data') {
+      navigate('/my/data');
+    }
+    setActive(active);
+
   }, [location, active, data, status, navigate]);
 
   // Logout
@@ -60,6 +65,13 @@ export default function My() {
     logout();
     navigate('/');
   };
+
+  // Links
+  const links = [
+    { icon: TbUser, label: 'Cuenta', active: 'data' === active, onClick: () => navigate('/my/data') },
+    { icon: TbDeviceDesktopAnalytics, active: 'stats' === active, disabled: !verified, label: 'Stats', onClick: () => navigate('/my/stats') },
+    { icon: TbDeviceGamepad, label: 'Jugar', active: 'jugar' === active, disabled: !verified, onClick: () => navigate('/my/jugar') },
+  ];
 
   return (
     <>
@@ -80,11 +92,7 @@ export default function My() {
       <AppShell.Navbar p="md">
         <Navbar 
           topLink={{ icon: TbAB, label: 'Dashboard', onClick: () => navigate('/') }}
-          mainLinks={[
-            { icon: TbUser, label: 'Cuenta', active: 'data' === active, onClick: () => navigate('/my/data') },
-            { icon: TbDeviceDesktopAnalytics, active: 'stats' === active, label: 'Stats', onClick: () => navigate('/my/stats') },
-            { icon: TbDeviceGamepad, label: 'Jugar', active: 'jugar' === active, onClick: () => navigate('/my/jugar') },
-          ]}
+          mainLinks={links}
           bottomLinks={[
             { icon: TbLogout, label: 'Salir', onClick: () => setLogoutModal(true) },
           ]}
