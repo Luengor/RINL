@@ -39,6 +39,18 @@ class ShapeDAO:
         return [ShapeFull.model_validate(shape) for shape in shapes]
     
     @staticmethod
+    def get_current_shape(email: str, session: Session) -> ShapeFull:
+        shape = session.query(ShapeModel) \
+            .filter(ShapeModel.user_email == email) \
+            .order_by(ShapeModel.date.desc()) \
+            .first()
+
+        if shape is None:
+            raise HTTPException(status_code=404, detail="Shape not found") 
+
+        return ShapeFull.model_validate(shape)
+
+    @staticmethod
     def delete_shape(shape_id: int, user_email: str, session: Session) -> ShapeFull:
         shape = session.query(ShapeModel) \
             .filter(ShapeModel.uuid == shape_id) \
