@@ -4,16 +4,36 @@ import { useState, useEffect } from 'react';
 import { AppShell, Button, Modal, Stack } from '@mantine/core';
 import Media from "../../components/Media/Media";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { logout } from "../../utils/session";
 import Data from "./data";
 import Stats from "./stats";
+import { useClient } from '../../hooks/useClient';
+import { useQuery } from '@tanstack/react-query';
+import { getMeUserMeGet } from '../../client';
 
 export default function My() {
+  // Get the client
+  const { logout, client } = useClient();
+
+  // Get user data
+  const { data, refetch, status } = useQuery({
+    queryKey: ['user-data'],
+    queryFn: async () => {
+      const req = await getMeUserMeGet({client: client});
+      return req.data;
+    },
+    staleTime: 1000 * 60 * 5,
+  })
+
   // Current page
   const location = useLocation();
   const [active, setActive] = useState("data");
 
+  const navigate = useNavigate();
   useEffect(() => {
+    if (status === 'success' && data.verified === false && location.pathname !== '/my/data') {
+      navigate('/my/data');
+    }
+
     switch (location.pathname) {
       case '/my':
       case '/my/data':
@@ -32,7 +52,7 @@ export default function My() {
         setActive('other');
         break;
     }
-  }, [location, active]);
+  }, [location, active, data, status, navigate]);
 
   // Logout
   const [logoutModal, setLogoutModal] = useState(false);
@@ -41,7 +61,6 @@ export default function My() {
     navigate('/');
   };
 
-  const navigate = useNavigate();
   return (
     <>
       <Modal opened={logoutModal} onClose={() => setLogoutModal(false)} title="Cerrar sesión" centered>

@@ -4,6 +4,7 @@ import { getActivitiesActivityGet, getShapesShapeGet } from "../../client";
 import { ActivityUuid, ShapeUuid } from "../../client";
 import { BarChart, BarChartProps, DonutChart, DonutChartCell, LineChart, LineChartProps } from "@mantine/charts";
 import { useEffect, useState } from "react";
+import { useClient } from "../../hooks/useClient";
 
 interface ApiData {
   activity: ActivityUuid[];
@@ -82,12 +83,15 @@ function Card({ title, children }: { title: string, children: React.ReactNode })
 }
 
 export default function Stats() {
+  // Get client
+  const { client } = useClient();
+
   // Get activity and shape data
   const { data, status, refetch } = useQuery({
     queryKey: ['activity-shape-data'],
     queryFn: async () => {
-      const activity_data = getActivitiesActivityGet(); 
-      const shape_data = getShapesShapeGet();
+      const activity_data = getActivitiesActivityGet({ client }); 
+      const shape_data = getShapesShapeGet({ client });
       const data = await Promise.all([activity_data, shape_data]);
       return {
         activity: data[0].data,

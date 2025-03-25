@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { has_token } from "../utils/session";
+import { useClient } from "../hooks/useClient";
 
 interface PrivateRoutesProps {
   login: boolean;
@@ -7,7 +7,8 @@ interface PrivateRoutesProps {
 }
 
 export function PrivateRoutes({ login, route }: PrivateRoutesProps) {
-  const logged_in = login ? has_token() : !has_token();
+  const { loggedIn } = useClient();
+  const logged_in = login ? loggedIn : !loggedIn;
 
   return (
     logged_in ? <Outlet /> : <Navigate to={route} />

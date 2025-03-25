@@ -18,18 +18,15 @@ import { getMeUserMeGet, updateMeUserMePut } from '../../client';
 import { useQuery } from '@tanstack/react-query';
 import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
-import { client } from '../../client/client.gen';
 import { notifications } from '@mantine/notifications';
+import { useClient } from '../../hooks/useClient';
 
 export default function Data() {
+  const { client } = useClient();
+
   // Data
   const { data, refetch, status } = useQuery({
     queryKey: ['user-data'],
-    queryFn: async () => {
-      const req = await getMeUserMeGet();
-      return req.data;
-    },
-    staleTime: 1000 * 60 * 5,
   })
 
   // Verify form
@@ -88,6 +85,7 @@ export default function Data() {
     const {name, email, year_of_birth} = dataForm.getValues();
     setUpdating(true);
     const response = await updateMeUserMePut({
+      client: client,
       body: {
         name: name === data.name ? null : name as string,
         email: email === data.email ? null : email as string,
@@ -118,7 +116,7 @@ export default function Data() {
   }
 
   useEffect(() => {
-    if (data) {
+    if (data && status === 'success') {
       dataForm.setValues({
         name: data.name,
         email: data.email,

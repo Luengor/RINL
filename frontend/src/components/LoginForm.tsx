@@ -15,18 +15,18 @@ import { useForm, isEmail, hasLength } from '@mantine/form'
 import { useDisclosure } from '@mantine/hooks';
 
 import { Form } from '@mantine/form';
-import { login, register as register_func } from '../utils/session';
 import { useNavigate } from 'react-router-dom';
-import type { HttpValidationError } from '../client';
-import { has_token } from '../utils/session';
+import { useClient } from '../hooks/useClient';
+import { createUserUserPost } from '../client';
   
 export function LoginForm() {
   const navigate = useNavigate(); 
+  const { client, login, loggedIn } = useClient();
 
   const [register, { toggle }] = useDisclosure(false) // State for the registration form;
 
   // Go to /my if we have a token
-  if (has_token())
+  if (loggedIn)
     navigate('/my/data');
 
   // Form validation
@@ -48,18 +48,27 @@ export function LoginForm() {
   async function handleSubmit() {
     const { email, password, name, birthYear } = form.getValues();
 
-    try {
-      if (register)
-        await register_func(email, password, name, birthYear)
-      else
-        await login(email, password);
-
-      navigate('/');
-    } catch (err) {
-      if ((err as HttpValidationError).detail) {
-        const error = ((err as HttpValidationError).detail ?? 'Error desconocido') as string;
-        form.setErrors({ email: error });
+    if (register) {
+      try {
+        await createUserUserPost({
+          client: client,
+          body: {
+            email: email,
+            password: password,
+            name: name,
+            year_of_birth: birthYear
+          }
+        });
+      } catch (response) {
+        return form.setErrors({ email: 'Correo ya registrado' });
       }
+    }
+
+    try {
+      await login(email, password);
+      navigate('/my/data');
+    } catch (response) {
+      return form.setErrors({ email: 'Coreo o contraseña incorrecta' });
     }
   }
 
