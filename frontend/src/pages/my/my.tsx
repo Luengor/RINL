@@ -21,6 +21,7 @@ export default function My() {
       const req = await getMeUserMeGet({client: client});
       return req.data;
     },
+    meta: { errorMessage: 'Error al cargar los datos' },
     staleTime: 1000 * 60 * 5,
   })
   const verified = status === 'success' ? data.verified : false;

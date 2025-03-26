@@ -1,19 +1,19 @@
 import { Grid, Group, Loader, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { getActivitiesActivityGet, getShapesShapeGet } from "../../client";
-import { ActivityUuid, ShapeUuid } from "../../client";
+import { ActivityUuid, ShapeFull } from "../../client";
 import { BarChart, BarChartProps, DonutChart, DonutChartCell, LineChart, LineChartProps } from "@mantine/charts";
 import { useEffect, useState } from "react";
 import { useClient } from "../../hooks/useClient";
 
 interface ApiData {
   activity: ActivityUuid[];
-  shape: ShapeUuid[];
+  shape: ShapeFull[];
 }
 
 interface PreprocessedData {
   activities: ActivityUuid[]; 
-  shapes: ShapeUuid[];
+  shapes: ShapeFull[];
   groupedData: {
     date: string;
     count: number;
@@ -98,6 +98,7 @@ export default function Stats() {
         shape: data[1].data,
       } as ApiData;
     },
+    meta: { errorMessage: 'Error al cargar los datos' },
     placeholderData: { activity: [], shape: [] },
     staleTime: 1000 * 60 * 10,
   })

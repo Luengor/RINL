@@ -23,20 +23,6 @@ export function useClient() {
     return response;
   });
 
-  // Generic error handling
-  clientRef.current.interceptors.response.use(async (response) => {
-    if (!response.ok) {
-      const details = (await response.json()).detail;
-      notifications.show({
-        title: 'Error',
-        message: details,
-        color: 'red',
-      });
-    }
-
-    return response;
-  });
-  
   // Set the token if it exists
   const token = localStorage.getItem('access_token');
   if (token) {
