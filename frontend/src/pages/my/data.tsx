@@ -14,7 +14,7 @@ import {
 } from '@mantine/core';
 
 import { useEffect, useState } from 'react';
-import { getMeUserMeGet, updateMeUserMePut } from '../../client';
+import { getMeUserMeGet, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
 import { useQuery } from '@tanstack/react-query';
 import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
@@ -49,9 +49,9 @@ export default function Data() {
   const handleVerify = async () => {
     const pin = (verifyForm.getValues().pin as string).toUpperCase();
     setFetchingVerifying(true);
-    const req = await client.post({
-      url: '/user/verify/' + pin,
-      security: [{ scheme: 'bearer', type: 'http' }]
+    const req = await verifyUserUserVerifyVerificationCodePost({
+      client: client,
+      path: { verification_code: pin }
     })
     setFetchingVerifying(false);
 
