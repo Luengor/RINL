@@ -45,6 +45,7 @@ function DataForm({ user } : { user: UserBase }) {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-data'] });
+      setVerifing(false);
       notifications.show({
         title: 'Correo verificado',
         message: 'Tu correo electrónico ha sido verificado correctamente',
