@@ -1,7 +1,6 @@
 import { ClientOptions, createClient, createConfig } from "@hey-api/client-fetch";
 import { useRef } from "react";
 import { loginForTokenLoginPost } from "../client";
-import { notifications } from "@mantine/notifications";
 
 export function useClient() {
   // Create a new client if it doesn't exist
