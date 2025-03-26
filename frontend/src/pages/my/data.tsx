@@ -14,8 +14,8 @@ import {
 } from '@mantine/core';
 
 import { useEffect, useState } from 'react';
-import { getMeUserMeGet, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
-import { useQuery } from '@tanstack/react-query';
+import { getMeUserMeGet, ModifyUser, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
@@ -24,20 +24,21 @@ import { UserBase } from '../../client';
 
 export default function Data() {
   const { client } = useClient();
+  const queryClient = useQueryClient();
 
-  // Data
-  const { data, refetch, status } = useQuery<UserBase>({
+  /// User Data
+  const { data: userData, status: userDataStatus } = useQuery<UserBase>({
     queryKey: ['user-data'],
     queryFn: async () => {
       const req = await getMeUserMeGet({client: client});
       return req.data;
     },
+    placeholderData: { name: '', email: '', year_of_birth: 0, verified: false },
     staleTime: 1000 * 60 * 5,
   })
 
-  // Verify form
+  /// Verify user 
   const [verifing, setVerifing] = useState(false);
-  const [fetching_verifying, setFetchingVerifying] = useState(false);
   const verifyForm = useForm({
     name: 'verify-form',
     mode: 'uncontrolled',
@@ -46,16 +47,23 @@ export default function Data() {
     },
   });
 
-  const handleVerify = async () => {
-    const pin = (verifyForm.getValues().pin as string).toUpperCase();
-    setFetchingVerifying(true);
-    const req = await verifyUserUserVerifyVerificationCodePost({
-      client: client,
-      path: { verification_code: pin }
-    })
-    setFetchingVerifying(false);
+  const verifyUserMutation = useMutation({
+    mutationKey: ['verify-user'],
+    mutationFn: async (pin: string) => {
+      await verifyUserUserVerifyVerificationCodePost({client: client, path: { verification_code: pin }});
+    },
 
-    if (req.error) {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user-data'] });
+      notifications.show({
+        title: 'Correo verificado',
+        message: 'Tu correo electrónico ha sido verificado correctamente',
+        color: 'green',
+        icon: <TbCheck/>
+      });
+    },
+
+    onError: () => {
       notifications.show({
         title: 'Error',
         message: 'No se ha podido verificar tu correo electrónico',
@@ -63,91 +71,94 @@ export default function Data() {
         icon: <TbX />
       });
       verifyForm.setErrors({ pin: 'Código incorrecto' });
-      return;
     }
+  });
 
-    notifications.show({
-      title: 'Correo verificado',
-      message: 'Tu correo electrónico ha sido verificado correctamente',
-      color: 'green',
-      icon: <TbCheck/>
-    });
-    setVerifing(false);
-    refetch();
+  const handleVerify = async () => {
+    const pin = (verifyForm.getValues().pin as string).toUpperCase();
+    verifyUserMutation.mutate(pin);
   }
 
-  // Main form
+  /// User data form (modify) 
   const dataForm = useForm({
     name: 'data-form',
     mode: 'uncontrolled',
+    initialValues: {
+      name: userData?.name,
+      email: userData?.email,
+      year_of_birth: userData?.year_of_birth,
+    },
     validate: {
       name: hasLength({ min: 1, max: 255 }, 'Nombre no puede estar vacío'),
       email: hasLength({ min: 1, max: 255 }, 'Correo no puede estar vacío'),
       year_of_birth: (value: number) => (value < 1900 || value > Date.now() ? 'Año de nacimiento inválido' : null) 
     }
   });
-  const [updating, setUpdating] = useState(false);
-  const handleModify = async () => {
-    const {name, email, year_of_birth} = dataForm.getValues();
-    setUpdating(true);
-    const response = await updateMeUserMePut({
-      client: client,
-      body: {
-        name: name === data.name ? null : name as string,
-        email: email === data.email ? null : email as string,
-        year_of_birth: year_of_birth === data.year_of_birth ? null : year_of_birth as number,
-      }
-    })
 
-    setUpdating(false);
+  // Update user data
+  const updateUserMutation = useMutation({
+    mutationKey: ['update-user'],
+    mutationFn: async (data: ModifyUser) => {
+      await updateMeUserMePut({client: client, body: data});
+    },
 
-    if (response.error) {
-      notifications.show({
-        title: 'Error',
-        message: 'No se ha podido modificar tus datos',
-        color: 'red',
-        icon: <TbX />
-      });
-      return;
-    } else {
-      // Refetch user data
-      refetch();
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user-data'] });
       notifications.show({
         title: 'Datos modificados',
         message: 'Tus datos han sido modificados correctamente',
         color: 'green',
         icon: <TbCheck/>
       });
+    },
+
+    onError: () => {
+      notifications.show({
+        title: 'Error',
+        message: 'No se ha podido modificar tus datos',
+        color: 'red',
+        icon: <TbX />
+      });
     }
+  })
+
+  const handleModify = async () => {
+    const {name, email, year_of_birth} = dataForm.getValues();
+    updateUserMutation.mutate({
+      email: email !== userData.email ? email as string : null,
+      name: name !== userData.name ? name as string : null,
+      year_of_birth: year_of_birth as number
+    });
   }
 
   useEffect(() => {
-    if (data && status === 'success') {
+    if (userData && userDataStatus === 'success') {
       dataForm.setValues({
-        name: data.name,
-        email: data.email,
-        year_of_birth: data.year_of_birth,
+        name: userData.name,
+        email: userData.email,
+        year_of_birth: userData.year_of_birth,
       });
       dataForm.setInitialValues({
-        name: data.name,
-        email: data.email,
-        year_of_birth: data.year_of_birth,
+        name: userData.name,
+        email: userData.email,
+        year_of_birth: userData.year_of_birth,
       });
       dataForm.setDirty(false);
     }
-  }, [status, data])
+  }, [userDataStatus, userData])
 
+  /// Page
   let dataTsx;
-  if (status === 'pending') {
+  if (userDataStatus === 'pending') {
     dataTsx = (
       <Loader type="dots" size="xl"/>
     );
   }
-  else if (status === 'error') {
+  else if (userDataStatus === 'error') {
     dataTsx = (
       <Text>Error al cargar los datos</Text>
     );
-  } else if (status === 'success') {
+  } else if (userDataStatus === 'success') {
     dataTsx = (
       <>
       <Form form={dataForm} onSubmit={handleModify}>
@@ -158,7 +169,7 @@ export default function Data() {
             {...dataForm.getInputProps('name')}
             leftSection={<TbUser />}
             placeholder='Nombre'
-            readOnly={!data.verified}
+            readOnly={!userData.verified}
           />
           <NumberInput
             label="Año de nacimiento"
@@ -166,7 +177,7 @@ export default function Data() {
             {...dataForm.getInputProps('year_of_birth')}
             leftSection={<TbCalendar />}
             placeholder='2000'
-            readOnly={!data.verified}
+            readOnly={!userData.verified}
           />
           <Stack gap="0">
             <TextInput
@@ -175,15 +186,15 @@ export default function Data() {
               {...dataForm.getInputProps('email')}
               leftSection={<TbMail />}
               rightSection={
-                <Chip readOnly checked={data.verified}>
-                  { data.verified ? 'Verificado' : 'Sin verificar' }
+                <Chip readOnly checked={userData.verified}>
+                  { userData.verified ? 'Verificado' : 'Sin verificar' }
                 </Chip>
               }
-              rightSectionWidth={data.verified ? 110 : 125}
+              rightSectionWidth={userData.verified ? 110 : 125}
               placeholder='ejemplo@ejemp.lo'
-              readOnly={!data.verified}
+              readOnly={!userData.verified}
             />
-            <Collapse in={!data.verified}>
+            <Collapse in={!userData.verified}>
                 <Text c="dimmed" size="sm" span>
                   Verifica tu correo electrónico
                 </Text>
@@ -192,7 +203,7 @@ export default function Data() {
           </Stack>
           <Collapse in={dataForm.isDirty()}>
               <Center>
-                <Button loading={updating} type='submit'>Modificar datos</Button>
+                <Button loading={updateUserMutation.isPending} type='submit'>Modificar datos</Button>
               </Center>
           </Collapse>
         </Stack>
@@ -200,7 +211,7 @@ export default function Data() {
       <Modal opened={verifing} title="Verificar correo electrónico" onClose={() => setVerifing(false)} centered>
         <Form form={verifyForm} onSubmit={handleVerify}>
           <Stack align='center'>
-              <Text>Introduce el código de verificación que te hemos enviado a {data.email}</Text>
+              <Text>Introduce el código de verificación que te hemos enviado a {userData.email}</Text>
               <PinInput
                 name='pin'
                 key={verifyForm.key('pin')}
@@ -208,7 +219,7 @@ export default function Data() {
                 length={6}
                 oneTimeCode
                 />
-              <Button loading={fetching_verifying} mt="sm" type='submit' variant="filled">Verificar</Button>
+              <Button loading={verifyUserMutation.isPending} mt="sm" type='submit' variant="filled">Verificar</Button>
           </Stack>
         </Form>
       </Modal>
