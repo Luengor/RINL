@@ -18,6 +18,7 @@ import { Form } from '@mantine/form';
 import { useNavigate } from 'react-router-dom';
 import { useClient } from '../hooks/useClient';
 import { createUserUserPost } from '../client';
+import { useMutation } from '@tanstack/react-query';
   
 export function LoginForm() {
   const navigate = useNavigate(); 
@@ -45,31 +46,49 @@ export function LoginForm() {
   })
 
   // Form submission
+  const loginMutation = useMutation({
+    mutationKey: ['login'],
+    mutationFn: async (data: {email: string, password:string}) => {
+      await login(data.email, data.password);
+    },
+    onSuccess: () => {
+      navigate('/my/data');
+    },
+    onError: () => {
+      form.setErrors({ email: 'Correo o contraseña incorrecta' });
+    },
+    meta: { errorMessage: 'No se ha podido iniciar sesión' }
+  });
+
+  const registerMutation = useMutation({
+    mutationKey: ['register'],
+    mutationFn: async (data: {email: string, password:string, name: string, birthYear: number}) => {
+      await createUserUserPost({
+        client: client,
+        body: {
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          year_of_birth: data.birthYear
+        }
+      });
+    },
+    onError: () => {
+      form.setErrors({ email: 'Correo ya registrado' });
+    },
+    onSuccess: () => {
+      loginMutation.mutate({ email: form.getValues().email, password: form.getValues().password });
+    },
+    meta: { errorMessage: 'No se ha podido registrar' }
+  });
+
   async function handleSubmit() {
     const { email, password, name, birthYear } = form.getValues();
 
-    if (register) {
-      try {
-        await createUserUserPost({
-          client: client,
-          body: {
-            email: email,
-            password: password,
-            name: name,
-            year_of_birth: birthYear
-          }
-        });
-      } catch (response) {
-        return form.setErrors({ email: 'Correo ya registrado' });
-      }
-    }
-
-    try {
-      await login(email, password);
-      navigate('/my/data');
-    } catch (response) {
-      return form.setErrors({ email: 'Coreo o contraseña incorrecta' });
-    }
+    if (register)
+      registerMutation.mutate({ email, password, name, birthYear });
+    else
+      loginMutation.mutate({ email, password });
   }
 
   // Actual form

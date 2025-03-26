@@ -9,7 +9,7 @@ import '@mantine/notifications/styles.css';
 
 import { MantineProvider } from '@mantine/core';
 import { notifications, Notifications } from '@mantine/notifications';
-import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { TbX } from 'react-icons/tb';
 
 const queryClient = new QueryClient({
@@ -26,8 +26,23 @@ const queryClient = new QueryClient({
       } else {
         console.error('No meta errorMessage for error: ', error);
       }
-    }
+    },
   }),
+
+  mutationCache: new MutationCache({
+    onError: (error, variables, context, mutation) => {
+      if (mutation.meta.errorMessage) {
+        notifications.show({
+          title: 'Error',
+          message: mutation.meta.errorMessage as string,
+          color: 'red',
+          icon: <TbX />,
+        });
+      } else {
+        console.error('No meta errorMessage for error: ', error, variables, context, mutation);
+      }
+    }
+  })
 })
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
