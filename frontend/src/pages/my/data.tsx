@@ -13,7 +13,7 @@ import {
   Title
 } from '@mantine/core';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { getMeUserMeGet, ModifyUser, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
@@ -22,20 +22,10 @@ import { notifications } from '@mantine/notifications';
 import { useClient } from '../../hooks/useClient';
 import { UserBase } from '../../client';
 
-export default function Data() {
+function DataForm({ user } : { user: UserBase }) {
+  // Get the client
   const { client } = useClient();
   const queryClient = useQueryClient();
-
-  /// User Data
-  const { data: userData, status: userDataStatus } = useQuery<UserBase>({
-    queryKey: ['user-data'],
-    queryFn: async () => {
-      const req = await getMeUserMeGet({client: client});
-      return req.data;
-    },
-    placeholderData: { name: '', email: '', year_of_birth: 0, verified: false },
-    staleTime: 1000 * 60 * 5,
-  })
 
   /// Verify user 
   const [verifing, setVerifing] = useState(false);
@@ -84,9 +74,9 @@ export default function Data() {
     name: 'data-form',
     mode: 'uncontrolled',
     initialValues: {
-      name: userData?.name,
-      email: userData?.email,
-      year_of_birth: userData?.year_of_birth,
+      name: user.name,
+      email: user.email,
+      year_of_birth: user.year_of_birth,
     },
     validate: {
       name: hasLength({ min: 1, max: 255 }, 'Nombre no puede estar vacío'),
@@ -103,13 +93,17 @@ export default function Data() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user-data'] });
       notifications.show({
         title: 'Datos modificados',
         message: 'Tus datos han sido modificados correctamente',
         color: 'green',
         icon: <TbCheck/>
       });
+      queryClient.invalidateQueries({ queryKey: ['user-data'] });
+
+      // Update form values
+      dataForm.setInitialValues(dataForm.getValues());
+      dataForm.resetDirty();
     },
 
     onError: () => {
@@ -125,42 +119,14 @@ export default function Data() {
   const handleModify = async () => {
     const {name, email, year_of_birth} = dataForm.getValues();
     updateUserMutation.mutate({
-      email: email !== userData.email ? email as string : null,
-      name: name !== userData.name ? name as string : null,
+      email: email !== user.email ? email as string : null,
+      name: name !== user.name ? name as string : null,
       year_of_birth: year_of_birth as number
     });
   }
 
-  useEffect(() => {
-    if (userData && userDataStatus === 'success') {
-      dataForm.setValues({
-        name: userData.name,
-        email: userData.email,
-        year_of_birth: userData.year_of_birth,
-      });
-      dataForm.setInitialValues({
-        name: userData.name,
-        email: userData.email,
-        year_of_birth: userData.year_of_birth,
-      });
-      dataForm.setDirty(false);
-    }
-  }, [userDataStatus, userData])
-
-  /// Page
-  let dataTsx;
-  if (userDataStatus === 'pending') {
-    dataTsx = (
-      <Loader type="dots" size="xl"/>
-    );
-  }
-  else if (userDataStatus === 'error') {
-    dataTsx = (
-      <Text>Error al cargar los datos</Text>
-    );
-  } else if (userDataStatus === 'success') {
-    dataTsx = (
-      <>
+  return (
+    <>
       <Form form={dataForm} onSubmit={handleModify}>
         <Stack align='stretch' gap="sm">
           <TextInput
@@ -169,7 +135,7 @@ export default function Data() {
             {...dataForm.getInputProps('name')}
             leftSection={<TbUser />}
             placeholder='Nombre'
-            readOnly={!userData.verified}
+            readOnly={!user.verified}
           />
           <NumberInput
             label="Año de nacimiento"
@@ -177,7 +143,7 @@ export default function Data() {
             {...dataForm.getInputProps('year_of_birth')}
             leftSection={<TbCalendar />}
             placeholder='2000'
-            readOnly={!userData.verified}
+            readOnly={!user.verified}
           />
           <Stack gap="0">
             <TextInput
@@ -186,15 +152,15 @@ export default function Data() {
               {...dataForm.getInputProps('email')}
               leftSection={<TbMail />}
               rightSection={
-                <Chip readOnly checked={userData.verified}>
-                  { userData.verified ? 'Verificado' : 'Sin verificar' }
+                <Chip readOnly checked={user.verified}>
+                  { user.verified ? 'Verificado' : 'Sin verificar' }
                 </Chip>
               }
-              rightSectionWidth={userData.verified ? 110 : 125}
+              rightSectionWidth={user.verified ? 110 : 125}
               placeholder='ejemplo@ejemp.lo'
-              readOnly={!userData.verified}
+              readOnly={!user.verified}
             />
-            <Collapse in={!userData.verified}>
+            <Collapse in={!user.verified}>
                 <Text c="dimmed" size="sm" span>
                   Verifica tu correo electrónico
                 </Text>
@@ -211,7 +177,7 @@ export default function Data() {
       <Modal opened={verifing} title="Verificar correo electrónico" onClose={() => setVerifing(false)} centered>
         <Form form={verifyForm} onSubmit={handleVerify}>
           <Stack align='center'>
-              <Text>Introduce el código de verificación que te hemos enviado a {userData.email}</Text>
+              <Text>Introduce el código de verificación que te hemos enviado a {user.email}</Text>
               <PinInput
                 name='pin'
                 key={verifyForm.key('pin')}
@@ -223,8 +189,30 @@ export default function Data() {
           </Stack>
         </Form>
       </Modal>
-      </>
-    );
+    </>
+  );
+}
+
+export default function Data() {
+  const { client } = useClient();
+
+  // User Data
+  const { data, isPending, isError } = useQuery<UserBase>({
+    queryKey: ['user-data'],
+    queryFn: async () => {
+      const req = await getMeUserMeGet({client: client});
+      return req.data;
+    },
+    staleTime: 1000 * 60 * 5,
+  })
+
+  let dataTsx;
+  if (isPending) {
+    dataTsx = <Loader type="dots" size="xl"/>
+  } else if (isError) {
+    dataTsx = <Text>Error al cargar los datos</Text>
+  } else {
+    dataTsx = <DataForm user={data} />
   }
 
   return (
@@ -234,7 +222,7 @@ export default function Data() {
       <Text >
         Aquí puedes ver y modificar tus datos.
       </Text>
-      {dataTsx}
+      { dataTsx }
     </Stack>
     </>
   )
