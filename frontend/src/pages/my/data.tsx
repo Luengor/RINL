@@ -16,18 +16,18 @@ import {
 import { useState } from 'react';
 import { getMeUserMeGet, ModifyUser, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { TbMail, TbUser, TbCalendar, TbCheck, TbX } from 'react-icons/tb';
+import { TbMail, TbUser, TbCalendar } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
 import { useClient } from '../../hooks/useClient';
 import { UserBase } from '../../client';
+import { ErrorNotification, OkNotification } from '../../utils/notifications';
 
 function DataForm({ user } : { user: UserBase }) {
   // Get the client
   const { client } = useClient();
   const queryClient = useQueryClient();
 
-  /// Verify user 
+  /// Verify user
   const [verifing, setVerifing] = useState(false);
   const verifyForm = useForm({
     name: 'verify-form',
@@ -46,21 +46,11 @@ function DataForm({ user } : { user: UserBase }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-data'] });
       setVerifing(false);
-      notifications.show({
-        title: 'Correo verificado',
-        message: 'Tu correo electrónico ha sido verificado correctamente',
-        color: 'green',
-        icon: <TbCheck/>
-      });
+      OkNotification('Correo verificado', 'Tu correo electrónico ha sido verificado correctamente');
     },
 
     onError: () => {
-      notifications.show({
-        title: 'Error',
-        message: 'No se ha podido verificar tu correo electrónico',
-        color: 'red',
-        icon: <TbX />
-      });
+      ErrorNotification('No se ha podido verificar tu correo electrónico');
       verifyForm.setErrors({ pin: 'Código incorrecto' });
     }
   });
@@ -94,12 +84,7 @@ function DataForm({ user } : { user: UserBase }) {
     },
 
     onSuccess: () => {
-      notifications.show({
-        title: 'Datos modificados',
-        message: 'Tus datos han sido modificados correctamente',
-        color: 'green',
-        icon: <TbCheck/>
-      });
+      OkNotification('Datos modificados', 'Tus datos han sido modificados correctamente');
       queryClient.invalidateQueries({ queryKey: ['user-data'] });
 
       // Update form values
@@ -108,12 +93,7 @@ function DataForm({ user } : { user: UserBase }) {
     },
 
     onError: () => {
-      notifications.show({
-        title: 'Error',
-        message: 'No se ha podido modificar tus datos',
-        color: 'red',
-        icon: <TbX />
-      });
+      ErrorNotification('No se ha podido modificar tus datos');
     }
   })
 

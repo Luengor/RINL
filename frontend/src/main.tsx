@@ -8,39 +8,26 @@ import '@mantine/charts/styles.css';
 import '@mantine/notifications/styles.css';
 
 import { MantineProvider } from '@mantine/core';
-import { notifications, Notifications } from '@mantine/notifications';
+import { Notifications } from '@mantine/notifications';
 import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { TbX } from 'react-icons/tb';
+import { ErrorNotification } from './utils/notifications';
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
-      if (query.meta.errorMessage) {
-        notifications.show({
-          title: 'Error',
-          message: query.meta.errorMessage as string,
-          color: 'red',
-          icon: <TbX />,
-        });
+      console.log('Error in query: ', error.message);
 
-      } else {
-        console.error('No meta errorMessage for error: ', error);
-      }
+      if (query.meta.errorMessage)
+        ErrorNotification(query.meta.errorMessage as string);
     },
   }),
 
   mutationCache: new MutationCache({
     onError: (error, variables, context, mutation) => {
-      if (mutation.meta.errorMessage) {
-        notifications.show({
-          title: 'Error',
-          message: mutation.meta.errorMessage as string,
-          color: 'red',
-          icon: <TbX />,
-        });
-      } else {
-        console.error('No meta errorMessage for error: ', error, variables, context, mutation);
-      }
+      console.log('Error in mutation: ', error, variables, context, mutation);
+
+      if (mutation.meta.errorMessage)
+        ErrorNotification(mutation.meta.errorMessage as string);
     }
   })
 })
