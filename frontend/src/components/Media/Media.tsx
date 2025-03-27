@@ -11,8 +11,16 @@ export default function Media() {
   const [videoStream, setVideoStream] = useState<MediaStream>(null);
   const inputVideoRef = useRef<HTMLVideoElement>(null);
 
-  // Prepare unity if not on debug
-  const { unityProvider, sendMessage, isLoaded } = useUnityContext({
+  useEffect(() => {
+    if (videoStream) return;
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+      setVideoStream(stream);
+    });
+  }, [videoStream]);
+
+  // Prepare unity
+  const { unityProvider, sendMessage: sendUnityMessage, isLoaded: isUnityLoaded, requestFullscreen } = useUnityContext({
     loaderUrl: "/unity/Build/unity.loader.js",
     dataUrl: "/unity/Build/unity.data",
     frameworkUrl: "/unity/Build/unity.framework.js",
@@ -21,35 +29,6 @@ export default function Media() {
       powerPreference: isOnMobile ? 1 : 2,
     }
   });
-
-  const getVideoStream = async () => {
-    if (videoStream) return;
-
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true
-    });
-
-    setVideoStream(stream);
-  }
-
-  useEffect(() => {
-    getVideoStream();
-  })
-
-  // Create pose landmarker and start detecting
-  useEffect(() => {
-    if (videoStream && !!unityProvider && isLoaded) {
-      createPoseLandmarker(isOnMobile ? "lite" : "heavy").then((poseLandmarker) => {
-        predict(poseLandmarker, inputVideoRef, (result) => {
-          sendMessage("GameController", "SetBodyPosition", result);
-        });
-
-        return () => {
-          poseLandmarker.close();
-        }
-      });
-    }
-  }, [videoStream, unityProvider, sendMessage, isLoaded]);
 
   // Custom event type expanding Event
   interface UnityEvent extends Event {
@@ -87,8 +66,9 @@ export default function Media() {
     }
   });
 
+  // Send video size to unity
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isUnityLoaded) return;
 
     let timeout_id: NodeJS.Timeout = null;
 
@@ -105,7 +85,7 @@ export default function Media() {
         }
 
         console.log("Sending video size", msg);
-        sendMessage("JSConnector", "SetVideoSize", JSON.stringify(msg));
+        sendUnityMessage("JSConnector", "SetVideoSize", JSON.stringify(msg));
         timeout_id = setTimeout(sendVideoSize, 5000);
       }
     }
@@ -118,7 +98,24 @@ export default function Media() {
         clearTimeout(timeout_id);
       }
     }
-  });
+  }, [isUnityLoaded, sendUnityMessage]);
+
+  // Create pose landmarker and start detecting
+  useEffect(() => {
+    if (videoStream && !!unityProvider && isUnityLoaded) {
+      requestFullscreen(true);
+
+      createPoseLandmarker(isOnMobile ? "lite" : "heavy").then((poseLandmarker) => {
+        predict(poseLandmarker, inputVideoRef, (result) => {
+          sendUnityMessage("GameController", "SetBodyPosition", result);
+        });
+
+        return () => {
+          poseLandmarker.close();
+        }
+      });
+    }
+  }, [videoStream, unityProvider, sendUnityMessage, isUnityLoaded]);
 
   // Render
   let content = <Loader type="dots" size="xl"/>;
@@ -141,7 +138,6 @@ export default function Media() {
       playsInline />
     </>
     );
-
   }
 
   return (
