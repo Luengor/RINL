@@ -24,9 +24,9 @@ async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)], s
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
         if email is None:
-            raise HTTPException(status_code=400, detail="Invalid token")
+            raise HTTPException(status_code=401, detail="Invalid token")
     except InvalidTokenError:
-        raise HTTPException(status_code=400, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token")
 
     user = AuthDAO.get_user(email, session)
     if user is None:
@@ -38,9 +38,9 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
         if email is None:
-            raise HTTPException(status_code=400, detail="Invalid token")
+            raise HTTPException(status_code=401, detail="Invalid token")
     except InvalidTokenError:
-        raise HTTPException(status_code=400, detail="Invalid token")
+        raise HTTPException(status_code=401, detail="Invalid token")
 
     user = UserDAO.get_user(email, session)
     if user is None:
@@ -49,5 +49,5 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
 
 async def get_current_verified_user(user: UserBase = Depends(get_current_user)) -> UserBase:
     if not user.verified:
-        raise HTTPException(status_code=400, detail="User not verified")
+        raise HTTPException(status_code=401, detail="User not verified")
     return user
