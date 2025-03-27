@@ -115,7 +115,7 @@ export default function Media() {
         }
       });
     }
-  }, [videoStream, unityProvider, sendUnityMessage, isUnityLoaded]);
+  }, [isUnityLoaded]);
 
   // Render
   let content = <Loader type="dots" size="xl"/>;
