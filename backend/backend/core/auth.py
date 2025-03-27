@@ -10,6 +10,11 @@ from dao.user import UserDAO
 from core.auth_utils import verify_password, oauth2_scheme, decode_token
 from core.db import get_db
 
+# CHANGING THIS STATUS CODES WILL BREAK THE FRONTEND
+INVALID_TOKEN = HTTPException(status_code=401, detail="Invalid token")
+NOT_VERIFIED = HTTPException(status_code=400, detail="User not verified")
+NOT_FOUND = HTTPException(status_code=404, detail="User not found")
+
 # Authentication
 def authenticate_user(email: str, password: str, session) -> UserAuth | None:
     user = AuthDAO.get_user(email, session)
@@ -24,13 +29,13 @@ async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)], s
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
         if email is None:
-            raise HTTPException(status_code=401, detail="Invalid token")
+            raise INVALID_TOKEN 
     except InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise INVALID_TOKEN 
 
     user = AuthDAO.get_user(email, session)
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise NOT_FOUND 
     return user
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], session = Depends(get_db)) -> UserBase:
@@ -38,16 +43,16 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
         payload = decode_token(token)
         email:str = payload.get("sub")  # type: ignore
         if email is None:
-            raise HTTPException(status_code=401, detail="Invalid token")
+            raise INVALID_TOKEN 
     except InvalidTokenError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        raise INVALID_TOKEN 
 
     user = UserDAO.get_user(email, session)
     if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise NOT_FOUND 
     return user
 
 async def get_current_verified_user(user: UserBase = Depends(get_current_user)) -> UserBase:
     if not user.verified:
-        raise HTTPException(status_code=401, detail="User not verified")
+        raise NOT_VERIFIED 
     return user

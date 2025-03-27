@@ -10,8 +10,8 @@ export function useClient() {
   })));
 
   // Logout the user if the token is invalid
-  clientRef.current.interceptors.response.use((response) => {
-    if (response.status === 401) {
+  clientRef.current.interceptors.response.use(async (response) => {
+    if (response.status === 401 && clientRef.current.getConfig().auth) {
       // Unauthorized, remove the token
       localStorage.removeItem('access_token');
       clientRef.current.setConfig({
