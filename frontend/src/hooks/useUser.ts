@@ -7,7 +7,7 @@ export function useUser() {
     const { client } = useClient();
     
     // Get user data
-    const { data: user, status: userStatus } = useQuery({
+    const { data: user, status: userStatus, refetch: refetchUser } = useQuery({
         queryKey: ['user-data'],
         queryFn: async () => {
             const req = await getMeUserMeGet({client: client});
@@ -21,7 +21,7 @@ export function useUser() {
     const verified = userStatus === 'success' ? user.verified : false;
     
     // Get latest shape
-    const { data: latestShape, status: latestShapeStatus } = useQuery({
+    const { data: latestShape, status: latestShapeStatus, refetch: refetchShape } = useQuery({
         queryKey: ['latest-shape'],
         queryFn: async () => {
             const req = await getCurrentShapeShapeCurrentGet({client: client, throwOnError: false});
@@ -38,6 +38,10 @@ export function useUser() {
     });
 
     const hasShape = latestShapeStatus === 'success' && latestShape !== null;
+    const refetch = () => {
+        refetchUser();
+        refetchShape();
+    }
 
     return {
         verified,
@@ -45,6 +49,7 @@ export function useUser() {
         user,
         latestShape,
         latestShapeStatus,
-        hasShape
+        hasShape,
+        refetch
     }
 }
