@@ -1,12 +1,14 @@
-import { Button, Loader, Modal, NumberInput, Paper, Slider, Stack, Text, Title, Tooltip } from "@mantine/core";
+import { Button, Modal, NumberInput, Paper, Slider, Stack, Text, Title, Tooltip } from "@mantine/core";
 import { useUser } from "../../hooks/useUser";
 import { useDisclosure } from "@mantine/hooks";
 import { Form, useForm } from "@mantine/form";
 import { useClient } from "../../hooks/useClient";
 import { createShapeShapePost, ShapeBase } from "../../client";
+import { useMutation } from "@tanstack/react-query";
+import { OkNotification } from "../../utils/notifications";
 
 export default function CurrentShapeCard() {
-  const { verified, latestShape, latestShapeStatus, hasShape, refetch } = useUser();
+  const { verified, latestShape, hasShape, refetch } = useUser();
   const [ addShapeOpened, { open: openAddShape, close: closeAddshape }] = useDisclosure(false);
 
   const newShapeForm = useForm({
@@ -18,13 +20,33 @@ export default function CurrentShapeCard() {
       sex_math: latestShape?.sex_math || 0.5,
     },
     validate: {
-      weight: (value: number) => (value < 0 ? 'Peso inválido' : null),
-      height: (value: number) => (value < 0 ? 'Altura inválida' : null),
+      weight: (value: number) => (value < 20 || value > 700 ? 'Peso inválido' : null),
+      height: (value: number) => (value < 50 || value > 300 ? 'Altura inválida' : null),
       sex_math: (value: number) => (value < 0 || value > 1 ? 'Sexo inválido' : null),
     }
   });
 
   const { client } = useClient();
+  const addShapeMutation = useMutation({
+    mutationKey: ['add-shape'],
+    mutationFn: async (shape: ShapeBase) => {
+      const req = await createShapeShapePost({
+        client: client,
+        body: shape
+      })
+      return req;
+    },
+    onSuccess: () => {
+      closeAddshape();
+      OkNotification('Forma física añadida', 'La forma física ha sido añadida correctamente');
+      refetch();
+    },
+
+    meta: {
+      errorMessage: 'Error al añadir la forma física'
+    },
+  })
+
   async function handleAddShape() {
     const { weight, height, sex_math } = newShapeForm.getValues();
     const shape: ShapeBase = {
@@ -34,19 +56,7 @@ export default function CurrentShapeCard() {
       sex_math: sex_math
     }
 
-    console.log(shape, sex_math);
-
-    const req = await createShapeShapePost({
-      client: client,
-      body: shape
-    })
-
-    if (req.response.ok) {
-      closeAddshape();
-      refetch();
-    } else {
-      newShapeForm.setErrors({ weight: 'Error al crear la forma' });
-    }
+    addShapeMutation.mutate(shape);
   }
 
   return (
