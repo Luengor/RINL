@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 
 from core.auth import get_current_verified_user
 from core.db import get_db
-from schemas.shape import ShapeBase, ShapeFull, ShapeBase, ShapeUUID
+from schemas.shape import ShapeBase, ShapeFull, ShapeBase
 from schemas.users import UserBase
 from dao.shape import ShapeDAO
 
