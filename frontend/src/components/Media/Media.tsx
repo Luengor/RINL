@@ -94,9 +94,9 @@ export default function Media() {
         }
 
         console.log("Sending video and shape to unity", msg);
-        sendUnityMessage("JSConnector", "SetVideoSize", JSON.stringify(msg));
-        sendUnityMessage("JSConnector", "SetCurrentShape", JSON.stringify(latestShape));
-        sendUnityMessage("JSConnector", "SetCurrentUser", JSON.stringify(user));
+        sendUnityMessage("GameController", "SetVideoSize", JSON.stringify(msg));
+        sendUnityMessage("GameController", "SetCurrentShape", JSON.stringify(latestShape));
+        sendUnityMessage("GameController", "SetCurrentUser", JSON.stringify(user));
         timeout_id = setTimeout(sendUserData, 5000);
       }
     }
