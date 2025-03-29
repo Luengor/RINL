@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useClient } from "./useClient";
-import { getMeUserMeGet } from "../client";
+import { getCurrentShapeShapeCurrentGet, getMeUserMeGet } from "../client";
 
 export function useUser() {
     // Get the client
     const { client } = useClient();
     
     // Get user data
-    const { data: user, status } = useQuery({
+    const { data: user, status: userStatus } = useQuery({
         queryKey: ['user-data'],
         queryFn: async () => {
             const req = await getMeUserMeGet({client: client});
@@ -18,11 +18,28 @@ export function useUser() {
         staleTime: 1000 * 60 * 5,
     })
     
-    const verified = status === 'success' ? user.verified : false;
+    const verified = userStatus === 'success' ? user.verified : false;
     
+    // Get latest shape
+    const { data: latestShape, status: latestShapeStatus } = useQuery({
+        queryKey: ['latest-shape'],
+        queryFn: async () => {
+            const req = await getCurrentShapeShapeCurrentGet({client: client});
+            return req.data;
+        },
+        meta: { errorMessage: 'Error al cargar la forma actual' },
+        staleTime: 1000 * 60 * 5,
+        enabled: verified
+    });
+
+    const hasShape = latestShapeStatus === 'success' && latestShape !== null;
+
     return {
         verified,
-        status,
-        user
+        userStatus,
+        user,
+        latestShape,
+        latestShapeStatus,
+        hasShape
     }
 }

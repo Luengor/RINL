@@ -3,10 +3,19 @@ import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
 import { Center, Loader } from "@mantine/core";
 import { ActivityBase, createActivityActivityPost } from "../../client";
+import { useUser } from "../../hooks/useUser";
+import { useNavigate } from "react-router-dom";
 
 const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
 
 export default function Media() {
+  // Exit if we don't have a shape or verified user
+  const { user, verified, hasShape, latestShape } = useUser();
+  const navigate = useNavigate();
+  if (!verified || !hasShape) {
+    navigate("/my/data");
+  }
+
   // Prepare video
   const [videoStream, setVideoStream] = useState<MediaStream>(null);
   const inputVideoRef = useRef<HTMLVideoElement>(null);
@@ -72,7 +81,7 @@ export default function Media() {
 
     let timeout_id: NodeJS.Timeout = null;
 
-    const sendVideoSize = () => {
+    const sendUserData = () => {
       if (inputVideoRef.current) {
         const msg = {
           width: inputVideoRef.current.videoWidth,
@@ -80,17 +89,19 @@ export default function Media() {
         };
 
         if (msg.width === 0 || msg.height === 0) {
-          timeout_id = setTimeout(sendVideoSize, 5000);
+          timeout_id = setTimeout(sendUserData, 5000);
           return;
         }
 
-        console.log("Sending video size", msg);
+        console.log("Sending video and shape to unity", msg);
         sendUnityMessage("JSConnector", "SetVideoSize", JSON.stringify(msg));
-        timeout_id = setTimeout(sendVideoSize, 5000);
+        sendUnityMessage("JSConnector", "SetCurrentShape", JSON.stringify(latestShape));
+        sendUnityMessage("JSConnector", "SetCurrentUser", JSON.stringify(user));
+        timeout_id = setTimeout(sendUserData, 5000);
       }
     }
 
-    sendVideoSize();
+    sendUserData();
 
     return () => {
       // Cancel the interval

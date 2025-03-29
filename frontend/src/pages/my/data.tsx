@@ -177,12 +177,12 @@ function DataForm({ user } : { user: UserBase }) {
 
 export default function Data() {
   // User Data
-  const { user, status } = useUser();
+  const { user, userStatus } = useUser();
 
   let dataTsx;
-  if (status === 'pending') {
+  if (userStatus === 'pending') {
     dataTsx = <Loader type="dots" size="xl"/>
-  } else if (status === 'error') {
+  } else if (userStatus === 'error') {
     dataTsx = <Text>Error al cargar los datos</Text>
   } else {
     dataTsx = <DataForm user={user} />

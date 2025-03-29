@@ -14,7 +14,7 @@ export default function My() {
   const { logout } = useClient();
 
   // Get user data
-  const { user, status, verified } = useUser();
+  const { user, userStatus, verified, hasShape } = useUser();
 
   // Current page
   const location = useLocation();
@@ -43,12 +43,12 @@ export default function My() {
         break;
     }
 
-    if (status === 'success' && user.verified === false && active !== 'data') {
+    if (userStatus === 'success' && user.verified === false && active !== 'data') {
       navigate('/my/data');
     }
     setActive(active);
 
-  }, [location, active, user, status, navigate]);
+  }, [location, active, user, userStatus, navigate]);
 
   // Logout
   const [logoutModal, setLogoutModal] = useState(false);
@@ -61,7 +61,7 @@ export default function My() {
   const links = [
     { icon: TbUser, label: 'Cuenta', active: 'data' === active, onClick: () => navigate('/my/data') },
     { icon: TbDeviceDesktopAnalytics, active: 'stats' === active, disabled: !verified, label: 'Stats', onClick: () => navigate('/my/stats') },
-    { icon: TbDeviceGamepad, label: 'Jugar', active: 'jugar' === active, disabled: !verified, onClick: () => navigate('/my/jugar') },
+    { icon: TbDeviceGamepad, label: 'Jugar', active: 'jugar' === active, disabled: !verified || !hasShape, onClick: () => navigate('/my/jugar') },
   ];
 
   return (
