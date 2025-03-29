@@ -14,13 +14,14 @@ import {
 } from '@mantine/core';
 
 import { useState } from 'react';
-import { getMeUserMeGet, ModifyUser, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ModifyUser, updateMeUserMePut, verifyUserUserVerifyVerificationCodePost } from '../../client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TbMail, TbUser, TbCalendar } from 'react-icons/tb';
 import { useForm, Form, hasLength } from '@mantine/form';
 import { useClient } from '../../hooks/useClient';
 import { UserBase } from '../../client';
 import { ErrorNotification, OkNotification } from '../../utils/notifications';
+import { useUser } from '../../hooks/useUser';
 
 function DataForm({ user } : { user: UserBase }) {
   // Get the client
@@ -175,26 +176,16 @@ function DataForm({ user } : { user: UserBase }) {
 }
 
 export default function Data() {
-  const { client } = useClient();
-
   // User Data
-  const { data, isPending, isError } = useQuery<UserBase>({
-    queryKey: ['user-data'],
-    queryFn: async () => {
-      const req = await getMeUserMeGet({client: client});
-      return req.data;
-    },
-    meta: { errorMessage: 'Error al cargar los datos' },
-    staleTime: 1000 * 60 * 5,
-  })
+  const { user, status } = useUser();
 
   let dataTsx;
-  if (isPending) {
+  if (status === 'pending') {
     dataTsx = <Loader type="dots" size="xl"/>
-  } else if (isError) {
+  } else if (status === 'error') {
     dataTsx = <Text>Error al cargar los datos</Text>
   } else {
-    dataTsx = <DataForm user={data} />
+    dataTsx = <DataForm user={user} />
   }
 
   return (

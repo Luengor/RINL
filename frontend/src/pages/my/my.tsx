@@ -7,24 +7,14 @@ import { Navbar } from "../../components/Navbar/Navbar";
 import Data from "./data";
 import Stats from "./stats";
 import { useClient } from '../../hooks/useClient';
-import { useQuery } from '@tanstack/react-query';
-import { getMeUserMeGet } from '../../client';
+import { useUser } from '../../hooks/useUser';
 
 export default function My() {
   // Get the client
-  const { logout, client } = useClient();
+  const { logout } = useClient();
 
   // Get user data
-  const { data, status } = useQuery({
-    queryKey: ['user-data'],
-    queryFn: async () => {
-      const req = await getMeUserMeGet({client: client});
-      return req.data;
-    },
-    meta: { errorMessage: 'Error al cargar los datos' },
-    staleTime: 1000 * 60 * 5,
-  })
-  const verified = status === 'success' ? data.verified : false;
+  const { user, status, verified } = useUser();
 
   // Current page
   const location = useLocation();
@@ -53,12 +43,12 @@ export default function My() {
         break;
     }
 
-    if (status === 'success' && data.verified === false && active !== 'data') {
+    if (status === 'success' && user.verified === false && active !== 'data') {
       navigate('/my/data');
     }
     setActive(active);
 
-  }, [location, active, data, status, navigate]);
+  }, [location, active, user, status, navigate]);
 
   // Logout
   const [logoutModal, setLogoutModal] = useState(false);
