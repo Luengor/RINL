@@ -60,15 +60,24 @@ export default function CurrentShapeCard() {
           <Text size="sm" c="dimmed">
             Necesitas introducir tu forma física para poder jugar.
           </Text>
-          <Button variant="outline" mt="sm" onClick={openAddShape}>
-            Introducir forma
-          </Button>
         </>
       )}
       {hasShape && (
         <>
+        <Text size="sm" c="dimmed">
+          Última forma física registrada: {new Date(latestShape?.date).toLocaleDateString()}
+        </Text>
+        <Text size="sm" c="dimmed">
+          Peso: {latestShape?.weight} kg
+        </Text>
+        <Text size="sm" c="dimmed">
+          Altura: {latestShape?.height} cm
+        </Text>
         </>
       )}
+      <Button variant="outline" mt="sm" onClick={openAddShape}>
+        Añadir forma
+      </Button>
     </Paper>
     <Modal opened={addShapeOpened} onClose={closeAddshape} title="Añadir forma física" centered>
       <Form form={newShapeForm} onSubmit={handleAddShape}>
