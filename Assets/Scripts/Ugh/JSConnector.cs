@@ -32,6 +32,19 @@ public class JSConnector : MonoBehaviour
     public void SetVideoSize(string sizeString)
     {
         imageSize = JsonUtility.FromJson<ImageSize>(sizeString);
+        Debug.Log($"Video Size: {imageSize.width}x{imageSize.height}");
+    }
+
+    public void SetCurrentShape(string shapeString)
+    {
+        Shape shape = JsonUtility.FromJson<Shape>(shapeString);
+        Debug.Log($"Shape: {shape}");
+    }
+
+    public void SetCurrentUser(string userString)
+    {
+        User user = JsonUtility.FromJson<User>(userString);
+        Debug.Log($"User: {user}");
     }
 
     public void CreateActivity(string minigame, int duration, int activity_points, string extra_data)

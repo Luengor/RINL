@@ -119,3 +119,17 @@ public struct Activity
     public int activity_points;
     public string extra_data;
 }
+
+[Serializable]
+public struct Shape
+{
+    public float weight;
+    public float height;
+    public float sex_math;
+}
+
+[Serializable]
+public struct User
+{
+    public string fullname;
+}
