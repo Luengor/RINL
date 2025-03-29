@@ -24,7 +24,12 @@ export function useUser() {
     const { data: latestShape, status: latestShapeStatus } = useQuery({
         queryKey: ['latest-shape'],
         queryFn: async () => {
-            const req = await getCurrentShapeShapeCurrentGet({client: client});
+            const req = await getCurrentShapeShapeCurrentGet({client: client, throwOnError: false});
+            if (req.response.status === 404) {
+                return null;
+            } else if (req.response.status !== 200) {
+                throw new Error('Error al cargar la forma actual');
+            }
             return req.data;
         },
         meta: { errorMessage: 'Error al cargar la forma actual' },
