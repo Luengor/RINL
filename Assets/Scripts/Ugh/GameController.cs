@@ -7,8 +7,10 @@ public class GameController : MonoBehaviour
     public static CalibrationData CalibrationData = new();
     public JSConnector JsConnector { get; private set; }
 
-    public RINLBody Body {
-        get {
+    public RINLBody Body
+    {
+        get
+        {
             if (body == null || !body.gameObject.activeInHierarchy)
                 body = FindFirstObjectByType<RINLBody>(FindObjectsInactive.Exclude);
 
@@ -34,7 +36,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        JsConnector = GetComponent<JSConnector>(); 
+        JsConnector = GetComponent<JSConnector>();
     }
 
 

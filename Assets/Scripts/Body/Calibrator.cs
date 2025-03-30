@@ -50,20 +50,20 @@ public class Calibrator : MonoBehaviour
 
         if (lastLandmarks.world == null)
         {
-            lastLandmarks = newLandmarks; 
+            lastLandmarks = newLandmarks;
             return;
         }
-        
+
         switch (state)
         {
             case CalibrationState.TPose:
                 TPoseCalibration(newLandmarks);
                 break;
-            
+
             case CalibrationState.Bounds:
                 BoundsCalibration(newLandmarks);
                 break;
-            
+
             case CalibrationState.Done:
                 calibration.data.calibrated = true;
 
@@ -109,7 +109,7 @@ public class Calibrator : MonoBehaviour
         // Add the landmarks to the bounds
         if (calibration.GrowBounds(newLandmarks))
             timeLeft = stillTime;
-        
+
         // Check if the body is still
         float diff = newLandmarks.SqrDistance3(lastLandmarks);
         if (diff > stillThreshold * 33)
@@ -117,7 +117,7 @@ public class Calibrator : MonoBehaviour
             timeLeft = stillTime;
             return;
         }
-        
+
         timeLeft -= Time.fixedDeltaTime;
         if (timeLeft <= 0)
         {
@@ -131,7 +131,7 @@ public class Calibrator : MonoBehaviour
         // Left hand and right hand are at the same height
         if (Mathf.Abs(landmarks.image[15].y - landmarks.image[16].y) > 0.1f)
             return false;
-        
+
         // Arms are straight
         if (Math.Abs(landmarks.image[15].y - landmarks.image[13].y) > 0.1f ||
             Math.Abs(landmarks.image[13].y - landmarks.image[11].y) > 0.1f ||
@@ -145,7 +145,7 @@ public class Calibrator : MonoBehaviour
             Math.Abs(landmarks.image[24].x - landmarks.image[26].x) > 0.1f ||
             Math.Abs(landmarks.image[26].x - landmarks.image[28].x) > 0.1f)
             return false;
-        
+
         return true;
     }
 }

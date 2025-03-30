@@ -32,7 +32,8 @@ public class MouseThing : MonoBehaviour
         Vector2 screenPos = mainCamera.WorldToScreenPoint(target.position);
 
         // Queue a mouse event at the position of this object
-        InputSystem.QueueStateEvent(Mouse.current, new MouseState {
+        InputSystem.QueueStateEvent(Mouse.current, new MouseState
+        {
             position = screenPos
         });
 
@@ -44,7 +45,8 @@ public class MouseThing : MonoBehaviour
 
             if (stillTime >= stillClickTime)
             {
-                InputSystem.QueueStateEvent(Mouse.current, new MouseState {
+                InputSystem.QueueStateEvent(Mouse.current, new MouseState
+                {
                     position = screenPos,
                     buttons = 1 << (int)MouseButton.Left
                 });

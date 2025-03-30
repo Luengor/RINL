@@ -13,7 +13,7 @@ public class SetText : MonoBehaviour
     public void SetObjectText(string jsonData)
     {
         ObjText data = JsonUtility.FromJson<ObjText>(jsonData);
-        GameObject obj = SceneScript.Instance.GetObject(data.obj); 
+        GameObject obj = SceneScript.Instance.GetObject(data.obj);
 
         Activity activity = GameController.Instance.GetActivityData();
         string formatedText = data.text

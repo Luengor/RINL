@@ -11,7 +11,8 @@ public class CalibrationData
 
     public Landmarks TransformLandmarks(RawLandmarks rawLandmarks)
     {
-        Landmarks landmarks = new() {
+        Landmarks landmarks = new()
+        {
             points = new Vector3[Constants.LANDMARKS],
             groundHeight = imageGroundHeight * worldImageRatio.y
         };
@@ -73,13 +74,13 @@ public class BodyCalibration
                 }
             }
 
-        
+
         return grown;
     }
 
     public Vector3 GetCombinedWorldLandmark(Landmarks landmarks, int index)
     {
-        return landmarks.points[index] + landmarks.hipPosition; 
+        return landmarks.points[index] + landmarks.hipPosition;
     }
 
     public bool IsFloating(RawLandmarks landmarks)
@@ -87,7 +88,7 @@ public class BodyCalibration
         // Check if the body is floating
         for (int i = 0; i < 33; i++)
             if (landmarks.image[i].InImage())
-                if (landmarks.image[i].y < data.imageGroundHeight) 
+                if (landmarks.image[i].y < data.imageGroundHeight)
                     return false;
 
         return true;
@@ -101,12 +102,12 @@ public class BodyCalibration
     private Vector2 CalculateWorldImage(RawLandmarks landmarks)
     {
         // Using the hips and shoulders to calculate the ratio
-        float imageHipDistance = Math.Abs(landmarks.image[24].x - landmarks.image[23].x); 
-        float imageShoulderDistance = Math.Abs(landmarks.image[11].y - landmarks.image[23].y); 
+        float imageHipDistance = Math.Abs(landmarks.image[24].x - landmarks.image[23].x);
+        float imageShoulderDistance = Math.Abs(landmarks.image[11].y - landmarks.image[23].y);
 
         float worldHipDistance = Math.Abs(landmarks.world[24].x - landmarks.world[23].x);
         float worldShoulderDistance = Math.Abs(landmarks.world[11].y - landmarks.world[23].y);
 
-        return new (worldHipDistance / imageHipDistance, worldShoulderDistance / imageShoulderDistance);
+        return new(worldHipDistance / imageHipDistance, worldShoulderDistance / imageShoulderDistance);
     }
 }

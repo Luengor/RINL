@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KeepUpWith: MonoBehaviour
+public class KeepUpWith : MonoBehaviour
 {
     public Transform target;
     public bool positionX = true;

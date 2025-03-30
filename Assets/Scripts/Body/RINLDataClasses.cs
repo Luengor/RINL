@@ -38,8 +38,8 @@ public struct RawLandmark
     public float y;
     public float z;
 
-    public readonly Vector2 ToVector2() { return new (x, y); }
-    public readonly Vector3 ToVector3() { return new (x, y, z); }
+    public readonly Vector2 ToVector2() { return new(x, y); }
+    public readonly Vector3 ToVector3() { return new(x, y, z); }
 
     public readonly float SqrDistance2(RawLandmark other)
     {
@@ -53,7 +53,7 @@ public struct RawLandmark
 
     public readonly bool InImage()
     {
-        return x >= -1 && x <= 1 && y >= 0 && y <= 1; 
+        return x >= -1 && x <= 1 && y >= 0 && y <= 1;
     }
 }
 
@@ -61,7 +61,7 @@ public struct RawLandmarks
 {
     public RawLandmark[] world;
     public RawLandmark[] image;
-    
+
     private readonly int size;
 
     public RawLandmarks(int size)

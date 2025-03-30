@@ -27,7 +27,7 @@ public class RINLBody : MonoBehaviour
     public float pointSmoothTime = 0.1f;
     [Tooltip("Max speed for the point movement (scaled by pointScale)")]
     public float pointMaxSpeed = 10f;
-    
+
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[Constants.LANDMARKS];
     private readonly Vector3[] bodyLandmarkSpeeds = new Vector3[Constants.LANDMARKS];
@@ -76,14 +76,16 @@ public class RINLBody : MonoBehaviour
                 {
                     endObject.SetParent(segmentObjects[part.segments.Length * 2 - 1].transform);
                     endObject.localPosition = Vector3.zero;
-                } else {
+                }
+                else
+                {
                     Debug.LogError("End object not found: " + part.moveEndObject);
                 }
             }
 
             bodyPartObjects.Add(segmentObjects);
         }
-        
+
     }
 
     private void FixedUpdate()
