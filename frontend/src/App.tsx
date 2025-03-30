@@ -11,12 +11,12 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route element={<PrivateRoutes login={false} route={"/my/data"}/>}>
+      <Route element={<PrivateRoutes requireLogin={false} route={"/my/data"}/>}>
         <Route path="/login" element={<Login />} />
       </Route>
       <Route path="/media" element={<Media />} />
       <Route path="/mediadebug" element={<MediaDebug />} />
-      <Route element={<PrivateRoutes login={true} route={"/login"} />}>
+      <Route element={<PrivateRoutes requireLogin={true} route={"/login"} />}>
         <Route path="/my/*" element={<My />} />
       </Route>
     </Routes>
