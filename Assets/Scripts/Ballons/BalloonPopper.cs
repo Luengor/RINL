@@ -20,7 +20,7 @@ public class BalloonPopper : MonoBehaviour
         {
             if (balloon.ballonType == type)
             {
-                var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                var explosion = Instantiate(explosionPrefab, other.transform.position, Quaternion.identity);
                 explosion.GetComponent<ParticleSystemRenderer>().material = balloon.GetComponent<Renderer>().material;
                 Destroy(other.gameObject);
 

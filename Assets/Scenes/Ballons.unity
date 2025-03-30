@@ -192,9 +192,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 2
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!136 &30372997
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -208,14 +208,14 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 62
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 3
+  m_Height: 4
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1818360608 &30372998
@@ -335,7 +335,7 @@ MonoBehaviour:
     m_Center: {x: 1, y: 2.5, z: 0}
     m_Extent: {x: 2.2, y: 2.5, z: 0}
   farEnoughAttempts: 3
-  minDistance: 1
+  minDistance: 1.5
   balloonTypes:
   - balloon: {fileID: 2100000, guid: 77a7c090ee96b22f2a9032724c8cbcb6, type: 2}
     popper: {fileID: 1337788585}
@@ -1035,9 +1035,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 2
-  m_Constraints: 0
-  m_CollisionDetection: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!136 &1337788590
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1051,14 +1051,14 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 62
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 3
+  m_Height: 4
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1818360608 &1337788591
@@ -1245,7 +1245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1501986903
 Transform:
   m_ObjectHideFlags: 0

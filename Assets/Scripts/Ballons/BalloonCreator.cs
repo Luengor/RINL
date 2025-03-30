@@ -5,6 +5,7 @@ public class BalloonCreator : MonoBehaviour
     public Bounds b;
     public int farEnoughAttempts = 3;
     public float minDistance = 0.5f;
+    public float floorHeight = 0.3f;
 
     [System.Serializable]
     public struct BalloonAndPopper
@@ -56,22 +57,23 @@ public class BalloonCreator : MonoBehaviour
         {
             spawnTimer = GetSpawnTime();
 
-            int type = Random.Range(0, balloonTypes.Length);
+            int type = 0;
             Vector3 pos = new(
                 Random.Range(b.min.x, b.max.x),
-                Random.Range(b.min.y, b.max.y),
-                Random.Range(b.min.z, b.max.z)
+                Random.Range(b.min.y + floorHeight, b.max.y),
+                Random.Range(0.3f * b.min.z, 0.3f * b.max.z)
             );
 
             for (int i = 0; i < farEnoughAttempts; i++)
             {
+                type = Random.Range(0, balloonTypes.Length);
                 if (Vector3.SqrMagnitude(pos - balloonTypes[type].popper.transform.position) > minDistance * minDistance)
                     break;
 
                 pos = new(
                     Random.Range(b.min.x, b.max.x),
-                    Random.Range(b.min.y, b.max.y),
-                    Random.Range(b.min.z, b.max.z)
+                    Random.Range(b.min.y + floorHeight, b.max.y),
+                    Random.Range(0.3f * b.min.z, 0.3f * b.max.z)
                 );
             }
 
