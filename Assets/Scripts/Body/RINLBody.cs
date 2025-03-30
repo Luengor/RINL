@@ -169,7 +169,7 @@ public class RINLBody : MonoBehaviour
                     part.segments[j].width
                 );
 
-                segment.up = header;
+                segment.up = bodyLandmarks[(int)part.segments[j].end].position - bodyLandmarks[(int)part.segments[j].start].position;
                 segment.localPosition = start;
             }
         }
