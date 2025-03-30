@@ -17,7 +17,7 @@ public class SetText : MonoBehaviour
 
         Activity activity = GameController.Instance.GetActivityData();
         string formatedText = data.text
-            .Replace("//score", GameController.Instance.GetScore().ToString())
+            .Replace("//score", activity.score.ToString())
             .Replace("//activity_points", activity.activity_points.ToString())
             .Replace("//duration", activity.duration.ToString())
             .Replace("//extra_data", activity.extra_data);

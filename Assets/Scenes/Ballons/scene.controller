@@ -40,40 +40,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameDuration: 60
   timerObjectName: Timer
-  shakeStrength: 2
-  shakeCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: -0.008999051
-      outSlope: -0.008999051
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.28902096
-    - serializedVersion: 3
-      time: 0.5
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1107 &-3645184371731506506
 AnimatorStateMachine:
   serializedVersion: 6
@@ -220,6 +186,6 @@ AnimatorStateTransition:
   m_ExitTime: 1
   m_HasExitTime: 1
   m_HasFixedDuration: 0
-  m_InterruptionSource: 0
+  m_InterruptionSource: 2
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1

@@ -116,6 +116,7 @@ public struct Activity
     public DateTime date;
     public string minigame;
     public int duration;
+    public int score;
     public int activity_points;
     public string extra_data;
 }

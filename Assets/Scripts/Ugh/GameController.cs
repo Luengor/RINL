@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
 
     private RINLBody body = null;
     private Activity activityData = new();
-    private int score = 0;
 
     void Awake()
     {
@@ -49,18 +48,10 @@ public class GameController : MonoBehaviour
         // Save the duration and other data
         activityData.duration = duration;
         activityData.extra_data = extra_data;
-        this.score = score;
+        activityData.score = score;
 
-        if (body == null)
-            body = FindFirstObjectByType<RINLBody>(FindObjectsInactive.Include);
-        
         // Get the activity points from the body
-        activityData.activity_points = body.GetActivityPoints();
-    }
-
-    public int GetScore()
-    {
-        return score;
+        activityData.activity_points = Body.GetActivityPoints();
     }
 
     public Activity GetActivityData()
