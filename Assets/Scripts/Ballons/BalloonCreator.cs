@@ -3,7 +3,17 @@ using UnityEngine;
 public class BalloonCreator : MonoBehaviour
 {
     public Bounds b;
-    public Material[] ballonTypes;
+    public int farEnoughAttempts = 3;
+    public float minDistance = 0.5f;
+
+    [System.Serializable]
+    public struct BalloonAndPopper
+    {
+        public Material balloon;
+        public GameObject popper;
+    }
+
+    public BalloonAndPopper[] balloonTypes;
     public GameObject balloonPrefab;
     public AnimationCurve spawnTimeCurve;
 
@@ -46,16 +56,28 @@ public class BalloonCreator : MonoBehaviour
         {
             spawnTimer = GetSpawnTime();
 
+            int type = Random.Range(0, balloonTypes.Length);
             Vector3 pos = new(
                 Random.Range(b.min.x, b.max.x),
                 Random.Range(b.min.y, b.max.y),
                 Random.Range(b.min.z, b.max.z)
             );
 
+            for (int i = 0; i < farEnoughAttempts; i++)
+            {
+                if (Vector3.SqrMagnitude(pos - balloonTypes[type].popper.transform.position) > minDistance * minDistance)
+                    break;
+
+                pos = new(
+                    Random.Range(b.min.x, b.max.x),
+                    Random.Range(b.min.y, b.max.y),
+                    Random.Range(b.min.z, b.max.z)
+                );
+            }
+
             GameObject balloon = Instantiate(balloonPrefab, pos, Quaternion.identity);
 
-            int type = Random.Range(0, ballonTypes.Length);
-            balloon.GetComponent<Renderer>().material = ballonTypes[type];
+            balloon.GetComponent<Renderer>().material = balloonTypes[type].balloon;
             balloon.GetComponent<Balloon>().ballonType = type; 
         }
     }

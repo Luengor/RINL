@@ -334,9 +334,13 @@ MonoBehaviour:
   b:
     m_Center: {x: 1, y: 2.5, z: 0}
     m_Extent: {x: 2.2, y: 2.5, z: 0}
-  ballonTypes:
-  - {fileID: 2100000, guid: 77a7c090ee96b22f2a9032724c8cbcb6, type: 2}
-  - {fileID: 2100000, guid: edb436471e46e4f6eae44458ba454e0a, type: 2}
+  farEnoughAttempts: 3
+  minDistance: 1
+  balloonTypes:
+  - balloon: {fileID: 2100000, guid: 77a7c090ee96b22f2a9032724c8cbcb6, type: 2}
+    popper: {fileID: 1337788585}
+  - balloon: {fileID: 2100000, guid: edb436471e46e4f6eae44458ba454e0a, type: 2}
+    popper: {fileID: 30372992}
   balloonPrefab: {fileID: 432634497908173423, guid: fa9f74dd6db5bb15c83d58847f783144, type: 3}
   spawnTimeCurve:
     serializedVersion: 2
