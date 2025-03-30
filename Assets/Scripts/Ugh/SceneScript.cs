@@ -1,21 +1,23 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneScript : MonoBehaviour
 {
     public GameObject[] objects;
-
     public static SceneScript Instance { get; private set; }
     private Animator animator;
 
-    void Awake()
+
+    private void Awake()
     {
-        if (Instance != null)
-            Destroy(Instance.gameObject);
+        if (Instance != null) {
+            Debug.LogError("Multiple instances of SceneScript found.");
+        }
 
         Instance = this;
     }
 
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
     }
@@ -32,9 +34,19 @@ public class SceneScript : MonoBehaviour
         return null;
     }
 
+    public void SwitchScene(string sceneName)
+    {
+        SceneManager.LoadSceneAsync(sceneName);
+    }
+
     public void SetBool(string trigger, bool value)
     {
         animator.SetBool(trigger, value);
+    }
+
+    public void ToggleBool(string trigger)
+    {
+        animator.SetBool(trigger, animator.GetBool(trigger) == false);
     }
 
     public void SetTrigger(string trigger)

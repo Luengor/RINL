@@ -72,6 +72,8 @@
     <Compile Include="Assets/Scripts/Generic/MouseThing.cs" />
     <Compile Include="Assets/Scenes/MainMenu/CheckCalibration.cs" />
     <Compile Include="Assets/Scripts/Ugh/SceneScript.cs" />
+    <Compile Include="Assets/Scripts/Calibration/TPoseCalibration.cs" />
+    <Compile Include="Assets/Scripts/Calibration/DoneCalibration.cs" />
     <Compile Include="Assets/Scripts/Body/BodyCalibration.cs" />
     <Compile Include="Assets/Scripts/Generic/SetText.cs" />
     <Compile Include="Assets/Scripts/Body/RINLDataClasses.cs" />
@@ -80,10 +82,10 @@
     <Compile Include="Assets/Scripts/Body/RINLBody.cs" />
     <Compile Include="Assets/Scripts/Body/BodyPart.cs" />
     <Compile Include="Assets/Scripts/Ugh/GameController.cs" />
+    <Compile Include="Assets/Scripts/Calibration/GrowCalibration.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonPopper.cs" />
     <Compile Include="Assets/Scripts/Generic/KeepUpWith.cs" />
-    <Compile Include="Assets/Scripts/Body/Calibrator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/TextMesh Pro/Shaders/TMPro.cginc" />
