@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DoneCalibration : StateMachineBehaviour
 {
-    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // Set the calibration data to calibrated
         GameController.CalibrationData.calibrated = true;
