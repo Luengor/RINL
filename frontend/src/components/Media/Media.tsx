@@ -5,6 +5,7 @@ import { Center, Loader } from "@mantine/core";
 import { ActivityBase, createActivityActivityPost } from "../../client";
 import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import { SendAndAck } from "../../utils/unity";
 
 const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
 
@@ -81,7 +82,7 @@ export default function Media() {
 
     let timeout_id: NodeJS.Timeout = null;
 
-    const sendUserData = () => {
+    const sendUserData = async () => {
       if (inputVideoRef.current) {
         const msg = {
           width: inputVideoRef.current.videoWidth,
@@ -89,15 +90,20 @@ export default function Media() {
         };
 
         if (msg.width === 0 || msg.height === 0) {
-          timeout_id = setTimeout(sendUserData, 5000);
+          timeout_id = setTimeout(sendUserData, 1000);
           return;
         }
 
         console.log("Sending video and shape to unity", msg);
-        sendUnityMessage("GameController", "SetVideoSize", JSON.stringify(msg));
-        sendUnityMessage("GameController", "SetCurrentShape", JSON.stringify(latestShape));
-        sendUnityMessage("GameController", "SetCurrentUser", JSON.stringify(user));
-        timeout_id = setTimeout(sendUserData, 5000);
+        await SendAndAck(() => {
+          sendUnityMessage("GameController", "SetVideoSize", JSON.stringify(msg));
+        }, "SetVideoSize")
+        await SendAndAck(() => {
+          sendUnityMessage("GameController", "SetCurrentShape", JSON.stringify(latestShape));
+        }, "SetCurrentShape")
+        await SendAndAck(() => {
+          sendUnityMessage("GameController", "SetCurrentUser", JSON.stringify(user));
+        }, "SetCurrentUser")
       }
     }
 
