@@ -169,6 +169,7 @@ public class RINLBody : MonoBehaviour
                     part.segments[j].width
                 );
 
+                // Up vector must be set with world coordinates because there is no local up
                 segment.up = bodyLandmarks[(int)part.segments[j].end].position - bodyLandmarks[(int)part.segments[j].start].position;
                 segment.localPosition = start;
             }
