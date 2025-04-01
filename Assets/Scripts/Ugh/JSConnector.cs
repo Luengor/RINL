@@ -6,7 +6,9 @@ public class JSConnector : MonoBehaviour
     public RawLandmarks LatestLandmarks { get; private set; }
 
     [DllImport("__Internal")]
-    private static extern void SendToReact(string message);
+    private static extern void SendToReact(string type, string payload);
+    [DllImport("__Internal")]
+    private static extern void SendAck(string functionName);
     private ImageSize imageSize = new() { width = 640, height = 480 };
 
     public void SetBodyPosition(string landmarkString)
@@ -32,19 +34,19 @@ public class JSConnector : MonoBehaviour
     public void SetVideoSize(string sizeString)
     {
         imageSize = JsonUtility.FromJson<ImageSize>(sizeString);
-        Debug.Log($"Video Size: {imageSize.width}x{imageSize.height}");
+        SendAck("SetVideoSize");
     }
 
     public void SetCurrentShape(string shapeString)
     {
         Shape shape = JsonUtility.FromJson<Shape>(shapeString);
-        Debug.Log($"Shape: {shape}");
+        SendAck("SetCurrentShape");
     }
 
     public void SetCurrentUser(string userString)
     {
         User user = JsonUtility.FromJson<User>(userString);
-        Debug.Log($"User: {user}");
+        SendAck("SetCurrentUser");
     }
 
     public void CreateActivity(string minigame, int duration, int activity_points, string extra_data)
@@ -59,6 +61,6 @@ public class JSConnector : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(activity);
-        SendToReact(json);
+        SendToReact("activity", json);
     }
 }
