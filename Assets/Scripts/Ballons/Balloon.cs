@@ -5,6 +5,7 @@ public class Balloon : MonoBehaviour
 {
     public float shrinkTime = 2f;
     public GameObject explosionPrefab;
+    public GameObject balloonRenderer; 
 
     [HideInInspector]
     public int ballonType = -1;
@@ -20,9 +21,9 @@ public class Balloon : MonoBehaviour
 
     void Update()
     {
-        transform.localScale -= shrinkSpeed * Time.deltaTime * Vector3.one;
+        balloonRenderer.transform.localScale -= shrinkSpeed * Time.deltaTime * Vector3.one;
 
-        if (transform.localScale.x <= 0)
+        if (balloonRenderer.transform.localScale.x <= 0)
         {
             Destroy(gameObject);
         }
@@ -30,7 +31,6 @@ public class Balloon : MonoBehaviour
 
     public void Popper(int type)
     {
-        Debug.Log(type + " popped " + ballonType);
         if (ballonType == type || ballonType == 3)
         {
             Pop(true);
@@ -48,14 +48,16 @@ public class Balloon : MonoBehaviour
 
     private void Pop(bool destroy)
     {
-        creator.balloonsPopped++;
         var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        explosion.GetComponent<ParticleSystemRenderer>().material = GetComponent<Renderer>().material;
+        explosion.GetComponent<ParticleSystemRenderer>().material = balloonRenderer.GetComponent<Renderer>().material;
 
-        if (destroy)
+        if (destroy) {
+            creator.balloonsPopped++;
             Destroy(gameObject);
-        else
+        }
+        else {
             explosion.transform.localScale *= 0.4f; 
+        }
     }
 
     void OnCollisionEnter(Collision collision)

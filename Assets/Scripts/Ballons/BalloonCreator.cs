@@ -92,11 +92,12 @@ public class BalloonCreator : MonoBehaviour
                 );
             }
 
-            GameObject balloon = Instantiate(balloonPrefab, pos, Quaternion.identity);
+            GameObject balloonObj = Instantiate(balloonPrefab, pos, Quaternion.identity);
+            Balloon balloon = balloonObj.GetComponent<Balloon>();
 
-            balloon.GetComponent<Renderer>().material = balloonTypes[type].balloon;
-            balloon.GetComponent<Balloon>().ballonType = type;
-            balloon.GetComponent<Balloon>().creator = this;
+            balloon.balloonRenderer.GetComponent<Renderer>().material = balloonTypes[type].balloon;
+            balloon.ballonType = type;
+            balloon.creator = this;
         }
     }
 

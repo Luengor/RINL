@@ -50,11 +50,9 @@ public class BodyCalibration
     {
         // Calculate the ratio between the image and world coordinates
         data.worldImageRatio = CalculateWorldImage(landmarks);
-        Debug.Log(data.worldImageRatio);
 
         // Calculate the ground height using the image landmarks
         data.imageGroundHeight = CalculateGroundHeight(landmarks);
-        Debug.Log(data.imageGroundHeight);
     }
 
     public bool GrowBounds(RawLandmarks rawLandmarks)
