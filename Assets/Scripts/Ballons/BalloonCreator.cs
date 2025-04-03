@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class BalloonCreator : MonoBehaviour
 {
-    public Bounds b;
+    [Tooltip("Number of attempts to find a position far enough from poppers")]
     public int farEnoughAttempts = 3;
+    [Tooltip("Minimum distance between balloons and poppers")]
     public float minDistance = 0.5f;
+    [Tooltip("Minimum height of the balloon spawn area")]
     public float floorHeight = 0.3f;
+    [Tooltip("Minimum time left to instantly spawn a balloon after popping one")]
+    public float minSkipTime = 0.2f;
 
     [System.Serializable]
     public struct BalloonAndPopper
@@ -19,12 +23,12 @@ public class BalloonCreator : MonoBehaviour
     public GameObject balloonPrefab;
     public AnimationCurve spawnTimeCurve;
 
-    [HideInInspector]
-    public int balloonsPopped = 0;
+    private int balloonsPopped = 0;
 
     private float spawnTimer, startTime;
     private bool gaming = false;
     private int difficulty = 0;
+    private Bounds b;
 
 
     private float GetSpawnTime()
@@ -47,6 +51,14 @@ public class BalloonCreator : MonoBehaviour
     {
         gaming = false;
         GameController.Instance.SetScore(balloonsPopped, 60, "{\"score\": " + balloonsPopped + "}");
+    }
+
+    public void BalloonPopped()
+    {
+        balloonsPopped++;
+
+        if (difficulty == 3 && spawnTimer > minSkipTime)
+            spawnTimer = 0;
     }
 
     // Update is called once per frame

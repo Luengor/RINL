@@ -52,7 +52,7 @@ public class Balloon : MonoBehaviour
         explosion.GetComponent<ParticleSystemRenderer>().material = balloonRenderer.GetComponent<Renderer>().material;
 
         if (destroy) {
-            creator.balloonsPopped++;
+            creator.BalloonPopped();
             Destroy(gameObject);
         }
         else {
