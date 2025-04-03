@@ -12,6 +12,13 @@ public class RINLBody : MonoBehaviour
     public BodyPart[] bodyParts;
     private List<GameObject[]> bodyPartObjects;
 
+    [Header("Hands")]
+    public Transform leftHand;
+    public Transform rightHand;
+    private GameObject leftHandRenderer, rightHandRenderer;
+    public float handScale = 1f;
+    public bool showHands = true;
+
     [Header("Point transformation settings")]
     [Tooltip("Flip the x-axis of the points")]
     public bool flipX = false;
@@ -46,6 +53,10 @@ public class RINLBody : MonoBehaviour
 
     private void Start()
     {
+        // Get the hand renderers
+        leftHandRenderer = leftHand.GetChild(0).gameObject;
+        rightHandRenderer = rightHand.GetChild(0).gameObject;
+
         // Get the body landmarks from the points object 
         for (int i = 0; i < Constants.LANDMARKS; i++)
             bodyLandmarks[i] = points.GetChild(i);
@@ -103,6 +114,9 @@ public class RINLBody : MonoBehaviour
 
         // Move the body parts
         MoveBodyParts();
+
+        // Move the hands
+        MoveHands();
     }
 
     private void MoveBody()
@@ -173,6 +187,37 @@ public class RINLBody : MonoBehaviour
                 segment.up = bodyLandmarks[(int)part.segments[j].end].position - bodyLandmarks[(int)part.segments[j].start].position;
                 segment.localPosition = start;
             }
+        }
+    }
+
+    public void MoveHands()
+    {
+        // Move
+        leftHand.localPosition =
+            (bodyLandmarks[(int)LandmarkNames.LeftWrist].localPosition + bodyLandmarks[(int)LandmarkNames.LeftIndex].localPosition) * .5f;
+        
+        rightHand.localPosition =
+            (bodyLandmarks[(int)LandmarkNames.RightWrist].localPosition + bodyLandmarks[(int)LandmarkNames.RightIndex].localPosition) * .5f;
+        
+        // Scale
+        if (!showHands)
+        {
+            if (leftHandRenderer.activeSelf)
+            {
+                leftHandRenderer.SetActive(false);
+                rightHandRenderer.SetActive(false);
+            }
+        }
+        else
+        {
+            if (!leftHandRenderer.activeSelf)
+            {
+                leftHandRenderer.SetActive(true);
+                rightHandRenderer.SetActive(true);
+            }
+
+            leftHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
+            rightHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
         }
     }
 

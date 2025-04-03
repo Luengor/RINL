@@ -22,5 +22,5 @@ MonoBehaviour:
   - start: 14
     end: 16
     width: 0.15
-    jointSize: 0.2
-  moveEndObject: RightHand
+    jointSize: 0
+  moveEndObject: 

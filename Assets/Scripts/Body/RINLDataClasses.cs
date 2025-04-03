@@ -20,6 +20,8 @@ public enum LandmarkNames
     RightElbow = 14,
     LeftWrist = 15,
     RightWrist = 16,
+    LeftIndex = 19,
+    RightIndex = 20,
     LeftHip = 23,
     RightHip = 24,
     LeftKnee = 25,
