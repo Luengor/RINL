@@ -14,6 +14,7 @@ public class BalloonCreator : MonoBehaviour
         public GameObject popper;
     }
 
+    [Tooltip("Left balloon, right balloon, double balloon, common balloon")]
     public BalloonAndPopper[] balloonTypes;
     public GameObject balloonPrefab;
     public AnimationCurve spawnTimeCurve;
@@ -23,6 +24,7 @@ public class BalloonCreator : MonoBehaviour
 
     private float spawnTimer, startTime;
     private bool gaming = false;
+    private int difficulty = 0;
 
 
     private float GetSpawnTime()
@@ -37,6 +39,8 @@ public class BalloonCreator : MonoBehaviour
         gaming = true;
 
         b = GameController.Instance.Body.GetBounds();
+
+        difficulty = SceneScript.Instance.Animator.GetInteger("difficulty");
     }
 
     public void StopGame()
@@ -57,7 +61,7 @@ public class BalloonCreator : MonoBehaviour
         {
             spawnTimer = GetSpawnTime();
 
-            int type = 0;
+            int type = GetBalloonType();
             Vector3 pos = new(
                 Random.Range(b.min.x, b.max.x),
                 Random.Range(b.min.y + floorHeight, b.max.y),
@@ -66,9 +70,20 @@ public class BalloonCreator : MonoBehaviour
 
             for (int i = 0; i < farEnoughAttempts; i++)
             {
-                type = Random.Range(0, balloonTypes.Length);
-                if (Vector3.SqrMagnitude(pos - balloonTypes[type].popper.transform.position) > minDistance * minDistance)
-                    break;
+                type = GetBalloonType(); 
+                if (type > 1)
+                {
+                    // Check distance to both poppers 
+                    if (Vector3.SqrMagnitude(pos - balloonTypes[0].popper.transform.position) > minDistance * minDistance &&
+                        Vector3.SqrMagnitude(pos - balloonTypes[1].popper.transform.position) > minDistance * minDistance)
+                        break;
+                }
+                else
+                {
+                    // Check distance to 1 popper
+                    if (Vector3.SqrMagnitude(pos - balloonTypes[type].popper.transform.position) > minDistance * minDistance)
+                        break;
+                }
 
                 pos = new(
                     Random.Range(b.min.x, b.max.x),
@@ -81,6 +96,26 @@ public class BalloonCreator : MonoBehaviour
 
             balloon.GetComponent<Renderer>().material = balloonTypes[type].balloon;
             balloon.GetComponent<Balloon>().ballonType = type;
+            balloon.GetComponent<Balloon>().creator = this;
+        }
+    }
+
+    private int GetBalloonType()
+    {
+        switch (difficulty)
+        {
+            case 1:
+                return 3;
+            
+            case 2:
+                return Random.Range(0, 2);
+            
+            case 3:
+                return Random.Range(0, 3);
+            
+            default:
+                Debug.LogError("Difficulty not set");
+                return 3; 
         }
     }
 }

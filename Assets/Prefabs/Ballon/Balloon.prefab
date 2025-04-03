@@ -122,4 +122,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shrinkTime: 2
+  explosionPrefab: {fileID: 7941965158278396756, guid: e2223f5379fa0325d83e92ff3b6cb705, type: 3}
   ballonType: -1
+  creator: {fileID: 0}

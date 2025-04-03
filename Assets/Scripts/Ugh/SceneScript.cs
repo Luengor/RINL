@@ -1,9 +1,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public struct AnimatorInt
+{
+    public string name;
+    public int value;
+}
+
+[RequireComponent(typeof(Animator))]
 public class SceneScript : MonoBehaviour
 {
     public GameObject[] objects;
+    public Animator Animator { get { return animator; } }
     public static SceneScript Instance { get; private set; }
     private Animator animator;
 
@@ -57,5 +66,16 @@ public class SceneScript : MonoBehaviour
     public void SetFloat(string trigger, float value)
     {
         animator.SetFloat(trigger, value);
+    }
+
+    public void SetInt(string trigger, int value)
+    {
+        animator.SetInteger(trigger, value);
+    }
+
+    public void SetIntJson(string json)
+    {
+        var intValue = JsonUtility.FromJson<AnimatorInt>(json);
+        animator.SetInteger(intValue.name, intValue.value);
     }
 }
