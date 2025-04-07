@@ -122,7 +122,7 @@ export default function Media() {
     if (videoStream && !!unityProvider && isUnityLoaded) {
       requestFullscreen(true);
 
-      createPoseLandmarker(isOnMobile ? "lite" : "heavy").then((poseLandmarker) => {
+      createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {
         predict(poseLandmarker, inputVideoRef, (result) => {
           sendUnityMessage("GameController", "SetBodyPosition", result);
         });

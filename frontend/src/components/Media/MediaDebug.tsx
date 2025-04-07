@@ -23,8 +23,7 @@ export default function MediaDebug() {
     // Create pose landmarker and start detecting
     useEffect(() => {
         if (videoStream) {
-            const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
-            createPoseLandmarker(isOnMobile ? "lite" : "full").then((poseLandmarker) => {
+            createPoseLandmarker("full").then((poseLandmarker) => {
                 predict(poseLandmarker, inputVideoRef, (result) => {
                     // Send result to websocket
                     if (ws.readyState === ws.OPEN)
