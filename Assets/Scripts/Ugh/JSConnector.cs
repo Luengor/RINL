@@ -61,6 +61,7 @@ public class JSConnector : MonoBehaviour
         };
 
         string json = JsonUtility.ToJson(activity);
+        Debug.Log("activity: " + json);
         SendToReact("activity", json);
     }
 }

@@ -50,32 +50,32 @@ public class SceneScript : MonoBehaviour
 
     public void SetBool(string trigger, bool value)
     {
-        animator.SetBool(trigger, value);
+        SceneScript.Instance.Animator.SetBool(trigger, value);
     }
 
     public void ToggleBool(string trigger)
     {
-        animator.SetBool(trigger, animator.GetBool(trigger) == false);
+        SceneScript.Instance.Animator.SetBool(trigger, SceneScript.Instance.Animator.GetBool(trigger) == false);
     }
 
     public void SetTrigger(string trigger)
     {
-        animator.SetTrigger(trigger);
+        SceneScript.Instance.Animator.SetTrigger(trigger);
     }
 
     public void SetFloat(string trigger, float value)
     {
-        animator.SetFloat(trigger, value);
+        SceneScript.Instance.Animator.SetFloat(trigger, value);
     }
 
     public void SetInt(string trigger, int value)
     {
-        animator.SetInteger(trigger, value);
+        SceneScript.Instance.Animator.SetInteger(trigger, value);
     }
 
     public void SetIntJson(string json)
     {
         var intValue = JsonUtility.FromJson<AnimatorInt>(json);
-        animator.SetInteger(intValue.name, intValue.value);
+        SceneScript.Instance.Animator.SetInteger(intValue.name, intValue.value);
     }
 }

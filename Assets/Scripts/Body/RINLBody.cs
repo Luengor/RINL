@@ -34,6 +34,7 @@ public class RINLBody : MonoBehaviour
     public float pointSmoothTime = 0.1f;
     [Tooltip("Max speed for the point movement (scaled by pointScale)")]
     public float pointMaxSpeed = 10f;
+    public TMPro.TextMeshProUGUI debugText;
 
     /// Private
     private readonly Transform[] bodyLandmarks = new Transform[Constants.LANDMARKS];
@@ -126,6 +127,17 @@ public class RINLBody : MonoBehaviour
             Vector3 newPos = GetLandmarkPosition(i);
             bodyLandmarks[i].localPosition = newPos;
         }
+
+        // Debug
+        float shoulderTilt = bodyLandmarks[(int)LandmarkNames.RightShoulder].localPosition.y - bodyLandmarks[(int)LandmarkNames.LeftShoulder].localPosition.y;
+        float hipTilt = bodyLandmarks[(int)LandmarkNames.RightHip].localPosition.y - bodyLandmarks[(int)LandmarkNames.LeftHip].localPosition.y;
+
+        debugText.text = "Left shoulder: " + bodyLandmarks[(int)LandmarkNames.LeftShoulder].localPosition + "\n" +
+                         "Right shoulder: " + bodyLandmarks[(int)LandmarkNames.RightShoulder].localPosition + "\n" +
+                         "Left hip: " + bodyLandmarks[(int)LandmarkNames.LeftHip].localPosition + "\n" +
+                         "Right hip: " + bodyLandmarks[(int)LandmarkNames.RightHip].localPosition + "\n\n" +
+                         "Shoulder tilt: " + shoulderTilt + "\n" +
+                         "Hip tilt: " + hipTilt + "\n";
     }
 
     private Vector3 GetLandmarkPosition(int index)

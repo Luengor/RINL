@@ -50,7 +50,16 @@ public class BalloonCreator : MonoBehaviour
     public void StopGame()
     {
         gaming = false;
-        GameController.Instance.SetScore(balloonsPopped, 60, "{\"score\": " + balloonsPopped + "}");
+
+        string extra_data = "{\"score\": " + balloonsPopped + "}";
+        GameController.Instance.SetScore(balloonsPopped, 60, extra_data);
+
+        if (!Application.isEditor)
+        {
+            RINLBody body = GameController.Instance.Body;
+            Debug.Log("Creating activity");
+            GameController.Instance.JsConnector.CreateActivity("Balloons", 60, body.GetActivityPoints(), extra_data);
+        }
     }
 
     public void BalloonPopped()

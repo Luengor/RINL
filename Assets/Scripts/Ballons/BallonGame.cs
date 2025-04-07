@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BallonGame : StateMachineBehaviour
 {
-    public int gameDuration = 60;
     public string timerObjectName = "Timer";
 
     private TextMeshProUGUI timerText;
