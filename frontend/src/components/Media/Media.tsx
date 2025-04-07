@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
-import { Center, Loader } from "@mantine/core";
+import { ActionIcon, Center, Loader } from "@mantine/core";
 import { ActivityBase, createActivityActivityPost } from "../../client";
 import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { SendAndAck } from "../../utils/unity";
+import { useClient } from "../../hooks/useClient";
 
 const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
 
@@ -49,17 +50,22 @@ export default function Media() {
   }
 
   // Unity messages
+  const { client } = useClient();
   useEffect(() => {
     // Subscribe to unity events
     const callback = (e: Event) => {
       // Do smth with the event 
+      console.log("Unity event", e);
       const {type: t, payload: p} = (e as UnityEvent).data;
+      const activity = p as ActivityBase;
+      activity.date = new Date().toISOString();
 
       switch (t) {
         // Handle activity event
         case "activity":
           createActivityActivityPost({
-            body: p as ActivityBase
+            client: client,
+            body: activity, 
           })
           break;
 
