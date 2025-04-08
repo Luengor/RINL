@@ -26,8 +26,8 @@ public class RINLBody : MonoBehaviour
     public float pointScale = 1f;
     [Tooltip("Use a fixed position for the hip. If false, the hip position is calculated from the image landmarks")]
     public bool fixedPosition = false;
-    [Tooltip("Set the hip position to the ground height. Ignored if fixedPosition is true")]
-    public bool useGroundHeight = true;
+    [Tooltip("Should the body be in the center of the bounds or in the center of the camera?")]
+    public bool centerWithBounds = true;
 
     [Header("Other settings")]
     [Tooltip("Smooth time for the point movement")]
@@ -142,16 +142,27 @@ public class RINLBody : MonoBehaviour
 
     private Vector3 GetLandmarkPosition(int index)
     {
+        // Get the last position and the new landmark position 
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newWorldPos = landmarks.points[index];
 
+        // If the body should be centered with the bounds, add the bounds center to the new position
+        if (centerWithBounds)
+        {
+            Vector3 boundsCenter = GameController.CalibrationData.bounds.center;
+            newWorldPos -= Vector3.right * boundsCenter.x; 
+        }
+
+        // If the body is not fixed, add the hip position to the new position 
+        // (this allows jumping and moving around)
         if (!fixedPosition)
             newWorldPos += landmarks.hipPosition;
 
+        // Flip the x-axis if needed
         if (flipX) newWorldPos.x *= -1;
 
+        // Calculate the new position
         Vector3 newPos = newWorldPos * pointScale;
-
         return Vector3.SmoothDamp(lastPos, newPos, ref bodyLandmarkSpeeds[index], pointSmoothTime, pointMaxSpeed * pointScale, Time.fixedDeltaTime);
     }
 

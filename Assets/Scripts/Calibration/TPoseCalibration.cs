@@ -15,8 +15,8 @@ public class TPoseCalibration : StateMachineBehaviour
 
         // Set body properties 
         body.gameObject.SetActive(true);
-        body.useGroundHeight = false;
         body.fixedPosition = true;
+        body.centerWithBounds = false;
 
         calibration = new BodyCalibration(GameController.CalibrationData);
         lastLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
@@ -57,7 +57,7 @@ public class TPoseCalibration : StateMachineBehaviour
             calibration.InitialT(lastLandmarks);
 
             GameController.CalibrationData = calibration.data;
-            
+
             // Proceed to the next state
             animator.SetTrigger("Progress");
         }
