@@ -102,6 +102,9 @@ public struct Landmarks
     // The points in world coordinates WITH THE HIP POSITION BEING THE ORIGIN
     public Vector3[] points;
 
+    // An array of bools indicating if the point is inside the bounds of the body
+    public bool[] inBounds;
+
     // The height of the ground in world coordinates (notice that in the points the hip position is the origin)
     public float groundHeight;
 

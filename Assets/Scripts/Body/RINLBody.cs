@@ -56,6 +56,13 @@ public class RINLBody : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(landmarks.hipPosition * pointScale + transform.position, 0.1f);
         Gizmos.DrawWireSphere(Vector3.up * landmarks.groundHeight * pointScale + transform.position, 0.1f);
+
+        Gizmos.color = Color.yellow;
+        for (int i = 0; i < Constants.LANDMARKS; i++)
+        {
+            if (landmarks.inBounds[i])
+                Gizmos.DrawWireSphere((landmarks.points[i] + landmarks.hipPosition) * pointScale + transform.position, 0.05f);
+        }
     }
 
     private void Start()

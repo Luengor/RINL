@@ -14,11 +14,9 @@ public class CalibrationData
         Landmarks landmarks = new()
         {
             points = new Vector3[Constants.LANDMARKS],
+            inBounds = new bool[Constants.LANDMARKS],
             groundHeight = imageGroundHeight * worldImageRatio.y
         };
-
-        for (int i = 0; i < Constants.LANDMARKS; i++)
-            landmarks.points[i] = rawLandmarks.world[i].ToVector3();
 
         // Calculate the hip position
         Vector2 imageHipPosition = (rawLandmarks.image[(int)LandmarkNames.LeftHip].ToVector2() + rawLandmarks.image[(int)LandmarkNames.RightHip].ToVector2()) / 2;
@@ -27,6 +25,12 @@ public class CalibrationData
             imageHipPosition.y * worldImageRatio.y,
             0
         );
+
+        // Calculate the world coordinates of the landmarks and check if they are in the bounds
+        for (int i = 0; i < Constants.LANDMARKS; i++) {
+            landmarks.points[i] = rawLandmarks.world[i].ToVector3();
+            landmarks.inBounds[i] = bounds.Contains(landmarks.points[i] + landmarks.hipPosition); 
+        }
 
         return landmarks;
     }
