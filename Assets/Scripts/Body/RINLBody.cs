@@ -26,6 +26,8 @@ public class RINLBody : MonoBehaviour
     public float pointScale = 1f;
     [Tooltip("Use a fixed position for the hip. If false, the hip position is calculated from the image landmarks")]
     public bool fixedPosition = false;
+    [Tooltip("Use ground height for the vertical position. If false, the hip will move only in the X axis")]
+    public bool useGroundHeight = true;
     [Tooltip("Should the body be in the center of the bounds or in the center of the camera?")]
     public bool centerWithBounds = true;
 
@@ -50,6 +52,10 @@ public class RINLBody : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(GameController.CalibrationData.bounds.center * pointScale + transform.position, GameController.CalibrationData.bounds.size * pointScale);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(landmarks.hipPosition * pointScale + transform.position, 0.1f);
+        Gizmos.DrawWireSphere(Vector3.up * landmarks.groundHeight * pointScale + transform.position, 0.1f);
     }
 
     private void Start()
@@ -129,15 +135,10 @@ public class RINLBody : MonoBehaviour
         }
 
         // Debug
-        float shoulderTilt = bodyLandmarks[(int)LandmarkNames.RightShoulder].localPosition.y - bodyLandmarks[(int)LandmarkNames.LeftShoulder].localPosition.y;
-        float hipTilt = bodyLandmarks[(int)LandmarkNames.RightHip].localPosition.y - bodyLandmarks[(int)LandmarkNames.LeftHip].localPosition.y;
-
-        debugText.text = "Left shoulder: " + bodyLandmarks[(int)LandmarkNames.LeftShoulder].localPosition + "\n" +
-                         "Right shoulder: " + bodyLandmarks[(int)LandmarkNames.RightShoulder].localPosition + "\n" +
-                         "Left hip: " + bodyLandmarks[(int)LandmarkNames.LeftHip].localPosition + "\n" +
-                         "Right hip: " + bodyLandmarks[(int)LandmarkNames.RightHip].localPosition + "\n\n" +
-                         "Shoulder tilt: " + shoulderTilt + "\n" +
-                         "Hip tilt: " + hipTilt + "\n";
+        debugText.text = "Hip position: " + landmarks.hipPosition + "\n" +
+                         "World2Image: " + GameController.CalibrationData.worldImageRatio + "\n" +
+                         "Ground height: " + landmarks.groundHeight + "\n" +
+                         "Image ground height: " + GameController.CalibrationData.imageGroundHeight;
     }
 
     private Vector3 GetLandmarkPosition(int index)
@@ -154,9 +155,16 @@ public class RINLBody : MonoBehaviour
         }
 
         // If the body is not fixed, add the hip position to the new position 
-        // (this allows jumping and moving around)
         if (!fixedPosition)
-            newWorldPos += landmarks.hipPosition;
+        {
+            // If the ground height is used, add the hips y position and subtract the ground height
+            if (useGroundHeight)
+                // newWorldPos.y += landmarks.hipPosition.y;
+                newWorldPos.y += landmarks.hipPosition.y - landmarks.groundHeight;
+
+            // Either way, add the hips x position
+            newWorldPos.x += landmarks.hipPosition.x;
+        }
 
         // Flip the x-axis if needed
         if (flipX) newWorldPos.x *= -1;

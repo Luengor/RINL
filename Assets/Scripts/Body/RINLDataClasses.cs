@@ -27,7 +27,11 @@ public enum LandmarkNames
     LeftKnee = 25,
     RightKnee = 26,
     LeftAnkle = 27,
-    RightAnkle = 28
+    RightAnkle = 28,
+    LeftHeel = 29,
+    RightHeel = 30,
+    LeftFootIndex = 31,
+    RightFootIndex = 32,
 }
 
 

@@ -143,6 +143,14 @@ PrefabInstance:
       propertyPath: pointScale
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 4715015402848618969, guid: 498eb591de874df5789c24144d29c559, type: 3}
+      propertyPath: fixedPosition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4715015402848618969, guid: 498eb591de874df5789c24144d29c559, type: 3}
+      propertyPath: useGroundHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7781583422150232807, guid: 498eb591de874df5789c24144d29c559, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4
