@@ -66,7 +66,7 @@ public class BalloonCreator : MonoBehaviour
     {
         balloonsPopped++;
 
-        if (difficulty == 3 && spawnTimer > minSkipTime)
+        if (difficulty == 3 && spawnTimer > minSkipTime && spawnTimer < GetSpawnTime() - minSkipTime)
             spawnTimer = 0;
     }
 
