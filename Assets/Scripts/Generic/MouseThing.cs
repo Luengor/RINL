@@ -5,8 +5,11 @@ using UnityEngine.InputSystem.LowLevel;
 public class MouseThing : MonoBehaviour
 {
     public Transform target;
+    public RectTransform circle;
     public float stillClickTime = 2f;
     public float stillClickDistance = 0.1f;
+    public float maxCircleSize = 30;
+    public AnimationCurve circleSizeCurve;
 
     private Camera mainCamera;
     private Vector2 lastPos = Vector2.zero;
@@ -30,6 +33,13 @@ public class MouseThing : MonoBehaviour
     {
         // Get on screen position of the target object 
         Vector2 screenPos = mainCamera.WorldToScreenPoint(target.position);
+
+        // Move the circle to the target position
+        circle.position = screenPos;
+
+        // Scale the circle based on the still time
+        float circleSize = circleSizeCurve.Evaluate(stillTime / stillClickTime) * maxCircleSize;
+        circle.sizeDelta = new Vector2(circleSize, circleSize);
 
         // Queue a mouse event at the position of this object
         InputSystem.QueueStateEvent(Mouse.current, new MouseState
