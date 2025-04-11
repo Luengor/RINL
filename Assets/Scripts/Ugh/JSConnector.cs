@@ -4,6 +4,8 @@ using UnityEngine;
 public class JSConnector : MonoBehaviour
 {
     public RawLandmarks LatestLandmarks { get; private set; }
+    public Shape UserShape { get; private set; } = new Shape { weight = 50f, height = 165f, sex_math = 0.1f };
+    public User CurrentUser { get; private set; }
 
     [DllImport("__Internal")]
     private static extern void SendToReact(string type, string payload);
@@ -39,13 +41,13 @@ public class JSConnector : MonoBehaviour
 
     public void SetCurrentShape(string shapeString)
     {
-        Shape shape = JsonUtility.FromJson<Shape>(shapeString);
+        UserShape = JsonUtility.FromJson<Shape>(shapeString);
         SendAck("SetCurrentShape");
     }
 
     public void SetCurrentUser(string userString)
     {
-        User user = JsonUtility.FromJson<User>(userString);
+        CurrentUser = JsonUtility.FromJson<User>(userString);
         SendAck("SetCurrentUser");
     }
 
