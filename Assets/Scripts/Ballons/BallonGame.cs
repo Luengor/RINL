@@ -19,6 +19,9 @@ public class BallonGame : StateMachineBehaviour
 
         // Set the timer
         timerText = SceneScript.Instance.GetObject(timerObjectName).GetComponent<TextMeshProUGUI>();
+
+        // Reset activity points
+        GameController.Instance.Body.ResetActivityPoints();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

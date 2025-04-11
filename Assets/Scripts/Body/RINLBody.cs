@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,6 +32,12 @@ public class RINLBody : MonoBehaviour
     [Tooltip("Should the body be in the center of the bounds or in the center of the camera?")]
     public bool centerWithBounds = true;
 
+    [Header("Activity points settings")]
+    [Tooltip("If the speed difference is greater than this value, the points will be calculated")]
+    public float minAccForPoints = 0.1f;
+    [Tooltip("The amount of points per unit of acceleration")]
+    public float accToPoints = 100f;
+
     [Header("Other settings")]
     [Tooltip("Smooth time for the point movement")]
     public float pointSmoothTime = 0.1f;
@@ -43,6 +50,8 @@ public class RINLBody : MonoBehaviour
     private readonly Vector3[] bodyLandmarkSpeeds = new Vector3[Constants.LANDMARKS];
 
     private Landmarks landmarks = new();
+
+    private float activityPoints = 0;
 
 
     private void OnDrawGizmos()
@@ -142,10 +151,7 @@ public class RINLBody : MonoBehaviour
         }
 
         // Debug
-        debugText.text = "Hip position: " + landmarks.hipPosition + "\n" +
-                         "World2Image: " + GameController.CalibrationData.worldImageRatio + "\n" +
-                         "Ground height: " + landmarks.groundHeight + "\n" +
-                         "Image ground height: " + GameController.CalibrationData.imageGroundHeight;
+        debugText.text = "Activity points: " + activityPoints;
     }
 
     private Vector3 GetLandmarkPosition(int index)
@@ -178,7 +184,26 @@ public class RINLBody : MonoBehaviour
 
         // Calculate the new position
         Vector3 newPos = newWorldPos * pointScale;
-        return Vector3.SmoothDamp(lastPos, newPos, ref bodyLandmarkSpeeds[index], pointSmoothTime, pointMaxSpeed * pointScale, Time.fixedDeltaTime);
+
+        // Save the previous speed
+        float lastSpeed = bodyLandmarkSpeeds[index].magnitude / pointScale;
+
+        // Calculate the new position 
+        Vector3 pos = Vector3.SmoothDamp(lastPos, newPos, ref bodyLandmarkSpeeds[index], pointSmoothTime, pointMaxSpeed * pointScale, Time.fixedDeltaTime);
+
+        // Get the new speed
+        float newSpeed = bodyLandmarkSpeeds[index].magnitude / pointScale;
+
+        // Calculate the speed difference for the activity points
+        float acc = Math.Abs(newSpeed - lastSpeed) / Time.fixedDeltaTime;
+        if (acc > minAccForPoints)
+        {
+            // Calculate the activity points based on the speed difference
+            activityPoints += acc * accToPoints * LandmarkWeights.LandmarkPointWeight[index];
+        }
+
+        // Return the new position
+        return pos;
     }
 
     private void MoveBodyParts()
@@ -271,12 +296,11 @@ public class RINLBody : MonoBehaviour
 
     public void ResetActivityPoints()
     {
-        // TODO
+        activityPoints = 0f;
     }
 
     public int GetActivityPoints()
     {
-        // TODO
-        return 100;
+        return Mathf.FloorToInt(activityPoints);
     }
 }

@@ -98,6 +98,9 @@ MonoBehaviour:
   pointScale: 3
   fixedPosition: 0
   useGroundHeight: 1
+  centerWithBounds: 1
+  minAccForPoints: 7
+  accToPoints: 0.003
   pointSmoothTime: 0.04
   pointMaxSpeed: 100
   debugText: {fileID: 849963794844122156}
@@ -1599,7 +1602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6478236905785241819
 RectTransform:
   m_ObjectHideFlags: 0
