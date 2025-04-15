@@ -6,6 +6,7 @@ from models.activity import Activity as ActivityModel
 from schemas.activity import ActivityFull, ActivityBase
 from schemas.users import UserBase
 from datetime import datetime
+from functools import lru_cache
 
 class ActivityDAO:
     @staticmethod
@@ -23,6 +24,9 @@ class ActivityDAO:
             session.add(activity_model)
             session.commit()
 
+            # Clear the lru_cache for the get_activities method
+            ActivityDAO.get_activities.cache_clear()
+
             return ActivityFull.model_validate(activity_model)
 
         except IntegrityError:
@@ -32,6 +36,7 @@ class ActivityDAO:
             raise HTTPException(status_code=500, detail="Internal server error")
         
     @staticmethod
+    @lru_cache(maxsize=128)
     def get_activities(email: str, minigame_filter: str | None, from_date: datetime, to_date: datetime, session: Session) -> list[ActivityFull]:
         if minigame_filter is None:
             activities = session.query(ActivityModel) \

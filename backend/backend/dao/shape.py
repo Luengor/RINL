@@ -6,6 +6,7 @@ from models.shape import Shape as ShapeModel
 from schemas.shape import ShapeBase, ShapeFull
 from schemas.users import UserBase
 from datetime import datetime
+from functools import lru_cache
 
 class ShapeDAO:
     @staticmethod
@@ -22,6 +23,9 @@ class ShapeDAO:
             session.add(shape_model)
             session.commit()
 
+            # Clear the lru_cache for the get_activities method
+            ShapeDAO.get_shapes.cache_clear()
+
             return ShapeFull.model_validate(shape_model)
         except IntegrityError:
             raise HTTPException(status_code=400, detail="Invalid shape")
@@ -29,6 +33,7 @@ class ShapeDAO:
             raise HTTPException(status_code=500, detail="Internal server error")
     
     @staticmethod
+    @lru_cache(maxsize=128)
     def get_shapes(email: str, from_date: datetime, to_date: datetime, session: Session) -> list[ShapeFull]:
         shapes = session.query(ShapeModel) \
             .filter(ShapeModel.user_email == email) \
