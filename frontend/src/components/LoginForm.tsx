@@ -20,6 +20,13 @@ import { useClient } from '../hooks/useClient';
 import { createUserUserPost } from '../client';
 import { useMutation } from '@tanstack/react-query';
   
+interface FormValues {
+  email: string;
+  password: string;
+  name: string;
+  birthYear: number;
+}
+
 export function LoginForm() {
   const navigate = useNavigate(); 
   const { client, login, loggedIn } = useClient();
@@ -31,7 +38,8 @@ export function LoginForm() {
     navigate('/my/data');
 
   // Form validation
-  const form = useForm({
+  const form = useForm<FormValues>({
+    name: 'login-form',
     mode: 'uncontrolled',
     validate: {
       email: isEmail('Correo inválido'),

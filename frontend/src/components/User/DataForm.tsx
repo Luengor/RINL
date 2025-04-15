@@ -7,6 +7,12 @@ import { Stack, Text, TextInput, NumberInput, Chip, Collapse, Center, Button, Mo
 import { TbUser, TbCalendar, TbMail } from "react-icons/tb";
 import { OkNotification, ErrorNotification } from "../../utils/notifications";
 
+interface DataFormValues {
+  name: string;
+  email: string;
+  year_of_birth: number;
+}
+
 export default function DataForm({ user } : { user: UserBase }) {
   // Get the client
   const { client } = useClient();
@@ -46,7 +52,7 @@ export default function DataForm({ user } : { user: UserBase }) {
   }
 
   /// User data form (modify) 
-  const dataForm = useForm({
+  const dataForm = useForm<DataFormValues>({
     name: 'data-form',
     mode: 'uncontrolled',
     initialValues: {

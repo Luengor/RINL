@@ -7,11 +7,17 @@ import { createShapeShapePost, ShapeBase } from "../../client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { OkNotification } from "../../utils/notifications";
 
+interface FormValues {
+  weight: number,
+  height: number,
+  sex_math: number
+}
+
 export default function CurrentShapeCard() {
   const { verified, latestShape, hasShape, refetch } = useUser();
   const [ addShapeOpened, { open: openAddShape, close: closeAddshape }] = useDisclosure(false);
 
-  const newShapeForm = useForm({
+  const newShapeForm = useForm<FormValues>({
     name: 'new-shape-form',
     mode: 'uncontrolled',
     initialValues: {
