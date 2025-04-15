@@ -15,6 +15,14 @@ router = APIRouter(
 async def create_user(user: RegisterUser, session=Depends(get_db), send_email=Depends(get_send_email)):
     return UserDAO.create_user(user, session, send_email)
 
+@router.post("/verify-email")
+async def send_verification_email(user: UserBase = Depends(get_current_user), session=Depends(get_db), send_email=Depends(get_send_email)):
+    if user.verified:
+        return Response(status_code=400, content="User already verified")
+    
+    UserDAO.send_verification_code(user.email, session, send_email)
+    return Response(status_code=200, content="Verification email sent")
+
 @router.post("/verify/{verification_code}")
 async def verify_user(verification_code: str, user: UserBase = Depends(get_current_user), session=Depends(get_db)):
     if user.verified:
