@@ -11,7 +11,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route element={<PrivateRoutes requireLogin={false} route={"/my/data"}/>}>
+      <Route
+        element={<PrivateRoutes requireLogin={false} route={"/my/data"} />}
+      >
         <Route path="/login" element={<Login />} />
       </Route>
       <Route path="/media" element={<Media />} />
@@ -20,8 +22,7 @@ function App() {
         <Route path="/my/*" element={<My />} />
       </Route>
     </Routes>
-  )
+  );
 }
 
-export default App
-
+export default App;

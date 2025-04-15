@@ -10,7 +10,5 @@ export function PrivateRoutes({ requireLogin, route }: PrivateRoutesProps) {
   const { loggedIn } = useClient();
   const logged_in = requireLogin ? loggedIn : !loggedIn;
 
-  return (
-    logged_in ? <Outlet /> : <Navigate to={route} />
-  );
+  return logged_in ? <Outlet /> : <Navigate to={route} />;
 }

@@ -1,21 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom';
-import App from './App.tsx'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.tsx";
 
-import '@mantine/core/styles.css';
-import '@mantine/charts/styles.css';
-import '@mantine/notifications/styles.css';
+import "@mantine/core/styles.css";
+import "@mantine/charts/styles.css";
+import "@mantine/notifications/styles.css";
 
-import { MantineProvider } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
-import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ErrorNotification } from './utils/notifications';
+import { MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
+import {
+  MutationCache,
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { ErrorNotification } from "./utils/notifications";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
-      console.log('Error in query: ', error.message);
+      console.log("Error in query: ", error.message);
 
       if (query.meta.errorMessage)
         ErrorNotification(query.meta.errorMessage as string);
@@ -24,15 +29,15 @@ const queryClient = new QueryClient({
 
   mutationCache: new MutationCache({
     onError: (error, variables, context, mutation) => {
-      console.log('Error in mutation: ', error, variables, context, mutation);
+      console.log("Error in mutation: ", error, variables, context, mutation);
 
       if (mutation.meta.errorMessage)
         ErrorNotification(mutation.meta.errorMessage as string);
-    }
-  })
-})
+    },
+  }),
+});
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <MantineProvider>
       <BrowserRouter>
@@ -42,6 +47,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </QueryClientProvider>
       </BrowserRouter>
     </MantineProvider>
-  </React.StrictMode>,
-)
-
+  </React.StrictMode>
+);
