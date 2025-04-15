@@ -4,7 +4,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Form, useForm } from "@mantine/form";
 import { useClient } from "../../hooks/useClient";
 import { createShapeShapePost, ShapeBase } from "../../client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { OkNotification } from "../../utils/notifications";
 
 export default function CurrentShapeCard() {
@@ -26,6 +26,7 @@ export default function CurrentShapeCard() {
     }
   });
 
+  const queryClient = useQueryClient();
   const { client } = useClient();
   const addShapeMutation = useMutation({
     mutationKey: ['add-shape'],
@@ -37,6 +38,7 @@ export default function CurrentShapeCard() {
       return req;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['activity-shape-data']});
       closeAddshape();
       OkNotification('Forma física añadida', 'La forma física ha sido añadida correctamente');
       refetch();

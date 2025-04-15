@@ -7,6 +7,7 @@ import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { SendAndAck } from "../../utils/unity";
 import { useClient } from "../../hooks/useClient";
+import { useQueryClient } from "@tanstack/react-query";
 
 const isOnMobile = navigator.userAgent.toLowerCase().includes("mobile");
 
@@ -51,6 +52,7 @@ export default function Media() {
 
   // Unity messages
   const { client } = useClient();
+  const queryClient = useQueryClient();
   useEffect(() => {
     // Subscribe to unity events
     const callback = (e: Event) => {
@@ -63,10 +65,12 @@ export default function Media() {
       switch (t) {
         // Handle activity event
         case "activity":
+          // Create an activity and invalidate the cache
           createActivityActivityPost({
             client: client,
             body: activity, 
-          })
+          });
+          queryClient.invalidateQueries({queryKey: ['activity-shape-data']});
           break;
 
         default:
