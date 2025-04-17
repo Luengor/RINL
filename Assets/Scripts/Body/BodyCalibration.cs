@@ -15,7 +15,8 @@ public class CalibrationData
         {
             points = new Vector3[Constants.LANDMARKS],
             inBounds = new bool[Constants.LANDMARKS],
-            groundHeight = imageGroundHeight * worldImageRatio.y
+            groundHeight = imageGroundHeight * worldImageRatio.y,
+            displacedAmount = GetDisplacedAmount(rawLandmarks)
         };
 
         // Calculate the hip position
@@ -34,6 +35,14 @@ public class CalibrationData
 
         return landmarks;
     }
+    public float GetDisplacedAmount(RawLandmarks landmarks)
+    {
+        return Math.Min(
+            Math.Abs(landmarks.image[(int)LandmarkNames.LeftAnkle].y - imageGroundHeight),
+            Math.Abs(landmarks.image[(int)LandmarkNames.RightAnkle].y - imageGroundHeight)
+        );
+    }
+
 };
 
 public class BodyCalibration
@@ -83,17 +92,6 @@ public class BodyCalibration
     public Vector3 GetCombinedWorldLandmark(Landmarks landmarks, int index)
     {
         return landmarks.points[index] + landmarks.hipPosition;
-    }
-
-    public bool IsFloating(RawLandmarks landmarks)
-    {
-        // Check if the body is floating
-        for (int i = 0; i < 33; i++)
-            if (landmarks.image[i].InImage())
-                if (landmarks.image[i].y < data.imageGroundHeight)
-                    return false;
-
-        return true;
     }
 
     private float CalculateGroundHeight(RawLandmarks landmarks)

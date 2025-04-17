@@ -20,6 +20,13 @@ public class RINLBody : MonoBehaviour
     public float handScale = 1f;
     public bool showHands = true;
 
+    [Header("Bounds and displacement")]
+    [Tooltip("The amount of displacement needed to consider the body displaced")]
+    public float displacementThreshold = 0.1f;
+    [Tooltip("The time needed to consider the body displaced")]
+    public float displacementTime = 3f;
+    private float displacementTimer = 0f;
+
     [Header("Point transformation settings")]
     [Tooltip("Flip the x-axis of the points")]
     public bool flipX = false;
@@ -132,8 +139,12 @@ public class RINLBody : MonoBehaviour
 
         landmarks = GameController.CalibrationData.TransformLandmarks(rawLandmarks);
 
+
         // Move all body points using the landmarks and the hip position
         MoveBody();
+
+        // Check if the body is displaced
+        UpdateDisplacement();
 
         // Move the body parts
         MoveBodyParts();
@@ -151,7 +162,11 @@ public class RINLBody : MonoBehaviour
         }
 
         // Debug
-        debugText.text = "Activity points: " + activityPoints;
+        debugText.text = "Left hip z: " + GameController.Instance.JsConnector.LatestLandmarks.image[(int)LandmarkNames.LeftHip].z + "\n" +
+                         "Image ground height: " + GameController.CalibrationData.imageGroundHeight + "\n" +
+                         "World ground height: " + landmarks.groundHeight + "\n" +
+                         "Displaced amount: " + landmarks.displacedAmount+ "\n"
+                         ;
     }
 
     private Vector3 GetLandmarkPosition(int index)
@@ -204,6 +219,21 @@ public class RINLBody : MonoBehaviour
 
         // Return the new position
         return pos;
+    }
+
+    private void UpdateDisplacement()
+    {
+        // Check if the body is displaced
+        if (landmarks.displacedAmount > displacementThreshold && GameController.CalibrationData.calibrated)
+            displacementTimer += Time.fixedDeltaTime;
+        else
+            displacementTimer = 0;
+
+        if (displacementTimer > displacementTime)
+        {
+            // TODO: alert
+            Debug.Log("Body is displaced");
+        }
     }
 
     private void MoveBodyParts()

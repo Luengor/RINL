@@ -160,6 +160,9 @@ public struct Landmarks
 
     // The hip position in world coordinates. This is the origin of the points
     public Vector3 hipPosition;
+
+    // The distance between the lowest feet and the ground (in image coordinates)
+    public float displacedAmount;
 }
 
 [Serializable]
