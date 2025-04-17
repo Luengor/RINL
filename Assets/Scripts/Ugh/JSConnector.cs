@@ -3,7 +3,13 @@ using UnityEngine;
 
 public class JSConnector : MonoBehaviour
 {
-    public RawLandmarks LatestLandmarks { get; private set; }
+    public RawLandmarks LatestLandmarks {
+        get { return latestLandmarks; }
+        private set
+        {
+            latestLandmarks = value;
+        }
+    } 
     public Shape UserShape { get; private set; } = new Shape { weight = 50f, height = 165f, sex_math = 0.1f };
     public User CurrentUser { get; private set; }
 
@@ -12,10 +18,13 @@ public class JSConnector : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void SendAck(string functionName);
     private ImageSize imageSize = new() { width = 640, height = 480 };
+    private RawLandmarks latestLandmarks = new(Constants.LANDMARKS); 
 
     public void SetBodyPosition(string landmarkString)
     {
+        int new_i = LatestLandmarks.i + 1;
         LatestLandmarks = JsonUtility.FromJson<RawLandmarks>(landmarkString);
+        latestLandmarks.i = new_i;
 
         // Convert the landmarks
         for (int i = 0; i < LatestLandmarks.world.Length; i++)

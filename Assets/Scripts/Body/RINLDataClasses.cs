@@ -118,6 +118,7 @@ public struct RawLandmarks
     public RawLandmark[] world;
     public RawLandmark[] image;
 
+    public int i;
     private readonly int size;
 
     public RawLandmarks(int size)
@@ -126,6 +127,7 @@ public struct RawLandmarks
         image = new RawLandmark[size];
 
         this.size = size;
+        this.i = 0;
     }
 
     public readonly float SqrDistance2(RawLandmarks other)

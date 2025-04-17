@@ -59,6 +59,7 @@ public class RINLBody : MonoBehaviour
     private Landmarks landmarks = new();
 
     private float activityPoints = 0;
+    private int last_ladmarks_i = -1;
 
 
     private void OnDrawGizmos()
@@ -137,8 +138,11 @@ public class RINLBody : MonoBehaviour
         if (rawLandmarks.image == null)
             return;
 
-        landmarks = GameController.CalibrationData.TransformLandmarks(rawLandmarks);
-
+        if (rawLandmarks.i > last_ladmarks_i)
+        {
+            landmarks = GameController.CalibrationData.TransformLandmarks(rawLandmarks);
+            last_ladmarks_i = rawLandmarks.i;
+        }
 
         // Move all body points using the landmarks and the hip position
         MoveBody();
