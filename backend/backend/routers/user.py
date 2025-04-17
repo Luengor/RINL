@@ -38,8 +38,8 @@ async def get_me(user: UserBase = Depends(get_current_user)):
     return user
 
 @router.put("/me", response_model=UserBase)
-async def update_me(modifications: ModifyUser, user: UserBase = Depends(get_current_user), session=Depends(get_db)):
-    return UserDAO.update_user(user, modifications, session)
+async def update_me(modifications: ModifyUser, user: UserBase = Depends(get_current_user), session=Depends(get_db), send_email=Depends(get_send_email)):
+    return UserDAO.update_user(user, modifications, session, send_email)
 
 @router.delete("/me")
 async def delete_me(user: UserBase = Depends(get_current_user), session=Depends(get_db)):

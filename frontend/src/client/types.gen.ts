@@ -174,6 +174,20 @@ export type CreateUserUserPostResponses = {
 
 export type CreateUserUserPostResponse = CreateUserUserPostResponses[keyof CreateUserUserPostResponses];
 
+export type SendVerificationEmailUserVerifyEmailPostData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/user/verify-email';
+};
+
+export type SendVerificationEmailUserVerifyEmailPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
 export type VerifyUserUserVerifyVerificationCodePostData = {
     body?: never;
     path: {

@@ -22,6 +22,7 @@ import {
 } from "@mantine/core";
 import { TbUser, TbCalendar, TbMail } from "react-icons/tb";
 import { OkNotification, ErrorNotification } from "../../utils/notifications";
+import { useNavigate } from "react-router-dom";
 
 interface DataFormValues {
   name: string;
@@ -31,7 +32,7 @@ interface DataFormValues {
 
 export default function DataForm({ user }: { user: UserBase }) {
   // Get the client
-  const { client } = useClient();
+  const { client, logout } = useClient();
   const queryClient = useQueryClient();
 
   /// Verify user
@@ -93,6 +94,7 @@ export default function DataForm({ user }: { user: UserBase }) {
   });
 
   // Update user data
+  const navigate = useNavigate();
   const updateUserMutation = useMutation({
     mutationKey: ["update-user"],
     mutationFn: async (data: ModifyUser) => {
@@ -106,14 +108,19 @@ export default function DataForm({ user }: { user: UserBase }) {
       );
       queryClient.invalidateQueries({ queryKey: ["user-data"] });
 
+      // For now, logout if the email is changed TODO
+      if (user.email !== dataForm.getValues().email) {
+        logout();
+        navigate("/login");
+        return;
+      }
+
       // Update form values
       dataForm.setInitialValues(dataForm.getValues());
       dataForm.resetDirty();
     },
 
-    onError: () => {
-      ErrorNotification("No se ha podido modificar tus datos");
-    },
+    meta: { errorMessage: "No se ha podido iniciar sesión" },
   });
 
   const handleModify = async () => {

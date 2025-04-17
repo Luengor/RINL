@@ -58,7 +58,7 @@ class UserDAO:
         session.commit()
 
     @staticmethod
-    def update_user(base_user: UserSchema, modify: ModifyUserSchema, session: Session) -> UserSchema:
+    def update_user(base_user: UserSchema, modify: ModifyUserSchema, session: Session, send_email: Callable[[str, str, str], bool]) -> UserSchema:
         # Check the user exists
         if not UserDAO.get_user(base_user.email, session):
             raise HTTPException(status_code=400, detail="User does not exist")
@@ -77,7 +77,11 @@ class UserDAO:
             user.email = modify.email
             user.verified = False
             user.verification_code = create_verification_code()
-            # TODO: Send verification email
+            if not send_email(
+                    user.email,
+                    "Verify your email",
+                    f"Your verification code is {user.verification_code}"):
+                raise HTTPException(status_code=500, detail="Failed to send verification email")
         
         session.commit()
 

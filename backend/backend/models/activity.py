@@ -8,7 +8,7 @@ class Activity(Base):
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)
     date: Mapped[datetime] = mapped_column()
-    user_email = mapped_column(String, ForeignKey('users.email'))
+    user_email = mapped_column(String, ForeignKey('users.email', onupdate="CASCADE"))
     minigame = mapped_column(String)
     duration = mapped_column(Float)
     score = mapped_column(Float)
