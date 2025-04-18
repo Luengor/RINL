@@ -68,7 +68,8 @@ public class RINLBody : MonoBehaviour
             return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(GameController.CalibrationData.bounds.center * pointScale + transform.position, GameController.CalibrationData.bounds.size * pointScale);
+        Bounds bounds = GetBounds();
+        Gizmos.DrawWireCube(bounds.center, bounds.size); 
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(landmarks.hipPosition * pointScale + transform.position, 0.1f);
@@ -322,7 +323,25 @@ public class RINLBody : MonoBehaviour
     {
         Bounds bounds = GameController.CalibrationData.bounds;
 
-        bounds.center = bounds.center * pointScale + transform.position;
+        // If the body is centered with the bounds, set the bounds center to the transform position
+        if (centerWithBounds)
+        {
+            bounds.center = new(
+                transform.position.x,
+                bounds.center.y * pointScale + transform.position.y,
+                transform.position.z
+            );
+        }
+        else
+        {
+            // If the body is not centered with the bounds, also use the bounds x position
+            bounds.center = new(
+                bounds.center.x * pointScale + transform.position.x,
+                bounds.center.y * pointScale + transform.position.y,
+                transform.position.z
+            );
+        }
+        
         bounds.size *= pointScale;
 
         return bounds;
