@@ -15,15 +15,21 @@ from .data import test_user
 def engine() -> Engine:
     engine = create_engine("sqlite:///./test.db")
     Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
 
     return engine
 
 @pytest.fixture()
-def session(engine) -> Generator[Session, None, None]:
-    Base.metadata.create_all(engine)
-    with Session(engine) as session:
+def session(engine: Engine) -> Generator[Session, None, None]:
+    with engine.connect() as connection:
+        connection.begin()
+        session = Session(connection)
+
         yield session
-    Base.metadata.drop_all(engine)
+
+        session.close()
+        connection.rollback()
+
 
 @pytest.fixture()
 def client(session: Session):
