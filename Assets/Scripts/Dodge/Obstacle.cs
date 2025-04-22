@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-    public Bounds bounds;
+    public ObstacleType type;
     private bool obstacleActive = false;
     private RINLBody body;
+    private Bounds bounds;
 
     private void Start()
     {
+        // Scale the bounds 
+        bounds = type.GetBounds(GameController.Instance.Body.GetBounds());
+
         ActivateObstacle();
     }
 
     private void FixedUpdate()
     {
-        bounds.center = transform.position;
-        
         if (CheckHit())
         {
             DeactivateObstacle();
@@ -24,13 +26,27 @@ public class Obstacle : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        if (!Application.isPlaying)
+        {
+            if (type == null)
+                return;
 
-        Vector3 center = Application.isPlaying ? bounds.center : transform.position;
-        if (!obstacleActive)
-            Gizmos.DrawWireCube(center, bounds.size);
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(Vector2.zero, Vector2.one);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(type.position - Vector2.one * .5f, type.size);
+        }
         else
-            Gizmos.DrawCube(center, bounds.size);
+        {
+            var playerBounds = GameController.Instance.Body.GetBounds();
+
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireCube(playerBounds.center, playerBounds.size);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(bounds.center, bounds.size);
+        }
     }
 
     private bool CheckHit()
