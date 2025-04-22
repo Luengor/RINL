@@ -11,16 +11,14 @@ public class Obstacle : MonoBehaviour
     {
         // Scale the bounds 
         bounds = type.GetBounds(GameController.Instance.Body.GetBounds());
-
-        ActivateObstacle();
     }
 
     private void FixedUpdate()
     {
         if (CheckHit())
         {
-            DeactivateObstacle();
             Debug.Log("Obstacle hit!");
+            DeactivateObstacle();
         }
     }
 
@@ -45,7 +43,10 @@ public class Obstacle : MonoBehaviour
             Gizmos.DrawWireCube(playerBounds.center, playerBounds.size);
 
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(bounds.center, bounds.size);
+            if (obstacleActive)
+                Gizmos.DrawCube(bounds.center, bounds.size);
+            else
+                Gizmos.DrawWireCube(bounds.center, bounds.size);
         }
     }
 
@@ -73,5 +74,6 @@ public class Obstacle : MonoBehaviour
     public void DeactivateObstacle()
     {
         obstacleActive = false;
+        Destroy(gameObject);
     }
 }
