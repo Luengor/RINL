@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RINLBody : MonoBehaviour
 {
     [Header("Transforms")]
     public Transform points;
+
+    [Header("Alert things")]
+    public GameObject alertPanel;
+    public TextMeshProUGUI alertText;
 
     [Header("Body parts")]
     public Transform bodyParent;
@@ -131,7 +136,7 @@ public class RINLBody : MonoBehaviour
 
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         // Get the landmarks from the JS connector and convert them
         RawLandmarks rawLandmarks = GameController.Instance.JsConnector.LatestLandmarks;
@@ -144,6 +149,20 @@ public class RINLBody : MonoBehaviour
             landmarks = GameController.CalibrationData.TransformLandmarks(rawLandmarks);
             last_ladmarks_i = rawLandmarks.i;
         }
+
+        // If we are displaced, check if we are ok to resume
+        if (displacementTimer > displacementTime && landmarks.displacedAmount < displacementThreshold)
+        {
+            displacementTimer = 0;
+            GameController.Instance.Resume();
+            alertPanel.SetActive(false);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (landmarks.points == null)
+            return;
 
         // Move all body points using the landmarks and the hip position
         MoveBody();
@@ -236,7 +255,9 @@ public class RINLBody : MonoBehaviour
 
         if (displacementTimer > displacementTime)
         {
-            // TODO: alert
+            alertPanel.SetActive(true);
+            alertText.text = "No te muevas perro";
+            GameController.Instance.Pause();
             Debug.Log("Body is displaced");
         }
     }
