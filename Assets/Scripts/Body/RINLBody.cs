@@ -76,16 +76,6 @@ public class RINLBody : MonoBehaviour
         Bounds bounds = GetBounds();
         Gizmos.DrawWireCube(bounds.center, bounds.size); 
 
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(landmarks.hipPosition * pointScale + transform.position, 0.1f);
-        Gizmos.DrawWireSphere(Vector3.up * landmarks.groundHeight * pointScale + transform.position, 0.1f);
-
-        Gizmos.color = Color.yellow;
-        for (int i = 0; i < Constants.LANDMARKS; i++)
-        {
-            if (landmarks.inBounds[i])
-                Gizmos.DrawWireSphere((landmarks.points[i] + landmarks.hipPosition) * pointScale + transform.position, 0.05f);
-        }
     }
 
     private void Start()
@@ -309,7 +299,7 @@ public class RINLBody : MonoBehaviour
         }
     }
 
-    public void MoveHands()
+    private void MoveHands()
     {
         // Move
         leftHand.localPosition =
@@ -338,6 +328,11 @@ public class RINLBody : MonoBehaviour
             leftHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
             rightHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
         }
+    }
+
+    public Vector3 GetLandmarkWorldPosition(int index)
+    {
+        return bodyLandmarks[index].position;
     }
 
     public Bounds GetBounds()

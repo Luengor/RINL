@@ -74,6 +74,7 @@
     <Compile Include="Assets/Scripts/Ugh/SceneScript.cs" />
     <Compile Include="Assets/Scripts/Body/BodyCalibration.cs" />
     <Compile Include="Assets/Scripts/Generic/SetText.cs" />
+    <Compile Include="Assets/Scripts/Dodge/Obstacle.cs" />
     <Compile Include="Assets/Scripts/Body/RINLDataClasses.cs" />
     <Compile Include="Assets/Scripts/Ballons/Balloon.cs" />
     <Compile Include="Assets/Scripts/Body/RINLBody.cs" />

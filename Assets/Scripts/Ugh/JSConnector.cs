@@ -12,6 +12,9 @@ public class JSConnector : MonoBehaviour
     } 
     public Shape UserShape { get; private set; } = new Shape { weight = 50f, height = 165f, sex_math = 0.1f };
     public User CurrentUser { get; private set; }
+    public float AspectRatio {
+        get { return (float)imageSize.width / imageSize.height; }
+    }
 
     [DllImport("__Internal")]
     private static extern void SendToReact(string type, string payload);
@@ -33,11 +36,9 @@ public class JSConnector : MonoBehaviour
             LatestLandmarks.world[i].y *= -1;
             LatestLandmarks.world[i].z *= -1;
 
-            // Calculate aspect ratio
-            float aspect = (float)imageSize.width / imageSize.height;
-
             // Flip and change the range of the image landmarks
-            LatestLandmarks.image[i].x = LatestLandmarks.image[i].x * aspect * 2 - aspect;
+            LatestLandmarks.image[i].x = (LatestLandmarks.image[i].x - .5f) * AspectRatio;
+            // LatestLandmarks.image[i].x = LatestLandmarks.image[i].x * AspectRatio * 2 - AspectRatio;
             LatestLandmarks.image[i].y = 1 - LatestLandmarks.image[i].y;
         }
     }
