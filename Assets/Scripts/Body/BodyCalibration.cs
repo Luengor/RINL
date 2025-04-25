@@ -5,9 +5,12 @@ using UnityEngine;
 public class CalibrationData
 {
     public bool calibrated = false;
-    public float imageGroundHeight = 0;
-    public Vector2 worldImageRatio = Vector2.zero;
-    public Bounds bounds = new();
+    public float imageGroundHeight = 0.109f;
+    public Vector2 worldImageRatio = new(2.25f, 2.11f);
+    public Bounds bounds = new(
+        new Vector3(0.13f, 0.95f, 0.03f),
+        new Vector3(1.08f, 0.95f, 0.41f)
+    );
 
     public Landmarks TransformLandmarks(RawLandmarks rawLandmarks)
     {

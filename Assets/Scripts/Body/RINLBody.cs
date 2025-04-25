@@ -75,7 +75,6 @@ public class RINLBody : MonoBehaviour
         Gizmos.color = Color.red;
         Bounds bounds = GetBounds();
         Gizmos.DrawWireCube(bounds.center, bounds.size); 
-
     }
 
     private void Start()

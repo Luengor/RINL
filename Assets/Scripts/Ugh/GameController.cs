@@ -6,6 +6,8 @@ public class GameController : MonoBehaviour
     public static CalibrationData CalibrationData = new();
     public JSConnector JsConnector { get; private set; }
 
+    public bool startCalibrated = true;
+
     public RINLBody Body
     {
         get
@@ -26,7 +28,12 @@ public class GameController : MonoBehaviour
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            if (startCalibrated)
+                CalibrationData.calibrated = true;
+
+        }
         else
             Destroy(gameObject);
 
