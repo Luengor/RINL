@@ -69,6 +69,9 @@ public class BodyCalibration
 
         // Calculate the ground height using the image landmarks
         data.imageGroundHeight = CalculateGroundHeight(landmarks);
+
+        // Add to the bounds the ground height
+        data.bounds.min = new Vector3(data.bounds.min.x, data.imageGroundHeight * data.worldImageRatio.y, data.bounds.min.z);
     }
 
     public bool GrowBounds(RawLandmarks rawLandmarks)
@@ -81,7 +84,9 @@ public class BodyCalibration
             if (rawLandmarks.image[i].InImage())
             {
                 Vector3 point = landmarks.points[i] + landmarks.hipPosition;
-                if (point.y > landmarks.groundHeight && !data.bounds.Contains(point))
+                point.y = Math.Max(point.y, landmarks.groundHeight);
+
+                if (!data.bounds.Contains(point))
                 {
                     data.bounds.Encapsulate(point);
                     grown = true;
@@ -114,11 +119,11 @@ public class BodyCalibration
          */
         float imageHipDistance = Math.Abs(landmarks.image[(int)LandmarkNames.LeftHip].x - landmarks.image[(int)LandmarkNames.RightHip].x);
         float imageShoulderDistance = Math.Abs(landmarks.image[(int)LandmarkNames.LeftShoulder].y - landmarks.image[(int)LandmarkNames.LeftHip].y);
-        float imageKneeDistance = Math.Abs(landmarks.image[(int)LandmarkNames.LeftKnee].y - landmarks.image[(int)LandmarkNames.LeftHip].y);
+        float imageKneeDistance = Math.Abs(landmarks.image[(int)LandmarkNames.LeftKnee].y - landmarks.image[(int)LandmarkNames.LeftAnkle].y);
 
         float worldHipDistance = Math.Abs(landmarks.world[(int)LandmarkNames.LeftHip].x - landmarks.world[(int)LandmarkNames.RightHip].x);
         float worldShoulderDistance = Math.Abs(landmarks.world[(int)LandmarkNames.LeftShoulder].y - landmarks.world[(int)LandmarkNames.LeftHip].y);
-        float worldKneeDistance = Math.Abs(landmarks.world[(int)LandmarkNames.LeftKnee].y - landmarks.world[(int)LandmarkNames.LeftHip].y);
+        float worldKneeDistance = Math.Abs(landmarks.world[(int)LandmarkNames.LeftKnee].y - landmarks.world[(int)LandmarkNames.LeftAnkle].y);
 
         Vector2 initialRatio = new(worldHipDistance / imageHipDistance, (worldShoulderDistance / imageShoulderDistance + worldKneeDistance / imageKneeDistance) / 2);
         return initialRatio; 

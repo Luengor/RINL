@@ -175,11 +175,11 @@ public class RINLBody : MonoBehaviour
         }
 
         // Debug
-        debugText.text = "Left hip z: " + GameController.Instance.JsConnector.LatestLandmarks.image[(int)LandmarkNames.LeftHip].z + "\n" +
-                         "Image ground height: " + GameController.CalibrationData.imageGroundHeight + "\n" +
-                         "World ground height: " + landmarks.groundHeight + "\n" +
-                         "Displaced amount: " + landmarks.displacedAmount+ "\n"
-                         ;
+        debugText.text = "World ground height: " + landmarks.groundHeight + "\n" +
+                         "GC Bounds min: " + GameController.CalibrationData.bounds.min + "\n" +
+                         "My Bounds min: " + GetBounds().min + "\n" +
+                         "Left ankle y: " + GetLandmarkWorldPosition((int)LandmarkNames.LeftAnkle).y + "\n" + 
+                         "Right ankle y: " + GetLandmarkWorldPosition((int)LandmarkNames.RightAnkle).y;
     }
 
     private Vector3 GetLandmarkPosition(int index)
@@ -352,7 +352,7 @@ public class RINLBody : MonoBehaviour
             // If the body is not centered with the bounds, also use the bounds x position
             bounds.center = new(
                 bounds.center.x * pointScale + transform.position.x,
-                bounds.center.y * pointScale + transform.position.y,
+                (bounds.center.y - landmarks.groundHeight) * pointScale + transform.position.y,
                 transform.position.z
             );
         }
