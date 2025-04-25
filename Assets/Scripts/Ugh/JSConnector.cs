@@ -61,17 +61,8 @@ public class JSConnector : MonoBehaviour
         SendAck("SetCurrentUser");
     }
 
-    public void CreateActivity(string minigame, int duration, int activity_points, string extra_data)
+    public void CreateActivity(Activity activity)
     {
-        Activity activity = new()
-        {
-            date = System.DateTime.Now,
-            minigame = minigame,
-            duration = duration,
-            activity_points = activity_points,
-            extra_data = extra_data
-        };
-
         string json = JsonUtility.ToJson(activity);
         Debug.Log("activity: " + json);
         SendToReact("activity", json);

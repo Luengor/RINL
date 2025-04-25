@@ -68,6 +68,7 @@
     <Compile Include="Assets/Scripts/Dodge/ObstacleType.cs" />
     <Compile Include="Assets/Scripts/Ugh/JSConnector.cs" />
     <Compile Include="Assets/SceneScripts/Calibration/DoneCalibration.cs" />
+    <Compile Include="Assets/Scripts/Dodge/ObstacleCreator.cs" />
     <Compile Include="Assets/Scripts/Ugh/DebugServer.cs" />
     <Compile Include="Assets/Scripts/Generic/MouseThing.cs" />
     <Compile Include="Assets/SceneScripts/MainMenu/Calibrate.cs" />

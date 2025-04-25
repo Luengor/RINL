@@ -60,15 +60,21 @@ public class GameController : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
-    public void SetScore(int score, int duration, string extra_data)
+    public void SetActivityData(string minigame, int duration, int score, string extra_data)
     {
-        // Save the duration and other data
+        activityData.date = System.DateTime.Now;
+        activityData.minigame = minigame;
         activityData.duration = duration;
-        activityData.extra_data = extra_data;
         activityData.score = score;
+        activityData.extra_data = extra_data;
 
         // Get the activity points from the body
         activityData.activity_points = Body.GetActivityPoints();
+    }
+
+    public void CreateActivity()
+    {
+        JsConnector.CreateActivity(this.activityData);
     }
 
     public Activity GetActivityData()

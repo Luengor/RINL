@@ -52,13 +52,13 @@ public class BalloonCreator : MonoBehaviour
         gaming = false;
 
         string extra_data = "{\"score\": " + balloonsPopped + "}";
-        GameController.Instance.SetScore(balloonsPopped, 60, extra_data);
+        GameController.Instance.SetActivityData("Balloons", 60, balloonsPopped, extra_data);
 
         if (!Application.isEditor)
         {
             RINLBody body = GameController.Instance.Body;
             Debug.Log("Creating activity");
-            GameController.Instance.JsConnector.CreateActivity("Balloons", 60, body.GetActivityPoints(), extra_data);
+            GameController.Instance.CreateActivity();
         }
     }
 
