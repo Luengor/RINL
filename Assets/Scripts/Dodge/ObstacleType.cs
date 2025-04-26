@@ -6,6 +6,8 @@ public class ObstacleType : ScriptableObject
     public Vector2 size;
     public Vector2 position;
 
+    public float duration = 1f;
+
     public Bounds GetBounds(Bounds bodyBounds)
     {
         Vector2 bodyExtents = bodyBounds.size;

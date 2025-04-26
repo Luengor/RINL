@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   size: {x: 1, y: 0.1}
   position: {x: 0.5, y: 0.05}
+  duration: 0.1

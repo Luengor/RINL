@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a070978d2c08d372384bc4a100f00755, type: 3}
   m_Name: RightWall
   m_EditorClassIdentifier: 
-  size: {x: 0.4, y: 1}
-  position: {x: 0.8, y: 0.5}
+  size: {x: 0.5, y: 1}
+  position: {x: 0.75, y: 0.5}
+  duration: 1

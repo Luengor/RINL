@@ -15,10 +15,12 @@ public class Obstacle : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!obstacleActive)
+            return;
+        
         if (CheckHit())
         {
-            Debug.Log("Obstacle hit!");
-            DeactivateObstacle();
+            DeactivateObstacle(true);
         }
     }
 
@@ -52,9 +54,6 @@ public class Obstacle : MonoBehaviour
 
     private bool CheckHit()
     {
-        if (!obstacleActive)
-            return false;
-
         for (ushort i = 0; i < Constants.LANDMARKS; i++)
         {
             Vector3 point = body.GetLandmarkWorldPosition(i);
@@ -68,11 +67,28 @@ public class Obstacle : MonoBehaviour
     public void ActivateObstacle()
     {
         obstacleActive = true;
+        Invoke("DeactivateObstacle", type.duration);
         body = GameController.Instance.Body; 
     }
 
-    public void DeactivateObstacle()
+    public void DeactivateObstacle(bool hit = false)
     {
+        ObstacleCreator creator = FindAnyObjectByType<ObstacleCreator>();
+        if (creator == null)
+        {
+            Debug.LogError("ObstacleCreator not found in the scene.");
+            return;
+        }
+
+        if (hit)
+        {
+            creator.StopGame();
+        }
+        else
+        {
+            creator.Dodge();
+        }
+
         obstacleActive = false;
         Destroy(gameObject);
     }
