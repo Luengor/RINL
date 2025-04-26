@@ -125,7 +125,8 @@ public class BodyCalibration
         float worldShoulderDistance = Math.Abs(landmarks.world[(int)LandmarkNames.LeftShoulder].y - landmarks.world[(int)LandmarkNames.LeftHip].y);
         float worldKneeDistance = Math.Abs(landmarks.world[(int)LandmarkNames.LeftKnee].y - landmarks.world[(int)LandmarkNames.LeftAnkle].y);
 
-        Vector2 initialRatio = new(worldHipDistance / imageHipDistance, (worldShoulderDistance / imageShoulderDistance + worldKneeDistance / imageKneeDistance) / 2);
+        // Vector2 initialRatio = new(worldHipDistance / imageHipDistance, (worldShoulderDistance / imageShoulderDistance + worldKneeDistance / imageKneeDistance) / 2);
+        Vector2 initialRatio = new(worldHipDistance / imageHipDistance, worldKneeDistance / imageKneeDistance);
         return initialRatio; 
     }
 }
