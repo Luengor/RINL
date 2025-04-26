@@ -102,7 +102,7 @@ MonoBehaviour:
   pointScale: 3
   fixedPosition: 0
   useGroundHeight: 1
-  centerWithBounds: 1
+  groundOffset: 0.08
   minAccForPoints: 7
   accToPoints: 0.003
   pointSmoothTime: 0.04

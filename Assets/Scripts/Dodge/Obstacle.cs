@@ -67,8 +67,13 @@ public class Obstacle : MonoBehaviour
     public void ActivateObstacle()
     {
         obstacleActive = true;
-        Invoke("DeactivateObstacle", type.duration);
+        Invoke("InvokableDeactivateObstacle", type.duration);
         body = GameController.Instance.Body; 
+    }
+
+    private void InvokableDeactivateObstacle()
+    {
+        DeactivateObstacle();
     }
 
     public void DeactivateObstacle(bool hit = false)

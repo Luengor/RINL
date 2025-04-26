@@ -41,6 +41,8 @@ public class RINLBody : MonoBehaviour
     public bool fixedPosition = false;
     [Tooltip("Use ground height for the vertical position. If false, the hip will move only in the X axis")]
     public bool useGroundHeight = true;
+    [Tooltip("Offset the ground height by this value")]
+    public float groundOffset = 0.1f;
 
     [Header("Activity points settings")]
     [Tooltip("If the speed difference is greater than this value, the points will be calculated")]
@@ -73,9 +75,6 @@ public class RINLBody : MonoBehaviour
         Gizmos.color = Color.red;
         Bounds bounds = GetBounds();
         Gizmos.DrawWireCube(bounds.center, bounds.size);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere((landmarks.hipPosition + Vector3.down * landmarks.groundHeight) * pointScale, 0.1f);
     }
 
     private void Start()
@@ -178,8 +177,8 @@ public class RINLBody : MonoBehaviour
         // Debug
         debugText.text = "World ground height: " + landmarks.groundHeight + "\n" +
                          "world image ratio: " + GameController.CalibrationData.worldImageRatio + "\n" +
-                         "LeftAnkle y (L, W): " + landmarks.points[(int)LandmarkNames.LeftAnkle].y + ", " + GetLandmarkWorldPosition((int)LandmarkNames.LeftAnkle).y + "\n" +
-                         "RightAnkle y (L, W): " + landmarks.points[(int)LandmarkNames.RightAnkle].y + ", " + GetLandmarkWorldPosition((int)LandmarkNames.RightAnkle).y + "\n";
+                         "LeftAnkle y (L, W): " + landmarks.points[(int)LandmarkNames.LeftAnkle].y + ", " + (GetLandmarkWorldPosition((int)LandmarkNames.LeftAnkle).y - transform.position.y) + "\n" +
+                         "RightAnkle y (L, W): " + landmarks.points[(int)LandmarkNames.RightAnkle].y + ", " + (GetLandmarkWorldPosition((int)LandmarkNames.RightAnkle).y - transform.position.y);
     }
 
     private Vector3 GetLandmarkPosition(int index)
@@ -194,7 +193,7 @@ public class RINLBody : MonoBehaviour
             // If the ground height is used, add the hips y position and subtract the ground height
             if (useGroundHeight)
                 // newWorldPos.y += landmarks.hipPosition.y;
-                newWorldPos.y += landmarks.hipPosition.y - landmarks.groundHeight;
+                newWorldPos.y += landmarks.hipPosition.y - landmarks.groundHeight + groundOffset;
 
             // Either way, add the hips x position
             newWorldPos.x += landmarks.hipPosition.x;
@@ -336,7 +335,7 @@ public class RINLBody : MonoBehaviour
 
         bounds.center = new(
             bounds.center.x * pointScale + transform.position.x,
-            (bounds.center.y - landmarks.groundHeight) * pointScale + transform.position.y,
+            (bounds.center.y - landmarks.groundHeight + groundOffset) * pointScale + transform.position.y,
             transform.position.z
         );
         

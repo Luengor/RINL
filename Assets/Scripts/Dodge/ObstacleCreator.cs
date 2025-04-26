@@ -1,3 +1,4 @@
+using UnityEditor.SearchService;
 using UnityEngine;
 
 [System.Serializable]
@@ -20,11 +21,6 @@ public class ObstacleCreator : MonoBehaviour
     private int obstaclesDodged = 0;
     private int lastSpawned = -1;
 
-    private void Start()
-    {
-        StartGame();
-    }
-
     public void Dodge()
     {
         obstaclesDodged++;
@@ -41,6 +37,7 @@ public class ObstacleCreator : MonoBehaviour
     public void StopGame()
     {
         gaming = false;
+        SceneScript.Instance.SetTrigger("GameDone");
 
         string extra_data = "{\"score\": " + obstaclesSpawned + "}";
         float now = Time.time;

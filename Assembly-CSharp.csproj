@@ -86,6 +86,7 @@
     <Compile Include="Assets/SceneScripts/Calibration/TPoseCalibration.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonPopper.cs" />
+    <Compile Include="Assets/SceneScripts/Dodge/DodgeGame.cs" />
     <Compile Include="Assets/SceneScripts/MainMenu/CheckCalibration.cs" />
   </ItemGroup>
   <ItemGroup>

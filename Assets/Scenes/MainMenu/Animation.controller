@@ -38,6 +38,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8801410be51c1f795a52a09c211626ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneName: Calibration
 --- !u!1101 &-2546786767003526304
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -141,7 +142,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_AnyStatePosition: {x: 60, y: 250, z: 0}
   m_EntryPosition: {x: 60, y: 390, z: 0}
   m_ExitPosition: {x: 60, y: 320, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
