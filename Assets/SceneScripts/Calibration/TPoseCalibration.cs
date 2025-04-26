@@ -16,7 +16,6 @@ public class TPoseCalibration : StateMachineBehaviour
         // Set body properties 
         body.gameObject.SetActive(true);
         body.fixedPosition = true;
-        body.centerWithBounds = false;
 
         calibration = new BodyCalibration(GameController.CalibrationData);
         lastLandmarks = GameController.Instance.JsConnector.LatestLandmarks;

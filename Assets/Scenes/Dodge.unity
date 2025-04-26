@@ -446,7 +446,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d732ed84b99386881a8220fd3a46c73f, type: 2}
     - {fileID: 11400000, guid: 7bba942cc06b987658c80ef6be3f82ae, type: 2}
     - {fileID: 11400000, guid: 8856a3d04845bbc6882dd61de05287ef, type: 2}
-    spawnTime: 1
+    spawnTime: 2
   obstaclePrefab: {fileID: 683344523192840567, guid: 29aaeb28358bf1f6baaaed2484a91d56, type: 3}
 --- !u!1 &2114411887
 GameObject:

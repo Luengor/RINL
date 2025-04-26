@@ -41,8 +41,6 @@ public class RINLBody : MonoBehaviour
     public bool fixedPosition = false;
     [Tooltip("Use ground height for the vertical position. If false, the hip will move only in the X axis")]
     public bool useGroundHeight = true;
-    [Tooltip("Should the body be in the center of the bounds or in the center of the camera?")]
-    public bool centerWithBounds = true;
 
     [Header("Activity points settings")]
     [Tooltip("If the speed difference is greater than this value, the points will be calculated")]
@@ -74,7 +72,10 @@ public class RINLBody : MonoBehaviour
 
         Gizmos.color = Color.red;
         Bounds bounds = GetBounds();
-        Gizmos.DrawWireCube(bounds.center, bounds.size); 
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere((landmarks.hipPosition + Vector3.down * landmarks.groundHeight) * pointScale, 0.1f);
     }
 
     private void Start()
@@ -176,10 +177,9 @@ public class RINLBody : MonoBehaviour
 
         // Debug
         debugText.text = "World ground height: " + landmarks.groundHeight + "\n" +
-                         "GC Bounds min: " + GameController.CalibrationData.bounds.min + "\n" +
-                         "My Bounds min: " + GetBounds().min + "\n" +
-                         "Left ankle y: " + GetLandmarkWorldPosition((int)LandmarkNames.LeftAnkle).y + "\n" + 
-                         "Right ankle y: " + GetLandmarkWorldPosition((int)LandmarkNames.RightAnkle).y;
+                         "world image ratio: " + GameController.CalibrationData.worldImageRatio + "\n" +
+                         "LeftAnkle y (L, W): " + landmarks.points[(int)LandmarkNames.LeftAnkle].y + ", " + GetLandmarkWorldPosition((int)LandmarkNames.LeftAnkle).y + "\n" +
+                         "RightAnkle y (L, W): " + landmarks.points[(int)LandmarkNames.RightAnkle].y + ", " + GetLandmarkWorldPosition((int)LandmarkNames.RightAnkle).y + "\n";
     }
 
     private Vector3 GetLandmarkPosition(int index)
@@ -187,13 +187,6 @@ public class RINLBody : MonoBehaviour
         // Get the last position and the new landmark position 
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newWorldPos = landmarks.points[index];
-
-        // If the body should be centered with the bounds, add the bounds center to the new position
-        if (centerWithBounds)
-        {
-            Vector3 boundsCenter = GameController.CalibrationData.bounds.center;
-            newWorldPos -= Vector3.right * boundsCenter.x; 
-        }
 
         // If the body is not fixed, add the hip position to the new position 
         if (!fixedPosition)
@@ -223,11 +216,14 @@ public class RINLBody : MonoBehaviour
         float newSpeed = bodyLandmarkSpeeds[index].magnitude / pointScale;
 
         // Calculate the speed difference for the activity points
-        float acc = Math.Abs(newSpeed - lastSpeed) / Time.fixedDeltaTime;
-        if (acc > minAccForPoints)
+        if (LandmarkWeights.LandmarkPointWeight[index] != 0)
         {
-            // Calculate the activity points based on the speed difference
-            activityPoints += acc * accToPoints * LandmarkWeights.LandmarkPointWeight[index];
+            float acc = Math.Abs(newSpeed - lastSpeed) / Time.fixedDeltaTime;
+            if (acc > minAccForPoints)
+            {
+                // Calculate the activity points based on the speed difference
+                activityPoints += acc * accToPoints * LandmarkWeights.LandmarkPointWeight[index];
+            }
         }
 
         // Return the new position
@@ -338,24 +334,11 @@ public class RINLBody : MonoBehaviour
     {
         Bounds bounds = GameController.CalibrationData.bounds;
 
-        // If the body is centered with the bounds, set the bounds center to the transform position
-        if (centerWithBounds)
-        {
-            bounds.center = new(
-                transform.position.x,
-                bounds.center.y * pointScale + transform.position.y,
-                transform.position.z
-            );
-        }
-        else
-        {
-            // If the body is not centered with the bounds, also use the bounds x position
-            bounds.center = new(
-                bounds.center.x * pointScale + transform.position.x,
-                (bounds.center.y - landmarks.groundHeight) * pointScale + transform.position.y,
-                transform.position.z
-            );
-        }
+        bounds.center = new(
+            bounds.center.x * pointScale + transform.position.x,
+            (bounds.center.y - landmarks.groundHeight) * pointScale + transform.position.y,
+            transform.position.z
+        );
         
         bounds.size *= pointScale;
 

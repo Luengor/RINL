@@ -6,11 +6,6 @@ public class DoneCalibration : StateMachineBehaviour
     {
         // Set the calibration data to calibrated
         GameController.CalibrationData.calibrated = true;
-        GameController.Instance.Body.centerWithBounds = true;
-
-        Debug.Log("imageGroundHeight: " + GameController.CalibrationData.imageGroundHeight);
-        Debug.Log("bounds: " + GameController.CalibrationData.bounds);
-        Debug.Log("worldImageRatio: " + GameController.CalibrationData.worldImageRatio);
 
         // Load the main menu scene
         SceneScript.Instance.SwitchScene("MainMenu");
