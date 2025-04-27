@@ -36,6 +36,9 @@ public class JSConnector : MonoBehaviour
             LatestLandmarks.world[i].y *= -1;
             LatestLandmarks.world[i].z *= -1;
 
+            // Set the ar
+            latestLandmarks.image[i].ar = AspectRatio;
+
             // Flip and change the range of the image landmarks
             LatestLandmarks.image[i].x = (LatestLandmarks.image[i].x - .5f) * AspectRatio;
             // LatestLandmarks.image[i].x = LatestLandmarks.image[i].x * AspectRatio * 2 - AspectRatio;

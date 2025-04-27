@@ -93,6 +93,7 @@ public struct RawLandmark
     public float x;
     public float y;
     public float z;
+    public float ar;
 
     public readonly Vector2 ToVector2() { return new(x, y); }
     public readonly Vector3 ToVector3() { return new(x, y, z); }
@@ -109,7 +110,7 @@ public struct RawLandmark
 
     public readonly bool InImage()
     {
-        return x >= -1 && x <= 1 && y >= 0 && y <= 1;
+        return x >= -ar*.5 && x <= ar*.5 && y >= -1 && y <= 1;
     }
 }
 
