@@ -74,33 +74,44 @@ public class BodyCalibration
 
         // Calculate the world ground height (relative to the hips) using the image ground height
         data.worldFeetGroundOffset = CalculateWorldFeetGroundOffset(landmarks);
-        Debug.Log($"Feet offset: {data.worldFeetGroundOffset}");
 
-        // Add to the bounds the ground height
-        data.bounds.min = new Vector3(data.bounds.min.x, data.imageGroundHeight * data.worldImageRatio.y, data.bounds.min.z);
+        // Prepare the bounds to the full image (starting from the ground height)
+        data.bounds.min = new Vector3(
+            data.bounds.min.x,
+            data.imageGroundHeight * data.worldImageRatio.y,
+            data.bounds.min.z
+        );
+
+        data.bounds.max = new Vector3(
+            data.bounds.min.x,
+            data.worldImageRatio.y,
+            data.bounds.min.z
+        );
     }
+
+    private bool leftHandOutside = false;
 
     public bool GrowBounds(RawLandmarks rawLandmarks)
     {
         Landmarks landmarks = data.TransformLandmarks(rawLandmarks);
-        bool grown = false;
 
-        // Only grow the bounds if the landmark is in the image
-        for (int i = 0; i < Constants.LANDMARKS; i++)
-            if (rawLandmarks.image[i].InImage())
-            {
-                Vector3 point = landmarks.points[i] + landmarks.hipPosition;
-                point.y = Math.Max(point.y, landmarks.groundHeight);
+        // If hand is outside the image or it has already been detected, we don't want to grow the bounds 
+        if (leftHandOutside || !rawLandmarks.image[(int)LandmarkNames.LeftWrist].InImage())
+        {
+            leftHandOutside = true;
+            return true;
+        }
 
-                if (!data.bounds.Contains(point))
-                {
-                    data.bounds.Encapsulate(point);
-                    grown = true;
-                }
-            }
+        // Grow the bounds to both sides
+        var point = landmarks.points[(int)LandmarkNames.LeftWrist] + landmarks.hipPosition;
+        data.bounds.Encapsulate(point);
+        data.bounds.Encapsulate(new Vector3(
+            -point.x,
+            point.y,
+            point.z
+        ));
 
-
-        return grown;
+        return false;
     }
 
     public Vector3 GetCombinedWorldLandmark(Landmarks landmarks, int index)

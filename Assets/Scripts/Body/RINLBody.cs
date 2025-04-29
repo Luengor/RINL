@@ -319,8 +319,11 @@ public class RINLBody : MonoBehaviour
                 rightHandRenderer.SetActive(true);
             }
 
-            leftHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
-            rightHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
+            if (GameController.Instance.JsConnector.LatestLandmarks.image[(int)LandmarkNames.LeftWrist].InImage())
+                leftHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
+            
+            if (GameController.Instance.JsConnector.LatestLandmarks.image[(int)LandmarkNames.RightWrist].InImage())
+                rightHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
         }
     }
 

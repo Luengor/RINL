@@ -363,9 +363,8 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: SetObjectText
-    data: "{\"obj\": \"InfoText\", \"text\":\"Muevete hacia la derecha y la izquierda
-      hasta donde puedas sin salir de la c\xE1mara.\\nCuando acabes, mant\xE9n la
-      posici\xF3n unos segundos.\"}"
+    data: '{"obj": "InfoText", "text":"Mueve tu mano izquierda hacia la izquierda
+      hasta que desaparezca."}'
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0

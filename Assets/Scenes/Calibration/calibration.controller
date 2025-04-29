@@ -89,8 +89,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c948d71af8fa389da4dcbd88837b94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stillTime: 3
-  stillThreshold: 0.001
 --- !u!1102 &-2196477320665864766
 AnimatorState:
   serializedVersion: 6
@@ -136,7 +134,7 @@ AnimatorStateMachine:
     m_Position: {x: 490, y: 110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2644228083580478345}
-    m_Position: {x: 710, y: 110, z: 0}
+    m_Position: {x: 720, y: 10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2196477320665864766}
     m_Position: {x: 940, y: 110, z: 0}
