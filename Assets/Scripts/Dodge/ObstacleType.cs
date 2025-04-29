@@ -23,7 +23,7 @@ public class ObstacleType : ScriptableObject
         );
 
         return new Bounds(
-            new Vector3(actualPosition.x, actualPosition.y, 0),
+            actualPosition,
             new Vector3(actualSize.x, actualSize.y, 2)
         );
     }

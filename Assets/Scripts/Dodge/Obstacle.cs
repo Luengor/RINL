@@ -3,14 +3,18 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     public ObstacleType type;
+    public Transform visible;
+    public AudioSource audioSource;
     private bool obstacleActive = false;
     private RINLBody body;
     private Bounds bounds;
 
     private void Start()
     {
-        // Scale the bounds 
+        // Scale the bounds and the visible game object
         bounds = type.GetBounds(GameController.Instance.Body.GetBounds());
+        transform.localPosition = new Vector3(bounds.center.x, bounds.center.y, 0.0f);
+        transform.localScale = new Vector3(bounds.size.x, bounds.size.y, 1.0f);
     }
 
     private void FixedUpdate()
@@ -20,7 +24,7 @@ public class Obstacle : MonoBehaviour
         
         if (CheckHit())
         {
-            DeactivateObstacle(true);
+            Hit();
         }
     }
 
@@ -64,37 +68,47 @@ public class Obstacle : MonoBehaviour
         return false;
     }
 
+    public void Beep()
+    {
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
+    }
+
     public void ActivateObstacle()
     {
         obstacleActive = true;
-        Invoke("InvokableDeactivateObstacle", type.duration);
+        GetComponent<Animator>().speed = 1.0f / type.duration;
         body = GameController.Instance.Body; 
     }
 
-    private void InvokableDeactivateObstacle()
+    public void Hit()
     {
-        DeactivateObstacle();
+        DeactivateObstacle(true);
     }
 
-    public void DeactivateObstacle(bool hit = false)
+    public void Deactivate()
+    {
+        DeactivateObstacle(false);
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    private void DeactivateObstacle(bool hit)
     {
         ObstacleCreator creator = FindAnyObjectByType<ObstacleCreator>();
-        if (creator == null)
+        if (creator != null && creator.Gaming)
         {
-            Debug.LogError("ObstacleCreator not found in the scene.");
-            return;
-        }
-
-        if (hit)
-        {
-            creator.StopGame();
-        }
-        else
-        {
-            creator.Dodge();
+            if (hit)
+                creator.StopGame();
+            else
+                creator.Dodge();
         }
 
         obstacleActive = false;
-        Destroy(gameObject);
     }
 }

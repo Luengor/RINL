@@ -15,7 +15,10 @@ public class ObstacleCreator : MonoBehaviour
     public TMPro.TextMeshProUGUI scoreText;
     
     private float spawnTimer, startTime;
-    private bool gaming = false;
+    public bool Gaming {
+        get;
+        private set;
+    } = false;
     private int obstaclesSpawned = 0;
     private int obstaclesDodged = 0;
     private int lastSpawned = -1;
@@ -29,13 +32,17 @@ public class ObstacleCreator : MonoBehaviour
     public void StartGame()
     {
         startTime = Time.time;
-        gaming = true;
+        scoreText.text = "0";
+        obstaclesDodged = 0;
+        obstaclesSpawned = 0;
         spawnTimer = difficultyConfigs[0].spawnTime;
+
+        Gaming = true;
     }
 
     public void StopGame()
     {
-        gaming = false;
+        Gaming = false;
         SceneScript.Instance.SetTrigger("GameDone");
 
         string extra_data = "{\"score\": " + obstaclesSpawned + "}";
@@ -53,7 +60,7 @@ public class ObstacleCreator : MonoBehaviour
 
     private void Update()
     {
-        if (!gaming)
+        if (!Gaming)
             return;
         
         spawnTimer -= Time.deltaTime;
@@ -69,7 +76,6 @@ public class ObstacleCreator : MonoBehaviour
             GameObject obstacle = Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
             var obstacleComponent = obstacle.GetComponent<Obstacle>();
             obstacleComponent.type = difficultyConfigs[0].obstacleTypes[type];
-            obstacleComponent.Invoke("ActivateObstacle", difficultyConfigs[0].warningTime);
 
             obstaclesSpawned++;
         }
