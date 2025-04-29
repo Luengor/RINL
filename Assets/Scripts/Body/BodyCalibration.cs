@@ -78,7 +78,7 @@ public class BodyCalibration
         // Prepare the bounds to the full image (starting from the ground height)
         data.bounds.min = new Vector3(
             data.bounds.min.x,
-            data.imageGroundHeight * data.worldImageRatio.y,
+            data.imageGroundHeight * data.worldImageRatio.y + data.worldFeetGroundOffset,
             data.bounds.min.z
         );
 
@@ -96,7 +96,8 @@ public class BodyCalibration
         Landmarks landmarks = data.TransformLandmarks(rawLandmarks);
 
         // If hand is outside the image or it has already been detected, we don't want to grow the bounds 
-        if (leftHandOutside || !rawLandmarks.image[(int)LandmarkNames.LeftWrist].InImage())
+        if (leftHandOutside
+            || Math.Abs(Math.Abs(rawLandmarks.image[(int)LandmarkNames.LeftWrist].x) - (rawLandmarks.image[0].ar * .5f)) < 0.1f)
         {
             leftHandOutside = true;
             return true;

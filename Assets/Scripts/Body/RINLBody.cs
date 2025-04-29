@@ -338,7 +338,7 @@ public class RINLBody : MonoBehaviour
 
         bounds.center = new(
             bounds.center.x * pointScale + transform.position.x,
-            (bounds.center.y - landmarks.groundHeight + groundOffset) * pointScale + transform.position.y,
+            (bounds.center.y - landmarks.groundHeight) * pointScale + transform.position.y, // no ground offset here?
             transform.position.z
         );
         

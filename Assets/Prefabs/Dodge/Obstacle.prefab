@@ -49,6 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: {fileID: 0}
   visible: {fileID: 7209557560200318672}
+  audioSource: {fileID: 2485886334505854902}
 --- !u!95 &9010948994025032252
 Animator:
   serializedVersion: 7
@@ -81,8 +82,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 925e162ec64034ff0bb118eaa42da971, type: 3}
-  m_Resource: {fileID: 8300000, guid: 925e162ec64034ff0bb118eaa42da971, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3475548b89e25b7f8861d0b54fd5a1ed, type: 3}
+  m_Resource: {fileID: 8300000, guid: 3475548b89e25b7f8861d0b54fd5a1ed, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -91,14 +92,14 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
+  BypassEffects: 1
+  BypassListenerEffects: 1
+  BypassReverbZones: 1
   rolloffCustomCurve:
     serializedVersion: 2
     m_Curve:

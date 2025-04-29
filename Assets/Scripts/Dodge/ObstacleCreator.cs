@@ -19,7 +19,6 @@ public class ObstacleCreator : MonoBehaviour
         get;
         private set;
     } = false;
-    private int obstaclesSpawned = 0;
     private int obstaclesDodged = 0;
     private int lastSpawned = -1;
 
@@ -34,7 +33,6 @@ public class ObstacleCreator : MonoBehaviour
         startTime = Time.time;
         scoreText.text = "0";
         obstaclesDodged = 0;
-        obstaclesSpawned = 0;
         spawnTimer = difficultyConfigs[0].spawnTime;
 
         Gaming = true;
@@ -45,11 +43,11 @@ public class ObstacleCreator : MonoBehaviour
         Gaming = false;
         SceneScript.Instance.SetTrigger("GameDone");
 
-        string extra_data = "{\"score\": " + obstaclesSpawned + "}";
+        string extra_data = "{\"score\": " + obstaclesDodged + "}";
         float now = Time.time;
         int elpased_seconds = (int)(now - startTime);
 
-        GameController.Instance.SetActivityData("Dodge", elpased_seconds, obstaclesSpawned, extra_data);
+        GameController.Instance.SetActivityData("Dodge", elpased_seconds, obstaclesDodged, extra_data);
 
         if (!Application.isEditor)
         {
@@ -76,8 +74,6 @@ public class ObstacleCreator : MonoBehaviour
             GameObject obstacle = Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
             var obstacleComponent = obstacle.GetComponent<Obstacle>();
             obstacleComponent.type = difficultyConfigs[0].obstacleTypes[type];
-
-            obstaclesSpawned++;
         }
     }
 }

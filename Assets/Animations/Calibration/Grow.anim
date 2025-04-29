@@ -364,7 +364,7 @@ AnimationClip:
   - time: 0
     functionName: SetObjectText
     data: '{"obj": "InfoText", "text":"Mueve tu mano izquierda hacia la izquierda
-      hasta que desaparezca."}'
+      todo lo posible lentamente."}'
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
