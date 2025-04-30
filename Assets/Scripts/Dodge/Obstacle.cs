@@ -5,6 +5,7 @@ public class Obstacle : MonoBehaviour
     public ObstacleType type;
     public Transform visible;
     public AudioSource audioSource;
+    public float warningTime, duration;
     private bool obstacleActive = false;
     private RINLBody body;
     private Bounds bounds;
@@ -15,6 +16,9 @@ public class Obstacle : MonoBehaviour
         bounds = type.GetBounds(GameController.Instance.Body.GetBounds());
         transform.localPosition = new Vector3(bounds.center.x, bounds.center.y, 0.0f);
         transform.localScale = new Vector3(bounds.size.x, bounds.size.y, 1.0f);
+
+        // Set the animator speed to match the warning time
+        GetComponent<Animator>().speed = 1.5f / warningTime;
     }
 
     private void FixedUpdate()
@@ -79,7 +83,7 @@ public class Obstacle : MonoBehaviour
     public void ActivateObstacle()
     {
         obstacleActive = true;
-        GetComponent<Animator>().speed = 1.0f / type.duration;
+        GetComponent<Animator>().speed = 1.0f / Mathf.Min(type.duration, duration);
         body = GameController.Instance.Body; 
     }
 

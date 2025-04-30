@@ -4,8 +4,10 @@ using UnityEngine;
 public struct DifficultyConfig
 {
     public ObstacleType[] obstacleTypes;
-    public float spawnTime;
-    public float warningTime;
+    [Tooltip("Time between obstacles")]
+    public AnimationCurve spawnCurve;
+    [Tooltip("Time before the obstacle is active")]
+    public AnimationCurve warningCurve;
 }
 
 public class ObstacleCreator : MonoBehaviour
@@ -21,6 +23,7 @@ public class ObstacleCreator : MonoBehaviour
     } = false;
     private int obstaclesDodged = 0;
     private int lastSpawned = -1;
+    private int difficultyIndex = 0;
 
     public void Dodge()
     {
@@ -30,11 +33,20 @@ public class ObstacleCreator : MonoBehaviour
 
     public void StartGame()
     {
+        // Get and reset the difficulty config
+        difficultyIndex = SceneScript.Instance.Animator.GetInteger("difficulty") - 1;
+        if (difficultyIndex < 0 || difficultyIndex >= difficultyConfigs.Length)
+            Debug.LogError("Invalid difficulty index: " + difficultyIndex);
+        
+        SceneScript.Instance.SetInt("difficulty", 0);
+
+        // Reset the game state
         startTime = Time.time;
         scoreText.text = "0";
         obstaclesDodged = 0;
-        spawnTimer = difficultyConfigs[0].spawnTime;
+        spawnTimer = difficultyConfigs[difficultyIndex].spawnCurve.Evaluate(0);
 
+        // Start the game
         Gaming = true;
     }
 
@@ -64,16 +76,26 @@ public class ObstacleCreator : MonoBehaviour
         spawnTimer -= Time.deltaTime;
         if (spawnTimer <= 0)
         {
-            spawnTimer = difficultyConfigs[0].spawnTime;
+            var difficulty = difficultyConfigs[difficultyIndex];
+            var elapsed = Time.time - startTime;
 
-            int type = Random.Range(0, difficultyConfigs[0].obstacleTypes.Length);
+            // Reset the spawn timer
+            spawnTimer = difficulty.spawnCurve.Evaluate(elapsed);
+
+            // Choose a random obstacle type, ensuring it's not the same as the last one 
+            int type = Random.Range(0, difficulty.obstacleTypes.Length);
             while (type == lastSpawned)
-            { type = Random.Range(0, difficultyConfigs[0].obstacleTypes.Length); }
+            { type = Random.Range(0, difficulty.obstacleTypes.Length); }
             lastSpawned = type;
 
+            // Spawn the obstacle
             GameObject obstacle = Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
+
+            // Set things on the obstacle 
             var obstacleComponent = obstacle.GetComponent<Obstacle>();
-            obstacleComponent.type = difficultyConfigs[0].obstacleTypes[type];
+            obstacleComponent.type = difficulty.obstacleTypes[type];
+            obstacleComponent.warningTime = difficulty.warningCurve.Evaluate(elapsed);
+            obstacleComponent.duration = spawnTimer - obstacleComponent.warningTime;
         }
     }
 }
