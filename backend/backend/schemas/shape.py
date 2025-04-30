@@ -9,7 +9,6 @@ class ShapeBase(BaseModel):
     date: datetime
     weight: float
     height: float
-    sex_math: float
 
 class ShapeUUID(ShapeBase):
     uuid: int

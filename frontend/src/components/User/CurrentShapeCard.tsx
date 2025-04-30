@@ -3,11 +3,9 @@ import {
   Modal,
   NumberInput,
   Paper,
-  Slider,
   Stack,
   Text,
   Title,
-  Tooltip,
 } from "@mantine/core";
 import { useUser } from "../../hooks/useUser";
 import { useDisclosure } from "@mantine/hooks";
@@ -20,7 +18,6 @@ import { OkNotification } from "../../utils/notifications";
 interface FormValues {
   weight: number;
   height: number;
-  sex_math: number;
 }
 
 export default function CurrentShapeCard() {
@@ -34,16 +31,13 @@ export default function CurrentShapeCard() {
     initialValues: {
       weight: latestShape?.weight || 0,
       height: latestShape?.height || 0,
-      sex_math: latestShape?.sex_math || 0.5,
     },
     validate: {
       weight: (value: number) =>
         value < 20 || value > 700 ? "Peso inválido" : null,
       height: (value: number) =>
         value < 50 || value > 300 ? "Altura inválida" : null,
-      sex_math: (value: number) =>
-        value < 0 || value > 1 ? "Sexo inválido" : null,
-    },
+    }
   });
 
   const queryClient = useQueryClient();
@@ -73,12 +67,11 @@ export default function CurrentShapeCard() {
   });
 
   async function handleAddShape() {
-    const { weight, height, sex_math } = newShapeForm.getValues();
+    const { weight, height } = newShapeForm.getValues();
     const shape: ShapeBase = {
       weight: weight,
       date: new Date().toISOString(),
-      height: height,
-      sex_math: sex_math,
+      height: height
     };
 
     addShapeMutation.mutate(shape);
@@ -138,28 +131,6 @@ export default function CurrentShapeCard() {
               {...newShapeForm.getInputProps("height")}
               placeholder="170"
             />
-
-            <Tooltip label="A la hora de realizar cálculos de tu forma física, es necesario tener en cuenta el sexo.">
-              <Text size="sm" fw={"bold"}>
-                Sexo
-              </Text>
-            </Tooltip>
-            <Slider
-              key={newShapeForm.key("sex_math")}
-              {...newShapeForm.getInputProps("sex_math")}
-              min={0}
-              max={1}
-              step={0.01}
-              marks={[
-                { value: 0, label: "Hombre" },
-                { value: 1, label: "Mujer" },
-              ]}
-              label={(value) => (value * 100).toFixed(0) + "%"}
-              mx="xs"
-              mb="xs"
-              defaultValue={0.5}
-            />
-
             <Button mt="lg" type="submit" variant="filled">
               Añadir forma
             </Button>

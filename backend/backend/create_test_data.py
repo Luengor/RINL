@@ -40,7 +40,6 @@ if __name__ == "__main__":
             date=now - timedelta(days=7),
             weight=80,
             height=180,
-            sex_math=1,
             user_email=user.email
         ))
 
@@ -48,7 +47,6 @@ if __name__ == "__main__":
             date=now - timedelta(days=3),
             weight=77,
             height=180,
-            sex_math=1,
             user_email=user.email
         ))
 
@@ -56,7 +54,6 @@ if __name__ == "__main__":
             date=now,
             weight=70,
             height=180,
-            sex_math=1,
             user_email=user.email
         ))
 

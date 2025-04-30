@@ -60,14 +60,12 @@ export type ShapeBase = {
     date: string;
     weight: number;
     height: number;
-    sex_math: number;
 };
 
 export type ShapeFull = {
     date: string;
     weight: number;
     height: number;
-    sex_math: number;
     uuid: number;
     user: UserBase;
 };
