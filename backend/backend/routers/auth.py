@@ -32,7 +32,7 @@ async def login_for_token(
     
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user.email}, expires_delta=access_token_expires
+        data={"sub": str(user.uuid)}, expires_delta=access_token_expires
     )
 
     response.set_cookie(
@@ -42,21 +42,6 @@ async def login_for_token(
         secure=True,
         expires=get_expire_time(access_token_expires),
     )
-    return Token(access_token=access_token, token_type="bearer")
-
-@router.post("/refresh", response_model=Token)
-async def refresh_token(old_token: Annotated[str, Depends(oauth2_scheme)], response: Response) -> Token:
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": old_token}, expires_delta=access_token_expires
-    )
-
-    response.delete_cookie("access_token")
-    response.set_cookie(
-        key="access_token",
-        value=access_token,
-    )
-
     return Token(access_token=access_token, token_type="bearer")
 
 @router.get("/", response_model=dict)

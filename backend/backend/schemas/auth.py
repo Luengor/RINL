@@ -5,5 +5,6 @@ class Token(BaseModel):
     token_type: str
 
 class UserAuth(BaseModel):
+    uuid: int
     email: str
     hashed_password: str

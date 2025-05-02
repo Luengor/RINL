@@ -8,7 +8,8 @@ from .activity import Activity
 class User(Base):
     __tablename__ = 'users'
 
-    email = mapped_column(String, primary_key=True)
+    uuid = mapped_column(Integer, primary_key=True, autoincrement=True)
+    email = mapped_column(String, unique=True)
     hashed_password = mapped_column(String)
     verified = mapped_column(Boolean, default=False)
     verification_code = mapped_column(String)
