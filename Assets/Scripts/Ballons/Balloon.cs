@@ -9,6 +9,7 @@ public class Balloon : MonoBehaviour
 
     [HideInInspector]
     public int ballonType = -1;
+    private int initialType = -1;
     [HideInInspector]
     public BalloonCreator creator;
 
@@ -17,6 +18,7 @@ public class Balloon : MonoBehaviour
     void Start()
     {
         shrinkSpeed = 1 / shrinkTime;
+        initialType = ballonType;
     }
 
     void Update()
@@ -44,15 +46,21 @@ public class Balloon : MonoBehaviour
 
             Pop(false);
         }
+        else if (initialType != 2)
+        {
+            // Wrong hand and not a double balloon -> pop without points
+            Pop(true, false);
+        } 
     }
 
-    private void Pop(bool destroy)
+    private void Pop(bool destroy, bool points = true)
     {
         var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         explosion.GetComponent<ParticleSystemRenderer>().material = balloonRenderer.GetComponent<Renderer>().material;
 
         if (destroy) {
-            creator.BalloonPopped();
+            if (points)
+                creator.BalloonPopped();
             Destroy(gameObject);
         }
         else {
