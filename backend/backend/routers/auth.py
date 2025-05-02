@@ -4,10 +4,10 @@ from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import OAuth2PasswordRequestForm
 
-from schemas.auth import Token
-from core.auth import authenticate_user, oauth2_scheme
-from core.db import get_db
-from core.auth_utils import create_access_token, get_expire_time
+from backend.schemas.auth import Token
+from backend.core.auth import authenticate_user, oauth2_scheme
+from backend.core.db import get_db
+from backend.core.auth_utils import create_access_token, get_expire_time
 
 ACCESS_TOKEN_EXPIRE_MINUTES = 180 
 

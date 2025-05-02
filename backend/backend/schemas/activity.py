@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 
-from .users import UserBase
+from backend.schemas.users import UserBase
 
 class ActivityBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)

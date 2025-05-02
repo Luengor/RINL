@@ -5,10 +5,10 @@ from typing import Generator
 import pytest
 
 from backend.main import app
-from core.db import Base, get_db
-from core.mail import get_send_email
-from core.auth_utils import get_password_hash, create_access_token
-from models.user import User
+from backend.core.db import Base, get_db
+from backend.core.mail import get_send_email
+from backend.core.auth_utils import get_password_hash, create_access_token
+from backend.models.user import User
 from .data import test_user
 
 @pytest.fixture(scope="session", autouse=True)

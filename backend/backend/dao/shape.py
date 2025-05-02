@@ -2,9 +2,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 from fastapi import HTTPException
-from models.shape import Shape as ShapeModel
-from schemas.shape import ShapeBase, ShapeFull
-from schemas.users import UserBase
+from backend.models.shape import Shape as ShapeModel
+from backend.schemas.shape import ShapeBase, ShapeFull
+from backend.schemas.users import UserBase
 from datetime import datetime
 from functools import lru_cache
 

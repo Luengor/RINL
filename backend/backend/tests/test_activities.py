@@ -1,7 +1,7 @@
 from .utils import client, login_token, session, engine
 from .data import test_user
 from datetime import datetime 
-from schemas.users import UserBase
+from backend.schemas.users import UserBase
 import pytest
 
 @pytest.fixture

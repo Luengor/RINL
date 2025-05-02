@@ -1,4 +1,4 @@
-from schemas.users import UserFull
+from backend.schemas.users import UserFull
 
 test_user = UserFull(
     email="test",

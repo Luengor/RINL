@@ -3,12 +3,12 @@ from typing import Annotated
 from jwt.exceptions import InvalidTokenError 
 from fastapi import Depends, HTTPException
 
-from schemas.auth import UserAuth
-from schemas.users import UserBase
-from dao.auth import AuthDAO
-from dao.user import UserDAO 
-from core.auth_utils import verify_password, oauth2_scheme, decode_token
-from core.db import get_db
+from backend.schemas.auth import UserAuth
+from backend.schemas.users import UserBase
+from backend.dao.auth import AuthDAO
+from backend.dao.user import UserDAO 
+from backend.core.auth_utils import verify_password, oauth2_scheme, decode_token
+from backend.core.db import get_db
 
 # CHANGING THIS STATUS CODES WILL BREAK THE FRONTEND
 INVALID_TOKEN = HTTPException(status_code=401, detail="Invalid token")

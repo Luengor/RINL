@@ -2,11 +2,11 @@ from os import environ
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
-from core.auth_utils import get_password_hash
-from core.db import Base
-from models.user import User
-from models.shape import Shape 
-from models.activity import Activity
+from backend.core.auth_utils import get_password_hash
+from backend.core.db import Base
+from backend.models.user import User
+from backend.models.shape import Shape 
+from backend.models.activity import Activity
 
 from datetime import datetime, timedelta, timezone
 

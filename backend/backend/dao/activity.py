@@ -2,9 +2,9 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 
 from fastapi import HTTPException
-from models.activity import Activity as ActivityModel
-from schemas.activity import ActivityFull, ActivityBase
-from schemas.users import UserBase
+from backend.models.activity import Activity as ActivityModel
+from backend.schemas.activity import ActivityFull, ActivityBase
+from backend.schemas.users import UserBase
 from datetime import datetime
 from functools import lru_cache
 

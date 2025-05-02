@@ -1,6 +1,6 @@
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy import Integer, String, Float, ForeignKey
-from core.db import Base
+from backend.core.db import Base
 from datetime import datetime
 
 class Shape(Base):

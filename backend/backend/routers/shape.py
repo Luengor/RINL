@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 
-from core.auth import get_current_verified_user
-from core.db import get_db
-from schemas.shape import ShapeBase, ShapeFull, ShapeBase
-from schemas.users import UserBase
-from dao.shape import ShapeDAO
+from backend.core.auth import get_current_verified_user
+from backend.core.db import get_db
+from backend.schemas.shape import ShapeBase, ShapeFull, ShapeBase
+from backend.schemas.users import UserBase
+from backend.dao.shape import ShapeDAO
 
 from datetime import datetime, timezone
 

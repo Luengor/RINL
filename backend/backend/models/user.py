@@ -1,6 +1,6 @@
 from sqlalchemy import Integer, String, Boolean 
 from sqlalchemy.orm import mapped_column, relationship, Mapped
-from core.db import Base
+from backend.core.db import Base
 from typing import List
 
 from .activity import Activity

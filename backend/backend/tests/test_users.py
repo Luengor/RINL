@@ -1,6 +1,6 @@
 from .utils import client, session, login_token, engine
 from .data import test_user
-from models.user import User
+from backend.models.user import User
 
 def test_create_user(client, session):
     # Create a user

@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers.auth import router as auth_router
-from routers.user import router as users_router
-from routers.activity import router as activity_router
-from routers.shape import router as shape_router
+from backend.routers.auth import router as auth_router
+from backend.routers.user import router as users_router
+from backend.routers.activity import router as activity_router
+from backend.routers.shape import router as shape_router
 
 app = FastAPI(
     title="RINL",

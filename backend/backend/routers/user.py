@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends, Response
 
-from core.auth import get_current_user
-from core.mail import get_send_email
-from core.db import get_db
-from dao.user import UserDAO
-from schemas.users import UserBase, RegisterUser, ModifyUser
+from backend.core.auth import get_current_user
+from backend.core.mail import get_send_email
+from backend.core.db import get_db
+from backend.dao.user import UserDAO
+from backend.schemas.users import UserBase, RegisterUser, ModifyUser
 
 router = APIRouter(
     prefix="/user",

@@ -2,13 +2,13 @@ from random import choices
 from fastapi import HTTPException
 from typing import Callable
 
-from core.auth_utils import get_password_hash
+from backend.core.auth_utils import get_password_hash
 from sqlalchemy.orm import Session
 
-from models.user import User as UserModel
-from schemas.users import UserBase as UserSchema
-from schemas.users import ModifyUser as ModifyUserSchema
-from schemas.users import RegisterUser as RegisterUserSchema 
+from backend.models.user import User as UserModel
+from backend.schemas.users import UserBase as UserSchema
+from backend.schemas.users import ModifyUser as ModifyUserSchema
+from backend.schemas.users import RegisterUser as RegisterUserSchema 
 
 def create_verification_code() -> str:
     return "".join(choices("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", k=6))
