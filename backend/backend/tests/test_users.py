@@ -33,9 +33,7 @@ def test_create_user(client: TestClient, session: Session):
     assert session.query(User).filter(User.email == test_user.email).first()
 
 
-def test_create_user_already_exists(
-    client: TestClient, verified_login_token: str, session: Session
-):
+def test_create_user_already_exists(client: TestClient, verified_login_token: str):
     # Create a duplicate user
     response = client.post(
         "/user/",
@@ -52,7 +50,7 @@ def test_create_user_already_exists(
     assert response.json()["detail"] == "User already exists"
 
 
-def test_get_me(client: TestClient, verified_login_token: str, session: Session):
+def test_get_me(client: TestClient, verified_login_token: str):
     # Get user
     response = client.get(
         "/user/me", headers={"Authorization": f"Bearer {verified_login_token}"}
@@ -68,7 +66,7 @@ def test_get_me(client: TestClient, verified_login_token: str, session: Session)
     }
 
 
-def test_login(client: TestClient, verified_login_token: str, session: Session):
+def test_login(client: TestClient, verified_login_token: str):
     # Login user
     response = client.post(
         "/login",
@@ -87,7 +85,7 @@ def test_login(client: TestClient, verified_login_token: str, session: Session):
     }
 
 
-def test_verify_user(client: TestClient, unverified_login_token: str, session: Session):
+def test_verify_user(client: TestClient, unverified_login_token: str):
     code = test_unverified_user.verification_code
 
     # Verify user
@@ -111,9 +109,7 @@ def test_verify_user(client: TestClient, unverified_login_token: str, session: S
     }
 
 
-def test_verify_user_already_verified(
-    client: TestClient, verified_login_token: str, session: Session
-):
+def test_verify_user_already_verified(client: TestClient, verified_login_token: str):
     code = test_user.verification_code
 
     # Verify user
@@ -172,7 +168,6 @@ def test_update_email_already_exists(
     client: TestClient,
     verified_login_token: str,
     unverified_login_token: str,
-    session: Session,
 ):
     # Update user
     response = client.put(
@@ -216,9 +211,7 @@ def test_delete_user(client: TestClient, verified_login_token: str, session: Ses
     assert not session.query(User).filter(User.email == test_user.email).first()
 
 
-def test_get_after_delete_user(
-    client: TestClient, verified_login_token: str, session: Session
-):
+def test_get_after_delete_user(client: TestClient, verified_login_token: str):
     # Delete user
     response = client.delete(
         "/user/me", headers={"Authorization": f"Bearer {verified_login_token}"}
