@@ -9,7 +9,7 @@ from backend.core.db import Base, get_db
 from backend.core.mail import get_send_email
 from backend.core.auth_utils import get_password_hash, create_access_token
 from backend.models.user import User
-from .data import test_user
+from .data import test_user, test_unverified_user
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -67,8 +67,8 @@ def verified_login_token(session: Session):
 @pytest.fixture
 def unverified_login_token(session: Session):
     # Add user to database
-    test_user_dict = test_user.model_dump()
-    test_user_dict["hashed_password"] = get_password_hash(test_user.password)
+    test_user_dict = test_unverified_user.model_dump()
+    test_user_dict["hashed_password"] = get_password_hash(test_unverified_user.password)
     test_user_dict.pop("password")
     test_user_dict["verified"] = False
 

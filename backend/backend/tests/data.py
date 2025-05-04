@@ -10,7 +10,7 @@ test_user = UserFull(
 )
 
 test_unverified_user = UserFull(
-    email="test",
+    email="test2",
     verified=False,
     name="test",
     year_of_birth=2000,

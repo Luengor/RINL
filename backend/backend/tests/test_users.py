@@ -33,6 +33,25 @@ def test_create_user(client: TestClient, session: Session):
     assert session.query(User).filter(User.email == test_user.email).first()
 
 
+def test_create_user_already_exists(
+    client: TestClient, verified_login_token: str, session: Session
+):
+    # Create a duplicate user
+    response = client.post(
+        "/user/",
+        json={
+            "email": test_user.email,
+            "password": test_user.password,
+            "name": test_user.name,
+            "year_of_birth": test_user.year_of_birth,
+        },
+    )
+
+    # Check response
+    assert response.status_code == 400
+    assert response.json()["detail"] == "User already exists"
+
+
 def test_get_me(client: TestClient, verified_login_token: str, session: Session):
     # Get user
     response = client.get(
@@ -85,11 +104,27 @@ def test_verify_user(client: TestClient, unverified_login_token: str, session: S
     )
     assert response.status_code == 200
     assert response.json() == {
-        "email": test_user.email,
-        "name": test_user.name,
-        "year_of_birth": test_user.year_of_birth,
+        "email": test_unverified_user.email,
+        "name": test_unverified_user.name,
+        "year_of_birth": test_unverified_user.year_of_birth,
         "verified": True,
     }
+
+
+def test_verify_user_already_verified(
+    client: TestClient, verified_login_token: str, session: Session
+):
+    code = test_user.verification_code
+
+    # Verify user
+    response = client.post(
+        f"/user/verify/{code}",
+        headers={"Authorization": f"Bearer {verified_login_token}"},
+    )
+
+    # Check response
+    assert response.status_code == 400
+    assert response.content == b"User already verified"
 
 
 def test_update_name(client: TestClient, verified_login_token: str):
@@ -133,7 +168,27 @@ def test_update_email(client: TestClient, verified_login_token: str):
     }
 
 
-def test_update_without_verification(client: TestClient, unverified_login_token: str):
+def test_update_email_already_exists(
+    client: TestClient,
+    verified_login_token: str,
+    unverified_login_token: str,
+    session: Session,
+):
+    # Update user
+    response = client.put(
+        "/user/me",
+        headers={"Authorization": f"Bearer {verified_login_token}"},
+        json={
+            "email": test_unverified_user.email,
+        },
+    )
+
+    # Check response
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Email already taken"
+
+
+def test_update_unverified_user(client: TestClient, unverified_login_token: str):
     # Update user
     response = client.put(
         "/user/me",
