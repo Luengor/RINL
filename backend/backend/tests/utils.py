@@ -11,6 +11,7 @@ from backend.core.auth_utils import get_password_hash, create_access_token
 from backend.models.user import User
 from .data import test_user
 
+
 @pytest.fixture(scope="session", autouse=True)
 def engine() -> Engine:
     engine = create_engine("sqlite:///./test.db")
@@ -18,6 +19,7 @@ def engine() -> Engine:
     Base.metadata.create_all(engine)
 
     return engine
+
 
 @pytest.fixture()
 def session(engine: Engine) -> Generator[Session, None, None]:
@@ -45,11 +47,12 @@ def client(session: Session):
 
     app.dependency_overrides.clear()
 
+
 @pytest.fixture
-def login_token(session: Session):
+def verified_login_token(session: Session):
     # Add user to database
     test_user_dict = test_user.model_dump()
-    test_user_dict["hashed_password"] = get_password_hash(test_user.password) 
+    test_user_dict["hashed_password"] = get_password_hash(test_user.password)
     test_user_dict.pop("password")
     test_user_dict["verified"] = True
 
@@ -58,5 +61,20 @@ def login_token(session: Session):
     session.commit()
 
     # Create login token
-    return create_access_token({"sub": user.email})
+    return create_access_token({"sub": str(user.uuid)})
 
+
+@pytest.fixture
+def unverified_login_token(session: Session):
+    # Add user to database
+    test_user_dict = test_user.model_dump()
+    test_user_dict["hashed_password"] = get_password_hash(test_user.password)
+    test_user_dict.pop("password")
+    test_user_dict["verified"] = False
+
+    user = User(**test_user_dict)
+    session.add(user)
+    session.commit()
+
+    # Create login token
+    return create_access_token({"sub": str(user.uuid)})

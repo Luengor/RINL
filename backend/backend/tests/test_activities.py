@@ -1,135 +1,153 @@
-from .utils import client, login_token, session, engine
-from .data import test_user
-from datetime import datetime 
-from backend.schemas.users import UserBase
+# pylint: disable=unused-import, unused-argument, redefined-outer-name, missing-function-docstring, missing-module-docstring
+# pyright: reportUnusedImport=false
+from typing import Any
+from datetime import datetime
+from fastapi.testclient import TestClient
+from sqlalchemy.orm import Session
 import pytest
+from backend.schemas.users import UserBase
+from .utils import client, verified_login_token, session, engine
+from .data import test_user
+
 
 @pytest.fixture
-def create_activity(client, login_token):
+def create_activity(client: TestClient, verified_login_token: str) -> dict[str, Any]:
     # Create an activity
-    d = datetime.today().isoformat('T')
+    d = datetime.today().isoformat("T")
     response = client.post(
         "/activity/",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
         },
         json={
-            "date": d, 
+            "date": d,
             "minigame": "test",
             "duration": 100,
             "score": 100,
             "activity_points": 100,
-            "extra_data": "{}"
-        }
+            "extra_data": "{}",
+        },
     )
 
     return response.json()
 
 
-def test_create_activity(client, login_token):
+def test_create_activity(client: TestClient, verified_login_token: str):
     # Create an activity
-    d = datetime.today().isoformat('T')
+    d = datetime.today().isoformat("T")
     response = client.post(
         "/activity/",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
         },
         json={
-            "date": d, 
+            "date": d,
             "minigame": "test",
             "duration": 100,
             "score": 100,
             "activity_points": 100,
-            "extra_data": "{}"
-        }
+            "extra_data": "{}",
+        },
     )
 
     assert response.status_code == 200
 
     assert response.json() == {
-        "date": d, 
+        "date": d,
         "uuid": 1,
         "minigame": "test",
         "duration": 100,
         "score": 100,
         "activity_points": 100,
         "extra_data": "{}",
-        "user": UserBase(**test_user.model_dump()).model_dump()
+        "user": UserBase(**test_user.model_dump()).model_dump(),
     }
-        
-def test_get_activity(client, login_token, create_activity):
+
+
+def test_get_activity(
+    client: TestClient, verified_login_token: str, create_activity: dict[str, Any]
+):
     # Get an activity
     response = client.get(
-        f"/activity/",
+        "/activity/",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
     print(response.json())
     create_activity.pop("user")
-    assert response.json() == [create_activity] 
+    assert response.json() == [create_activity]
 
-def test_get_filter_minigate(client, login_token, create_activity):
+
+def test_get_filter_minigate(
+    client: TestClient, verified_login_token: str, create_activity: dict[str, Any]
+):
     # Get an activity
     response = client.get(
-        f"/activity/?minigame_filter=test",
+        "/activity/?minigame_filter=test",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
     assert len(response.json()) == 1
 
     response = client.get(
-        f"/activity/?minigame_filter=wrong",
+        "/activity/?minigame_filter=wrong",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
     assert len(response.json()) == 0
 
-def test_get_filter_date(client, login_token, create_activity):
+
+def test_get_filter_date(
+    client: TestClient, verified_login_token: str, create_activity: dict[str, Any]
+):
     # Get an activity
     response = client.get(
-        f"/activity/?from_date=2000-01-01",
+        "/activity/?from_date=2000-01-01",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
     assert len(response.json()) == 1
 
     response = client.get(
-        f"/activity/?to_date=2000-01-01",
+        "/activity/?to_date=2000-01-01",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
     assert len(response.json()) == 0
 
-def test_delete_activity(client, login_token, create_activity):
+
+def test_delete_activity(
+    client: TestClient, verified_login_token: str, create_activity: dict[str, Any]
+):
     # Delete an activity
     response = client.delete(
         f"/activity/{create_activity['uuid']}",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
@@ -138,13 +156,12 @@ def test_delete_activity(client, login_token, create_activity):
     assert response.json() == create_activity
 
     response = client.get(
-        f"/activity/",
+        "/activity/",
         headers={
-            "Authorization": f"Bearer {login_token}",
-            "Content-Type": "application/json"
-        }
+            "Authorization": f"Bearer {verified_login_token}",
+            "Content-Type": "application/json",
+        },
     )
 
     assert response.status_code == 200
     assert len(response.json()) == 0
-
