@@ -1,7 +1,7 @@
+from typing import Generator
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, Engine
 from sqlalchemy.orm import Session
-from typing import Generator
 import pytest
 
 from backend.main import app

@@ -214,3 +214,20 @@ def test_delete_user(client: TestClient, verified_login_token: str, session: Ses
 
     # Check user in database
     assert not session.query(User).filter(User.email == test_user.email).first()
+
+
+def test_get_after_delete_user(
+    client: TestClient, verified_login_token: str, session: Session
+):
+    # Delete user
+    response = client.delete(
+        "/user/me", headers={"Authorization": f"Bearer {verified_login_token}"}
+    )
+    assert response.status_code == 200
+
+    # Try to get user
+    response = client.get(
+        "/user/me", headers={"Authorization": f"Bearer {verified_login_token}"}
+    )
+    assert response.status_code == 404
+    assert response.json()["detail"] == "User not found"
