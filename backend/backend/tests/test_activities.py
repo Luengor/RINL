@@ -3,7 +3,6 @@
 from typing import Any
 from datetime import datetime
 from fastapi.testclient import TestClient
-from sqlalchemy.orm import Session
 import pytest
 from backend.schemas.users import UserBase
 from .utils import client, verified_login_token, session, engine
