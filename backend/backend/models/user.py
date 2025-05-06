@@ -1,9 +1,12 @@
-from sqlalchemy import Integer, String, Boolean 
+from sqlalchemy import Integer, String, Boolean
+from sqlalchemy_utils import EncryptedType
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from backend.core.db import Base
 from typing import List
+from backend.core.encrypt import ENCRIPTION_KEY
 
 from .activity import Activity
+
 
 class User(Base):
     __tablename__ = 'users'
@@ -13,9 +16,10 @@ class User(Base):
     hashed_password = mapped_column(String)
     verified = mapped_column(Boolean, default=False)
     verification_code = mapped_column(String)
-    name = mapped_column(String)
-    year_of_birth = mapped_column(Integer)
+    name = mapped_column(EncryptedType(String, ENCRIPTION_KEY))
+    year_of_birth = mapped_column(EncryptedType(Integer, ENCRIPTION_KEY))
 
-    activities: Mapped[List["Activity"]] = relationship("Activity", cascade="all, delete") # type: ignore
-    shapes: Mapped[List["Shape"]] = relationship("Shape", cascade="all, delete") # type: ignore
-
+    activities: Mapped[List["Activity"]] = relationship(
+        "Activity", cascade="all, delete")  # type: ignore
+    shapes: Mapped[List["Shape"]] = relationship(
+        "Shape", cascade="all, delete")  # type: ignore

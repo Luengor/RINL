@@ -2,17 +2,22 @@ from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy import Integer, String, Float, ForeignKey
 from backend.core.db import Base
 from datetime import datetime
+from sqlalchemy_utils import EncryptedType
+from backend.core.encrypt import ENCRIPTION_KEY
+
 
 class Activity(Base):
     __tablename__ = 'activities'
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)
     date: Mapped[datetime] = mapped_column()
-    user_email = mapped_column(String, ForeignKey('users.email', onupdate="CASCADE"))
+    user_email = mapped_column(String, ForeignKey(
+        'users.email', onupdate="CASCADE"))
     minigame = mapped_column(String)
-    duration = mapped_column(Float)
+    duration = mapped_column(EncryptedType(Float, ENCRIPTION_KEY))
     score = mapped_column(Float)
-    activity_points = mapped_column(Float)
-    extra_data = mapped_column(String, default="{}")  # JSON
+    activity_points = mapped_column(EncryptedType(Float, ENCRIPTION_KEY))
+    extra_data = mapped_column(EncryptedType(
+        String, ENCRIPTION_KEY), default="{}")  # JSON
 
     user = relationship('User', back_populates='activities')
