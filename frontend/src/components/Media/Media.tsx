@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
-import { Center, Loader } from "@mantine/core";
+import { Button, Center, Loader, Stack } from "@mantine/core";
 import { ActivityBase, createActivityActivityPost } from "../../client";
 import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
@@ -147,7 +147,7 @@ export default function Media() {
   // Create pose landmarker and start detecting
   useEffect(() => {
     if (videoStream && !!unityProvider && isUnityLoaded) {
-      requestFullscreen(true);
+      // requestFullscreen(true);
 
       createPoseLandmarker(isOnMobile ? "lite" : "full").then(
         (poseLandmarker) => {
@@ -168,21 +168,24 @@ export default function Media() {
   if (videoStream) {
     content = (
       <>
-        <Unity
-          unityProvider={unityProvider}
-          style={{ width: "100%", height: "100%" }}
-          matchWebGLToCanvasSize={true}
-        />
-        <video
-          ref={(r) => {
-            inputVideoRef.current = r;
-            if (inputVideoRef.current)
-              inputVideoRef.current.srcObject = videoStream;
-          }}
-          hidden
-          autoPlay
-          playsInline
-        />
+        <Stack w="100%" h="100%" justify="center" align="center">
+          <Button fullWidth onClick={() => {requestFullscreen(true)}}>Jugar en pantalla completa</Button>
+          <Unity
+            unityProvider={unityProvider}
+            style={{ width: "100%", height: "100%" }}
+            matchWebGLToCanvasSize={true}
+          />
+          <video
+            ref={(r) => {
+              inputVideoRef.current = r;
+              if (inputVideoRef.current)
+                inputVideoRef.current.srcObject = videoStream;
+            }}
+            hidden
+            autoPlay
+            playsInline
+          />
+        </Stack>
       </>
     );
   }
