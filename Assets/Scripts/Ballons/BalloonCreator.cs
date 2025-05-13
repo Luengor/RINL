@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BalloonCreator : MonoBehaviour
@@ -70,7 +71,6 @@ public class BalloonCreator : MonoBehaviour
             spawnTimer = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!gaming)
