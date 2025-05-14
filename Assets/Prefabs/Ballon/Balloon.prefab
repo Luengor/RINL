@@ -72,9 +72,9 @@ MonoBehaviour:
   balloonRenderer: {fileID: 3035108069244566347}
   soundEffectPrefab: {fileID: 1649057996213143418, guid: 0d1b2abded1a2f340a93f694a63649f4, type: 3}
   popSounds:
-  - {fileID: 8300000, guid: 782c96487fd47822687240e25b487593, type: 3}
-  - {fileID: 8300000, guid: 2e400e3fc97001befa33124e2b176d16, type: 3}
-  - {fileID: 8300000, guid: e7ea2e2995775a9f98f94f414472d76c, type: 3}
+  - {fileID: 8300000, guid: 8a9590f5f120fe8eaaa247eb623570b5, type: 3}
+  - {fileID: 8300000, guid: 7f586de48c989bedf8fc181ca7a2e70a, type: 3}
+  - {fileID: 8300000, guid: fbafd7a51ffc8984a988ea78f2f42d6d, type: 3}
   ballonType: -1
   creator: {fileID: 0}
 --- !u!1 &3035108069244566347
