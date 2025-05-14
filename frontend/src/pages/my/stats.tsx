@@ -1,4 +1,5 @@
 import {
+  Center,
   Grid,
   Group,
   Loader,
@@ -98,6 +99,34 @@ function Card({
   );
 }
 
+function ThisOrText({
+  text,
+  condition,
+  children,
+}: {
+  text: string;
+  condition: boolean;
+  children: React.ReactNode;
+}) {
+  if (condition) {
+    return <>{children}</>;
+  } else {
+    return (
+      <Paper
+        shadow="md"
+        p="md"
+      >
+        <Center h="100%">
+          <Title order={3} mb="xl" fw="normal">
+            {text}
+          </Title>
+        </Center>
+      </Paper>
+    );
+  }
+}
+
+
 export default function Stats() {
   // Get client
   const { client } = useClient();
@@ -118,6 +147,8 @@ export default function Stats() {
     placeholderData: { activity: [], shape: [] },
     staleTime: 1000 * 60 * 10,
   });
+
+  const has_data = data.activity.length > 0 || data.shape.length > 0;
 
   const [dataRange, setDataRange] = useState("week");
   const [chartData, setChartData] = useState<PreprocessedData>({
@@ -145,8 +176,7 @@ export default function Stats() {
       playTime: [],
     };
 
-    filteredData.shapes = data.shape
-      .filter((shape) => {
+    const inDateShapes = data.shape.filter((shape) => {
         const date = new Date(shape.date);
         return dataRange === "week"
           ? date >= weekAgo
@@ -156,7 +186,14 @@ export default function Stats() {
           ? date >= yearAgo
           : true;
       })
-      .map((shape) => {
+    
+    // Add at least one shape to the filtered data
+    if (inDateShapes.length === 0 && data.shape.length > 0) {
+      const lastShape = data.shape[data.shape.length - 1];
+      inDateShapes.push(lastShape);
+    }
+
+    filteredData.shapes = inDateShapes.map((shape) => {
         const date = new Date(shape.date);
         shape.date = date.toISOString().split("T")[0];
         return shape;
@@ -287,6 +324,7 @@ export default function Stats() {
           onChange={setDataRange}
           fullWidth
           my="sm"
+          disabled={!has_data}
           data={[
             { value: "week", label: "Semana" },
             { value: "month", label: "Mes" },
@@ -300,67 +338,92 @@ export default function Stats() {
         <Title order={2}>Actividades</Title>
       </Grid.Col>
       <Card title="Puntos de actividad">
-        <BarChart
-          {...defaultBarChartConfig}
-          data={chartData.groupedData}
-          series={[{ name: "points", label: "Puntos de actividad" }]}
-        />
+        <ThisOrText
+          text="Todavía no has jugado a nada"
+          condition={chartData.groupedData.length > 0}
+        >
+          <BarChart
+            {...defaultBarChartConfig}
+            data={chartData.groupedData}
+            series={[{ name: "points", label: "Puntos de actividad" }]}
+          />
+        </ThisOrText>
       </Card>
       <Card title="Tiempo jugado">
-        <BarChart
-          {...defaultBarChartConfig}
-          data={chartData.groupedData}
-          series={[{ name: "duration", label: "Tiempo jugado" }]}
-        />
+        <ThisOrText
+          text="Todavía no has jugado a nada"
+          condition={chartData.groupedData.length > 0}
+        >
+          <BarChart
+            {...defaultBarChartConfig}
+            data={chartData.groupedData}
+            series={[{ name: "duration", label: "Tiempo jugado" }]}
+          />
+        </ThisOrText>
       </Card>
       <Card title="Distribución de minijuegos">
-        <Group justify="space-between" grow>
-          <Stack align="center">
-            <Title order={4}>Veces jugado</Title>
-            <DonutChart
-              startAngle={180}
-              withLabels
-              labelsType="value"
-              endAngle={0}
-              data={chartData.playCount}
-            />
-          </Stack>
-          <Stack align="center">
-            <Title order={4}>Tiempo jugado</Title>
-            <DonutChart
-              startAngle={180}
-              withLabels
-              labelsType="value"
-              endAngle={0}
-              data={chartData.playTime}
-            />
-          </Stack>
-        </Group>
+        <ThisOrText
+          text="Todavía no has jugado a nada"
+          condition={chartData.playCount.length > 0}
+        >
+          <Group justify="space-between" grow>
+            <Stack align="center">
+              <Title order={4}>Veces jugado</Title>
+              <DonutChart
+                startAngle={180}
+                withLabels
+                labelsType="value"
+                endAngle={0}
+                data={chartData.playCount}
+              />
+            </Stack>
+            <Stack align="center">
+              <Title order={4}>Tiempo jugado</Title>
+              <DonutChart
+                startAngle={180}
+                withLabels
+                labelsType="value"
+                endAngle={0}
+                data={chartData.playTime}
+              />
+            </Stack>
+          </Group>
+        </ThisOrText>
       </Card>
 
       <Grid.Col span={12}>
         <Title order={2}>Forma física</Title>
       </Grid.Col>
       <Card title="Peso">
-        <LineChart
-          {...defaultLineChartConfig}
-          data={chartData.shapes}
-          yAxisProps={{ domain: [minWeight - 5, maxWeight + 5] }}
-          series={[{ name: "weight", label: "Peso" }]}
-        />
+        <ThisOrText
+          text="Todavía no has registrado tu forma física"
+          condition={chartData.shapes.length > 0}
+        >
+          <LineChart
+            {...defaultLineChartConfig}
+            data={chartData.shapes}
+            yAxisProps={{ domain: [minWeight - 5, maxWeight + 5] }}
+            series={[{ name: "weight", label: "Peso" }]}
+          />
+        </ThisOrText>
       </Card>
       <Card title="IMC">
-        <LineChart
-          {...defaultLineChartConfig}
-          data={chartData.shapes.map((shape) => {
-            return {
-              date: shape.date,
-              bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
-            };
-          })}
-          yAxisProps={{ domain: [0, 40] }}
-          series={[{ name: "bmi", label: "BMI" }]}
-        />
+        <ThisOrText
+          text="Todavía no has registrado tu forma física"
+          condition={chartData.shapes.length > 0}
+        >
+          <LineChart
+            {...defaultLineChartConfig}
+            data={chartData.shapes.map((shape) => {
+              return {
+                date: shape.date,
+                bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
+              };
+            })}
+            yAxisProps={{ domain: [0, 40] }}
+            series={[{ name: "bmi", label: "BMI" }]}
+          />
+        </ThisOrText>
       </Card>
     </Grid>
   );
