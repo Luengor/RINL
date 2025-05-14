@@ -6,6 +6,8 @@ public class Balloon : MonoBehaviour
     public float shrinkTime = 2f;
     public GameObject explosionPrefab;
     public GameObject balloonRenderer; 
+    public GameObject soundEffectPrefab;
+    public AudioClip[] popSounds;
 
     [HideInInspector]
     public int ballonType = -1;
@@ -57,6 +59,9 @@ public class Balloon : MonoBehaviour
     {
         var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         explosion.GetComponent<ParticleSystemRenderer>().material = balloonRenderer.GetComponent<Renderer>().material;
+
+        var soundEffect = Instantiate(soundEffectPrefab, transform.position, Quaternion.identity);
+        soundEffect.GetComponent<SoundEffect>().effects = popSounds;
 
         if (destroy) {
             if (points)

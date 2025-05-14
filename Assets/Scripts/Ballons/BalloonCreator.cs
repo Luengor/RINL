@@ -30,6 +30,7 @@ public class BalloonCreator : MonoBehaviour
     private bool gaming = false;
     private int difficulty = 0;
     private Bounds b;
+    private readonly List<int> toCreateTypes = new();
 
 
     private float GetSpawnTime()
@@ -124,20 +125,39 @@ public class BalloonCreator : MonoBehaviour
 
     private int GetBalloonType()
     {
-        switch (difficulty)
-        {
-            case 1:
-                return 3;
-            
-            case 2:
-                return Random.Range(0, 2);
-            
-            case 3:
-                return Random.Range(0, 3);
-            
-            default:
-                Debug.LogError("Difficulty not set");
-                return 3; 
-        }
+        const int copyAmmount = 3;
+
+        // If the balloon tipe list is empty, fill it
+        if (toCreateTypes.Count == 0)
+            switch (difficulty)
+            {
+                case 1:
+                    for (int i = 0; i < copyAmmount; i++)
+                        toCreateTypes.Add(3);
+                    break;
+                
+                case 2:
+                    for (int i = 0; i < copyAmmount; i++)
+                        for (int j = 0; j < 2; j++)
+                            toCreateTypes.Add(j);
+                    break;
+                
+                case 3:
+                    for (int i = 0; i < copyAmmount; i++)
+                        for (int j = 0; j < 3; j++)
+                            toCreateTypes.Add(j);
+                    break;
+                
+                default:
+                    Debug.LogError("Difficulty not set");
+                    return 3; 
+            }
+
+        // Get a random type from the list
+        int index = Random.Range(0, toCreateTypes.Count);
+        int type = toCreateTypes[index];
+        toCreateTypes.RemoveAt(index);
+
+        return type;
     }
 }
