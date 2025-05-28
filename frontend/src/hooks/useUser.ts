@@ -4,7 +4,7 @@ import { getCurrentShapeShapeCurrentGet, getMeUserMeGet } from "../client";
 
 export function useUser() {
   // Get the client
-  const { client } = useClient();
+  const { client, logout: client_logout } = useClient();
 
   // Get user data
   const {
@@ -54,6 +54,11 @@ export function useUser() {
     refetchShape();
   };
 
+  const logout = () => {
+    client_logout();
+    refetch();
+  }
+
   return {
     verified,
     userStatus,
@@ -62,5 +67,6 @@ export function useUser() {
     latestShapeStatus,
     hasShape,
     refetch,
+    logout,
   };
 }

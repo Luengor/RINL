@@ -33,9 +33,6 @@ export function LoginForm() {
 
   const [register, { toggle }] = useDisclosure(false); // State for the registration form;
 
-  // Go to /my if we have a token
-  if (loggedIn) navigate("/my/data");
-
   // Form validation
   const form = useForm<FormValues>({
     name: "login-form",
