@@ -1,11 +1,11 @@
-\documentclass[a4paper,11pt,twoside,openright]{memoir}
-\usepackage{import}
-\usepackage{tikz}
+\documentclass[a4paper,11pt,openright]{memoir}
 \usepackage{graphicx}
+\usepackage[spanish]{babel}
 
 \begin{document}
 
 \frontmatter
+
 % Portada
 \title{Rinl: Plataforma de entretenimiento y ejercicio utilizando la detección de posturas}
 \author{Alberto Luengo Román}
@@ -14,8 +14,49 @@
     Julio 2024\endgraf\bigskip
     Sergio García González \hspace*{3cm} Gabriel Villarubia González\endgraf
 }
-\clearpage\maketitle
+\maketitle
 \thispagestyle{empty}
+\clearpage
+\pagebreak
+
+% Páginas de cabecera
+\input{memoria/cabecera.tex}
+
+\mainmatter
+%% Índices
+\tableofcontents
+
+% Lista de anexos
+
+\listoffigures
+\listoftables
+
+% Resto de cosas
+\input{memoria/c01-introduccion.tex}
+
+\input{memoria/c02-objeto.tex}
+
+\input{memoria/c03-antecedentes.tex}
+
+\input{memoria/c04-situacion.tex}
+
+\input{memoria/c05-normas.tex}
+
+\input{memoria/c06-requisitos.tex}
+
+\input{memoria/c07-hipotesis.tex}
+
+\input{memoria/c08-alternativas.tex}
+
+\input{memoria/c09-solucion.tex}
+
+\input{memoria/c10-riesgos.tex}
+
+\input{memoria/c11-organizacion.tex}
+
+\input{memoria/c12-conclusiones.tex}
+
+\input{memoria/c13-bibliografia.tex}
 
 
 \end{document}
