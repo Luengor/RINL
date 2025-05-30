@@ -9,7 +9,7 @@ public class Calibrate : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        mainMenu = GameObject.Find("MainMenu");
+        mainMenu = SceneScript.Instance.GetObject("MainMenu");
         mainMenu.SetActive(false);
         SceneManager.LoadSceneAsync(sceneName);
     }
