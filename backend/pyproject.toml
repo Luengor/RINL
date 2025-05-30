@@ -1,0 +1,31 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "luengor", email = "aluengor0001@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "bcrypt>=4.3.0",
+    "cryptography>=45.0.3",
+    "fastapi[standard]>=0.115.12",
+    "passlib>=1.7.4",
+    "psycopg2>=2.9.10",
+    "pyjwt>=2.10.1",
+    "pytest>=8.3.5",
+    "python-dotenv>=1.1.0",
+    "sqlalchemy>=2.0.41",
+    "sqlalchemy-utils>=0.41.2",
+    "uvicorn>=0.34.2",
+]
+
+[project.scripts]
+create_test_data = "backend.create_test_data:main"
+server = "backend.server:main"
+test = "backend.tests.main:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

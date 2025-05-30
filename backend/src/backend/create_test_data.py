@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from backend.core.auth_utils import get_password_hash
 from backend.core.db import Base
 from backend.models.user import User
-from backend.models.shape import Shape 
+from backend.models.shape import Shape
 from backend.models.activity import Activity
 
 from datetime import datetime, timedelta, timezone
@@ -16,15 +16,16 @@ ENGINE_PATH = f"postgresql://{environ.get('POSTGRES_USER')}:{environ.get('POSTGR
 engine = create_engine(ENGINE_PATH)
 
 ACTIVITY_COUNT = 2000
-ACTIVITIES_FROM = 100 
+ACTIVITIES_FROM = 100
 MINIGAMES = ["test1", "test2"]
 
-if __name__ == "__main__":
+
+def main():
     Base.metadata.create_all(engine)
     now = datetime.now(timezone.utc)
 
     with Session(engine) as session:
-        # Create test user 
+        # Create test user
         user = User(
             email="test@test.com",
             hashed_password=get_password_hash("123456"),
@@ -59,9 +60,13 @@ if __name__ == "__main__":
 
         # Add some activities to the user
         for i in range(ACTIVITY_COUNT):
-            date = now - timedelta(days=random.randint(0, ACTIVITIES_FROM), hours=random.randint(-12, 12))
+            date = now - \
+                timedelta(days=random.randint(0, ACTIVITIES_FROM),
+                          hours=random.randint(-12, 12))
             while (date > now):
-                date = now - timedelta(days=random.randint(0, ACTIVITIES_FROM), hours=random.randint(-12, 12))
+                date = now - \
+                    timedelta(days=random.randint(0, ACTIVITIES_FROM),
+                              hours=random.randint(-12, 12))
 
             session.add(Activity(
                 date=date,
@@ -75,3 +80,6 @@ if __name__ == "__main__":
 
         session.commit()
 
+
+if __name__ == "__main__":
+    main()
