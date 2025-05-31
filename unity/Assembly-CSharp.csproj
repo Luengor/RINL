@@ -85,6 +85,7 @@
     <Compile Include="Assets/SceneScripts/Calibration/GrowCalibration.cs" />
     <Compile Include="Assets/Scripts/Body/BodyPart.cs" />
     <Compile Include="Assets/Scripts/Ugh/GameController.cs" />
+    <Compile Include="Assets/SceneScripts/MainMenu/ButtonsHelp.cs" />
     <Compile Include="Assets/SceneScripts/Calibration/TPoseCalibration.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonCreator.cs" />
     <Compile Include="Assets/Scripts/Ballons/BalloonPopper.cs" />
