@@ -20,6 +20,19 @@ NOT_FOUND = HTTPException(status_code=404, detail="User not found")
 
 
 def authenticate_user(email: str, password: str, session: Session) -> UserAuth | None:
+    """Authenticates a user by their email and password.
+
+    It searches for the user in the database using the provided email,
+    verifies the password, and returns the user if authentication is successful.
+
+    Args:
+        email (str): The email of the user to authenticate.
+        password (str): The password of the user to authenticate.
+        session (Session): The database session to use for querying.
+
+    Returns:
+        UserAuth | None: The authenticated user if successful, otherwise None.
+    """
     user = AuthDAO.get_user_email(email, session)
     if not user:
         return None
@@ -29,6 +42,18 @@ def authenticate_user(email: str, password: str, session: Session) -> UserAuth |
 
 
 async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)], session: Session = Depends(get_db)) -> UserAuth:
+    """Retrieves the current authenticated user based on the provided token.
+
+    Args:
+        token (str): The JWT token used for authentication.
+        session (Session): The database session to use for querying.
+
+    Returns:
+        UserAuth: The authenticated user object.
+
+    Raises:
+        HTTPException: If the token is invalid or the user is not found.
+    """
     try:
         payload = decode_token(token)
         uuid = payload.get("sub")
@@ -45,6 +70,18 @@ async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)], s
 
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], session: Session = Depends(get_db)) -> UserBase:
+    """Retrieves the current user based on the provided token.
+
+    Args:
+        token (str): The JWT token used for authentication.
+        session (Session): The database session to use for querying.
+
+    Returns:
+        UserBase: The current user object.
+
+    Raises:
+        HTTPException: If the token is invalid or the user is not found.
+    """
     user_auth = await get_current_user_auth(token, session)
     user = UserDAO.get_user(user_auth.email, session)
     if user is None:
@@ -54,6 +91,17 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
 
 
 async def get_current_verified_user(user: UserBase = Depends(get_current_user)) -> UserBase:
+    """Retrieves the current verified user.
+
+    Args:
+        user (UserBase): The current user object.
+
+    Returns:
+        UserBase: The user object if it is verified.
+
+    Raises:
+        HTTPException: If the user is not verified.
+    """
     if not user.verified:
         raise NOT_VERIFIED
     return user
