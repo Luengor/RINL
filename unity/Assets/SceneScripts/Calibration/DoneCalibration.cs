@@ -6,6 +6,7 @@ public class DoneCalibration : StateMachineBehaviour
     {
         // Set the calibration data to calibrated
         GameController.CalibrationData.calibrated = true;
+        GameController.Instance.gameData[GameDataConstants.CalibratedKey] = true;
 
         // Load the main menu scene
         SceneScript.Instance.SwitchScene("MainMenu");

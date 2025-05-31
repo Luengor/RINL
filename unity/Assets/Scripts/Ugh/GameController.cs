@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -7,6 +9,7 @@ public class GameController : MonoBehaviour
     public JSConnector JsConnector { get; private set; }
 
     public bool startCalibrated = true;
+    public Dictionary<string, object> gameData = new();
 
     public RINLBody Body
     {
@@ -80,5 +83,13 @@ public class GameController : MonoBehaviour
     public Activity GetActivityData()
     {
         return activityData;
+    }
+
+    public T GetGameData<T>(string key, T defaultValue = default)
+    {
+        if (gameData.TryGetValue(key, out var value))
+            return (T)value;
+        
+        return defaultValue;
     }
 }
