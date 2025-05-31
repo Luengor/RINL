@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import Integer, String, Float, ForeignKey
 from sqlalchemy.orm import mapped_column, relationship, Mapped
-from sqlalchemy_utils import EncryptedType
+from sqlalchemy_utils import StringEncryptedType
 from backend.core.db import Base
 from backend.core.encrypt import ENCRIPTION_KEY
 
@@ -11,8 +11,8 @@ class Shape(Base):
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)
     date: Mapped[datetime] = mapped_column()
-    weight = mapped_column(EncryptedType(Float, ENCRIPTION_KEY))
-    height = mapped_column(EncryptedType(Float, ENCRIPTION_KEY))
+    weight = mapped_column(StringEncryptedType(Float, ENCRIPTION_KEY))
+    height = mapped_column(StringEncryptedType(Float, ENCRIPTION_KEY))
 
     user_email = mapped_column(String, ForeignKey(
         'users.email', onupdate='CASCADE'))

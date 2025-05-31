@@ -1,7 +1,7 @@
 from typing import List, TYPE_CHECKING
 from sqlalchemy import Integer, String, Boolean
 from sqlalchemy.orm import mapped_column, relationship, Mapped
-from sqlalchemy_utils import EncryptedType
+from sqlalchemy_utils import StringEncryptedType
 from backend.core.db import Base
 from backend.core.encrypt import ENCRIPTION_KEY
 
@@ -18,8 +18,8 @@ class User(Base):
     hashed_password = mapped_column(String)
     verified = mapped_column(Boolean, default=False)
     verification_code = mapped_column(String)
-    name = mapped_column(EncryptedType(String, ENCRIPTION_KEY))
-    year_of_birth = mapped_column(EncryptedType(Integer, ENCRIPTION_KEY))
+    name = mapped_column(StringEncryptedType(String, ENCRIPTION_KEY))
+    year_of_birth = mapped_column(StringEncryptedType(Integer, ENCRIPTION_KEY))
 
     activities: Mapped[List["Activity"]] = relationship(
         "Activity", cascade="all, delete")  # type: ignore
