@@ -1,12 +1,13 @@
+# pylint: disable=raise-missing-from
+from datetime import datetime
+from functools import lru_cache
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-
 from fastapi import HTTPException
 from backend.models.activity import Activity as ActivityModel
 from backend.schemas.activity import ActivityFull, ActivityBase
 from backend.schemas.users import UserBase
-from datetime import datetime
-from functools import lru_cache
+
 
 class ActivityDAO:
     @staticmethod
@@ -20,7 +21,7 @@ class ActivityDAO:
                 score=activity.score,
                 activity_points=activity.activity_points,
                 extra_data=activity.extra_data)
-            
+
             session.add(activity_model)
             session.commit()
 
@@ -31,10 +32,11 @@ class ActivityDAO:
 
         except IntegrityError:
             raise HTTPException(status_code=400, detail="Invalid activity")
-        
+
         except Exception:
-            raise HTTPException(status_code=500, detail="Internal server error")
-        
+            raise HTTPException(
+                status_code=500, detail="Internal server error")
+
     @staticmethod
     @lru_cache(maxsize=128)
     def get_activities(email: str, minigame_filter: str | None, from_date: datetime, to_date: datetime, session: Session) -> list[ActivityFull]:
@@ -46,24 +48,24 @@ class ActivityDAO:
                 .order_by(ActivityModel.date) \
                 .all()
             return [ActivityFull.model_validate(activity) for activity in activities]
-        else:
-            activities = session.query(ActivityModel) \
-                .filter(ActivityModel.user_email == email) \
-                .filter(ActivityModel.minigame == minigame_filter) \
-                .filter(ActivityModel.date >= from_date) \
-                .filter(ActivityModel.date <= to_date) \
-                .order_by(ActivityModel.date) \
-                .all()
+
+        activities = session.query(ActivityModel) \
+            .filter(ActivityModel.user_email == email) \
+            .filter(ActivityModel.minigame == minigame_filter) \
+            .filter(ActivityModel.date >= from_date) \
+            .filter(ActivityModel.date <= to_date) \
+            .order_by(ActivityModel.date) \
+            .all()
 
         return [ActivityFull.model_validate(activity) for activity in activities]
-    
+
     @staticmethod
     def delete_activity(activity_id: int, user_email: str, session: Session) -> ActivityFull | None:
         activity = session.query(ActivityModel) \
             .filter(ActivityModel.uuid == activity_id) \
             .filter(ActivityModel.user_email == user_email) \
             .first()
-        
+
         if activity is None:
             raise HTTPException(status_code=404, detail="Activity not found")
 
@@ -71,5 +73,4 @@ class ActivityDAO:
         session.delete(activity)
         session.commit()
 
-        return model 
-
+        return model

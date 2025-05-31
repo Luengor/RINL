@@ -1,13 +1,12 @@
+from datetime import datetime, timezone
+from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends
-
 from backend.core.auth import get_current_verified_user
 from backend.core.db import get_db
+from backend.dao.activity import ActivityDAO
 from backend.schemas.activity import ActivityFull, ActivityBase, ActivityUUID
 from backend.schemas.users import UserBase
-from backend.dao.activity import ActivityDAO
-from sqlalchemy.orm import Session
 
-from datetime import datetime, timezone
 
 router = APIRouter(
     prefix="/activity",

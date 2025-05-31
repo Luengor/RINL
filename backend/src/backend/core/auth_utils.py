@@ -1,41 +1,70 @@
 from typing import Any
 from datetime import timedelta, datetime, timezone
-from os import environ
+import os
 
 import jwt
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
 
 # Some constants
-SECRET_KEY = environ["JWT_SECRET"]
+SECRET_KEY = os.environ.get("JWT_SECRET", "very_secret_key")
 ALGORITHM = "HS256"
 
-## Dependencies
+# Dependencies
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 # Passwords
 def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verify a plain password agains a hashed password.
+
+    Args:
+        plain_password (str): The plain text password to verify.
+        hashed_password (str): The hashed password to compare against.
+
+    Returns:
+        bool: True if the plain password matches the hashed password, False otherwise.
+    """
     return pwd_context.verify(plain_password, hashed_password)
 
 
 def get_password_hash(password: str) -> str:
+    """Hash a password using bcrypt.
+
+    Args:
+        password (str): The plain text password to hash.
+
+    Returns:
+        str: The hashed password.
+    """
     return pwd_context.hash(password)
 
 
 # Tokens
-def get_expire_time(expires_delta: timedelta | None = None) -> datetime:
-    return (
-        datetime.now(timezone.utc) + expires_delta
-        if expires_delta
-        else datetime.now(timezone.utc)
-    )
+def get_expire_time(expires_delta: timedelta = timedelta(minutes=15)) -> datetime:
+    """Get the expiration time for a token.
+
+    Args:
+        expires_delta (timedelta | None): The time delta for expiration. Defaults to 15 minutes. 
+
+    Returns:
+        datetime: The expiration time as a UTC datetime object.
+    """
+    return datetime.now(timezone.utc) + expires_delta
 
 
 def create_access_token(
     data: dict[str, Any], expires_delta: timedelta | None = None
 ) -> str:
+    """Create a JWT access token.
+
+    This function encodes the given data into a JWT token with an expiration time.
+
+    Args:
+        data (dict[str, Any]): The data to encode in the token.
+        expires_delta (timedelta | None): The time delta for expiration. Defaults to 15 minutes.
+    """
     to_encode = data.copy()
     expire = (
         get_expire_time(expires_delta)
@@ -48,4 +77,12 @@ def create_access_token(
 
 
 def decode_token(token: str) -> dict[str, Any]:
+    """Decode a JWT token.
+
+    Args:
+        token (str): The JWT token to decode.
+
+    Returns:
+        dict[str, Any]: The decoded token data.
+    """
     return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

@@ -1,11 +1,13 @@
+from typing import List, TYPE_CHECKING
 from sqlalchemy import Integer, String, Boolean
-from sqlalchemy_utils import EncryptedType
 from sqlalchemy.orm import mapped_column, relationship, Mapped
+from sqlalchemy_utils import EncryptedType
 from backend.core.db import Base
-from typing import List
 from backend.core.encrypt import ENCRIPTION_KEY
 
-from .activity import Activity
+if TYPE_CHECKING:
+    from backend.models.activity import Activity
+    from backend.models.shape import Shape
 
 
 class User(Base):

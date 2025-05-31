@@ -1,16 +1,14 @@
+from datetime import datetime, timedelta, timezone
 from os import environ
+import random
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
-
 from backend.core.auth_utils import get_password_hash
 from backend.core.db import Base
 from backend.models.user import User
 from backend.models.shape import Shape
 from backend.models.activity import Activity
 
-from datetime import datetime, timedelta, timezone
-
-import random
 
 ENGINE_PATH = f"postgresql://{environ.get('POSTGRES_USER')}:{environ.get('POSTGRES_PASSWORD')}@{environ.get('POSTGRES_HOST')}:5432"
 engine = create_engine(ENGINE_PATH)
@@ -59,11 +57,11 @@ def main():
         ))
 
         # Add some activities to the user
-        for i in range(ACTIVITY_COUNT):
+        for _ in range(ACTIVITY_COUNT):
             date = now - \
                 timedelta(days=random.randint(0, ACTIVITIES_FROM),
                           hours=random.randint(-12, 12))
-            while (date > now):
+            while date > now:
                 date = now - \
                     timedelta(days=random.randint(0, ACTIVITIES_FROM),
                               hours=random.randint(-12, 12))

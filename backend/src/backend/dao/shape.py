@@ -1,24 +1,25 @@
+# pylint: disable=raise-missing-from
+from datetime import datetime
+from functools import lru_cache
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-
 from fastapi import HTTPException
 from backend.models.shape import Shape as ShapeModel
 from backend.schemas.shape import ShapeBase, ShapeFull
 from backend.schemas.users import UserBase
-from datetime import datetime
-from functools import lru_cache
+
 
 class ShapeDAO:
     @staticmethod
     def create_shape(shape: ShapeBase, user: UserBase, session: Session) -> ShapeFull:
         try:
             shape_model = ShapeModel(
-                date = shape.date,
-                weight = shape.weight,
-                height = shape.height,
-                user_email = user.email
+                date=shape.date,
+                weight=shape.weight,
+                height=shape.height,
+                user_email=user.email
             )
-            
+
             session.add(shape_model)
             session.commit()
 
@@ -29,8 +30,9 @@ class ShapeDAO:
         except IntegrityError:
             raise HTTPException(status_code=400, detail="Invalid shape")
         except Exception:
-            raise HTTPException(status_code=500, detail="Internal server error")
-    
+            raise HTTPException(
+                status_code=500, detail="Internal server error")
+
     @staticmethod
     @lru_cache(maxsize=128)
     def get_shapes(email: str, from_date: datetime, to_date: datetime, session: Session) -> list[ShapeFull]:
@@ -41,7 +43,7 @@ class ShapeDAO:
             .order_by(ShapeModel.date) \
             .all()
         return [ShapeFull.model_validate(shape) for shape in shapes]
-    
+
     @staticmethod
     def get_current_shape(email: str, session: Session) -> ShapeFull:
         shape = session.query(ShapeModel) \
@@ -69,4 +71,3 @@ class ShapeDAO:
         session.commit()
 
         return model
-

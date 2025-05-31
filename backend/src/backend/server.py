@@ -1,7 +1,7 @@
 import sys
 import os
-import uvicorn
 from dotenv import dotenv_values
+import uvicorn
 
 
 def _run_test():
@@ -23,7 +23,8 @@ def main():
         print("server <host> <port> <workers> -> run in production mode")
         sys.exit(1)
 
-    values = dotenv_values(".env")
+    values = {key: value if value else "" for key,
+              value in dotenv_values(".env").items()}
     print("Using environment variables:")
     print('\n'.join(f"  {key} = {value}" for key, value in values.items()))
     os.environ.update(values)

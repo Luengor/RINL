@@ -1,5 +1,6 @@
 # pylint: disable=unused-import, unused-argument, redefined-outer-name, missing-function-docstring, missing-module-docstring
 # pyright: reportUnusedImport=false
+import json
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from backend.models.user import User
@@ -120,7 +121,8 @@ def test_verify_user_already_verified(client: TestClient, verified_login_token: 
 
     # Check response
     assert response.status_code == 400
-    assert response.content == b"User already verified"
+    assert json.loads(response.content).get(
+        "detail") == "User already verified"
 
 
 def test_update_name(client: TestClient, verified_login_token: str):
@@ -208,7 +210,8 @@ def test_delete_user(client: TestClient, verified_login_token: str, session: Ses
     assert response.status_code == 200
 
     # Check user in database
-    assert not session.query(User).filter(User.email == test_user.email).first()
+    assert not session.query(User).filter(
+        User.email == test_user.email).first()
 
 
 def test_get_after_delete_user(client: TestClient, verified_login_token: str):

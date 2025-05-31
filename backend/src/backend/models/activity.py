@@ -1,8 +1,8 @@
-from sqlalchemy.orm import mapped_column, relationship, Mapped
-from sqlalchemy import Integer, String, Float, ForeignKey
-from backend.core.db import Base
 from datetime import datetime
+from sqlalchemy import Integer, String, Float, ForeignKey
+from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy_utils import EncryptedType
+from backend.core.db import Base
 from backend.core.encrypt import ENCRIPTION_KEY
 
 

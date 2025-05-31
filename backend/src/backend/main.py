@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
 from backend.routers.auth import router as auth_router
 from backend.routers.user import router as users_router
 from backend.routers.activity import router as activity_router

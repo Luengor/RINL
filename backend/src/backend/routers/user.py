@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Response, HTTPException
-
+from sqlalchemy.orm import Session
 from backend.core.auth import get_current_user, get_current_verified_user
-from backend.core.mail import get_send_email
 from backend.core.db import get_db
+from backend.core.mail import get_send_email, SendEmailType
 from backend.dao.user import UserDAO
 from backend.schemas.users import UserBase, RegisterUser, ModifyUser
 
@@ -14,7 +14,7 @@ router = APIRouter(
 
 @router.post("/", response_model=UserBase)
 async def create_user(
-    user: RegisterUser, session=Depends(get_db), send_email=Depends(get_send_email)
+    user: RegisterUser, session: Session = Depends(get_db), send_email: SendEmailType = Depends(get_send_email)
 ):
     return UserDAO.create_user(user, session, send_email)
 
@@ -22,8 +22,8 @@ async def create_user(
 @router.post("/verify-email")
 async def send_verification_email(
     user: UserBase = Depends(get_current_user),
-    session=Depends(get_db),
-    send_email=Depends(get_send_email),
+    session: Session = Depends(get_db),
+    send_email: SendEmailType = Depends(get_send_email),
 ):
     if user.verified:
         raise HTTPException(
@@ -38,7 +38,7 @@ async def send_verification_email(
 async def verify_user(
     verification_code: str,
     user: UserBase = Depends(get_current_user),
-    session=Depends(get_db),
+    session: Session = Depends(get_db),
 ):
     if user.verified:
         raise HTTPException(
@@ -62,15 +62,15 @@ async def get_me(user: UserBase = Depends(get_current_user)):
 async def update_me(
     modifications: ModifyUser,
     user: UserBase = Depends(get_current_verified_user),
-    session=Depends(get_db),
-    send_email=Depends(get_send_email),
+    session: Session = Depends(get_db),
+    send_email: SendEmailType = Depends(get_send_email),
 ):
     return UserDAO.update_user(user, modifications, session, send_email)
 
 
 @router.delete("/me")
 async def delete_me(
-    user: UserBase = Depends(get_current_user), session=Depends(get_db)
+    user: UserBase = Depends(get_current_user), session: Session = Depends(get_db)
 ):
     UserDAO.delete_user(user.email, session)
     response = Response(status_code=200, content="User deleted")

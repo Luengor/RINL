@@ -1,9 +1,9 @@
+# pylint: disable=redefined-outer-name
 from typing import Generator
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, Engine
 from sqlalchemy.orm import Session
 import pytest
-
 from backend.main import app
 from backend.core.db import Base, get_db
 from backend.core.mail import get_send_email
@@ -39,7 +39,12 @@ def client(session: Session):
     app.dependency_overrides[get_db] = lambda: session
 
     # Mail setup
-    app.dependency_overrides[get_send_email] = lambda: lambda to, subject, content: True
+    def dummy_send_email(
+        _1: str, _2: str, _3: str
+    ) -> bool:
+        return True
+
+    app.dependency_overrides[get_send_email] = lambda: dummy_send_email
 
     # Create client
     client = TestClient(app)
@@ -68,7 +73,8 @@ def verified_login_token(session: Session):
 def unverified_login_token(session: Session):
     # Add user to database
     test_user_dict = test_unverified_user.model_dump()
-    test_user_dict["hashed_password"] = get_password_hash(test_unverified_user.password)
+    test_user_dict["hashed_password"] = get_password_hash(
+        test_unverified_user.password)
     test_user_dict.pop("password")
     test_user_dict["verified"] = False
 

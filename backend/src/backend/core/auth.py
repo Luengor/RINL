@@ -1,13 +1,13 @@
 from typing import Annotated
-import sys
 
-from jwt.exceptions import InvalidTokenError 
+from jwt.exceptions import InvalidTokenError
 from fastapi import Depends, HTTPException
+from sqlalchemy.orm import Session
 
 from backend.schemas.auth import UserAuth
 from backend.schemas.users import UserBase
 from backend.dao.auth import AuthDAO
-from backend.dao.user import UserDAO 
+from backend.dao.user import UserDAO
 from backend.core.auth_utils import verify_password, oauth2_scheme, decode_token
 from backend.core.db import get_db
 
@@ -17,7 +17,9 @@ NOT_VERIFIED = HTTPException(status_code=400, detail="User not verified")
 NOT_FOUND = HTTPException(status_code=404, detail="User not found")
 
 # Authentication
-def authenticate_user(email: str, password: str, session) -> UserAuth | None:
+
+
+def authenticate_user(email: str, password: str, session: Session) -> UserAuth | None:
     user = AuthDAO.get_user_email(email, session)
     if not user:
         return None
@@ -25,22 +27,24 @@ def authenticate_user(email: str, password: str, session) -> UserAuth | None:
         return None
     return user
 
-async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)], session = Depends(get_db)) -> UserAuth:
+
+async def get_current_user_auth(token: Annotated[str, Depends(oauth2_scheme)], session: Session = Depends(get_db)) -> UserAuth:
     try:
         payload = decode_token(token)
-        uuid = int(payload.get("sub"))  # type: ignore
+        uuid = payload.get("sub")
         if uuid is None:
-            raise INVALID_TOKEN 
+            raise INVALID_TOKEN
     except InvalidTokenError as e:
         print(f"Invalid token: {e}", flush=True)
-        raise INVALID_TOKEN 
+        raise INVALID_TOKEN
 
-    user = AuthDAO.get_user(uuid, session)
+    user = AuthDAO.get_user(int(uuid), session)
     if user is None:
-        raise NOT_FOUND 
+        raise NOT_FOUND
     return user
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], session = Depends(get_db)) -> UserBase:
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], session: Session = Depends(get_db)) -> UserBase:
     user_auth = await get_current_user_auth(token, session)
     user = UserDAO.get_user(user_auth.email, session)
     if user is None:
@@ -48,7 +52,8 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
 
     return user
 
+
 async def get_current_verified_user(user: UserBase = Depends(get_current_user)) -> UserBase:
     if not user.verified:
-        raise NOT_VERIFIED 
+        raise NOT_VERIFIED
     return user

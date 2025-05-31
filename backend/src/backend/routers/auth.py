@@ -1,9 +1,8 @@
 from typing import Annotated
 from datetime import timedelta
-
 from fastapi import APIRouter, Depends, HTTPException, status, Response
 from fastapi.security import OAuth2PasswordRequestForm
-
+from sqlalchemy.orm import Session
 from backend.schemas.auth import Token
 from backend.core.auth import authenticate_user, oauth2_scheme
 from backend.core.db import get_db
@@ -21,7 +20,7 @@ router = APIRouter(
 async def login_for_token(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     response: Response,
-    session: Annotated = Depends(get_db)
+    session: Session = Depends(get_db)
 ) -> Token:
     user = authenticate_user(form_data.username, form_data.password, session)
     if not user:
@@ -47,5 +46,5 @@ async def login_for_token(
 
 
 @router.get("/", response_model=dict)
-async def check_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict:
+async def check_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict[str, str]:
     return {"token": token}
