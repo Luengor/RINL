@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, HTTPException
 
 from backend.core.auth import get_current_user, get_current_verified_user
 from backend.core.mail import get_send_email
@@ -26,7 +26,9 @@ async def send_verification_email(
     send_email=Depends(get_send_email),
 ):
     if user.verified:
-        return Response(status_code=400, content="User already verified")
+        raise HTTPException(
+            status_code=400, detail="User already verified"
+        )
 
     UserDAO.send_verification_code(user.email, session, send_email)
     return Response(status_code=200, content="Verification email sent")
@@ -39,12 +41,16 @@ async def verify_user(
     session=Depends(get_db),
 ):
     if user.verified:
-        return Response(status_code=400, content="User already verified")
+        raise HTTPException(
+            status_code=400, detail="User already verified"
+        )
 
-    elif UserDAO.verify_user(user.email, verification_code, session):
+    if UserDAO.verify_user(user.email, verification_code, session):
         return Response(status_code=200, content="User verified")
 
-    return Response(status_code=400, content="Invalid verification code")
+    raise HTTPException(
+        status_code=400, detail="Invalid verification code"
+    )
 
 
 @router.get("/me", response_model=UserBase)
