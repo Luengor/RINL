@@ -9,13 +9,31 @@ EMAIL_PASSWORD = environ.get('EMAIL_PASSWORD')
 
 
 SendEmailType = Callable[[str, str, str], bool]
+"""Type alias for the send_email function.
+
+The function takes the email address, subject, and content as parameters
+and returns a boolean indicating success or failure.
+"""
 
 
 def get_send_email() -> SendEmailType:
+    """Returns a function that sends an email."""
     return send_email
 
 
 def send_email(email: str, subject: str, content: str) -> bool:
+    """Sends an email to the specified address with the given subject and content.
+
+    If the environment variable `SKIP_EMAIL` is set, the email sending is skipped and the function returns True.
+
+    Args:
+        email (str): The recipient's email address.
+        subject (str): The subject of the email.
+        content (str): The content of the email.
+
+    Returns:
+        bool: True if the email was sent successfully, False otherwise.
+    """
     if environ.get('SKIP_EMAIL', False):
         return True
 
