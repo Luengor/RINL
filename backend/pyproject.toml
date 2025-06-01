@@ -12,7 +12,7 @@ dependencies = [
     "cryptography>=45.0.3",
     "fastapi[standard]>=0.115.12",
     "passlib>=1.7.4",
-    "psycopg2>=2.9.10",
+    "psycopg2-binary",
     "pyjwt>=2.10.1",
     "pytest>=8.3.5",
     "python-dotenv>=1.1.0",

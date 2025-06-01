@@ -63,7 +63,7 @@ passlib==1.7.4
     # via backend (pyproject.toml)
 pluggy==1.6.0
     # via pytest
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
     # via backend (pyproject.toml)
 pycparser==2.22
     # via cffi

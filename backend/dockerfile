@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.13-alpine
 
 # Create a directory for the app
 WORKDIR /app
@@ -6,10 +6,10 @@ WORKDIR /app
 # Add everything in the current directory to the app directory 
 ADD . /app
 
-# Install the requirements
-RUN pip install -r requirements.txt
+# Install uv
+RUN pip install uv 
+RUN uv sync
 
 # Run the app
-WORKDIR /app/backend
-CMD ["python3", "-m", "fastapi", "run", "--workers", "2", "main.py"]
+CMD ["uv", "run", "server", "0.0.0.0", "8000", "2"]
 
