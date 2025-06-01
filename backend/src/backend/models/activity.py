@@ -7,6 +7,20 @@ from backend.core.encrypt import ENCRIPTION_KEY
 
 
 class Activity(Base):
+    """Model representing a user's activity in the system.
+
+    Attributes:
+        uuid (int): Auto-incrementing integer used as the primary key. 
+        date (datetime): The date and time when the activity occurred.
+        user_email (str): Email of the user associated with the activity.
+        minigame (str): Name of the minigame played during the activity.
+        duration (float): Duration of the activity in seconds, encrypted.
+        activity_points (float): Points earned during the activity, encrypted.
+        score (float): Score achieved in the activity.
+        extra_data (str): Additional data related to the activity, stored as a JSON string and encrypted.
+
+        user (relationship): Relationship to the User model, allowing access to user details associated with the activity.
+    """
     __tablename__ = 'activities'
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)

@@ -11,6 +11,20 @@ if TYPE_CHECKING:
 
 
 class User(Base):
+    """Model representing a user in the system.
+
+    Attributes:
+        uuid (int): Auto-incrementing integer used as the primary key.
+        email (str): Unique email address of the user.
+        hashed_password (str): Hashed password for user authentication.
+        verified (bool): Indicates whether the user's email is verified.
+        verification_code (str): Code used for email verification.
+        name (str): Encrypted name of the user.
+        year_of_birth (int): Encrypted year of birth of the user.
+
+        activities (list[Activity]): List of activities associated with the user.
+        shapes (list[Shape]): List of physical shapes associated with the user.
+    """
     __tablename__ = 'users'
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)

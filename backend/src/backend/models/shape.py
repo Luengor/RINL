@@ -7,6 +7,18 @@ from backend.core.encrypt import ENCRIPTION_KEY
 
 
 class Shape(Base):
+    """Model representing the physical shape of a user.
+
+    Attributes:
+        uuid (int): Auto-incrementing integer used as the primary key.
+        date (datetime): The date and time when the shape was recorded.
+        weight (float): The user's weight, encrypted.
+        height (float): The user's height, encrypted.
+        user_email (str): Email of the user associated with the shape.
+
+        user (relationship): Relationship to the User model.
+    """
+
     __tablename__ = 'shapes'
 
     uuid = mapped_column(Integer, primary_key=True, autoincrement=True)
