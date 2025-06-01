@@ -17,7 +17,11 @@ and returns a boolean indicating success or failure.
 
 
 def get_send_email() -> SendEmailType:
-    """Returns a function that sends an email."""
+    """Dependency that provides the send_email function.
+
+    Returns:
+        SendEmailType: A callable that sends an email.
+    """
     return send_email
 
 
