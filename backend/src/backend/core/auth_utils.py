@@ -1,3 +1,5 @@
+"""Utility functions for authentication and token management."""
+
 from typing import Any
 from datetime import timedelta, datetime, timezone
 import os

@@ -1,15 +1,26 @@
 {{ fullname | escape | underline}}
 
 .. automodule:: {{ fullname }}
-   :member-order: bysource
   
    {% block attributes %}
    {% if attributes %}
-   .. rubric:: Module Attributes 
+   .. rubric:: Module Attributes
 
    .. autosummary::
       :toctree:
    {% for item in attributes %}
+      {{ item }}
+   {%- endfor %}
+   {% endif %}
+   {% endblock %}
+
+   {% block functions %}
+   {% if functions %}
+   .. rubric:: {{ _('Functions') }}
+
+   .. autosummary::
+      :toctree:
+   {% for item in functions %}
       {{ item }}
    {%- endfor %}
    {% endif %}
@@ -23,18 +34,6 @@
       :toctree:
       :template: class-template.rst
    {% for item in classes %}
-      {{ item }}
-   {%- endfor %}
-   {% endif %}
-   {% endblock %}
-
-   {% block functions %}
-   {% if functions %}
-   .. rubric:: Module Functions 
-
-   .. autosummary::
-      :toctree:
-   {% for item in functions %}
       {{ item }}
    {%- endfor %}
    {% endif %}
@@ -54,7 +53,7 @@
 
 {% block modules %}
 {% if modules %}
-.. rubric:: Modules 
+.. rubric:: Modules
 
 .. autosummary::
    :toctree:
