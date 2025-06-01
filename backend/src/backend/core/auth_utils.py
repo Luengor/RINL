@@ -8,11 +8,17 @@ from passlib.context import CryptContext
 
 # Some constants
 SECRET_KEY = os.environ.get("JWT_SECRET", "very_secret_key")
+"""Secret key for JWT encoding and decoding. Obtained from the environment variable 'JWT_SECRET'."""
+
 ALGORITHM = "HS256"
+"""Algorithm used for JWT encoding and decoding."""
 
 # Dependencies
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+"""Dependency for OAuth2 password bearer token authentication."""
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+"""Password context for hashing and verifying passwords using bcrypt."""
 
 
 # Passwords
