@@ -1,3 +1,5 @@
+"""Auth API router for handling user login and token generation."""
+
 from typing import Annotated
 from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException, status, Response

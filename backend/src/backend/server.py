@@ -1,3 +1,4 @@
+"""Module to run the FastAPI server with different configurations."""
 import sys
 import os
 from dotenv import dotenv_values
@@ -17,6 +18,7 @@ def _run_production(host: str, port: str, workers: int = 4):
 
 
 def main():
+    """Main function to run the FastAPI server."""
     args = sys.argv[1:]
     if len(args) not in [1, 3] or (len(args) == 1 and args[0] != "test"):
         print("server test                    -> run in test mode")

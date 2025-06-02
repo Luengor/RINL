@@ -1,3 +1,5 @@
+"""Activity model for validating and serializing activity data."""
+
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 from backend.schemas.users import UserBase

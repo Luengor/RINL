@@ -1,3 +1,5 @@
+"""Base database model and session management dependencies."""
+
 from os import environ
 from typing import Any, Generator
 from sqlalchemy import create_engine

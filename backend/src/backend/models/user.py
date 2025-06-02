@@ -1,3 +1,5 @@
+"""User model for storing in the system."""
+
 from typing import List, TYPE_CHECKING
 from sqlalchemy import Integer, String, Boolean
 from sqlalchemy.orm import mapped_column, relationship, Mapped

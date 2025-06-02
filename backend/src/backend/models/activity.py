@@ -1,3 +1,5 @@
+"""Activity model for tracking user activities in the system."""
+
 from datetime import datetime
 from sqlalchemy import Integer, String, Float, ForeignKey
 from sqlalchemy.orm import mapped_column, relationship, Mapped

@@ -1,3 +1,5 @@
+"""Physical shape models for validating and serializing user shape data."""
+
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 from backend.schemas.users import UserBase

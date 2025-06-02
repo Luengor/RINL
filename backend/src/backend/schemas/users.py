@@ -1,3 +1,5 @@
+"""User models for handling validation and serialization of user data."""
+
 from typing import Optional
 from pydantic import BaseModel, ConfigDict
 

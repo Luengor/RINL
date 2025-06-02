@@ -1,3 +1,4 @@
+"""Main module defining the FastAPI application that includes all the routers"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.routers.auth import router as auth_router
@@ -25,6 +26,7 @@ app.include_router(shape_router)
 
 
 def main():
+    """Main function that runs the FastAPI application"""
     import uvicorn
     uvicorn.run("app", host="localhost", port=8000,
                 log_level="info", reload=True)

@@ -1,3 +1,5 @@
+"""Shape API router for managing user physical shapes."""
+
 from datetime import datetime, timezone
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session

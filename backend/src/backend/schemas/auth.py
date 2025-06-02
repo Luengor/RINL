@@ -1,3 +1,5 @@
+"""Authentication models for validating and serializing authentication data."""
+
 from pydantic import BaseModel
 
 

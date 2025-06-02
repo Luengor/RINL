@@ -1,3 +1,5 @@
+"""User API router for managing user-related operations."""
+
 from fastapi import APIRouter, Depends, Response, HTTPException
 from sqlalchemy.orm import Session
 from backend.core.auth import get_current_user, get_current_verified_user

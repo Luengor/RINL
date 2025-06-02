@@ -1,3 +1,5 @@
+"""Data Access Object for handling user-related operations in the database."""
+
 from random import choices
 from fastapi import HTTPException
 from sqlalchemy.orm import Session

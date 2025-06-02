@@ -1,3 +1,5 @@
+"""Mail dependencies."""
+
 import smtplib
 from typing import Callable
 from email.message import EmailMessage

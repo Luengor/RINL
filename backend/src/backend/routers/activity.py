@@ -1,3 +1,5 @@
+"""Activity API router for managing user activities."""
+
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, Depends

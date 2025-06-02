@@ -1,3 +1,5 @@
+"""Utility module to create some test data in the database for development purposes."""
+
 from datetime import datetime, timedelta, timezone
 from os import environ
 import random
@@ -19,6 +21,8 @@ MINIGAMES = ["test1", "test2"]
 
 
 def main():
+    """Main function that creates the test data in the database."""
+
     Base.metadata.create_all(engine)
     now = datetime.now(timezone.utc)
 

@@ -1,3 +1,5 @@
+"""Authentication dependencies and utilities."""
+
 from typing import Annotated
 
 from jwt.exceptions import InvalidTokenError

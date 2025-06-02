@@ -1,3 +1,5 @@
+"""Data Access Object for handling activities in the database."""
+
 # pylint: disable=raise-missing-from
 from datetime import datetime
 from functools import lru_cache
