@@ -1,0 +1,45 @@
+\documentclass[a4paper,11pt,oneside,openright]{memoir}
+\usepackage{graphicx}       % Para incluir imágenes
+\usepackage[spanish]{babel} % Para el idioma español
+
+\begin{document}
+\frontmatter
+
+% Portada
+\title{Anexo I. Especificaciones del sistema}
+\author{Alberto Luengo Román}
+\date{
+    % Mes y año de defensa
+    Julio 2024\endgraf\bigskip
+    Tutores: \endgraf
+    Sergio García González \hspace*{3cm} Gabriel Villarubia González\endgraf
+}
+\maketitle
+\thispagestyle{empty}
+\clearpage
+\pagebreak
+
+\mainmatter
+%% Índices
+\tableofcontents
+\clearpage
+\pagebreak
+\listoffigures
+\clearpage
+\pagebreak
+\listoftables
+\clearpage
+\pagebreak
+
+% Contenido del anexo
+\input{anexo1/c01-preambulo.tex}
+
+\input{anexo1/c02-objetivos.tex}
+
+\input{anexo1/c03-requisitos.tex}
+
+\input{anexo1/c04-matriz.tex}
+
+\input{anexo1/referencias.tex}
+
+\end{document}

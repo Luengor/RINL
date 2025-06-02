@@ -1,6 +1,9 @@
-\documentclass[a4paper,11pt,openright]{memoir}
-\usepackage{graphicx}
-\usepackage[spanish]{babel}
+\documentclass[a4paper,11pt,oneside,openright]{memoir}
+\usepackage{graphicx}       % Para incluir imágenes
+\usepackage[spanish]{babel} % Para el idioma español
+\usepackage{xr}             % Para referencias cruzadas entre documentos
+
+\externaldocument{anexo1}   % Permite referencias cruzadas al anexo1.tex
 
 \begin{document}
 \frontmatter
