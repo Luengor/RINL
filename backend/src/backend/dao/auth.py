@@ -26,7 +26,7 @@ class AuthDAO:
 
     @staticmethod
     def get_user_email(email: str, session: Session) -> UserAuth | None:
-        """Retrieve a user by email from the database.
+        """Retrieve a user authentication by email from the database.
 
         Args:
             email (str): The email of the user to retrieve.
