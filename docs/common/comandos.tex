@@ -11,31 +11,31 @@
 \define@key{objetivo}{estabilidad}{\def\objetivo@estabilidad{#1}}
 \define@key{objetivo}{comentarios}{\def\objetivo@comentarios{#1}}
 
-\setkeys{objetivo}{
+\presetkeys{objetivo}{
     id = {0000},
     nombre = {},
     fuentes = {Propuesta inicial del trabajo de fin de grado},
     descripcion = {El sistema deberá...},
     subobjetivos = {No procede},
-    importancia = {Fundamental},
-    urgencia = {Alta},
-    estado = {En desarrollo},
-    estabilidad = {Estable},
+    importancia = {Vital},
+    urgencia = {Inmediatamente},
+    estado = {Validado},
+    estabilidad = {Alta},
     comentarios = {No procede},
-}
+}{}
 
 \newcommand{\objetivo}[1]{
     \setkeys{objetivo}{#1}
-    \begin{table}[h!]
+    \begin{table}[!ht]
     \begin{center}
     {
         \rowcolors{2}{Snow2}{Snow1}
-        \begin{tabular}{ | l | p{8.75cm} | }
+        \begin{tabular}{ | l | p{10cm} | }
             \hline
             \rowcolor{Snow3}
             \textbf{OBJ-\objetivo@id} & \textbf{\objetivo@nombre} \\
             \hline
-            \textbf{Versión} & 1.0 \\
+            \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
             \textbf{Autores} & Alberto Luengo Román \\
             \textbf{Fuentes} & \objetivo@fuentes \\
             \textbf{Descripción} & \objetivo@descripcion \\
