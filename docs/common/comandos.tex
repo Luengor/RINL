@@ -1,0 +1,58 @@
+\makeatletter   % Para poder usar @ en los nombres de comandos
+
+\define@key{objetivo}{id}{\def\objetivo@id{#1}}
+\define@key{objetivo}{nombre}{\def\objetivo@nombre{#1}}
+\define@key{objetivo}{fuentes}{\def\objetivo@fuentes{#1}}
+\define@key{objetivo}{descripcion}{\def\objetivo@descripcion{#1}}
+\define@key{objetivo}{subobjetivos}{\def\objetivo@subobjetivos{#1}}
+\define@key{objetivo}{importancia}{\def\objetivo@importancia{#1}}
+\define@key{objetivo}{urgencia}{\def\objetivo@urgencia{#1}}
+\define@key{objetivo}{estado}{\def\objetivo@estado{#1}}
+\define@key{objetivo}{estabilidad}{\def\objetivo@estabilidad{#1}}
+\define@key{objetivo}{comentarios}{\def\objetivo@comentarios{#1}}
+
+\setkeys{objetivo}{
+    id = {0000},
+    nombre = {},
+    fuentes = {Propuesta inicial del trabajo de fin de grado},
+    descripcion = {El sistema deberá...},
+    subobjetivos = {No procede},
+    importancia = {Fundamental},
+    urgencia = {Alta},
+    estado = {En desarrollo},
+    estabilidad = {Estable},
+    comentarios = {No procede},
+}
+
+\newcommand{\objetivo}[1]{
+    \setkeys{objetivo}{#1}
+    \begin{table}[h!]
+    \begin{center}
+    {
+        \rowcolors{2}{Snow2}{Snow1}
+        \begin{tabular}{ | l | p{8.75cm} | }
+            \hline
+            \rowcolor{Snow3}
+            \textbf{OBJ-\objetivo@id} & \textbf{\objetivo@nombre} \\
+            \hline
+            \textbf{Versión} & 1.0 \\
+            \textbf{Autores} & Alberto Luengo Román \\
+            \textbf{Fuentes} & \objetivo@fuentes \\
+            \textbf{Descripción} & \objetivo@descripcion \\
+            \textbf{Subobjetivos} & \objetivo@subobjetivos \\
+            \textbf{Importancia} & \objetivo@importancia \\
+            \textbf{Urgencia} & \objetivo@urgencia \\
+            \textbf{Estado} & \objetivo@estado \\
+            \textbf{Estabilidad} & \objetivo@estabilidad \\
+            \textbf{Comentarios} & \objetivo@comentarios \\
+            \hline
+        \end{tabular}
+    }
+    \end{center}
+    \caption{OBJ-\objetivo@id: \objetivo@nombre}
+    \label{anexo1:tab:obj\objetivo@id}
+    \end{table}
+}
+
+\makeatother
+
