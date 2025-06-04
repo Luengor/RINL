@@ -29,7 +29,7 @@ interface FormValues {
 
 export function LoginForm() {
   const navigate = useNavigate();
-  const { client, login, loggedIn } = useClient();
+  const { client, login } = useClient();
 
   const [register, { toggle }] = useDisclosure(false); // State for the registration form;
 

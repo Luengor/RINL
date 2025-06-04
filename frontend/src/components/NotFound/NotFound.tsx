@@ -1,4 +1,4 @@
-import { Button, Center, Container, Group, Stack, Text, Title } from '@mantine/core';
+import { Button, Center, Group, Stack, Text, Title } from '@mantine/core';
 import classes from './NotFound.module.css';
 import { Link } from 'react-router-dom';
 

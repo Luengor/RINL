@@ -7,11 +7,14 @@ import { useRef } from "react";
 import { loginForTokenLoginPost } from "../client";
 
 export function useClient() {
+  // API url
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   // Create a new client if it doesn't exist
   const clientRef = useRef(
     createClient(
       createConfig<ClientOptions>({
-        baseUrl: "http://localhost:8000",
+        baseUrl: apiUrl,
         throwOnError: true,
       })
     )
