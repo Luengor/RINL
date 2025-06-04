@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  circleColor: {r: 1, g: 1, b: 1, a: 1}
   circle: {fileID: 8326236141663091606}
   stillClickTime: 2
-  stillClickDistance: 0.05
+  stillClickDistance: 0.1
   maxCircleSize: 50
   circleSizeCurve:
     serializedVersion: 2
