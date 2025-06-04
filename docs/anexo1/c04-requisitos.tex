@@ -16,9 +16,12 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         El sistema deberá almacenar la información necesaria de los usuarios.
     },
 }{
-    objetivosAsociados = {},
+    objetivosAsociados = \lista{
+        \item OBJ-0003: Adaptación a diferentes usuarios
+        \item OBJ-0006: Gestión de usuarios 
+    },
     requisitosAsociados = {},
-    datosEspecificos = {\lista{
+    datosEspecificos = \lista{
         \item Identificador único del usuario
         \item Correo electrónico
         \item Contraseña (almacenada como un hash)
@@ -26,7 +29,7 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         \item Código de verificación del usuario
         \item Nombre completo
         \item Fecha de nacimiento
-    }},
+    },
     intervaloTemporal = {Solo presente},
 }
 
@@ -37,9 +40,12 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         El sistema deberá almacenar la información de las actividades realizadas por los usuarios.
     },
 }{
-    objetivosAsociados = {},
+    objetivosAsociados = \lista{
+        \item OBJ-0002: Juegos y actividades
+        \item OBJ-0005: Estadísiticas y seguimiento 
+    },
     requisitosAsociados = {},
-    datosEspecificos = {\lista{
+    datosEspecificos = \lista{
         \item Identificador único de la actividad
         \item Fecha y hora en la que se realizó la actividad
         \item Correo del usuario que realizó la actividad
@@ -47,8 +53,8 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         \item Duración en segundos de la actividad
         \item Puntuación obtenida en la actividad
         \item Información adicional de la actividad (JSON)
-    }},
-    intervaloTemporal = {Solo presente},
+    },
+    intervaloTemporal = {Presente y pasado},
 }
 
 \requisitoinfo{
@@ -58,16 +64,19 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         El sistema deberá almacenar la información de la forma física de los usuarios.
     },
 }{
-    objetivosAsociados = {},
+    objetivosAsociados = \lista{
+        \item OBJ-0002: Juegos y actividades
+        \item OBJ-0005: Estadísiticas y seguimiento
+    },
     requisitosAsociados = {},
-    datosEspecificos = {\lista{
+    datosEspecificos = \lista{
         \item Identificador único de la forma física
         \item Fecha y hora en la que se registró la forma física
         \item Peso del usuario en kilogramos
         \item Altura del usuario en centímetros
         \item Correo del usuario al que pertenece la forma física
-    }},
-    intervaloTemporal = {Solo presente},
+    },
+    intervaloTemporal = {Presente y pasado},
 }
 
 \section{Requisitos funcionales}
