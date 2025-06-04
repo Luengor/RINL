@@ -6,6 +6,7 @@ import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import Media from "./components/Media/Media";
 import MediaDebug from "./components/Media/MediaDebug";
+import { NotFoundPage } from "./components/NotFound/NotFound";
 
 function App() {
   return (
@@ -21,6 +22,8 @@ function App() {
       <Route element={<PrivateRoutes requireLogin={true} route={"/login"} />}>
         <Route path="/my/*" element={<My />} />
       </Route>
+
+      <Route path="*" element={<NotFoundPage />} /> 
     </Routes>
   );
 }
