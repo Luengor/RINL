@@ -24,6 +24,15 @@ async def login_for_token(
     response: Response,
     session: Session = Depends(get_db)
 ) -> Token:
+    """Login endpoint to authenticate user and generate access token.
+
+    This function is an endpoint.
+
+    Args:
+        form_data (OAuth2PasswordRequestForm): The form data containing username and password, automatically injected by FastAPI.
+        response (Response): The HTTP response object.
+        session (Session): The database session, automatically injected by FastAPI.
+    """
     user = authenticate_user(form_data.username, form_data.password, session)
     if not user:
         raise HTTPException(
@@ -49,4 +58,13 @@ async def login_for_token(
 
 @router.get("/", response_model=dict)
 async def check_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict[str, str]:
+    """Check if the provided token is valid.
+
+    This function is an endpoint.
+
+    Args:
+        token (str): The access token to check, automatically injected by FastAPI.
+    Returns:
+        dict[str, str]: A dictionary containing the token if valid.
+    """
     return {"token": token}

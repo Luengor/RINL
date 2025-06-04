@@ -18,6 +18,17 @@ router = APIRouter(
 async def create_user(
     user: RegisterUser, session: Session = Depends(get_db), send_email: SendEmailType = Depends(get_send_email)
 ):
+    """Create a new user.
+
+    This function is an endpoint.
+
+    Args:
+        user (RegisterUser): The user to create.
+        session (Session): The database session, automatically injected by FastAPI.
+        send_email (SendEmailType): The email sending function, automatically injected by FastAPI.
+    Returns:
+        UserBase: The created user with basic details.
+    """
     return UserDAO.create_user(user, session, send_email)
 
 
@@ -27,6 +38,17 @@ async def send_verification_email(
     session: Session = Depends(get_db),
     send_email: SendEmailType = Depends(get_send_email),
 ):
+    """Send a verification email to the user if they are not verified.
+
+    This function is an endpoint.
+
+    Args:
+        user (UserBase): The current user, automatically injected by FastAPI.
+        session (Session): The database session, automatically injected by FastAPI.
+        send_email (SendEmailType): The email sending function, automatically injected by FastAPI.
+    Returns:
+        Response: A response indicating the email has been sent.
+    """
     if user.verified:
         raise HTTPException(
             status_code=400, detail="User already verified"
@@ -42,6 +64,17 @@ async def verify_user(
     user: UserBase = Depends(get_current_user),
     session: Session = Depends(get_db),
 ):
+    """Verify the user with the provided verification code.
+
+    This function is an endpoint.
+
+    Args:
+        verification_code (str): The verification code sent to the user's email.
+        user (UserBase): The current user, automatically injected by FastAPI.
+        session (Session): The database session, automatically injected by FastAPI.
+    Returns:
+        Response: A response indicating the user has been verified.
+    """
     if user.verified:
         raise HTTPException(
             status_code=400, detail="User already verified"
@@ -57,6 +90,15 @@ async def verify_user(
 
 @router.get("/me", response_model=UserBase)
 async def get_me(user: UserBase = Depends(get_current_user)):
+    """Get the current user's details.
+
+    This function is an endpoint.
+
+    Args:
+        user (UserBase): The current user, automatically injected by FastAPI.
+    Returns:
+        UserBase: The current user's details.
+    """
     return user
 
 
@@ -67,6 +109,18 @@ async def update_me(
     session: Session = Depends(get_db),
     send_email: SendEmailType = Depends(get_send_email),
 ):
+    """Update the current user's details.
+
+    This function is an endpoint.
+
+    Args:
+        modifications (ModifyUser): The modifications to apply to the user.
+        user (UserBase): The current user, automatically injected by FastAPI.
+        session (Session): The database session, automatically injected by FastAPI.
+        send_email (SendEmailType): The email sending function, automatically injected by FastAPI.
+    Returns:
+        UserBase: The updated user with basic details.
+    """
     return UserDAO.update_user(user, modifications, session, send_email)
 
 
@@ -74,6 +128,16 @@ async def update_me(
 async def delete_me(
     user: UserBase = Depends(get_current_user), session: Session = Depends(get_db)
 ):
+    """Delete the current user.
+
+    This function is an endpoint.
+
+    Args:
+        user (UserBase): The current user, automatically injected by FastAPI.
+        session (Session): The database session, automatically injected by FastAPI.
+    Returns:
+        Response: An ok response indicating the user has been deleted.
+    """
     UserDAO.delete_user(user.email, session)
     response = Response(status_code=200, content="User deleted")
     response.delete_cookie("access_token")
