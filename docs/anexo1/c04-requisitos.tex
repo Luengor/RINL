@@ -1,8 +1,74 @@
 \chapter{Catálogo de requisitos del sistema}
 \label{anexo1:cap:requisitos}
+En este capítulo se expone el catálogo de requisitos del sistema, que incluye tanto los requisitos
+funcionales como los no funcionales, así como los requisitos de almacenamiento de información.
+También se incluyen los diagramas de casos de uso y la definición de los actores del sistema. Todo
+esto siguiendo las pautas dadas por Durán y Bernárdez \cite{DuranBernardez}.
 
 \section{Requisitos de almacenamiento de información}
 \label{anexo1:sec:requisitos-almacenamiento}
+En esta sección se definen los requisitos relaccionados con el almacenamiento de la información.
+
+\requisitoinfo{
+    id = {0001},
+    nombre = {Usuario},
+    descripcion = {
+        El sistema deberá almacenar la información necesaria de los usuarios.
+    },
+}{
+    objetivosAsociados = {},
+    requisitosAsociados = {},
+    datosEspecificos = {\lista{
+        \item Identificador único del usuario
+        \item Correo electrónico
+        \item Contraseña (almacenada como un hash)
+        \item Indicador de si el usuario está verificado
+        \item Código de verificación del usuario
+        \item Nombre completo
+        \item Fecha de nacimiento
+    }},
+    intervaloTemporal = {Solo presente},
+}
+
+\requisitoinfo{
+    id = {0002},
+    nombre = {Actividad},
+    descripcion = {
+        El sistema deberá almacenar la información de las actividades realizadas por los usuarios.
+    },
+}{
+    objetivosAsociados = {},
+    requisitosAsociados = {},
+    datosEspecificos = {\lista{
+        \item Identificador único de la actividad
+        \item Fecha y hora en la que se realizó la actividad
+        \item Correo del usuario que realizó la actividad
+        \item Juego en el que se realizó la actividad
+        \item Duración en segundos de la actividad
+        \item Puntuación obtenida en la actividad
+        \item Información adicional de la actividad (JSON)
+    }},
+    intervaloTemporal = {Solo presente},
+}
+
+\requisitoinfo{
+    id = {0003},
+    nombre = {Forma física},
+    descripcion = {
+        El sistema deberá almacenar la información de la forma física de los usuarios.
+    },
+}{
+    objetivosAsociados = {},
+    requisitosAsociados = {},
+    datosEspecificos = {\lista{
+        \item Identificador único de la forma física
+        \item Fecha y hora en la que se registró la forma física
+        \item Peso del usuario en kilogramos
+        \item Altura del usuario en centímetros
+        \item Correo del usuario al que pertenece la forma física
+    }},
+    intervaloTemporal = {Solo presente},
+}
 
 \section{Requisitos funcionales}
 \label{anexo1:sec:requisitos-funcionales}
