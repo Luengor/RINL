@@ -166,7 +166,7 @@ export default function DataForm({ user }: { user: UserBase }) {
                 style={{ cursor: "pointer" }}
                 size="sm"
                 span
-                c="blue"
+                c="orange"
                 onClick={() => setVerifing(true)}
               >
                 {" aquí."}

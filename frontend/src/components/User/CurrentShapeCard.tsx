@@ -77,38 +77,53 @@ export default function CurrentShapeCard() {
     addShapeMutation.mutate(shape);
   }
 
+  let card_content = <Text>Loading...</Text>;
+  if (!verified) {
+    card_content = (
+      <Text size="sm" c="dimmed">
+        Tu cuenta no está verificada. Verifícala para poder añadir tu forma física.
+      </Text>
+    );
+  } else if (!hasShape) {
+    card_content = (
+      <>
+        <Title order={4}>Todavía no has introducido tu forma física</Title>
+        <Text size="sm" c="dimmed">
+          Necesitas introducir tu forma física para poder jugar.
+        </Text>
+        <Button variant="outline" mt="sm" onClick={openAddShape}>
+          Añadir forma
+        </Button>
+      </>
+    );
+  } else {
+    card_content = (
+      <>
+        <Text size="sm" c="dimmed">
+          Última forma física registrada:{" "}
+          {new Date(latestShape?.date).toLocaleDateString()}
+        </Text>
+        <Text size="sm" c="dimmed">
+          Peso: {latestShape?.weight} kg
+        </Text>
+        <Text size="sm" c="dimmed">
+          Altura: {latestShape?.height} cm
+        </Text>
+        <Button variant="outline" mt="sm" onClick={openAddShape}>
+          Añadir forma
+        </Button>
+      </>
+    );
+  }
+
   return (
     <>
       <Paper shadow="md" p="sm">
         <Title order={3} fw="inherit">
-          Forma actual
+          Forma física actual
         </Title>
 
-        {verified && hasShape === false && (
-          <>
-            <Title order={4}>Todavía no has introducido tu forma física</Title>
-            <Text size="sm" c="dimmed">
-              Necesitas introducir tu forma física para poder jugar.
-            </Text>
-          </>
-        )}
-        {hasShape && (
-          <>
-            <Text size="sm" c="dimmed">
-              Última forma física registrada:{" "}
-              {new Date(latestShape?.date).toLocaleDateString()}
-            </Text>
-            <Text size="sm" c="dimmed">
-              Peso: {latestShape?.weight} kg
-            </Text>
-            <Text size="sm" c="dimmed">
-              Altura: {latestShape?.height} cm
-            </Text>
-          </>
-        )}
-        <Button variant="outline" mt="sm" onClick={openAddShape}>
-          Añadir forma
-        </Button>
+        {card_content}
       </Paper>
       <Modal
         opened={addShapeOpened}

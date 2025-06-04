@@ -7,7 +7,7 @@ import "@mantine/core/styles.css";
 import "@mantine/charts/styles.css";
 import "@mantine/notifications/styles.css";
 
-import { MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import {
   MutationCache,
@@ -37,9 +37,13 @@ const queryClient = new QueryClient({
   }),
 });
 
+const theme = createTheme({
+  primaryColor: "orange",
+})
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <Notifications />

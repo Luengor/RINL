@@ -18,7 +18,7 @@ export function useUser() {
       return req.data;
     },
 
-    meta: { errorMessage: "Error al cargar los datos" },
+    // meta: { errorMessage: "Error al cargar los datos" },
     staleTime: 1000 * 60 * 5,
   });
 

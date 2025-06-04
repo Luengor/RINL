@@ -114,7 +114,7 @@ export function LoginForm() {
             {register ? "¿Ya tienes una cuenta?" : "¿No tienes una cuenta?"}
           </Text>
           <Text
-            c="blue"
+            c="orange"
             size="sm"
             ta="center"
             mt={5}

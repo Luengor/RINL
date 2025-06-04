@@ -17,7 +17,7 @@ function UserCard() {
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Stack>
           <Title order={2}>Bienvenido, {user.name}!</Title>
-          <Button onClick={() => navigate("/my/data")} variant="light" color="blue" fullWidth>
+          <Button onClick={() => navigate("/my/data")} variant="light" fullWidth>
             Ir a mi perfil
           </Button>
           <Button onClick={handleLogout} variant="light" color="red" fullWidth>
