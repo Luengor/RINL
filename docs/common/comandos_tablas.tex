@@ -265,7 +265,63 @@
     \end{table}
 }
 
+% Comando para definir un requisito no funcional
+\define@key{requisitonf}{objetivosAsociados}{\def\requisitonf@objetivosAsociados{#1}}
+\define@key{requisitonf}{requisitosAsociados}{\def\requisitonf@requisitosAsociados{#1}}
 
+\presetkeys{requisitonf}{
+    objetivosAsociados = {\item[ ] \textbf{PD}},
+    requisitosAsociados = {\item[ ] \textbf{PD}},
+}{}
+
+\newcommand{\requisitonf}[2]{
+    \setkeys{keygenerica}{#1}
+    \setkeys{requisitonf}{#2}
+
+    \begin{table}[H]
+    \begingroup
+    \centering
+
+    \NiceMatrixOptions{
+        cell-space-limits = 4pt
+    }
+
+    \makebox[\textwidth] {
+    \begin{NiceTabular}[width=15cm]{ | l | X |[color=gray] X | } 
+    \CodeBefore
+        \rowcolor{Snow3}{1}
+        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \Body
+        \hline
+        \textbf{NFR-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \hline
+        \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
+        \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
+        \textbf{Fuentes} & \bloque{\keygenerica@fuentes} \\
+        \textbf{Objetivos asociados} & \bloque{\parbox{9.5cm}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \requisitonf@objetivosAsociados
+            \end{itemize}
+        }} \\
+        \textbf{Requisitos asociados} & \bloque{\parbox{9.5cm}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \requisitonf@requisitosAsociados
+            \end{itemize}
+        }} \\ 
+        \textbf{Descripción} & \bloque{\parbox{9.5cm}{\keygenerica@descripcion}} \\ 
+        \textbf{Importancia} & \bloque{\keygenerica@importancia} \\
+        \textbf{Urgencia} & \bloque{\keygenerica@urgencia} \\
+        \textbf{Estado} & \bloque{\keygenerica@estado} \\
+        \textbf{Estabilidad} & \bloque{\keygenerica@estabilidad} \\
+        \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
+    \hline
+    \end{NiceTabular}
+    }
+    \caption{Requisito no funcional \keygenerica@id: \keygenerica@nombre}
+    \label{anexo1:tab:rnf\keygenerica@id}
+    \endgroup
+    \end{table}
+}
 
 
 \makeatother
