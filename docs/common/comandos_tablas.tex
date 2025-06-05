@@ -98,38 +98,55 @@
 \define@key{requisitoinfo}{objetivosAsociados}{\def\requisitoinfo@objetivosAsociados{#1}}
 \define@key{requisitoinfo}{requisitosAsociados}{\def\requisitoinfo@requisitosAsociados{#1}}
 \define@key{requisitoinfo}{datosEspecificos}{\def\requisitoinfo@datosEspecificos{#1}}
-\define@key{requisitoinfo}{intervaloTemporal}{\def\requisitoinfo@intervaloTemporal{#1}}
+\define@key{requisitoinfo}{tiempoVidaMedio}{\def\requisitoinfo@tiempoVidaMedio{#1}}
+\define@key{requisitoinfo}{tiempoVidaMaximo}{\def\requisitoinfo@tiempoVidaMaximo{#1}}
+\define@key{requisitoinfo}{ocurrenciasSimultaneasMedio}{\def\requisitoinfo@ocurrenciasSimultaneasMedio{#1}}
+\define@key{requisitoinfo}{ocurrenciasSimultaneasMaximo}{\def\requisitoinfo@ocurrenciasSimultaneasMaximo{#1}}
 
 \presetkeys{requisitoinfo}{
     objetivosAsociados = {No procede},
     requisitosAsociados = {No procede},
     datosEspecificos = {No procede},
-    intervaloTemporal = {Pasado y presente, solo presente},
+    tiempoVidaMedio = {No procede},
+    tiempoVidaMaximo = {No procede},
+    ocurrenciasSimultaneasMedio = {No procede},
+    ocurrenciasSimultaneasMaximo = {No procede},
 }{}
 
 \newcommand{\requisitoinfo}[2]{
     \setkeys{keygenerica}{#1}
     \setkeys{requisitoinfo}{#2}
-    \tablarara{
-        titulo = {\textbf{RI-\keygenerica@id} & \textbf{\keygenerica@nombre}},
-        contenido = {
-            \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
-            \textbf{Autores} & Alberto Luengo Román \\
-            \textbf{Fuentes} & \keygenerica@fuentes \\
-            \textbf{Objetivos asociados} & \requisitoinfo@objetivosAsociados \\
-            \textbf{Requisitos asociados} & \requisitoinfo@requisitosAsociados \\
-            \textbf{Descripción} & \keygenerica@descripcion \\
-            \textbf{Datos específicos} & \requisitoinfo@datosEspecificos \\
-            \textbf{Intervalo temporal} & \requisitoinfo@intervaloTemporal \\
-            \textbf{Importancia} & \keygenerica@importancia \\
-            \textbf{Urgencia} & \keygenerica@urgencia \\
-            \textbf{Estado} & \keygenerica@estado \\
-            \textbf{Estabilidad} & \keygenerica@estabilidad \\
-            \textbf{Comentarios} & \keygenerica@comentarios \\
-        },
-        caption = {Requisito de información \keygenerica@id: \keygenerica@nombre},
-        label = {anexo1:tab:ri\keygenerica@id}
+
+    \begin{table}[H]
+    \noindent \makebox[\textwidth] {
+        \rowcolors{2}{Snow2}{Snow1}
+        \begin{tabular}{ | l | p{5cm} | p{5cm} | }
+            \hline
+            \rowcolor{Snow3}
+            \textbf{RI-\keygenerica@id} & \multicolumn{2}{p{10.75cm}|}{\textbf{\keygenerica@nombre}} \\ 
+            \hline
+            \textbf{Versión} & \multicolumn{2}{p{10.75cm}|}{1.0 (\textbf{TODO: FECHA})} \\
+            \textbf{Autores} & \multicolumn{2}{p{10.75cm}|}{Alberto Luengo Román} \\
+            \textbf{Fuentes} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@fuentes} \\
+            \textbf{Objetivos asociados} & \multicolumn{2}{p{10.75cm}|}{\requisitoinfo@objetivosAsociados} \\
+            \textbf{Requisitos asociados} & \multicolumn{2}{p{10.75cm}|}{\requisitoinfo@requisitosAsociados} \\
+            \textbf{Descripción} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@descripcion} \\
+            \textbf{Datos específicos} & \multicolumn{2}{p{10.75cm}|}{\requisitoinfo@datosEspecificos} \\
+                                                      & \textbf{Medio} & \textbf{Máximo} \\ \cline{2-3}
+            \multirow{-2}{*}{\textbf{Tiempo de vida}} & \requisitoinfo@tiempoVidaMedio & \requisitoinfo@tiempoVidaMaximo \\
+                                                               & \textbf{Medio} & \textbf{Máximo} \\ \cline{2-3}
+            \multirow{-2}{*}{\textbf{Ocurrencias simultáneas}} & \requisitoinfo@ocurrenciasSimultaneasMedio & \requisitoinfo@ocurrenciasSimultaneasMaximo \\
+            \textbf{Importancia} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@importancia} \\
+            \textbf{Urgencia} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@urgencia} \\
+            \textbf{Estado} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@estado} \\
+            \textbf{Estabilidad} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@estabilidad} \\
+            \textbf{Comentarios} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@comentarios} \\
+            \hline
+        \end{tabular}
     }
+    \caption{Requisito de información \keygenerica@id: \keygenerica@nombre}
+    \label{anexo1:tab:ri\keygenerica@id}
+    \end{table}
 }
 
 \makeatother
