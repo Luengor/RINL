@@ -27,6 +27,57 @@
     comentarios = {No procede},
 }{}
 
+% Comando para definir un participante
+\define@key{participante}{nombre}{\def\participante@nombre{#1}}
+\define@key{participante}{organizacion}{\def\participante@organizacion{#1}}
+\define@key{participante}{rol}{\def\participante@rol{#1}}
+\define@key{participante}{desarrollador}{\def\participante@desarrollador{#1}}
+\define@key{participante}{cliente}{\def\participante@cliente{#1}}
+\define@key{participante}{usuario}{\def\participante@usuario{#1}}
+\define@key{participante}{comentarios}{\def\participante@comentarios{#1}}
+
+\presetkeys{participante}{
+    nombre = {Nombre del participante},
+    organizacion = {Organización del participante},
+    rol = {Rol del participante},
+    desarrollador = {No},
+    cliente = {No},
+    usuario = {No},
+    comentarios = {No procede},
+}{}
+
+\newcommand{\participante}[1]{
+    \setkeys{participante}{#1}
+    \begin{table}[H]
+    \begingroup
+    \centering
+    \NiceMatrixOptions{
+        cell-space-limits = 4pt
+    }
+    \makebox[\textwidth] {
+    \begin{NiceTabular}[width=15cm]{ | l | X | }
+    \CodeBefore
+        \rowcolor{Snow3}{1}
+        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \Body
+        \hline
+        \textbf{Participante} & \textbf{\participante@nombre} \\
+        \hline
+        \textbf{Organización} & \participante@organizacion \\
+        \textbf{Rol} & \participante@rol \\
+        \textbf{Desarrollador} & \participante@desarrollador \\
+        \textbf{Cliente} & \participante@cliente \\
+        \textbf{Usuario} & \participante@usuario \\
+        \textbf{Comentarios} & \participante@comentarios \\
+    \hline
+    \end{NiceTabular}
+    }
+    \caption{Participante: \participante@nombre}
+    \label{anexo1:tab:part\participante@nombre}
+    \endgroup
+    \end{table}
+}
+
 % Comando para definir un objetivo
 \define@key{objetivo}{subobjetivos}{\def\objetivo@subobjetivos{#1}}
 
