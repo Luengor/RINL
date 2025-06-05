@@ -1,0 +1,9 @@
+@startuml Actores
+
+:Usuario sin autenticar: as userno
+:Usuario autenticado: as useryes
+:Sistema: as sys
+
+userno <|-- useryes
+
+@enduml

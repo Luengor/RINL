@@ -1,1 +1,10 @@
 \input{common/comandos_tablas.tex}
+
+\newcommand{\diagrama}[3]{
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\textwidth]{#2}
+        \caption{#1}
+        \label{fig:#3}
+    \end{figure}
+}
