@@ -1,45 +1,7 @@
 \makeatletter   % Para poder usar @ en los nombres de comandos
 
-% Comando para las listas
-\newcommand{\lista}[1]{
-    \begin{minipage}[t]{10cm}
-    \begin{itemize}[leftmargin=*, itemsep=0pt]
-        #1
-    \end{itemize}
-    \break
-    \end{minipage}
-}
-
-% Comando de tabla genérica
-\define@key{tablarara}{titulo}{\def\tablarara@titulo{#1}}
-\define@key{tablarara}{contenido}{\def\tablarara@contenido{#1}}
-\define@key{tablarara}{caption}{\def\tablarara@caption{#1}}
-\define@key{tablarara}{label}{\def\tablarara@label{#1}}
-
-\presetkeys{tablarara}{
-    titulo = {Título de la tabla},
-    caption = {Descripción de la tabla},
-    label = {anexo1:tab:tabla}
-    contenido = {Contenido de la tabla},
-}{}
-
-\newcommand{\tablarara}[1]{
-    \setkeys{tablarara}{#1}
-    \begin{table}[H]
-    \noindent \makebox[\textwidth] {
-        \rowcolors{2}{Snow2}{Snow1}
-        \begin{tabular}{ | l | p{10cm} | }
-            \hline
-            \rowcolor{Snow3}
-            \tablarara@titulo \\
-            \hline
-            \tablarara@contenido
-            \hline
-        \end{tabular}
-    }
-    \caption{\tablarara@caption}
-    \label{\tablarara@label}
-    \end{table}
+\newcommand{\bloque}[1]{
+    \Block[l]{1-2}{#1}
 }
 
 % Keys comunes para la mayoría de las tablas
@@ -69,29 +31,53 @@
 \define@key{objetivo}{subobjetivos}{\def\objetivo@subobjetivos{#1}}
 
 \presetkeys{objetivo}{
-    subobjetivos = {No procede},
+    subobjetivos = {\item[ ] \textbf{PD}},
 }{}
 
 \newcommand{\objetivo}[2]{
     \setkeys{keygenerica}{#1}
     \setkeys{objetivo}{#2}
-    \tablarara{
-        titulo = {\textbf{OBJ-\keygenerica@id} & \textbf{\keygenerica@nombre}},
-        contenido = {
-            \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
-            \textbf{Autores} & Alberto Luengo Román \\
-            \textbf{Fuentes} & \keygenerica@fuentes \\
-            \textbf{Descripción} & \keygenerica@descripcion \\
-            \textbf{Subobjetivos} & \objetivo@subobjetivos \\
-            \textbf{Importancia} & \keygenerica@importancia \\
-            \textbf{Urgencia} & \keygenerica@urgencia \\
-            \textbf{Estado} & \keygenerica@estado \\
-            \textbf{Estabilidad} & \keygenerica@estabilidad \\
-            \textbf{Comentarios} & \keygenerica@comentarios \\
-        },
-        caption = {Objetivo \keygenerica@id: \keygenerica@nombre},
-        label = {anexo1:tab:obj\keygenerica@id}
+
+    \begin{table}[H]
+    \begingroup
+    \centering
+
+    \NiceMatrixOptions{
+        cell-space-limits = 4pt
     }
+
+    \makebox[\textwidth] {
+    \begin{NiceTabular}[width=15cm]{ | l | X | } 
+    \CodeBefore
+        \rowcolor{Snow3}{1}
+        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \Body
+        \hline
+        \textbf{OBJ-\keygenerica@id} & \textbf{\keygenerica@nombre} \\
+        \hline
+        \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
+        \textbf{Autores} & Alberto Luengo Román \\
+        \textbf{Fuentes} & \keygenerica@fuentes \\
+        \textbf{Descripción} & \keygenerica@descripcion \\
+        \textbf{Subobjetivos} & \Block[j]{1-1}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \objetivo@subobjetivos
+            \end{itemize}
+        } \\
+        \textbf{Importancia} & \keygenerica@importancia \\
+        \textbf{Urgencia} & \keygenerica@urgencia \\
+        \textbf{Estado} & \keygenerica@estado \\
+        \textbf{Estabilidad} & \keygenerica@estabilidad \\
+        \textbf{Comentarios} & \keygenerica@comentarios \\
+    \hline
+    \end{NiceTabular}
+    }
+
+    \caption{Objetivo \keygenerica@id: \keygenerica@nombre}
+    \label{anexo1:tab:obj\keygenerica@id}
+
+    \endgroup
+    \end{table}
 }
 
 % Comando para definir un requisito de información
@@ -104,13 +90,13 @@
 \define@key{requisitoinfo}{ocurrenciasSimultaneasMaximo}{\def\requisitoinfo@ocurrenciasSimultaneasMaximo{#1}}
 
 \presetkeys{requisitoinfo}{
-    objetivosAsociados = {No procede},
-    requisitosAsociados = {No procede},
-    datosEspecificos = {No procede},
-    tiempoVidaMedio = {No procede},
-    tiempoVidaMaximo = {No procede},
-    ocurrenciasSimultaneasMedio = {No procede},
-    ocurrenciasSimultaneasMaximo = {No procede},
+    objetivosAsociados = {\item[ ] \textbf{PD}},
+    requisitosAsociados = {\item[ ] \textbf{PD}},
+    datosEspecificos = {\item[ ] \textbf{PD}},
+    tiempoVidaMedio = {},
+    tiempoVidaMaximo = {},
+    ocurrenciasSimultaneasMedio = {},
+    ocurrenciasSimultaneasMaximo = {},
 }{}
 
 \newcommand{\requisitoinfo}[2]{
@@ -118,34 +104,58 @@
     \setkeys{requisitoinfo}{#2}
 
     \begin{table}[H]
-    \noindent \makebox[\textwidth] {
-        \rowcolors{2}{Snow2}{Snow1}
-        \begin{tabular}{ | l | p{5cm} | p{5cm} | }
-            \hline
-            \rowcolor{Snow3}
-            \textbf{RI-\keygenerica@id} & \multicolumn{2}{p{10.75cm}|}{\textbf{\keygenerica@nombre}} \\ 
-            \hline
-            \textbf{Versión} & \multicolumn{2}{p{10.75cm}|}{1.0 (\textbf{TODO: FECHA})} \\
-            \textbf{Autores} & \multicolumn{2}{p{10.75cm}|}{Alberto Luengo Román} \\
-            \textbf{Fuentes} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@fuentes} \\
-            \textbf{Objetivos asociados} & \multicolumn{2}{p{10.75cm}|}{\requisitoinfo@objetivosAsociados} \\
-            \textbf{Requisitos asociados} & \multicolumn{2}{p{10.75cm}|}{\requisitoinfo@requisitosAsociados} \\
-            \textbf{Descripción} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@descripcion} \\
-            \textbf{Datos específicos} & \multicolumn{2}{p{10.75cm}|}{\requisitoinfo@datosEspecificos} \\
-                                                      & \textbf{Medio} & \textbf{Máximo} \\ \cline{2-3}
-            \multirow{-2}{*}{\textbf{Tiempo de vida}} & \requisitoinfo@tiempoVidaMedio & \requisitoinfo@tiempoVidaMaximo \\
-                                                               & \textbf{Medio} & \textbf{Máximo} \\ \cline{2-3}
-            \multirow{-2}{*}{\textbf{Ocurrencias simultáneas}} & \requisitoinfo@ocurrenciasSimultaneasMedio & \requisitoinfo@ocurrenciasSimultaneasMaximo \\
-            \textbf{Importancia} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@importancia} \\
-            \textbf{Urgencia} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@urgencia} \\
-            \textbf{Estado} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@estado} \\
-            \textbf{Estabilidad} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@estabilidad} \\
-            \textbf{Comentarios} & \multicolumn{2}{p{10.75cm}|}{\keygenerica@comentarios} \\
-            \hline
-        \end{tabular}
+    \begingroup
+    \centering
+
+    \NiceMatrixOptions{
+        cell-space-limits = 4pt
     }
+
+    \makebox[\textwidth] {
+    \begin{NiceTabular}[width=15cm]{ | l | X |[color=gray] X | } 
+    \CodeBefore
+        \rowcolor{Snow3}{1}
+        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \Body
+        \hline
+        \textbf{IRQ-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \hline
+        \textbf{Autores} & \bloque{Alberto Luengo Román} \\
+        \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
+        \textbf{Fuentes} & \bloque{\keygenerica@fuentes} \\
+        \textbf{Objetivos asociados} & \bloque{\parbox{9.5cm}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \requisitoinfo@objetivosAsociados
+            \end{itemize}
+        }} \\
+        \textbf{Requisitos asociados} & \bloque{\parbox{9.5cm}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \requisitoinfo@requisitosAsociados
+            \end{itemize}
+        }} \\
+        \textbf{Descripción} & \bloque{\parbox{9.5cm}{\keygenerica@descripcion}} \\ 
+        \textbf{Datos específicos} & \bloque{\parbox{9.5cm}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \requisitoinfo@datosEspecificos 
+            \end{itemize}
+        }} \\
+        \Block[l]{2-1}{\textbf{Tiempo de vida}} & \textbf{Medio} & \textbf{Máximo} \\
+                                                & años           & para siempre \\ 
+        \Block[l]{2-1}{\textbf{Ocurrencias simultáneas}} & \textbf{Medio} & \textbf{Máximo} \\
+                                                         & unas pocas     & un montón \\
+        \textbf{Importancia} & \bloque{\keygenerica@importancia} \\
+        \textbf{Urgencia} & \bloque{\keygenerica@urgencia} \\
+        \textbf{Estado} & \bloque{\keygenerica@estado} \\
+        \textbf{Estabilidad} & \bloque{\keygenerica@estabilidad} \\
+        \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
+    \hline
+    \end{NiceTabular}
+    }
+
     \caption{Requisito de información \keygenerica@id: \keygenerica@nombre}
     \label{anexo1:tab:ri\keygenerica@id}
+
+    \endgroup
     \end{table}
 }
 
