@@ -96,6 +96,42 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
 
 \subsection{Definición de actores}
 \label{anexo1:sec:requisitos-funcionales-actores}
+En este subapartado se definen los distintos actores del sistema en forma de tabla, así como la
+relacción entre ellos a través de un diagrama.
+
+\actor{
+    id = {0001},
+    nombre = {Usuario sin autenticar},
+    descripcion = {
+        Este actor representa a un usuario que no ha iniciado sesión en el sistema.
+    },
+    comentarios = {
+        Este actor interactúa con el sistema unicamente para registrarse o iniciar sesión.
+    }
+}
+
+\actor{
+    id = {0002},
+    nombre = {Usuario autenticado},
+    descripcion = {
+        Este actor representa a un usuario que ha iniciado sesión en el sistema.
+    },
+    comentarios = {
+        Este actor puede realizar todas las acciones disponibles en el sistema.
+    }
+}
+
+% Usuarios verificados? Usuarios que hayan subido su forma física?
+
+\actor{
+    id = {0003},
+    nombre = {Sistema},
+    descripcion = {
+        Este actor representa al sistema en sí mismo.
+    }
+}
+
+
 
 \subsection{Casos de uso del sistema}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso-definicion}
