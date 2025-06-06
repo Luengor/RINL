@@ -1,11 +1,9 @@
-# pylint: disable=unused-import, unused-argument, redefined-outer-name, missing-function-docstring, missing-module-docstring
-# pyright: reportUnusedImport=false
+# pylint: disable=missing-function-docstring,missing-module-docstring
 from typing import Any
 from datetime import datetime
 from fastapi.testclient import TestClient
 import pytest
 from backend.schemas.users import UserBase
-from .utils import client, verified_login_token, session, engine
 from .data import test_user
 
 

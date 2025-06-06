@@ -1,14 +1,11 @@
-# pylint: disable=unused-import, unused-argument, redefined-outer-name, missing-function-docstring, missing-module-docstring
-# pyright: reportUnusedImport=false
+# pylint: missing-function-docstring, missing-module-docstring
 from typing import Any
 from datetime import datetime
 from fastapi.testclient import TestClient
 import pytest
-from backend.schemas.users import UserBase
 from backend.core.auth import NOT_VERIFIED
-from .utils import client, unverified_login_token, verified_login_token, session, engine
-from .data import test_user
 from backend.schemas.shape import ShapeBase
+from .data import test_user
 
 test_shape = ShapeBase(
     date=datetime.now(),

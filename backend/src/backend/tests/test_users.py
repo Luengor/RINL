@@ -1,12 +1,10 @@
-# pylint: disable=unused-import, unused-argument, redefined-outer-name, missing-function-docstring, missing-module-docstring
-# pyright: reportUnusedImport=false
+# pylint: disable=missing-function-docstring,missing-module-docstring
 import json
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from backend.models.user import User
 from backend.core.auth import NOT_VERIFIED
 from .data import test_user, test_unverified_user
-from .utils import client, session, verified_login_token, unverified_login_token, engine
 
 
 def test_create_user(client: TestClient, session: Session):
