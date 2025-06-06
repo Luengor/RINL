@@ -287,33 +287,33 @@
     }
 
     \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ | l | X |[color=gray] X | } 
+    \begin{NiceTabular}[width=15cm]{ | l | X | } 
     \CodeBefore
         \rowcolor{Snow3}{1}
         \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
     \Body
         \hline
-        \textbf{NFR-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \textbf{NFR-\keygenerica@id} & \textbf{\keygenerica@nombre} \\ 
         \hline
-        \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
-        \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
-        \textbf{Fuentes} & \bloque{\keygenerica@fuentes} \\
-        \textbf{Objetivos asociados} & \bloque{\parbox{9.5cm}{
+        \textbf{Autores} & Luengo Román, Alberto \\
+        \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
+        \textbf{Fuentes} & \keygenerica@fuentes \\
+        \textbf{Objetivos asociados} & \Block[j]{1-1}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \requisitonf@objetivosAsociados
             \end{itemize}
-        }} \\
-        \textbf{Requisitos asociados} & \bloque{\parbox{9.5cm}{
+        } \\
+        \textbf{Requisitos asociados} & \Block[j]{1-1}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \requisitonf@requisitosAsociados
             \end{itemize}
-        }} \\ 
-        \textbf{Descripción} & \bloque{\parbox{9.5cm}{\keygenerica@descripcion}} \\ 
-        \textbf{Importancia} & \bloque{\keygenerica@importancia} \\
-        \textbf{Urgencia} & \bloque{\keygenerica@urgencia} \\
-        \textbf{Estado} & \bloque{\keygenerica@estado} \\
-        \textbf{Estabilidad} & \bloque{\keygenerica@estabilidad} \\
-        \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
+        } \\ 
+        \textbf{Descripción} & \keygenerica@descripcion \\ 
+        \textbf{Importancia} & \keygenerica@importancia \\
+        \textbf{Urgencia} & \keygenerica@urgencia \\
+        \textbf{Estado} & \keygenerica@estado \\
+        \textbf{Estabilidad} & \keygenerica@estabilidad \\
+        \textbf{Comentarios} & \keygenerica@comentarios \\
     \hline
     \end{NiceTabular}
     }
