@@ -4,6 +4,30 @@
     \Block[l]{1-2}{#1}
 }
 
+\newcommand{\tableshell}[4]{
+    \begin{table}[H]
+    \begingroup
+    \centering
+    \NiceMatrixOptions{
+        cell-space-limits = 4pt
+    }
+    \makebox[\textwidth] {
+    \begin{NiceTabular}[width=15cm]{ #1 }
+    \CodeBefore
+        \rowcolor{Snow3}{1}
+        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \Body
+    \hline
+        #2
+    \hline
+    \end{NiceTabular}
+    }
+    \caption{#3}
+    \label{#4}
+    \endgroup
+    \end{table}
+}
+
 % Keys comunes para la mayoría de las tablas
 \define@key{keygenerica}{id}{\def\keygenerica@id{#1}}
 \define@key{keygenerica}{nombre}{\def\keygenerica@nombre{#1}}
@@ -48,19 +72,8 @@
 
 \newcommand{\participante}[1]{
     \setkeys{participante}{#1}
-    \begin{table}[H]
-    \begingroup
-    \centering
-    \NiceMatrixOptions{
-        cell-space-limits = 4pt
-    }
-    \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ | l | X | }
-    \CodeBefore
-        \rowcolor{Snow3}{1}
-        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
-    \Body
-        \hline
+    
+    \tableshell{ | l | X | }{
         \textbf{Participante} & \textbf{\participante@nombre} \\
         \hline
         \textbf{Organización} & \participante@organizacion \\
@@ -69,13 +82,11 @@
         \textbf{Cliente} & \participante@cliente \\
         \textbf{Usuario} & \participante@usuario \\
         \textbf{Comentarios} & \participante@comentarios \\
-    \hline
-    \end{NiceTabular}
+    }{
+        Participante: \participante@nombre
+    }{
+        anexo1:tab:part\participante@nombre
     }
-    \caption{Participante: \participante@nombre}
-    \label{anexo1:tab:part\participante@nombre}
-    \endgroup
-    \end{table}
 }
 
 % Comando para definir un objetivo
@@ -89,21 +100,7 @@
     \setkeys{keygenerica}{#1}
     \setkeys{objetivo}{#2}
 
-    \begin{table}[H]
-    \begingroup
-    \centering
-
-    \NiceMatrixOptions{
-        cell-space-limits = 4pt
-    }
-
-    \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ | l | X | } 
-    \CodeBefore
-        \rowcolor{Snow3}{1}
-        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
-    \Body
-        \hline
+    \tableshell{ | l | X | }{
         \textbf{OBJ-\keygenerica@id} & \textbf{\keygenerica@nombre} \\
         \hline
         \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
@@ -120,15 +117,11 @@
         \textbf{Estado} & \keygenerica@estado \\
         \textbf{Estabilidad} & \keygenerica@estabilidad \\
         \textbf{Comentarios} & \keygenerica@comentarios \\
-    \hline
-    \end{NiceTabular}
+    }{
+        Objetivo \keygenerica@id: \keygenerica@nombre
+    }{
+        anexo1:tab:obj\keygenerica@id
     }
-
-    \caption{Objetivo \keygenerica@id: \keygenerica@nombre}
-    \label{anexo1:tab:obj\keygenerica@id}
-
-    \endgroup
-    \end{table}
 }
 
 % Comando para definir un requisito de información
@@ -154,21 +147,8 @@
     \setkeys{keygenerica}{#1}
     \setkeys{requisitoinfo}{#2}
 
-    \begin{table}[H]
-    \begingroup
-    \centering
-
-    \NiceMatrixOptions{
-        cell-space-limits = 4pt
-    }
-
-    \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ | l | X |[color=gray] X | } 
-    \CodeBefore
-        \rowcolor{Snow3}{1}
-        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
-    \Body
-        \hline
+        
+    \tableshell{ | l | X |[color=gray] X | }{
         \textbf{IRQ-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
         \hline
         \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
@@ -199,15 +179,11 @@
         \textbf{Estado} & \bloque{\keygenerica@estado} \\
         \textbf{Estabilidad} & \bloque{\keygenerica@estabilidad} \\
         \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
-    \hline
-    \end{NiceTabular}
+    }{
+        Requisito de información \keygenerica@id: \keygenerica@nombre
+    }{
+        anexo1:tab:ri\keygenerica@id
     }
-
-    \caption{Requisito de información \keygenerica@id: \keygenerica@nombre}
-    \label{anexo1:tab:ri\keygenerica@id}
-
-    \endgroup
-    \end{table}
 }
 
 % Comando para definir un actor
@@ -232,21 +208,7 @@
 \newcommand{\actor}[1]{
     \setkeys{actor}{#1}
 
-    \begin{table}[H]
-    \begingroup
-    \centering
-
-    \NiceMatrixOptions{
-        cell-space-limits = 4pt
-    }
-
-    \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ | l | X | } 
-    \CodeBefore
-        \rowcolor{Snow3}{1}
-        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
-    \Body
-        \hline
+    \tableshell{ | l | X | }{
         \textbf{ACT-\actor@id} & \textbf{\actor@nombre} \\
         \hline
         \textbf{Versión} & \actor@version \\
@@ -254,15 +216,11 @@
         \textbf{Fuentes} & \actor@fuentes \\
         \textbf{Descripción} & \actor@descripcion \\ 
         \textbf{Comentarios} & \actor@comentarios \\ 
-    \hline
-    \end{NiceTabular}
+    }{
+        Actor: ACT-\actor@id - \actor@nombre
+    }{
+        anexo1:tab:act\actor@id
     }
-
-    \caption{Actor: ACT-\actor@id - \actor@nombre}
-    \label{anexo1:tab:act\actor@id}
-
-    \endgroup
-    \end{table}
 }
 
 % Comando para definir un requisito no funcional
@@ -278,21 +236,7 @@
     \setkeys{keygenerica}{#1}
     \setkeys{requisitonf}{#2}
 
-    \begin{table}[H]
-    \begingroup
-    \centering
-
-    \NiceMatrixOptions{
-        cell-space-limits = 4pt
-    }
-
-    \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ | l | X | } 
-    \CodeBefore
-        \rowcolor{Snow3}{1}
-        \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
-    \Body
-        \hline
+    \tableshell{ | l | X | }{
         \textbf{NFR-\keygenerica@id} & \textbf{\keygenerica@nombre} \\ 
         \hline
         \textbf{Autores} & Luengo Román, Alberto \\
@@ -314,14 +258,39 @@
         \textbf{Estado} & \keygenerica@estado \\
         \textbf{Estabilidad} & \keygenerica@estabilidad \\
         \textbf{Comentarios} & \keygenerica@comentarios \\
-    \hline
-    \end{NiceTabular}
+    }{
+        Requisito no funcional \keygenerica@id: \keygenerica@nombre
+    }{
+        anexo1:tab:rnf\keygenerica@id
     }
-    \caption{Requisito no funcional \keygenerica@id: \keygenerica@nombre}
-    \label{anexo1:tab:rnf\keygenerica@id}
-    \endgroup
-    \end{table}
 }
 
+% Comando para definir un caso de uso
+\define@key{casouso}{objetivosAsociados}{\def\casouso@objetivosAsociados{#1}}
+\define@key{casouso}{requisitosAsociados}{\def\casouso@requisitosAsociados{#1}}
+\define@key{casouso}{precondicion}{\def\casouso@precondicion{#1}}
+\define@key{casouso}{secuencia}{\def\casouso@secuencia{#1}}
+\define@key{casouso}{postcondicion}{\def\casouso@postcondicion{#1}}
+\define@key{casouso}{excepciones}{\def\casouso@excepciones{#1}}
+\define@key{casouso}{rendimiento}{\def\casouso@rendimiento{#1}}
+\define@key{casouso}{frecuencia}{\def\casouso@frecuencia{#1}}
+
+\presetkeys{casouso}{
+    objetivosAsociados = {\item[ ] \textbf{PD}},
+    requisitosAsociados = {\item[ ] \textbf{PD}},
+    precondicion = {No procede},
+    secuencia = {},
+    postcondicion = {No procede},
+    excepciones = {},
+    rendimiento = {},
+    frecuencia = {No procede},
+}{}
+
+\newcommand{\casouso}[2]{
+    \setkeys{keygenerica}{#1}
+    \setkeys{casouso}{#2}
+    
+    \begin{table}[H]
+}
 
 \makeatother
