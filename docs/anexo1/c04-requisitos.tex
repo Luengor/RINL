@@ -90,6 +90,25 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
 
 \section{Requisitos funcionales}
 \label{anexo1:sec:requisitos-funcionales}
+\casouso{
+    id = {0001},
+    nombre = {Registrarse},
+    descripcion = {El sistema deberá comportarse tal como se describe en el siguiente caso de uso},
+}{
+    longsecuencia = {4},
+    secuencia = { 
+        & 1 & El actor Usuario sin autenticar pulsa el texto 'Regístrate' en la página
+              principal o en la página de iniciar sesión \\
+        & 2 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
+        & 3 & El usuario rellena el formulario y pulsa el botón de registrarse. \\
+        & 4 & El sistema valida la información introducida y, si es correcta, el usuario es creado. \\
+    },
+    longexcepciones = {1},
+    excepciones = {
+        & 4 & Si el usuario ya existe, el sistema muestra un mensaje de error indicando que el
+              correo electrónico ya está en uso. \\
+    },
+}
 
 \subsection{Diagramas de casos de uso}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso}

@@ -151,8 +151,8 @@
     \tableshell{ | l | X |[color=gray] X | }{
         \textbf{IRQ-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
         \hline
-        \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
         \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
+        \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
         \textbf{Fuentes} & \bloque{\keygenerica@fuentes} \\
         \textbf{Objetivos asociados} & \bloque{\parbox{9.5cm}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
@@ -239,8 +239,8 @@
     \tableshell{ | l | X | }{
         \textbf{NFR-\keygenerica@id} & \textbf{\keygenerica@nombre} \\ 
         \hline
-        \textbf{Autores} & Luengo Román, Alberto \\
         \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
+        \textbf{Autores} & Luengo Román, Alberto \\
         \textbf{Fuentes} & \keygenerica@fuentes \\
         \textbf{Objetivos asociados} & \Block[j]{1-1}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
@@ -269,9 +269,12 @@
 \define@key{casouso}{objetivosAsociados}{\def\casouso@objetivosAsociados{#1}}
 \define@key{casouso}{requisitosAsociados}{\def\casouso@requisitosAsociados{#1}}
 \define@key{casouso}{precondicion}{\def\casouso@precondicion{#1}}
+\define@key{casouso}{longsecuencia}{\def\casouso@longsecuencia{#1}}
 \define@key{casouso}{secuencia}{\def\casouso@secuencia{#1}}
 \define@key{casouso}{postcondicion}{\def\casouso@postcondicion{#1}}
+\define@key{casouso}{longexcepciones}{\def\casouso@longexcepciones{#1}}
 \define@key{casouso}{excepciones}{\def\casouso@excepciones{#1}}
+\define@key{casouso}{longrendimiento}{\def\casouso@longrendimiento{#1}}
 \define@key{casouso}{rendimiento}{\def\casouso@rendimiento{#1}}
 \define@key{casouso}{frecuencia}{\def\casouso@frecuencia{#1}}
 
@@ -279,9 +282,12 @@
     objetivosAsociados = {\item[ ] \textbf{PD}},
     requisitosAsociados = {\item[ ] \textbf{PD}},
     precondicion = {No procede},
+    longsecuencia = {0},
     secuencia = {},
     postcondicion = {No procede},
+    longexcepciones = {0},
     excepciones = {},
+    longrendimiento = {0},
     rendimiento = {},
     frecuencia = {No procede},
 }{}
@@ -289,8 +295,69 @@
 \newcommand{\casouso}[2]{
     \setkeys{keygenerica}{#1}
     \setkeys{casouso}{#2}
+
+    \def\parwidth{10cm}
+    \newcounter{csec}
+    \setcounter{csec}{\casouso@longsecuencia}
+    \stepcounter{csec}
+
+    \newcounter{cexc}
+    \setcounter{cexc}{\casouso@longexcepciones}
+    \stepcounter{cexc}
+
+    \newcounter{cren}
+    \setcounter{cren}{\casouso@longrendimiento}
+    \stepcounter{cren}
     
-    \begin{table}[H]
+    
+    \tableshell{ | p{2.75cm} | X[c,m] | X[10,m] | }{
+        \textbf{UC-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \hline
+        \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
+        \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
+        \textbf{Fuentes} & \bloque{\keygenerica@fuentes} \\
+        \textbf{Objetivos asociados} & \bloque{\parbox{\parwidth}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \casouso@objetivosAsociados
+            \end{itemize}
+        }} \\
+        \textbf{Requisitos asociados} & \bloque{\parbox{\parwidth}{
+            \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
+                \casouso@requisitosAsociados
+            \end{itemize}
+        }} \\
+        \textbf{Descripción} & \bloque{\parbox{\parwidth}{\keygenerica@descripcion}} \\ 
+        \textbf{Precondición} & \bloque{\parbox{\parwidth}{\casouso@precondicion}} \\
+
+        \Block[l]{\thecsec-1}{\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción} \\
+        \cline{2-3}
+        \casouso@secuencia
+        \textbf{Postcondición} & \bloque{\parbox{\parwidth}{\casouso@postcondicion}} \\
+
+        \ifx\casouso@excepciones\empty
+        \else
+            \Block[l]{\thecexc-1}{\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\
+            \cline{2-3}
+            \casouso@excepciones
+        \fi
+
+        \ifx\casouso@rendimiento\empty
+        \else
+            \Block[l]{\theren-1}{\textbf{Rendimiento}} & \textbf{Medida} & \textbf{Valor} \\
+            \cline{2-3}
+            \casouso@rendimiento
+        \fi
+        \textbf{Frecuencia} & \bloque{\casouso@frecuencia} \\
+        \textbf{Importancia} & \bloque{\keygenerica@importancia} \\
+        \textbf{Urgencia} & \bloque{\keygenerica@urgencia} \\
+        \textbf{Estado} & \bloque{\keygenerica@estado} \\
+        \textbf{Estabilidad} & \bloque{\keygenerica@estabilidad} \\
+        \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
+    }{
+        Caso de uso: \keygenerica@id: \keygenerica@nombre
+    }{
+        anexo1:tab:cu\keygenerica@id
+    }
 }
 
 \makeatother
