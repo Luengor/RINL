@@ -6,6 +6,8 @@
 
 \newcommand{\tableshell}[4]{
     \begin{table}[H]
+    \protected@edef\@currentlabelname{#3}
+    \label{#4}
     \begingroup
     \centering
     \NiceMatrixOptions{
@@ -23,7 +25,6 @@
     \end{NiceTabular}
     }
     \caption{#3}
-    \label{#4}
     \endgroup
     \end{table}
 }
@@ -107,7 +108,7 @@
         \textbf{Autores} & Luengo Román, Alberto \\
         \textbf{Fuentes} & \keygenerica@fuentes \\
         \textbf{Descripción} & \keygenerica@descripcion \\
-        \textbf{Subobjetivos} & \Block[j]{1-1}{
+        \textbf{Subobjetivos} & \Block{1-1}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \objetivo@subobjetivos
             \end{itemize}
@@ -119,9 +120,7 @@
         \textbf{Comentarios} & \keygenerica@comentarios \\
     }{
         Objetivo \keygenerica@id: \keygenerica@nombre
-    }{
-        anexo1:tab:obj\keygenerica@id
-    }
+    }{anexo1:tab:obj\keygenerica@id}
 }
 
 % Comando para definir un requisito de información
