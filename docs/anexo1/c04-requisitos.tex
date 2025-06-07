@@ -95,6 +95,13 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
     nombre = {Registrarse},
     descripcion = {El sistema deberá comportarse tal como se describe en el siguiente caso de uso},
 }{
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+    },
     longsecuencia = {4},
     secuencia = { 
         & 1 & El actor Usuario sin autenticar pulsa el texto 'Regístrate' en la página
@@ -102,6 +109,11 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         & 2 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
         & 3 & El usuario rellena el formulario y pulsa el botón de registrarse. \\
         & 4 & El sistema valida la información introducida y, si es correcta, el usuario es creado. \\
+              % Mandar correo de verificación
+              % Iniciar sesión
+    },
+    postcondicion = {
+        La sesión del usuario es iniciada automáticamente.
     },
     longexcepciones = {1},
     excepciones = {
