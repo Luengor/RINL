@@ -1,0 +1,11 @@
+@startuml "casosuso"
+
+:Usuario sin autenticar: as userno
+
+left to right direction
+usecase UC0001 as "UC-0001
+Registrarse"
+
+userno --> (UC0001)
+
+@enduml
