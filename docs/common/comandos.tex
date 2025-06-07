@@ -1,10 +1,32 @@
 \input{common/comandos_tablas.tex}
 
-\newcommand{\diagrama}[3]{
-    \begin{figure}[h]
+\makeatletter
+
+\define@key{diagrama}{nombre}{\def\diagrama@nombre{#1}}
+\define@key{diagrama}{archivo}{\def\diagrama@archivo{#1}}
+\define@key{diagrama}{etiqueta}{\def\diagrama@etiqueta{#1}}
+\define@key{diagrama}{forzarPosicion}{\def\diagrama@forzarPosicion{#1}}
+
+\presetkeys{diagrama}{
+    nombre = {Diagrama},
+    archivo = {},
+    etiqueta = {fig:diagrama},
+    forzarPosicion = {}, 
+}{}
+
+\newcommand{\diagrama}[1]{
+    \setkeys{diagrama}{#1}
+
+    \ifx\diagrama@forzarPosicion\empty
+        \begin{figure}[!ht]
+    \else
+        \begin{figure}[H]
+    \fi
         \centering
-        \includegraphics[width=0.8\textwidth]{#2}
-        \caption{#1}
-        \label{fig:#3}
+        \includegraphics[width=0.8\textwidth]{\diagrama@archivo}
+        \caption{\diagrama@nombre}
+        \label{anexo1:fig:\diagrama@etiqueta}
     \end{figure}
 }
+
+\makeatother

@@ -5,8 +5,8 @@ funcionales como los no funcionales, así como los requisitos de almacenamiento 
 También se incluyen los diagramas de casos de uso y la definición de los actores del sistema. Todo
 esto siguiendo las pautas dadas por Durán y Bernárdez \cite{DuranBernardez}.
 
-\section{Requisitos de almacenamiento de información}
-\label{anexo1:sec:requisitos-almacenamiento}
+\section{Requisitos de información}
+\label{anexo1:sec:requisitos-informacion}
 En esta sección se definen los requisitos relaccionados con el almacenamiento de la información.
 
 \requisitoinfo{
@@ -90,47 +90,27 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
 
 \section{Requisitos funcionales}
 \label{anexo1:sec:requisitos-funcionales}
-\casouso{
-    id = {0001},
-    nombre = {Registrarse},
-    descripcion = {El sistema deberá comportarse tal como se describe en el siguiente caso de uso},
-}{
-    objetivosAsociados = {
-        \item \nameref{anexo1:tab:obj0004}
-        \item \nameref{anexo1:tab:obj0006}
-    },
-    requisitosAsociados = {
-        \item \nameref{anexo1:tab:ri0001}
-    },
-    longsecuencia = {4},
-    secuencia = { 
-        & 1 & El actor Usuario sin autenticar pulsa el texto 'Regístrate' en la página
-              principal o en la página de iniciar sesión \\
-        & 2 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
-        & 3 & El usuario rellena el formulario y pulsa el botón de registrarse. \\
-        & 4 & El sistema valida la información introducida y, si es correcta, el usuario es creado. \\
-              % Mandar correo de verificación
-              % Iniciar sesión
-    },
-    postcondicion = {
-        La sesión del usuario es iniciada automáticamente.
-    },
-    longexcepciones = {1},
-    excepciones = {
-        & 4 & Si el usuario ya existe, el sistema muestra un mensaje de error indicando que el
-              correo electrónico ya está en uso. \\
-    },
-}
 
 \subsection{Diagramas de casos de uso}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso}
+
+\diagrama{
+    nombre = {Casos de uso del sistema},
+    archivo = {anexo1/diagramas/casosuso.pdf},
+    etiqueta = {casos-uso},
+    forzarPosicion = {sí pls},
+}
 
 \subsection{Definición de actores}
 \label{anexo1:sec:requisitos-funcionales-actores}
 En este subapartado se definen los distintos actores del sistema en forma de tabla, así como la
 relacción entre ellos a través de un diagrama.
 
-\diagrama{Actores del sistema}{anexo1/diagramas/Actores.pdf}{anexo1:fig:actores}
+\diagrama{
+    nombre = {Actores del sistema},
+    archivo = {anexo1/diagramas/Actores.pdf},
+    etiqueta = {actores},
+}
 
 \actor{
     id = {0001},
@@ -167,6 +147,38 @@ relacción entre ellos a través de un diagrama.
 
 \subsection{Casos de uso del sistema}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso-definicion}
+\casouso{
+    id = {0001},
+    nombre = {Registrarse},
+    descripcion = {El sistema deberá comportarse tal como se describe en el siguiente caso de uso},
+}{
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+    },
+    longsecuencia = {4},
+    secuencia = { 
+        & 1 & El actor Usuario sin autenticar pulsa el texto 'Regístrate' en la página
+              principal o en la página de iniciar sesión \\
+        & 2 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
+        & 3 & El usuario rellena el formulario y pulsa el botón de registrarse. \\
+        & 4 & El sistema valida la información introducida y, si es correcta, el usuario es creado. \\
+              % Mandar correo de verificación
+              % Iniciar sesión
+    },
+    postcondicion = {
+        La sesión del usuario es iniciada automáticamente.
+    },
+    longexcepciones = {1},
+    excepciones = {
+        & 4 & Si el usuario ya existe, el sistema muestra un mensaje de error indicando que el
+              correo electrónico ya está en uso. \\
+    },
+}
+
 
 \section{Requisitos no funcionales}
 \label{anexo1:sec:requisitos-no-funcionales}
