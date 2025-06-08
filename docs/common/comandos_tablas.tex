@@ -11,7 +11,7 @@
     \begingroup
     \centering
     \NiceMatrixOptions{
-        cell-space-limits = 4pt
+        cell-space-limits = 3pt
     }
     \makebox[\textwidth] {
     \begin{NiceTabular}[width=15cm]{ #1 }
@@ -85,9 +85,7 @@
         \textbf{Comentarios} & \participante@comentarios \\
     }{
         Participante: \participante@nombre
-    }{
-        anexo1:tab:part\participante@nombre
-    }
+    }{anexo1:tab:part\participante@nombre}
 }
 
 % Comando para definir un objetivo
@@ -214,9 +212,9 @@
         \textbf{Fuentes} & \actor@fuentes \\
         \textbf{Descripción} & \actor@descripcion \\ 
         \textbf{Comentarios} & \actor@comentarios \\ 
-    }{
-        Actor: ACT-\actor@id - \actor@nombre
-    }{anexo1:tab:act\actor@id}
+    }
+    {ACT-\actor@id \ \actor@nombre}
+    {anexo1:tab:act\actor@id}
 }
 
 % Comando para definir un requisito no funcional

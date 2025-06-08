@@ -69,8 +69,8 @@ relacción entre ellos a través de un diagrama.
     nombre = {Registrarse},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario sin autenticar pulse el texto 'Regístrate' en la página principal o la página
-        de inicio de sesión. 
+        actor \nameref{anexo1:tab:act0001} pulse el texto 'Regístrate' en la página principal o la página
+        de inicio de sesión
     },
 }{
     objetivosAsociados = {
@@ -81,18 +81,18 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:ri0001}
     },
     precondicion = {%
-        El actor debe tener el rol de Usuario sin autenticar.
+        El actor no debe ser \nameref{anexo1:tab:act0002}
     },
-    longsecuencia = {3},
+    longsecuencia = {5},
     secuencia = {%
         & 1 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
-        & 2 & El usuario rellena el formulario y pulsa el botón de registrarse \\
+        & 2 & El actor \nameref{anexo1:tab:act0001} rellena el formulario y pulsa el botón de registrarse \\
         & 3 & El sistema valida la información introducida y, si es correcta, el usuario es creado \\
-              % Mandar correo de verificación
-              % Iniciar sesión
+        & 4 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu3} \\
+        & 5 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu2} \\
     },
     postcondicion = {%
-        El actor Usuario sin autenticar pasa a tener el rol de Usuario autenticado.
+        El actor pasa a tener el rol \nameref{anexo1:tab:act0002} % Usuario autenticado.
     },
     longexcepciones = {1},
     excepciones = {%
@@ -105,67 +105,155 @@ relacción entre ellos a través de un diagrama.
     nombre = {Iniciar sesión},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario sin autenticar intente iniciar sesión desde la página principal o la página
+        actor \nameref{anexo1:tab:act0001} intente iniciar sesión desde la página principal o la página
         de inicio de sesión, o durante la realización del caso de uso \nameref{anexo1:tab:cu1}
     },
-}{}
+}{
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0001} rellena el formulario de inicio de sesión y pulsa
+              el botón de iniciar sesión \\
+        & 2 & El sistema valida la información introducida y, si es correcta, el usuario es autenticado \\
+        & 3 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu4} \\
+    },
+    postcondicion = {%
+        El actor pasa a tener el rol \nameref{anexo1:tab:act0002} % Usuario autenticado. 
+    },
+    longexcepciones = {1},
+    excepciones = {%
+        & 2 & Si el usuario no existe o la contraseña es incorrecta, el sistema muestra un mensaje de
+              error indicando que las credenciales son incorrectas \\
+    },
+}
 
 \casouso{
     nombre = {Mandar correo de verificación},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso abstracto
-        durante la realización del caso de uso \nameref{anexo1:tab:cu1}
+        durante la realización del caso de uso \nameref{anexo1:tab:cu1} y \nameref{anexo1:tab:cu8}
     },
-}{}
+}{
+    longsecuencia = {1},
+    secuencia = {%
+        & 1 & El sistema envía un correo electrónico al usuario con un codigo alfanumérico de
+              verificación. \\
+    },
+}
 
 \casouso{
     nombre = {Ver datos personales},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario autenticado entre en la sección de datos personales ya sea desde el menú o
-        justo después de iniciar sesión
+        actor \nameref{anexo1:tab:act0002} entre en la sección de datos personales ya sea desde el
+        menú o en el caso de uso \nameref{anexo1:tab:cu2} 
     },
-}{}
+}{
+    longsecuencia = {1},
+    secuencia = {%
+        & 1 & El sistema muestra los datos personales y la forma física actual del usuario \\
+    },
+}
 
 \casouso{
     nombre = {Eliminar cuenta},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario autenticado pulse el botón de eliminar cuenta en el menú principal 
+        actor \nameref{anexo1:tab:act0002} pulse el botón de eliminar cuenta en el menú principal 
     },
-}{}
+}{
+    longsecuencia = {4},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de elminar cuenta en el menú principal \\
+        & 2 & El sistema muestra una advertencia, indicando que esta operación no es reversible \\
+        & 3 & El actor confirma la eliminación \\
+        & 4 & El sistema elimina los datos del actor y se le envía a la página principal \\
+    },
+    postcondicion = {%
+        El actor pasa a tener el rol \nameref{anexo1:tab:act0001} % Usuario sin autenticar.
+    },
+    longexcepciones = {1},
+    excepciones = {%
+        & 2 & Si el actor no confirma la eliminación, el sistema vuelve al menú principal \\
+    },
+}
 
 \casouso{
     nombre = {Cerrar sesión},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario autenticado pulse el botón de cerrar sesión en el menú principal o en la
-        página principal
+        actor \nameref{anexo1:tab:act0002} pulse el botón de cerrar sesión en el menú principal o
+        en la página principal
     },
-}{}
+}{
+    longsecuencia = {4},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de cerrar sesión \\
+        & 2 & El sistema muestra un mensaje de confirmación\\
+        & 3 & El actor confirma el cierre de sesión \\
+        & 4 & El sistema elimina la sesión del actor y se le envía a la página principal \\
+    },
+    postcondicion = {%
+        El actor pasa a tener el rol \nameref{anexo1:tab:act0001} % Usuario sin autenticar.
+    },
+    longexcepciones = {1},
+    excepciones = {%
+        & 2 & Si el actor no confirma el cierre de sesión, el sistema vuelve al menú principal \\
+    },
+}
 
 \casouso{
     nombre = {Verificar correo electrónico},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario autenticado pulse el botón de verificar correo electrónico en el menú
+        actor \nameref{anexo1:tab:act0002} pulse el botón de verificar correo electrónico en el menú
         principal
     },
-}{}
+}{
+    precondicion = {%
+        El actor no debe ser \nameref{anexo1:tab:act0003} % Usuario verificado.
+    },
+    longsecuencia = {4},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de verificar correo electrónico \\
+        & 2 & El sistema muestra un formulario para introducir el código de verificación mandado al
+              correo electrónico del usuario durante el registro \\
+        & 3 & El actor introduce el código de verificación y pulsa el botón de verificar \\
+        & 4 & El sistema valida el código introducido y, si es correcto, verifica al usuario \\
+    },
+    postcondicion = {%
+        El actor pasa a tener el rol \nameref{anexo1:tab:act0003} % Usuario verificado.
+    },
+    longexcepciones = {2},
+    excepciones = {%
+        & 2 & Si el actor cancela la verificación, el sistema vuelve al menú principal \\
+        & 4 & Si el código es incorrecto, el sistema muestra un mensaje de error indicando que el
+              código es incorrecto \\
+    },
+}
 
 \casouso{
     nombre = {Modificar datos personales},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        Usuario verificado modifique alguno de sus datos personales en el menú principal
+        \nameref{anexo1:tab:act0003} modifique alguno de sus datos personales en el menú principal
     },
-}{}
+}{
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} modifica alguno de sus datos personales y \\
+              pulsa el botón de guardar cambios \\
+        & 2 & El sistema valida la información introducida y, si es correcta, actualiza los datos del
+              usuario \\
+        & 3 & Si el usuario ha modificado su correo electrónico, el actor pasa a tener el rol
+              \nameref{anexo1:tab:act0002} y se realiza el caso de uso \nameref{anexo1:tab:cu} \\
+    },
+}
 
 \casouso{
     nombre = {Añadir forma física},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        Usuario verificado pulse el botón de añadir forma física en el menú principal
+        \nameref{anexo1:tab:act0003} pulse el botón de añadir forma física en el menú principal
     },
 }{}
 
@@ -173,7 +261,7 @@ relacción entre ellos a través de un diagrama.
     nombre = {Consultar estadísticas},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario verificado pulse el botón de consultar estadísticas en el menú principal
+        actor \nameref{anexo1:tab:act0003} pulse el botón de consultar estadísticas en el menú principal
     },
 }{}
 
@@ -181,7 +269,7 @@ relacción entre ellos a través de un diagrama.
     nombre = {Filtrar estadísticas},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario verifcado pulse alguno de los filtros temporales disponibles en el menú de
+        actor \nameref{anexo1:tab:act0003} pulse alguno de los filtros temporales disponibles en el menú de
         estadísticas
     },
 }{}
@@ -190,7 +278,7 @@ relacción entre ellos a través de un diagrama.
     nombre = {Abrir el juego},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario verificado pulse el botón de jugar en el menú principal
+        actor \nameref{anexo1:tab:act0003} pulse el botón de jugar en el menú principal
     },
 }{}
 
@@ -198,7 +286,7 @@ relacción entre ellos a través de un diagrama.
     nombre = {Activar pantalla completa},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor Usuario verificado pulse el botón de activar pantalla completa en el menú de juego.
+        actor \nameref{anexo1:tab:act0003} pulse el botón de activar pantalla completa en el menú de juego.
     },
 }{}
 
@@ -246,7 +334,7 @@ relacción entre ellos a través de un diagrama.
     nombre = {Volver a jugar},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
-        Usuario verificado pulse el botón de volver a jugar en el menú de puntuaciones del minijuego.
+        \nameref{anexo1:tab:act0003} pulse el botón de volver a jugar en el menú de puntuaciones del minijuego.
     },
 }{}
 
@@ -254,8 +342,10 @@ relacción entre ellos a través de un diagrama.
     nombre = {Volver a la selección de minijuego},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
-        Usuario verificado pulse el botón de volver al menú principal en el menú de puntuaciones del
+        \nameref{anexo1:tab:act0003} pulse el botón de volver al menú principal en el menú de puntuaciones del
         minijuego.
     },
 }{}
 
+% jugar minijuego globos 
+% jugar minijuego esquivar 
