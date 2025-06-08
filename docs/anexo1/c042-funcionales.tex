@@ -1,0 +1,261 @@
+\subsection{Diagramas de casos de uso}
+\label{anexo1:sec:requisitos-funcionales-casos-de-uso}
+
+\diagrama{
+    nombre = {Casos de uso del sistema},
+    archivo = {anexo1/diagramas/casosuso.pdf},
+    etiqueta = {casos-uso},
+    forzarPosicion = {sí pls},
+}
+
+\subsection{Definición de actores}
+\label{anexo1:sec:requisitos-funcionales-actores}
+En este subapartado se definen los distintos actores del sistema en forma de tabla, así como la
+relacción entre ellos a través de un diagrama.
+
+\diagrama{
+    nombre = {Actores del sistema},
+    archivo = {anexo1/diagramas/Actores.pdf},
+    etiqueta = {actores},
+}
+
+\actor{
+    id = {0001},
+    nombre = {Usuario sin autenticar},
+    descripcion = {
+        Este actor representa a un usuario que no ha iniciado sesión en el sistema.
+    },
+    comentarios = {
+        Este actor interactúa con el sistema unicamente para registrarse o iniciar sesión.
+    }
+}
+
+\actor{
+    id = {0002},
+    nombre = {Usuario autenticado},
+    descripcion = {
+        Este actor representa a un usuario que ha iniciado sesión en el sistema.
+    },
+    comentarios = {
+        Este usuario solo puede consultar sus datos personales, cerrar sesión y verificar su correo
+        electrónico.
+    }
+}
+
+\actor{
+    id = {0003},
+    nombre = {Usuario verificado},
+    descripcion = {
+        Este actor representa a un usuario que ha iniciado sesión en el sistema y ha verificado su 
+        correo electrónico.
+    },
+    comentarios = {
+        Este actor puede realizar todas las acciones disponibles en el sistema.
+    }
+}
+
+\actor{
+    id = {0004},
+    nombre = {Sistema},
+    descripcion = {
+        Este actor representa al sistema en sí mismo.
+    }
+}
+
+
+\subsection{Casos de uso del sistema}
+\label{anexo1:sec:requisitos-funcionales-casos-de-uso-definicion}
+\casouso{
+    nombre = {Registrarse},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario sin autenticar pulse el texto 'Regístrate' en la página principal o la página
+        de inicio de sesión. 
+    },
+}{
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+    },
+    precondicion = {%
+        El actor debe tener el rol de Usuario sin autenticar.
+    },
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
+        & 2 & El usuario rellena el formulario y pulsa el botón de registrarse \\
+        & 3 & El sistema valida la información introducida y, si es correcta, el usuario es creado \\
+              % Mandar correo de verificación
+              % Iniciar sesión
+    },
+    postcondicion = {%
+        El actor Usuario sin autenticar pasa a tener el rol de Usuario autenticado.
+    },
+    longexcepciones = {1},
+    excepciones = {%
+        & 3 & Si el usuario ya existe, el sistema muestra un mensaje de error indicando que el
+              correo electrónico ya está en uso \\
+    },
+}
+
+\casouso{
+    nombre = {Iniciar sesión},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario sin autenticar intente iniciar sesión desde la página principal o la página
+        de inicio de sesión, o durante la realización del caso de uso \nameref{anexo1:tab:cu1}
+    },
+}{}
+
+\casouso{
+    nombre = {Mandar correo de verificación},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso abstracto
+        durante la realización del caso de uso \nameref{anexo1:tab:cu1}
+    },
+}{}
+
+\casouso{
+    nombre = {Ver datos personales},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario autenticado entre en la sección de datos personales ya sea desde el menú o
+        justo después de iniciar sesión
+    },
+}{}
+
+\casouso{
+    nombre = {Eliminar cuenta},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario autenticado pulse el botón de eliminar cuenta en el menú principal 
+    },
+}{}
+
+\casouso{
+    nombre = {Cerrar sesión},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario autenticado pulse el botón de cerrar sesión en el menú principal o en la
+        página principal
+    },
+}{}
+
+\casouso{
+    nombre = {Verificar correo electrónico},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario autenticado pulse el botón de verificar correo electrónico en el menú
+        principal
+    },
+}{}
+
+\casouso{
+    nombre = {Modificar datos personales},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        Usuario verificado modifique alguno de sus datos personales en el menú principal
+    },
+}{}
+
+\casouso{
+    nombre = {Añadir forma física},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        Usuario verificado pulse el botón de añadir forma física en el menú principal
+    },
+}{}
+
+\casouso{
+    nombre = {Consultar estadísticas},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario verificado pulse el botón de consultar estadísticas en el menú principal
+    },
+}{}
+
+\casouso{
+    nombre = {Filtrar estadísticas},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario verifcado pulse alguno de los filtros temporales disponibles en el menú de
+        estadísticas
+    },
+}{}
+
+\casouso{
+    nombre = {Abrir el juego},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario verificado pulse el botón de jugar en el menú principal
+    },
+}{}
+
+\casouso{
+    nombre = {Activar pantalla completa},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        actor Usuario verificado pulse el botón de activar pantalla completa en el menú de juego.
+    },
+}{}
+
+\casouso{
+    nombre = {Calibrar cámara},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso abstracto una
+        vez se inicie el caso de uso \nameref{anexo1:tab:cu12}
+    },
+}{}
+
+\casouso{
+    nombre = {Escoger minijuego},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso una vez termine
+        el caso de uso \nameref{anexo1:tab:cu13} o \nameref{anexo1:tab:cu20}
+    },
+}{}
+
+\casouso{
+    nombre = {Escoger dificultad},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso una vez termine
+        el caso de uso \nameref{anexo1:tab:cu14} o \nameref{anexo1:tab:cu19}
+    },
+}{}
+
+\casouso{
+    nombre = {Jugar minijuego},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso una vez termine
+        el caso de uso \nameref{anexo1:tab:cu15}
+    },
+}{}
+
+\casouso{
+    nombre = {Ver puntuaciones},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso una vez termine
+        el minijuego escogido por el usuario, es decir, al terminar el caso de uso \nameref{anexo1:tab:cu16}
+    },
+}{}
+
+\casouso{
+    nombre = {Volver a jugar},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
+        Usuario verificado pulse el botón de volver a jugar en el menú de puntuaciones del minijuego.
+    },
+}{}
+
+\casouso{
+    nombre = {Volver a la selección de minijuego},
+    descripcion = {%
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
+        Usuario verificado pulse el botón de volver al menú principal en el menú de puntuaciones del
+        minijuego.
+    },
+}{}
+

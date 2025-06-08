@@ -286,26 +286,32 @@
     frecuencia = {No procede},
 }{}
 
+\newcounter{csec}
+\newcounter{cexc}
+\newcounter{cren}
+\newcounter{ncasouso}
+\setcounter{ncasouso}{1}
+
 \newcommand{\casouso}[2]{
     \setkeys{keygenerica}{#1}
     \setkeys{casouso}{#2}
 
-    \def\parwidth{10cm}
-    \newcounter{csec}
+    \def\parwidth{11.5cm}
     \setcounter{csec}{\casouso@longsecuencia}
     \stepcounter{csec}
 
-    \newcounter{cexc}
     \setcounter{cexc}{\casouso@longexcepciones}
     \stepcounter{cexc}
 
-    \newcounter{cren}
     \setcounter{cren}{\casouso@longrendimiento}
     \stepcounter{cren}
-    
+
+    \protected@edef\ncasouso{%
+        \num[mode=text,reset-text-series=false,minimum-integer-digits=4]{\thencasouso}
+    }
     
     \tableshell{ | p{2.75cm} | X[c,m] | X[10,m] | }{
-        \textbf{UC-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \textbf{UC-\ncasouso} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
         \hline
         \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
         \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
@@ -347,9 +353,11 @@
         \textbf{Estado} & \bloque{\keygenerica@estado} \\
         \textbf{Estabilidad} & \bloque{\keygenerica@estabilidad} \\
         \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
-    }{
-        Caso de uso: \keygenerica@id: \keygenerica@nombre
-    }{anexo1:tab:cu\keygenerica@id}
+    }{%
+        UC-\ncasouso \keygenerica@nombre
+    }{anexo1:tab:cu\thencasouso}
+
+    \stepcounter{ncasouso}
 }
 
 \makeatother
