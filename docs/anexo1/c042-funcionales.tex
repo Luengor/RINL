@@ -99,7 +99,7 @@ relacción entre ellos a través de un diagrama.
     longexcepciones = {1},
     excepciones = {%
         & 3 & Si el usuario ya existe, el sistema muestra un mensaje de error indicando que el
-              correo electrónico ya está en uso \\
+              correo electrónico ya está en uso y se vuelve al paso 2 \\
     },
 }
 
@@ -125,7 +125,7 @@ relacción entre ellos a través de un diagrama.
     longexcepciones = {1},
     excepciones = {%
         & 2 & Si el usuario no existe o la contraseña es incorrecta, el sistema muestra un mensaje de
-              error indicando que las credenciales son incorrectas \\
+              error indicando que las credenciales son incorrectas y se vuelve al paso 1 \\
     },
 }
 
@@ -179,7 +179,8 @@ relacción entre ellos a través de un diagrama.
     },
     longexcepciones = {1},
     excepciones = {%
-        & 2 & Si el actor no confirma la eliminación, el sistema vuelve al menú principal \\
+        & 2 & Si el actor no confirma la eliminación, el sistema vuelve al menú principal y el
+              caso de uso termina \\
     },
 }
 
@@ -204,7 +205,8 @@ relacción entre ellos a través de un diagrama.
     },
     longexcepciones = {1},
     excepciones = {%
-        & 2 & Si el actor no confirma el cierre de sesión, el sistema vuelve al menú principal \\
+        & 2 & Si el actor no confirma el cierre de sesión, el sistema vuelve al menú principal y
+              el caso de uso termina \\
     },
 }
 
@@ -233,9 +235,10 @@ relacción entre ellos a través de un diagrama.
     },
     longexcepciones = {2},
     excepciones = {%
-        & 2 & Si el actor cancela la verificación, el sistema vuelve al menú principal \\
+        & 2 & Si el actor cancela la verificación, el sistema vuelve al menú principal y el caso
+              uso termina \\
         & 4 & Si el código es incorrecto, el sistema muestra un mensaje de error indicando que el
-              código es incorrecto \\
+              código es incorrecto y se vuelve al paso 2 \\
     },
 }
 
@@ -256,6 +259,16 @@ relacción entre ellos a través de un diagrama.
         & 3 & Si el usuario ha modificado su correo electrónico, el actor pasa a tener el rol
               \nameref{anexo1:tab:act0002} y se realiza el caso de uso \nameref{anexo1:tab:cu:mandar-correo-verificacion} \\
     },
+    postcondicion = {%
+        Los datos del actor son modificados en el sistema.
+        Si el correo electrónico ha sido modificado, el actor pasa a tener el rol
+        \nameref{anexo1:tab:act0002} % Usuario autenticado
+    },
+    longexcepciones = {1},
+    excepciones = {%
+        & 2 & Si la información introducida es inválida, el sistema muestra un mensaje de error
+              indicando que los datos son inválidos y se vuelve al paso 1 \\
+    },
 }
 
 \casouso{
@@ -266,6 +279,25 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {anadir-forma-fisica},
+    longsecuencia = {4},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de añadir forma física \\
+        & 2 & El sistema muestra un formulario \\
+        & 3 & El actor rellena el formalario con la información de la forma física y pulsa el botón de
+              añadir \\ 
+        & 4 & El sistema valida la información introducida y, si es válida, añade la forma física al
+              historial del usuario \\
+    },
+    postcondicion = {%
+        La forma física es añadida al historial del usuario
+    },
+    longexcepciones = {2},
+    excepciones = {%
+        & 2 & Si el actor cancela la adición de forma física, el sistema vuelve al menú principal
+              y el caso de uso termina \\
+        & 4 & Si la información introducida es inválida, el sistema muestra un mensaje de error
+              indicando que los datos son inválidos y se vuelve al paso 2 \\
+    },
 }
 
 \casouso{
@@ -276,6 +308,15 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {consultar-estadisticas},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:anadir-forma-fisica}
+    },
+    longsecuencia = {2},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa en el botón de consultar estadísticas \\
+        & 2 & El sistema muestra las estadísticas del usuario, incluyendo el historial de formas
+              físicas y las puntuaciones de los minijuegos \\
+    },
 }
 
 \casouso{
@@ -287,6 +328,17 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {filtrar-estadisticas},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:consultar-estadisticas}
+    },
+    longsecuencia = {2},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa en el filtro temporal deseado \\
+        & 2 & El sistema filtra las estadísticas del usuario según el filtro seleccionado \\
+    },
+    postcondicion = {%
+        Las estadísticas del usuario son filtradas según el filtro seleccionado
+    },
 }
 
 \casouso{
@@ -297,6 +349,14 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {abrir-juego},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:anadir-forma-fisica}
+    },
+    longsecuencia = {2},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de jugar \\
+        & 2 & El sistema muestra el menú del juego \\
+    },
 }
 
 \casouso{
@@ -307,6 +367,14 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {activar-pantalla-completa},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:abrir-juego}
+    },
+    longsecuencia = {2},
+    secuencia = {%
+        & 1 & El usuario \nameref{anexo1:tab:act0003} pulsa el botón de activar pantalla completa \\
+        & 2 & El sistema cambia el modo de visualización a pantalla completa \\
+    },
 }
 
 \casouso{
@@ -317,16 +385,44 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {calibrar-camara},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:abrir-juego}. Este
+        caso de uso se ejecuta una vez por sesión, es decir, no es necesario volver a calibrar la cámara
+        si ya se ha hecho en la sesión actual.
+    },
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El sistema muestra un mensaje indicando que se debe calibrar la cámara \\
+        & 2 & El actor \nameref{anexo1:tab:act0003} sigue las instrucciones del sistema para calibrar la cámara \\
+        & 3 & El sistema guarda la calibración de la cámara para la sesión actual \\
+    },
+    postcondicion = {%
+        La cámara queda calibrada para la sesión actual
+    },
 }
 
 \casouso{
     nombre = {Escoger minijuego},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso una vez termine
-        el caso de uso \nameref{anexo1:tab:cu:abrir-juego} o \nameref{anexo1:tab:cu:volver-seleccion-minijuego}
+        el caso de uso \nameref{anexo1:tab:cu:calibrar-camara} o \nameref{anexo1:tab:cu:volver-seleccion-minijuego}
     },
 }{
     key = {escoger-minijuego},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:calibrar-camara}
+    },
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El sistema muestra el menú de selección de minijuegos \\
+        & 2 & El actor \nameref{anexo1:tab:act0003} escoge el minijuego que desea jugar \\
+        & 3 & El sistema guarda la selección del minijuego y se ejecuta el caso de uso
+              \nameref{anexo1:tab:cu:escoger-dificultad} \\
+    },
+    postcondicion = {%
+        El actor \nameref{anexo1:tab:act0003} ha seleccionado un minijuego y el sistema guarda la
+        selección para su posterior uso
+    },
 }
 
 \casouso{
@@ -337,6 +433,21 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {escoger-dificultad},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego}
+    },
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El sistema muestra el menú de selección de dificultad \\
+        & 2 & El actor \nameref{anexo1:tab:act0003} escoge la dificultad que desea jugar \\
+        & 3 & El sistema guarda la selección de dificultad y se ejecuta el caso de uso
+              \nameref{anexo1:tab:cu:jugar-minijuego-globos} o \nameref{anexo1:tab:cu:jugar-minijuego-esquivar}
+              dependiendo del minijuego seleccionado \\
+    },
+    postcondicion = {%
+        El actor \nameref{anexo1:tab:act0003} ha seleccionado una dificultad y el sistema guarda la
+        selección para la adaptación del minijuego escogido 
+    },
 }
 
 \casouso{
@@ -348,6 +459,16 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {jugar-minijuego-globos},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad}
+    },
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El sistema muestra el minijuego de globos \\
+        & 2 & El actor \nameref{anexo1:tab:act0003} juega al minijuego de globos hasta terminar \\
+        & 3 & El sistema guarda la puntuación obtenida y se ejecuta el caso de uso
+              \nameref{anexo1:tab:cu:ver-puntuaciones} \\
+    },
 }
 
 \casouso{
@@ -359,6 +480,16 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {jugar-minijuego-esquivar},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad}
+    },
+    longsecuencia = {3},
+    secuencia = {%
+        & 1 & El sistema muestra el minijuego de esquivar \\
+        & 2 & El actor \nameref{anexo1:tab:act0003} juega al minijuego de esquivar hasta terminar \\
+        & 3 & El sistema guarda la puntuación obtenida y se ejecuta el caso de uso
+              \nameref{anexo1:tab:cu:ver-puntuaciones} \\
+    },
 }
 
 \casouso{
@@ -370,6 +501,23 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {ver-puntuaciones},
+    precondicion = {%
+        El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:jugar-minijuego-globos} o
+        \nameref{anexo1:tab:cu:jugar-minijuego-esquivar}
+    },
+    longsecuencia = {4},
+    secuencia = {%
+        & 1 & El sistema almacena la actividad realizada. \\
+        & 2 & El sistema muestra la puntuación obtenida en el minijuego, así como botones para
+              volver a jugar o volver al menú de selección de minijuegos \\
+        & 3 & Si el actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a jugar, se ejecuta
+              el caso de uso \nameref{anexo1:tab:cu:volver-a-jugar} \\
+        & 4 & Si el actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a la selección de
+              minijuego, se ejecuta el caso de uso \nameref{anexo1:tab:cu:volver-seleccion-minijuego} \\
+    },
+    postcondicion = {%
+        La puntuación obtenida en el minijuego es guardada en el historial del usuario
+    },
 }
 
 \casouso{
@@ -380,6 +528,11 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {volver-a-jugar},
+    longsecuencia = {2},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a jugar \\
+        & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad} \\
+    },
 }
 
 \casouso{
@@ -391,5 +544,9 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {volver-seleccion-minijuego},
+    secuencia = {%
+        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver al menú principal \\
+        & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego} \\
+    },
 }
 
