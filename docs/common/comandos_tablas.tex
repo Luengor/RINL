@@ -258,6 +258,7 @@
 }
 
 % Comando para definir un caso de uso
+\define@key{casouso}{key}{\def\casouso@key{#1}}
 \define@key{casouso}{objetivosAsociados}{\def\casouso@objetivosAsociados{#1}}
 \define@key{casouso}{requisitosAsociados}{\def\casouso@requisitosAsociados{#1}}
 \define@key{casouso}{precondicion}{\def\casouso@precondicion{#1}}
@@ -271,6 +272,7 @@
 \define@key{casouso}{frecuencia}{\def\casouso@frecuencia{#1}}
 
 \presetkeys{casouso}{
+    key = {},
     objetivosAsociados = {\item[ ] \textbf{PD}},
     requisitosAsociados = {\item[ ] \textbf{PD}},
     precondicion = {No procede},
@@ -353,7 +355,8 @@
         \textbf{Comentarios} & \bloque{\keygenerica@comentarios} \\
     }{%
         UC-\ncasouso \keygenerica@nombre
-    }{anexo1:tab:cu\thencasouso}
+    }
+    {anexo1:tab:cu:\casouso@key}
 
     \stepcounter{ncasouso}
 }
