@@ -5,12 +5,14 @@
 \define@key{diagrama}{nombre}{\def\diagrama@nombre{#1}}
 \define@key{diagrama}{archivo}{\def\diagrama@archivo{#1}}
 \define@key{diagrama}{etiqueta}{\def\diagrama@etiqueta{#1}}
+\define@key{diagrama}{width}{\def\diagrama@width{#1}}
 \define@key{diagrama}{forzarPosicion}{\def\diagrama@forzarPosicion{#1}}
 
 \presetkeys{diagrama}{
     nombre = {Diagrama},
     archivo = {},
     etiqueta = {fig:diagrama},
+    width = 0.8\textwidth,
     forzarPosicion = {}, 
 }{}
 
@@ -23,7 +25,7 @@
         \begin{figure}[H]
     \fi
         \centering
-        \includegraphics[width=0.8\textwidth]{\diagrama@archivo}
+        \includegraphics[width=\diagrama@width]{\diagrama@archivo}
         \caption{\diagrama@nombre}
         \label{anexo1:fig:\diagrama@etiqueta}
     \end{figure}

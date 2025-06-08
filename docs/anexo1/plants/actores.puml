@@ -1,9 +1,13 @@
 @startuml Actores
 
-:Usuario sin autenticar: as userno
-:Usuario autenticado: as useryes
+left to right direction
 :Sistema: as sys
+:Usuario sin autenticar: as anon
+:Usuario autenticado: as userauth
+:Usuario verificado: as userverif 
 
-userno <|-- useryes
+anon <|-- userauth
+userauth <|-- userverif
+
 
 @enduml
