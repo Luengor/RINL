@@ -7,14 +7,19 @@
 
 left to right direction
 package "Gestión de usuario" {
-    usecase Registrarse as "UC-0001\nRegistrarse"
-    usecase IniciarSesion as "UC-0002\nIniciar sesión
+    usecase Registrarse as "UC-0001
+    Registrarse"
+    usecase IniciarSesion as "UC-0002
+    Iniciar sesión
     ---
     Extensiones:
     Registrarse"
-    usecase MandarCorreoVerificacion as "UC-0003\nMandar correo de verificación"
-    usecase CerrarSesion as "UC-0006\nCerrar sesión"
-    usecase VerDatosPersonales as "UC-0004\nVer datos personales
+    usecase MandarCorreoVerificacion as "UC-0003
+    Mandar correo de verificación"
+    usecase CerrarSesion as "UC-0006
+    Cerrar sesión"
+    usecase VerDatosPersonales as "UC-0004
+    Ver datos personales
     ---
     Extensiones:
     Eliminar cuenta
@@ -22,18 +27,24 @@ package "Gestión de usuario" {
     Verificar correo electrónico
     Modificar datos personales
     Añadir forma física"
-    usecase EliminarCuenta as "UC-0005\nEliminar cuenta"
-    usecase VerificarCorreoElectronico as "UC-0007\nVerificar correo electrónico"
-    usecase ModificarDatosPersonales as "UC-0008\nModificar datos personales"
+    usecase EliminarCuenta as "UC-0005
+    Eliminar cuenta"
+    usecase VerificarCorreoElectronico as "UC-0007
+    Verificar correo electrónico"
+    usecase ModificarDatosPersonales as "UC-0008
+    Modificar datos personales"
 }
 
 package "Estadísticas y seguimiento" {
-    usecase AnadirFormaFisica as "UC-0009\nAñadir forma física"
-    usecase ConsultarEstadisticas as "UC-0010\nConsultar estadísticas
+    usecase AnadirFormaFisica as "UC-0009
+    Añadir forma física"
+    usecase ConsultarEstadisticas as "UC-0010
+    Consultar estadísticas
     ---
     Extensiones:
     Filtrar estadísticas"
-    usecase FiltrarEstadisticas as "UC-0011\nFiltrar estadísticas"
+    usecase FiltrarEstadisticas as "UC-0011
+    Filtrar estadísticas"
 }
 
 package "Juego" {
@@ -46,8 +57,10 @@ package "Juego" {
     Calibrar cámara
     Escoger minijuego
     "
-    usecase PantallaCompleta as "UC-0013\nActivar pantalla completa"
-    usecase Calibrar as "UC-0014\nCalibrar cámara"
+    usecase PantallaCompleta as "UC-0013
+    Activar pantalla completa"
+    usecase Calibrar as "UC-0014
+    Calibrar cámara"
     usecase EscogerMinijuego as "
     UC-0015
     Escoger minijuego

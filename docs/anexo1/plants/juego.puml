@@ -1,0 +1,107 @@
+@startuml "juego"
+
+:Usuario verificado: as userverif 
+
+package "Juego" {
+    usecase AbrirJuego as "
+    UC-0012
+    Abrir el juego
+    ---
+    Extensiones:
+    Activar pantalla completa
+    Calibrar cámara
+    Escoger minijuego
+    "
+    usecase PantallaCompleta as "UC-0013
+    Activar pantalla completa"
+    usecase Calibrar as "UC-0014
+    Calibrar cámara"
+    usecase EscogerMinijuego as "
+    UC-0015
+    Escoger minijuego
+    ---
+    Extensiones:
+    Escoger dificultad
+    "
+    usecase EscogerDificultad as "
+    UC-0016
+    Escoger dificultad
+    ---
+    Extensiones:
+    Jugar minijuego globos
+    Jugar minijuego esquivar
+    "
+    usecase JugarGlobos as "
+    UC-0017
+    Jugar minijuego globos
+    ---
+    Extensiones:
+    Ver puntuaciones"
+    usecase JugarEsquivar as "
+    UC-0018
+    Jugar minijuego esquivar
+    ---
+    Extensiones:
+    Ver puntuaciones
+    "
+    usecase Puntuacion as "
+    UC-0019
+    Ver puntuaciones
+    ---
+    Extensiones:
+    Volver a jugar
+    Volver al menú principal
+    "
+    usecase VolverJugar as "
+    UC-0020
+    Volver a jugar
+    ---
+    Extensiones:
+    Escoger dificultad
+    "
+    usecase VolverMenuJuego as "
+    UC-0021
+    Volver al menú principal
+    ---
+    Extensiones:
+    Escoger minijuego
+    "
+}
+
+/'
+ ' El usuario verificado puede abrir el juego, desde el cual se puede activar la pantalla completa.
+ ' La primera vez que se abra el juego, automáticamente se calibrará la cámara. 
+ ' Después, aparecerá el menú de selección de minijuego.
+ ' Desde el menú de selección de minijuego, se puede escoger el minijuego.
+ ' Una vez escogido el minijuego, se puede escoger la dificultad.
+ ' Una vez escogida la dificultad, se jugará el minijuego.
+ ' Finalmente, se podrá ver la puntuación obtenida y volver a jugar o volver al menú principal.
+ '/
+userverif -> (AbrirJuego)
+
+(AbrirJuego) <.. (Calibrar) : <<extend>>
+note bottom of link : CONDITION {Solo una vez por sesión}
+
+' Escoger minijuego después de jugar
+(EscogerMinijuego) ..> (VolverMenuJuego) : <<extend>>
+
+' Escoger minijuego después de abrir el juego
+(AbrirJuego) <. (EscogerMinijuego) : <<extend>>
+' Escoger dificultad después de escoger minijuego 
+(EscogerMinijuego) <. (EscogerDificultad) : <<extend>>
+' Escoger dificultad después de jugar 
+(EscogerDificultad) ..> (VolverJugar) : <<extend>>
+
+' Jugar minijuego globos/esquivar después de escoger dificultad
+(EscogerDificultad) <. (JugarGlobos) : <<extend>>
+(EscogerDificultad) <.. (JugarEsquivar) : <<extend>>
+' Ver puntuaciones después de jugar minijuego globos/esquivar
+(JugarGlobos) <.. (Puntuacion) : <<extend>>
+(JugarEsquivar) <.. (Puntuacion) : <<extend>>
+' Volver a jugar/volver al menú principal después de ver puntuaciones
+(VolverMenuJuego) .> (Puntuacion) : <<extend>>
+(Puntuacion) <. (VolverJugar) : <<extend>>
+
+(AbrirJuego) <. (PantallaCompleta) : <<extend>>
+
+@enduml

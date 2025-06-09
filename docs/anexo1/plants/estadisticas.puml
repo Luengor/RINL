@@ -1,0 +1,40 @@
+@startuml "estadisticas"
+
+:Usuario verificado: as userverif 
+
+left to right direction
+package "Gestión de usuario" {
+    usecase VerDatosPersonales as "UC-0004
+    Ver datos personales
+    ---
+    Extensiones:
+    Eliminar cuenta
+    Cerrar sesión
+    Verificar correo electrónico
+    Modificar datos personales
+    Añadir forma física"
+}
+
+package "Estadísticas y seguimiento" {
+    usecase ConsultarEstadisticas as "UC-0010
+    Consultar estadísticas
+    ---
+    Extensiones:
+    Filtrar estadísticas"
+    usecase AnadirFormaFisica as "UC-0009
+    Añadir forma física"
+    usecase FiltrarEstadisticas as "UC-0011
+    Filtrar estadísticas"
+}
+
+/'
+ ' El usuario verificado puede realizar todos los casos de estadísicas y seguimiento.
+ ' El caso de uso AnadirFormaFisica se extiende desde el menú de datos personales y el FiltrarEstadisticas del ConsultarEstadisticas
+ '/
+userverif --> (ConsultarEstadisticas)
+(ConsultarEstadisticas) <. (FiltrarEstadisticas) : <<extend>>
+
+(AnadirFormaFisica) ..> (VerDatosPersonales) : <<extend>>
+note bottom of link : CONDITION {actor == Usuario verificado} 
+
+@enduml

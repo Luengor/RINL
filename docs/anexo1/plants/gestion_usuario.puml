@@ -1,0 +1,69 @@
+@startuml "gestionusuario"
+
+:Sistema: as sys
+:Usuario sin autenticar: as anon
+:Usuario autenticado: as userauth
+
+left to right direction
+package "Gestión de usuario" {
+    usecase Registrarse as "UC-0001
+    Registrarse"
+    usecase IniciarSesion as "UC-0002
+    Iniciar sesión
+    ---
+    Extensiones:
+    Registrarse"
+    usecase MandarCorreoVerificacion as "UC-0003
+    Mandar correo de verificación"
+    usecase CerrarSesion as "UC-0006
+    Cerrar sesión"
+    usecase VerDatosPersonales as "UC-0004
+    Ver datos personales
+    ---
+    Extensiones:
+    Eliminar cuenta
+    Cerrar sesión
+    Verificar correo electrónico
+    Modificar datos personales
+    Añadir forma física"
+    usecase EliminarCuenta as "UC-0005
+    Eliminar cuenta"
+    usecase VerificarCorreoElectronico as "UC-0007
+    Verificar correo electrónico"
+    usecase ModificarDatosPersonales as "UC-0008
+    Modificar datos personales"
+}
+
+package "Estadísticas y seguimiento" {
+    usecase AnadirFormaFisica as "UC-0009
+    Añadir forma física"
+}
+
+/'
+ ' El Usuario anónimo pude iniciar sesión y registrarse, el segundo extiende del primero.
+ ' El caso de uso MandarCorreoVerificacion (Mandar correo de verificación) se incluye en registrarse.
+ '/
+anon --> (IniciarSesion)
+(IniciarSesion) <. (Registrarse) : <<extend>>
+(Registrarse) .> (MandarCorreoVerificacion) : <<include>>
+sys --> (MandarCorreoVerificacion)
+
+/'
+ ' El usuario autenticado (pero no verifiado) puede ver sus datos personales desde el menú. Desde ahí
+ ' puede eliminar su cuenta, verificar su correo electrónico o cerrar sesión.
+ ' El caso de uso ModificarDatosPersonales (Modificar datos personales) se extiende desde ver datos personales, pero se
+ ' añade la condición de que el usuario esté verificado.
+ ' Además, si la modificación de datos personales es correcta, se aplica el caso de uso MandarCorreoVerificacion
+ '/
+userauth --> (VerDatosPersonales)
+(VerDatosPersonales) <.. (EliminarCuenta) : <<extend>>
+(VerDatosPersonales) <.. (CerrarSesion) : <<extend>>
+(VerDatosPersonales) <. (VerificarCorreoElectronico) : <<extend>>
+(VerDatosPersonales) <.. (ModificarDatosPersonales) : <<extend>>
+note top of link : CONDITION {actor == Usuario verificado} 
+(MandarCorreoVerificacion) <.. (ModificarDatosPersonales) : <<include>>
+
+(VerDatosPersonales) <.. (AnadirFormaFisica) : <<extend>>
+note bottom of link : CONDITION {actor == Usuario verificado} 
+
+@enduml
