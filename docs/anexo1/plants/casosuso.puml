@@ -1,11 +1,72 @@
 @startuml "casosuso"
 
-:Usuario sin autenticar: as userno
+:Sistema: as sys
+:Usuario sin autenticar: as anon
+:Usuario autenticado: as userauth
+:Usuario verificado: as userverif 
 
 left to right direction
-usecase UC0001 as "UC-0001
-Registrarse"
+package "Gestión de usuario" {
+    usecase UC0001 as "UC-0001\nRegistrarse"
+    usecase UC0002 as "UC-0002\nIniciar sesión
+    ---
+    Extensiones:
+    Registrarse"
+    usecase UC0003 as "UC-0003\nMandar correo de verificación"
+    usecase UC0006 as "UC-0006\nCerrar sesión"
+    usecase UC0004 as "UC-0004\nVer datos personales
+    ---
+    Extensiones:
+    Eliminar cuenta
+    Cerrar sesión
+    Verificar correo electrónico
+    Modificar datos personales"
+    usecase UC0005 as "UC-0005\nEliminar cuenta"
+    usecase UC0007 as "UC-0007\nVerificar correo electrónico"
+    usecase UC0008 as "UC-0008\nModificar datos personales"
+}
 
-userno --> (UC0001)
+package "Estadísticas y seguimiento" {
+    usecase UC0009 as "UC-0009\nAñadir forma física"
+    usecase UC0010 as "UC-0010\nConsultar estadísticas"
+    usecase UC0011 as "UC-0011\nFiltrar estadísticas"
+}
+
+package "Juego" {
+    usecase UC0012 as "UC-0012\nAbrir el juego"
+    usecase UC0013 as "UC-0013\nActivar pantalla completa"
+    usecase UC0014 as "UC-0014\nCalibrar cámara"
+    usecase UC0015 as "UC-0015\nEscoger minijuego"
+    usecase UC0016 as "UC-0016\nEscoger dificultad"
+    usecase UC0017 as "UC-0017\nJugar minijuego globos"
+    usecase UC0018 as "UC-0018\nJugar minijuego esquivar"
+    usecase UC0019 as "UC-0019\nVer puntuaciones"
+    usecase UC0020 as "UC-0020\nVolver a jugar"
+    usecase UC0021 as "UC-0021\nVolver al menú principal"
+}
+
+/'
+ ' El Usuario anónimo pude iniciar sesión y registrarse, el segundo extiende del primero.
+ ' El caso de uso UC0003 (Mandar correo de verificación) se incluye en registrarse.
+ '/
+anon --> (UC0002)
+(UC0002) <. (UC0001) : <<extend>>
+(UC0001) .> (UC0003) : <<include>>
+sys --> (UC0003)
+
+/'
+ ' El usuario autenticado (pero no verifiado) puede ver sus datos personales desde el menú. Desde ahí
+ ' puede eliminar su cuenta, verificar su correo electrónico o cerrar sesión.
+ ' El caso de uso UC0008 (Modificar datos personales) se extiende desde ver datos personales, pero se
+ ' añade la condición de que el usuario esté verificado.
+ ' Además, si la modificación de datos personales es correcta, se aplica el caso de uso UC0003
+ '/
+userauth --> (UC0004)
+(UC0004) <.. (UC0005) : <<extend>>
+(UC0004) <.. (UC0006) : <<extend>>
+(UC0004) <. (UC0007) : <<extend>>
+(UC0004) <.. (UC0008) : <<extend>>
+note top of link : CONDITION {actor == Usuario verificado} 
+(UC0003) <.. (UC0008) : <<include>>
 
 @enduml
