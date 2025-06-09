@@ -20,7 +20,8 @@ package "Gestión de usuario" {
     Eliminar cuenta
     Cerrar sesión
     Verificar correo electrónico
-    Modificar datos personales"
+    Modificar datos personales
+    Añadir forma física"
     usecase UC0005 as "UC-0005\nEliminar cuenta"
     usecase UC0007 as "UC-0007\nVerificar correo electrónico"
     usecase UC0008 as "UC-0008\nModificar datos personales"
@@ -28,7 +29,10 @@ package "Gestión de usuario" {
 
 package "Estadísticas y seguimiento" {
     usecase UC0009 as "UC-0009\nAñadir forma física"
-    usecase UC0010 as "UC-0010\nConsultar estadísticas"
+    usecase UC0010 as "UC-0010\nConsultar estadísticas
+    ---
+    Extensiones:
+    Filtrar estadísticas"
     usecase UC0011 as "UC-0011\nFiltrar estadísticas"
 }
 
@@ -68,5 +72,15 @@ userauth --> (UC0004)
 (UC0004) <.. (UC0008) : <<extend>>
 note top of link : CONDITION {actor == Usuario verificado} 
 (UC0003) <.. (UC0008) : <<include>>
+
+/'
+ ' El usuario verificado puede realizar todos los casos de estadísicas y seguimiento.
+ ' El caso de uso UC0009 se extiende desde el menú de datos personales y el UC0011 del UC0010
+ '/
+(UC0004) <.. (UC0009) : <<extend>>
+note bottom of link : CONDITION {actor == Usuario verificado} 
+userverif --> (UC0010)
+(UC0010) <. (UC0011) : <<extend>>
+
 
 @enduml
