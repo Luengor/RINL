@@ -112,6 +112,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {iniciar-sesion},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     longsecuencia = {3},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0001} rellena el formulario de inicio de sesión y pulsa
@@ -137,6 +141,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {mandar-correo-verificacion},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     longsecuencia = {1},
     secuencia = {%
         & 1 & El sistema envía un correo electrónico al usuario con un codigo alfanumérico de
@@ -153,6 +161,11 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {ver-datos-personales},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     longsecuencia = {1},
     secuencia = {%
         & 1 & El sistema muestra los datos personales y la forma física actual del usuario \\
@@ -167,6 +180,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {eliminar-cuenta},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     longsecuencia = {4},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de elminar cuenta en el menú principal \\
@@ -193,6 +210,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {cerrar-sesion},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     longsecuencia = {4},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de cerrar sesión \\
@@ -219,6 +240,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {verificar-correo-electronico},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     precondicion = {%
         El actor no debe ser \nameref{anexo1:tab:act0003} % Usuario verificado
     },
@@ -250,6 +275,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {modificar-datos-personales},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0006}
+    },
     longsecuencia = {3},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} modifica alguno de sus datos personales y
@@ -279,6 +308,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {anadir-forma-fisica},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+    },
     longsecuencia = {4},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de añadir forma física \\
@@ -308,6 +341,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {consultar-estadisticas},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:anadir-forma-fisica}
     },
@@ -328,6 +365,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {filtrar-estadisticas},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:consultar-estadisticas}
     },
@@ -349,6 +390,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {abrir-juego},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0002}
+        \item \nameref{anexo1:tab:obj0004}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:anadir-forma-fisica}
     },
@@ -367,6 +412,9 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {activar-pantalla-completa},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:abrir-juego}
     },
@@ -385,6 +433,9 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {calibrar-camara},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:abrir-juego}. Este
         caso de uso se ejecuta una vez por sesión, es decir, no es necesario volver a calibrar la cámara
@@ -409,6 +460,11 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {escoger-minijuego},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+        \item \nameref{anexo1:tab:obj0003}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:calibrar-camara}
     },
@@ -433,6 +489,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {escoger-dificultad},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0003}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego}
     },
@@ -459,6 +519,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {jugar-minijuego-globos},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad}
     },
@@ -480,6 +544,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {jugar-minijuego-esquivar},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad}
     },
@@ -501,6 +569,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {ver-puntuaciones},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0005}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:jugar-minijuego-globos} o
         \nameref{anexo1:tab:cu:jugar-minijuego-esquivar}
@@ -528,6 +600,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {volver-a-jugar},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+    },
     longsecuencia = {2},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a jugar \\
@@ -544,6 +620,10 @@ relacción entre ellos a través de un diagrama.
     },
 }{
     key = {volver-seleccion-minijuego},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+    },
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver al menú principal \\
         & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego} \\
