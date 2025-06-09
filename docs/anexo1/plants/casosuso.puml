@@ -37,16 +37,67 @@ package "Estadísticas y seguimiento" {
 }
 
 package "Juego" {
-    usecase AbrirJuego as "UC-0012\nAbrir el juego"
+    usecase AbrirJuego as "
+    UC-0012
+    Abrir el juego
+    ---
+    Extensiones:
+    Activar pantalla completa
+    Calibrar cámara
+    Escoger minijuego
+    "
     usecase PantallaCompleta as "UC-0013\nActivar pantalla completa"
     usecase Calibrar as "UC-0014\nCalibrar cámara"
-    usecase EscogerMinijuego as "UC-0015\nEscoger minijuego"
-    usecase EscogerDificultad as "UC-0016\nEscoger dificultad"
-    usecase JugarGlobos as "UC-0017\nJugar minijuego globos"
-    usecase JugarEsquivar as "UC-0018\nJugar minijuego esquivar"
-    usecase Puntuacion as "UC-0019\nVer puntuaciones"
-    usecase VolverJugar as "UC-0020\nVolver a jugar"
-    usecase VolverMenuJuego as "UC-0021\nVolver al menú principal"
+    usecase EscogerMinijuego as "
+    UC-0015
+    Escoger minijuego
+    ---
+    Extensiones:
+    Escoger dificultad
+    "
+    usecase EscogerDificultad as "
+    UC-0016
+    Escoger dificultad
+    ---
+    Extensiones:
+    Jugar minijuego globos
+    Jugar minijuego esquivar
+    "
+    usecase JugarGlobos as "
+    UC-0017
+    Jugar minijuego globos
+    ---
+    Extensiones:
+    Ver puntuaciones"
+    usecase JugarEsquivar as "
+    UC-0018
+    Jugar minijuego esquivar
+    ---
+    Extensiones:
+    Ver puntuaciones
+    "
+    usecase Puntuacion as "
+    UC-0019
+    Ver puntuaciones
+    ---
+    Extensiones:
+    Volver a jugar
+    Volver al menú principal
+    "
+    usecase VolverJugar as "
+    UC-0020
+    Volver a jugar
+    ---
+    Extensiones:
+    Escoger dificultad
+    "
+    usecase VolverMenuJuego as "
+    UC-0021
+    Volver al menú principal
+    ---
+    Extensiones:
+    Escoger minijuego
+    "
 }
 
 /'
