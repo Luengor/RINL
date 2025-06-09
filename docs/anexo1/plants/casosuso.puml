@@ -7,14 +7,14 @@
 
 left to right direction
 package "Gestión de usuario" {
-    usecase UC0001 as "UC-0001\nRegistrarse"
-    usecase UC0002 as "UC-0002\nIniciar sesión
+    usecase Registrarse as "UC-0001\nRegistrarse"
+    usecase IniciarSesion as "UC-0002\nIniciar sesión
     ---
     Extensiones:
     Registrarse"
-    usecase UC0003 as "UC-0003\nMandar correo de verificación"
-    usecase UC0006 as "UC-0006\nCerrar sesión"
-    usecase UC0004 as "UC-0004\nVer datos personales
+    usecase MandarCorreoVerificacion as "UC-0003\nMandar correo de verificación"
+    usecase CerrarSesion as "UC-0006\nCerrar sesión"
+    usecase VerDatosPersonales as "UC-0004\nVer datos personales
     ---
     Extensiones:
     Eliminar cuenta
@@ -22,18 +22,18 @@ package "Gestión de usuario" {
     Verificar correo electrónico
     Modificar datos personales
     Añadir forma física"
-    usecase UC0005 as "UC-0005\nEliminar cuenta"
-    usecase UC0007 as "UC-0007\nVerificar correo electrónico"
-    usecase UC0008 as "UC-0008\nModificar datos personales"
+    usecase EliminarCuenta as "UC-0005\nEliminar cuenta"
+    usecase VerificarCorreoElectronico as "UC-0007\nVerificar correo electrónico"
+    usecase ModificarDatosPersonales as "UC-0008\nModificar datos personales"
 }
 
 package "Estadísticas y seguimiento" {
-    usecase UC0009 as "UC-0009\nAñadir forma física"
-    usecase UC0010 as "UC-0010\nConsultar estadísticas
+    usecase AnadirFormaFisica as "UC-0009\nAñadir forma física"
+    usecase ConsultarEstadisticas as "UC-0010\nConsultar estadísticas
     ---
     Extensiones:
     Filtrar estadísticas"
-    usecase UC0011 as "UC-0011\nFiltrar estadísticas"
+    usecase FiltrarEstadisticas as "UC-0011\nFiltrar estadísticas"
 }
 
 package "Juego" {
@@ -102,36 +102,36 @@ package "Juego" {
 
 /'
  ' El Usuario anónimo pude iniciar sesión y registrarse, el segundo extiende del primero.
- ' El caso de uso UC0003 (Mandar correo de verificación) se incluye en registrarse.
+ ' El caso de uso MandarCorreoVerificacion (Mandar correo de verificación) se incluye en registrarse.
  '/
-anon --> (UC0002)
-(UC0002) <. (UC0001) : <<extend>>
-(UC0001) .> (UC0003) : <<include>>
-sys --> (UC0003)
+anon --> (IniciarSesion)
+(IniciarSesion) <. (Registrarse) : <<extend>>
+(Registrarse) .> (MandarCorreoVerificacion) : <<include>>
+sys --> (MandarCorreoVerificacion)
 
 /'
  ' El usuario autenticado (pero no verifiado) puede ver sus datos personales desde el menú. Desde ahí
  ' puede eliminar su cuenta, verificar su correo electrónico o cerrar sesión.
- ' El caso de uso UC0008 (Modificar datos personales) se extiende desde ver datos personales, pero se
+ ' El caso de uso ModificarDatosPersonales (Modificar datos personales) se extiende desde ver datos personales, pero se
  ' añade la condición de que el usuario esté verificado.
- ' Además, si la modificación de datos personales es correcta, se aplica el caso de uso UC0003
+ ' Además, si la modificación de datos personales es correcta, se aplica el caso de uso MandarCorreoVerificacion
  '/
-userauth --> (UC0004)
-(UC0004) <.. (UC0005) : <<extend>>
-(UC0004) <.. (UC0006) : <<extend>>
-(UC0004) <. (UC0007) : <<extend>>
-(UC0004) <.. (UC0008) : <<extend>>
+userauth --> (VerDatosPersonales)
+(VerDatosPersonales) <.. (EliminarCuenta) : <<extend>>
+(VerDatosPersonales) <.. (CerrarSesion) : <<extend>>
+(VerDatosPersonales) <. (VerificarCorreoElectronico) : <<extend>>
+(VerDatosPersonales) <.. (ModificarDatosPersonales) : <<extend>>
 note top of link : CONDITION {actor == Usuario verificado} 
-(UC0003) <.. (UC0008) : <<include>>
+(MandarCorreoVerificacion) <.. (ModificarDatosPersonales) : <<include>>
 
 /'
  ' El usuario verificado puede realizar todos los casos de estadísicas y seguimiento.
- ' El caso de uso UC0009 se extiende desde el menú de datos personales y el UC0011 del UC0010
+ ' El caso de uso AnadirFormaFisica se extiende desde el menú de datos personales y el FiltrarEstadisticas del ConsultarEstadisticas
  '/
-(UC0004) <.. (UC0009) : <<extend>>
+(VerDatosPersonales) <.. (AnadirFormaFisica) : <<extend>>
 note bottom of link : CONDITION {actor == Usuario verificado} 
-userverif --> (UC0010)
-(UC0010) <. (UC0011) : <<extend>>
+userverif --> (ConsultarEstadisticas)
+(ConsultarEstadisticas) <. (FiltrarEstadisticas) : <<extend>>
 
 /'
  ' El usuario verificado puede abrir el juego, desde el cual se puede activar la pantalla completa.
