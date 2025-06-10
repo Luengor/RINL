@@ -159,7 +159,7 @@
     \setkeys{keygenerica}{#1}
     \setkeys{requisitoinfo}{#2}
 
-    \def\parwidth{9.5cm}
+    \def\parwidth{10.75cm}
         
     \tableshell[ | l | X |[color=gray] X | ][
         cellSpaceLimits = 3pt,
@@ -327,7 +327,7 @@
         \num[mode=text,reset-text-series=false,minimum-integer-digits=4]{\thencasouso}
     }
     
-    \tableshell[ | p{2.75cm} | X[c,m] | X[10,m] | ][
+    \tableshell[ | W{l}{2.75cm} | X[c,m] | X[10,m] | ][
         cellSpaceLimits = 3pt,
         fontSize = {\small}
     ]{
@@ -336,12 +336,12 @@
         \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
         \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
         \textbf{Fuentes} & \bloque{\keygenerica@fuentes} \\
-        \textbf{Objetivos asociados} & \bloque{\begin{minipage}{\parwidth}
+        \Block[l]{1-1}{\textbf{Objetivos asociados}} & \bloque{\begin{minipage}{\parwidth}
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \casouso@objetivosAsociados
             \end{itemize}
         \end{minipage}} \\
-        \textbf{Requisitos asociados} & \bloque{\begin{minipage}{\parwidth}
+        \Block[l]{1-1}{\textbf{Requisitos asociados}} & \bloque{\begin{minipage}{\parwidth}
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \casouso@requisitosAsociados
             \end{itemize}
