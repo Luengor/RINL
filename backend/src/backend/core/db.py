@@ -10,7 +10,11 @@ class Base(DeclarativeBase):
     """Base class for all SQLAlchemy models."""
 
 
-ENGINE_PATH = f"postgresql://{environ.get('POSTGRES_USER')}:{environ.get('POSTGRES_PASSWORD')}@{environ.get('POSTGRES_HOST')}:5432"
+USER = environ.get("POSTGRES_USER", "postgres")
+PASSWORD = environ.get("POSTGRES_PASSWORD", "postgres")
+HOST = environ.get("POSTGRES_HOST", "localhost")
+PORT = environ.get("POSTGRES_PORT", "5432")
+ENGINE_PATH = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}"
 engine = create_engine(ENGINE_PATH)
 
 

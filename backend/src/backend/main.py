@@ -1,4 +1,5 @@
 """Main module defining the FastAPI application that includes all the routers"""
+from os import environ
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from backend.routers.auth import router as auth_router
@@ -6,14 +7,13 @@ from backend.routers.user import router as users_router
 from backend.routers.activity import router as activity_router
 from backend.routers.shape import router as shape_router
 
-
 app = FastAPI(
     title="RINL",
 )
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:4173"],
+    allow_origins=[environ.get("CORS_ORIGIN", "*")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
