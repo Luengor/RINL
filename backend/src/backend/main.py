@@ -9,6 +9,7 @@ from backend.routers.shape import router as shape_router
 
 app = FastAPI(
     title="RINL",
+    root_path="/api",
 )
 
 app.add_middleware(

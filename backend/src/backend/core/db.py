@@ -13,8 +13,7 @@ class Base(DeclarativeBase):
 USER = environ.get("POSTGRES_USER", "postgres")
 PASSWORD = environ.get("POSTGRES_PASSWORD", "postgres")
 HOST = environ.get("POSTGRES_HOST", "localhost")
-PORT = environ.get("POSTGRES_PORT", "5432")
-ENGINE_PATH = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}"
+ENGINE_PATH = f"postgresql://{USER}:{PASSWORD}@{HOST}:5432"
 engine = create_engine(ENGINE_PATH)
 
 
