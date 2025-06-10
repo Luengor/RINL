@@ -1,12 +1,55 @@
+En este apartado se detallan los requisitos funcionales del sistema como casos de uso. Se han
+definido tres paquetes de requisitos funcionales:
+\begin{itemize}
+    \item \textbf{Gestión de usuario}: Se agrupan aquí los casos de uso relacionados con la
+           gestión de usuarios como la visualización y modificación de datos personales, así como
+           aquellos relacionados con el registro y la sesión del usuario.
+    \item \textbf{Estadísticas y seguimiento}: Se encuentran aquí los casos de uso referentes a la
+           visualización de estadísiticas de juego y la historial de formas físicas.
+    \item \textbf{Juego}: Se agrupan aquí los casos de uso relacionados con el juego en sí, como la
+           selección de minijuegos, la calibración de la cámara y la interacción con los minijuegos.
+\end{itemize}
+
 \subsection{Diagramas de casos de uso}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso}
+En este sub-apartado se muestra el diagrama de todos los casos de uso del sistema (figura
+\ref{anexo1:fig:casos-uso}), así como distintos diagramas de casos de uso agrupados por paquetes
+(figuras \ref{anexo1:fig:casos-uso-gestion-usuario}, \ref{anexo1:fig:casos-uso-estadisticas} y
+\ref{anexo1:fig:casos-uso-juego}). Estos diagramas muestran las relaciones entre los actores y los
+casos de uso, así como las relaciones entre los propios casos de uso. 
+
+\diagrama{
+    nombre = {Paquete de casos de uso Estadísticas y seguimiento},
+    archivo = {anexo1/diagramas/estadisticas.pdf},
+    etiqueta = {casos-uso-estadisticas},
+    width = \textwidth,
+    forzarPosicion = {sí pls},
+}
 
 \diagrama{
     nombre = {Casos de uso del sistema},
     archivo = {anexo1/diagramas/casosuso.pdf},
     etiqueta = {casos-uso},
+    width = \textwidth,
     forzarPosicion = {sí pls},
 }
+
+\diagrama{
+    nombre = {Paquete de casos de uso Gestion de usuario},
+    archivo = {anexo1/diagramas/gestionusuario.pdf},
+    etiqueta = {casos-uso-gestion-usuario},
+    width = \textwidth,
+    forzarPosicion = {sí pls},
+}
+
+\diagrama{
+    nombre = {Paquete de casos de uso Juego},
+    archivo = {anexo1/diagramas/juego.pdf},
+    etiqueta = {casos-uso-juego},
+    width = \textwidth,
+    forzarPosicion = {sí pls},
+}
+
 
 \subsection{Definición de actores}
 \label{anexo1:sec:requisitos-funcionales-actores}
