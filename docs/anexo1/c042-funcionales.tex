@@ -159,6 +159,9 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0006}
     },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+    },
     longsecuencia = {3},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0001} rellena el formulario de inicio de sesión y pulsa
@@ -180,13 +183,17 @@ relacción entre ellos a través de un diagrama.
     nombre = {Mandar correo de verificación},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso abstracto
-        durante la realización del caso de uso \nameref{anexo1:tab:cu:registrarse} y \nameref{anexo1:tab:cu:modificar-datos-personales}
+        durante la realización del caso de uso \nameref{anexo1:tab:cu:registrarse} y
+        \nameref{anexo1:tab:cu:modificar-datos-personales}
     },
 }{
     key = {mandar-correo-verificacion},
     objetivosAsociados = {
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
     },
     longsecuencia = {1},
     secuencia = {%
@@ -209,6 +216,10 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:obj0005}
         \item \nameref{anexo1:tab:obj0006}
     },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+        \item \nameref{anexo1:tab:ri0003}
+    },
     longsecuencia = {1},
     secuencia = {%
         & 1 & El sistema muestra los datos personales y la forma física actual del usuario \\
@@ -227,12 +238,19 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0006}
     },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+        \item \nameref{anexo1:tab:ri0002}
+        \item \nameref{anexo1:tab:ri0003}
+    },
     longsecuencia = {4},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de elminar cuenta en el menú principal \\
+        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de elminar cuenta en el menú
+              principal \\
         & 2 & El sistema muestra una advertencia, indicando que esta operación no es reversible \\
         & 3 & El actor confirma la eliminación \\
-        & 4 & El sistema elimina los datos del actor y se le envía a la página principal \\
+        & 4 & El sistema elimina los datos del actor (esto incluye sus formas físicas y actividades)
+              y se le envía a la página principal \\
     },
     postcondicion = {%
         El actor pasa a tener el rol \nameref{anexo1:tab:act0001} % Usuario sin autenticar
@@ -287,6 +305,9 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0006}
     },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+    },
     precondicion = {%
         El actor no debe ser \nameref{anexo1:tab:act0003} % Usuario verificado
     },
@@ -322,6 +343,9 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0006}
     },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0001}
+    },
     longsecuencia = {3},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} modifica alguno de sus datos personales y
@@ -354,6 +378,9 @@ relacción entre ellos a través de un diagrama.
     objetivosAsociados = {
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0005}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0003}
     },
     longsecuencia = {4},
     secuencia = {%
@@ -388,6 +415,10 @@ relacción entre ellos a través de un diagrama.
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0005}
     },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0002}
+        \item \nameref{anexo1:tab:ri0003}
+    },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:anadir-forma-fisica}
     },
@@ -411,6 +442,10 @@ relacción entre ellos a través de un diagrama.
     objetivosAsociados = {
         \item \nameref{anexo1:tab:obj0004}
         \item \nameref{anexo1:tab:obj0005}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0002}
+        \item \nameref{anexo1:tab:ri0003}
     },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:consultar-estadisticas}
@@ -615,6 +650,9 @@ relacción entre ellos a través de un diagrama.
     objetivosAsociados = {
         \item \nameref{anexo1:tab:obj0001}
         \item \nameref{anexo1:tab:obj0005}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:ri0002}
     },
     precondicion = {%
         El actor debe haber satisfecho el caso de uso \nameref{anexo1:tab:cu:jugar-minijuego-globos} o
