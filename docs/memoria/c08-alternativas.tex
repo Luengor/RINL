@@ -1,2 +1,113 @@
 \chapter{Estudio de alternativas y viabilidad}
 \label{cap:alternativas}
+En este capítulo se argumentan las herramientas y tecnologías usadas en el proyecto, así como las
+alternativas que se han considerado y por qué se ha optado por las elegidas. Se agruparán las
+herramientas en tres secciones: \gls{backend}, \gls{frontend} y videojuego. Además se evaluará la
+viabilidad económica y técnica del proyecto.
+
+\section{Alternativas tecnológicas}
+\label{sec:alternativas-tecnologicas}
+
+\subsection{Herramientas utilizadas en el backend}
+\label{subsec:herramientas-backend}
+El \gls{backend} consiste en una API REST encargada de gestionar la lógica de negocio, el acceso a
+datos y la comunicación con el \gls{frontend}.
+
+\subsubsection{Python}
+\label{subsubsec:python}
+Python es un lenguaje de programación de alto nivel, interpretado y multipropósito. Acorde a
+la última encuesta a desarrolladores de Stack Overflow, es el tercer lenguaje más popular, después
+de JavaScript y HTML/CSS (tecnologías que también se usan en este proyecto)
+\cite{encuestaTecnologias2024}. La ventaja de utilizar un lenguaje popular es que hay una gran 
+cantidad de herramienta, documentación y comunidad que pueden ayudar a resolver problemas y
+mejorar la productividad del desarrollo. Se escoge Python frente a otros lenguaje como JavaScript o
+Java porque es un lenguaje ya conocido por el autor y tiene una gran cantidad de bibliotecas
+destinadas a la creación de APIs REST.
+
+\subsubsection{UV}
+\label{subsubsec:uv}
+UV es un gestor de paquetes y proyectos para Python que permite crear y gestionar entornos viruales
+de forma sencilla y muy rápida \parencite{uvPython}. Se escoge UV frente a otros gestores de paquetes
+o a no usar ninguno por su simplicidad y facilidad de uso. Además, es mucho más rápido que otros como
+poetry o pdm (ver figura \ref{fig:uvspeed}).
+
+% fuente de esto?
+\diagrama{
+    nombre = {Comparativa de velocidades de gestores de paquetes},
+    archivo = {memoria/fotos/uvspeed.png},
+    width = 0.7\textwidth,
+    etiqueta = {fig:uvspeed},
+}
+
+\subsubsection{FastAPI}
+\label{subsubsec:fastapi}
+FastAPI es un \gls{framework} web para Python que permite crear APIs REST de forma muy rápida y
+sencilla \parencite{fastapi}. Se basa en el estándar OpenAPI y permite generar documentación de
+manera automática. Además, favorece la escritura de código limpio y mantenible, fomentando el uso de
+la composición y la reutilización de código a través de su sistema de inyección de dependencias.%
+Se escoge FastAPI frente a otros \glspl{framework} como Flask o Django por su simplicidad, rapidez
+de desarrollo y libertad para estructurar el proyecto.
+
+\subsubsection{PostgreSQL}
+\label{subsubsec:postgresql}
+Para el almacenamiento de datos se ha optado por PostgreSQL, un sistema de gestión de bases de datos
+relaccionales de código abierto \parencite{postgresql}. Se escoge PostgreSQL frente a otros sistemas
+de bases de datos por su robustez y escalabilidad. Además, es compatible con el estándar SQL,
+estudiado en la asignatura de Bases de Datos, por lo que el autor ya tiene experiencia con él.
+
+\subsubsection{SQLAlchemy}
+\label{subsubsec:sqlalchemy}
+SQLAlchemy es una librería de Python que proporciona un \gls{ORM} para interactuar con bases de datos
+relacionales de forma sencilla \parencite{sqlalchemy}. Permite definir modelos de datos como clases
+de Python y realizar consultas a la base de datos utilizando una sintaxis muy similar a SQL, pero
+con la ventaja de realizarse todo desde Python, utilizando sus tipos de datos y estructuras.
+
+
+\subsection{Herramientas utilizadas en el frontend}
+\label{subsec:herramientas-frontend}
+
+\subsubsection{TypeScript}
+\label{subsubsec:typescript}
+
+\subsubsection{Vite}
+\label{subsubsec:vite}
+
+\subsubsection{Mantine}
+\label{subsubsec:mantine}
+
+\subsubsection{Mediapipe}
+\label{subsubsec:mediapipe}
+
+
+\subsection{Herramientas utilizadas en el despliegue}
+\label{subsec:herramientas-despliegue}
+\subsubsection{Docker}
+\label{subsubsec:docker}
+Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado por Docker, una
+herramienta de contenedorización que permite empaquetar aplicaciones y sus dependencias en
+contenedores ligeros y portables \parencite{docker}. Esto permite distribuir la aplicación completa
+en distintos equipos simplemente compartiendo el archivo de comfiguración y las fuentes del proyecto,
+realizando la instalación y despliegue de forma automática.
+
+\subsubsection{Caddy}
+\label{subsubsec:caddy}
+Caddy es un servidor web y proxy inverso que permite servir aplicaciones web de forma sencilla y
+rápida con un simple archivo de configuración \parencite{caddy}. Se escoge Caddy frente a otros
+servidores web como Nginx o Apache por ser muy sencillo de configurar y por crear certificados
+SSL de forma automática y gratuita, lo que permite servir la aplicación de forma segura sin
+necesidad de comprar o generar un certificado.
+
+\diagrama{
+    nombre = {Toda la configuración de Caddy de este proyecto},
+    archivo = {memoria/fotos/caddy.png},
+    etiqueta = {fig:caddy},
+}
+
+\subsection{Herramientas utilizadas en el videojuego}
+\label{subsec:herramientas-videojuego}
+
+
+\section{Viabilidad económica}
+\label{sec:viabilidad-economica}
+
+% Unity me destroza aquí
