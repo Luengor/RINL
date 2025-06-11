@@ -11,6 +11,8 @@ public class RINLBody : MonoBehaviour
     [Header("Alert things")]
     public GameObject alertPanel;
     public TextMeshProUGUI alertText;
+    [Tooltip("Text to show when the body is displaced")]
+    public string displacedText = "Vuelve a la posición de calibración para continuar";
 
     [Header("Body parts")]
     public Transform bodyParent;
@@ -240,7 +242,7 @@ public class RINLBody : MonoBehaviour
         if (displacementTimer > displacementTime)
         {
             alertPanel.SetActive(true);
-            alertText.text = "No te muevas perro";
+            alertText.text = displacedText; 
             GameController.Instance.Pause();
             Debug.Log("Body is displaced");
         }
