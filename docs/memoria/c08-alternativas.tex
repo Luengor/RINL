@@ -18,11 +18,18 @@ datos y la comunicación con el \gls{frontend}.
 Python es un lenguaje de programación de alto nivel, interpretado y multipropósito. Acorde a
 la última encuesta a desarrolladores de Stack Overflow, es el tercer lenguaje más popular, después
 de JavaScript y HTML/CSS (tecnologías que también se usan en este proyecto)
-\cite{encuestaTecnologias2024}. La ventaja de utilizar un lenguaje popular es que hay una gran 
+\parencite{encuestaTecnologias2024}. La ventaja de utilizar un lenguaje popular es que hay una gran
 cantidad de herramienta, documentación y comunidad que pueden ayudar a resolver problemas y
 mejorar la productividad del desarrollo. Se escoge Python frente a otros lenguaje como JavaScript o
 Java porque es un lenguaje ya conocido por el autor y tiene una gran cantidad de bibliotecas
 destinadas a la creación de APIs REST.
+
+\diagrama{
+    nombre = {Lenguajes de programación más populares},
+    archivo = {memoria/fotos/tecnologias.png},
+    width = 0.7\textwidth,
+    etiqueta = {fig:lenguajesPopulares},
+}
 
 \subsubsection{UV}
 \label{subsubsec:uv}
@@ -65,15 +72,32 @@ con la ventaja de realizarse todo desde Python, utilizando sus tipos de datos y 
 
 \subsection{Herramientas utilizadas en el frontend}
 \label{subsec:herramientas-frontend}
+El \gls{frontend} consiste en una aplicación web que permite a los usuarios interactuar con el
+\gls{backend} y el videojuego.
 
 \subsubsection{TypeScript}
 \label{subsubsec:typescript}
+JavaScript es el lenguaje de programación más utilizado en el desarrollo web
+\parencite{encuestaTecnologias2024}, pero su tipado dinámico puede llevar a errores difíciles de
+detectar y a un código menos legible y manenible. TypeScript es un superconjunto de JavaScript que
+añade tipado estático, eliminando muchos de estos problemas y mejorando la productividad del
+desarrollo \parencite{typescript}.
+
+\subsubsection{React}
+\label{subsubsec:react}
+React es una biblioteca de JavaScript para construir interfaces de usuario, desarrollada por
+Facebook \parencite{react}. Permite crear componentes reutilizables y gestionar el estado de la
+aplicación de forma sencilla.
 
 \subsubsection{Vite}
 \label{subsubsec:vite}
-
-\subsubsection{Mantine}
-\label{subsubsec:mantine}
+Vite es una herramienta de construcción y desarrollo de aplicaciones web gratuita y de código
+abierto \parencite{Vite} que permite crear productos de manera rápida y sencilla. Inicialmente se
+escogió NextJS como \gls{framework} para el \gls{frontend}, pero poco después de comenzar el
+desarrollo se descartó puesto que no permitía exportar la aplicación web como un sitio estático,
+lo que era necesario para servir la aplicación de manera independiente del \gls{backend}. Se
+optó por Vite como alternativa, ya que permite exportar la aplicación como un sitio web estático y
+soporta TypeScript y React de forma nativa.
 
 \subsubsection{Mediapipe}
 \label{subsubsec:mediapipe}
@@ -105,7 +129,15 @@ necesidad de comprar o generar un certificado.
 
 \subsection{Herramientas utilizadas en el videojuego}
 \label{subsec:herramientas-videojuego}
-
+Para el desarrollo del videojuego se ha optado por Unity, un motor de videojuegos muy popular y
+versátil que permite crear juegos en 2D y 3D de forma sencilla \parencite{unity}. Unity utiliza el
+lenguaje de programación C\# y cuenta con una gran cantidad de herramientas y recursos en línea que
+facilitan el desarrollo de videojuegos. Se consideró Godot como alternativa, pero se descartó puesto
+que el motor aun se encuentra en desarrollo muy activo y suele sufrir cambios frecuentes que pueden
+romper la compatibilidad con versiones anteriores. Por otro lado, Unreal Engine no soporta exportar
+a WebGL \parencite{noWebExportUnrealReddit} \parencite{noWebExportUnreal}, lo que hace su uso
+inviable para este proyecto. Por esto, y por la familiaridad del autor con Unity, se optó por este
+motor para el desarrollo del videojuego.
 
 \section{Viabilidad económica}
 \label{sec:viabilidad-economica}
