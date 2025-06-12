@@ -48,6 +48,3 @@ class UserFull(UserBase):
 
     password: str
     """The hashed password of the user."""
-
-    verification_code: str
-    """The verification code for the user's email."""

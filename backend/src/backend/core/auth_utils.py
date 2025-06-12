@@ -54,7 +54,7 @@ def get_expire_time(expires_delta: timedelta = timedelta(minutes=15)) -> datetim
     """Get the expiration time for a token.
 
     Args:
-        expires_delta (timedelta | None): The time delta for expiration. Defaults to 15 minutes. 
+        expires_delta (timedelta | None): The time delta for expiration. Defaults to 15 minutes.
 
     Returns:
         datetime: The expiration time as a UTC datetime object.

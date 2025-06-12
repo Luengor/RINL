@@ -20,7 +20,6 @@ class User(Base):
         email (str): Unique email address of the user.
         hashed_password (str): Hashed password for user authentication.
         verified (bool): Indicates whether the user's email is verified.
-        verification_code (str): Code used for email verification.
         name (str): Encrypted name of the user.
         year_of_birth (int): Encrypted year of birth of the user.
 
@@ -33,7 +32,6 @@ class User(Base):
     email = mapped_column(String, unique=True)
     hashed_password = mapped_column(String)
     verified = mapped_column(Boolean, default=False)
-    verification_code = mapped_column(String)
     name = mapped_column(StringEncryptedType(String, ENCRIPTION_KEY))
     year_of_birth = mapped_column(StringEncryptedType(Integer, ENCRIPTION_KEY))
 

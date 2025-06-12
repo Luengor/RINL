@@ -41,6 +41,7 @@ def send_email(email: str, subject: str, content: str) -> bool:
         bool: True if the email was sent successfully, False otherwise.
     """
     if environ.get('SKIP_EMAIL', False):
+        print(f'Email to {email}:\n{subject}\n{content}')
         return True
 
     # Create the email

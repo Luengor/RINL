@@ -5,20 +5,22 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${POSTGRES_USER} 
+      POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  
+    ports:
+      - "5432:5432"
+
   backend:
     build:
       context: ./backend
       dockerfile: dockerfile
     env_file:
-      - .env 
+      - .env
     ports:
       - "${API_PORT}:8000"
     depends_on:
       - postgres
-    
+
   frontend:
     build:
       context: ./frontend
