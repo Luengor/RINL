@@ -6,7 +6,7 @@ from jwt.exceptions import InvalidTokenError
 from sqlalchemy.orm import Session
 from backend.core.auth import get_current_user, get_current_verified_user
 from backend.core.auth_utils import create_access_token, decode_token
-from backend.core.common import API_URL, VERIFY_REDIRECT_URL
+from backend.core.common import API_URL, VERIFY_REDIRECT_URL, FRONTEND_URL
 from backend.core.db import get_db
 from backend.core.mail import get_send_email, SendEmailType
 from backend.dao.user import UserDAO
@@ -81,7 +81,7 @@ async def create_user(
         VERICIATION_EMAIL[0],
         VERICIATION_EMAIL[1].format(
             url=f"{API_URL}/user/verify?token={token}",
-            rivulet=f"{API_URL}/static/rivulet.gif"
+            rivulet=f"{FRONTEND_URL}/public/rivulet.gif"
         ),
     )
 
@@ -124,7 +124,7 @@ async def send_verification_email(
         VERICIATION_EMAIL[0],
         VERICIATION_EMAIL[1].format(
             url=f"{API_URL}/user/verify?token={token}",
-            rivulet=f"{API_URL}/static/rivulet.gif"
+            rivulet=f"{FRONTEND_URL}/public/rivulet.gif"
         ),
     )
 
@@ -226,7 +226,7 @@ async def update_me(
             UPDATE_EMAIL[1].format(
                 url=f"{API_URL}/user/me/email?token={token}",
                 nuevo_correo=modifications.email,
-                rivulet=f"{API_URL}/static/rivulet.gif"
+                rivulet=f"{FRONTEND_URL}/public/rivulet.gif"
             ),
         )
 

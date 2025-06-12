@@ -1,9 +1,9 @@
 """Main module defining the FastAPI application that includes all the routers"""
-from os import environ
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from backend.routers.auth import router as auth_router
+from backend.core.common import FRONTEND_URL
 from backend.routers.user import router as users_router
 from backend.routers.activity import router as activity_router
 from backend.routers.shape import router as shape_router
@@ -21,7 +21,7 @@ app.mount(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[environ.get("CORS_ORIGIN", "*")],
+    allow_origins=[FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
