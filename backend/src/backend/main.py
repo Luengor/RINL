@@ -1,6 +1,5 @@
 """Main module defining the FastAPI application that includes all the routers"""
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from backend.routers.auth import router as auth_router
 from backend.core.common import FRONTEND_URL
@@ -11,12 +10,6 @@ from backend.routers.shape import router as shape_router
 app = FastAPI(
     title="RINL",
     root_path="/api",
-)
-
-app.mount(
-    "/static",
-    StaticFiles(directory="static"),
-    name="static",
 )
 
 app.add_middleware(
