@@ -4,10 +4,9 @@ left to right direction
 :Sistema: as sys
 :Usuario sin autenticar: as anon
 :Usuario autenticado: as userauth
-:Usuario verificado: as userverif 
+:Usuario verificado: as userverif
 
 anon <|-- userauth
 userauth <|-- userverif
-
 
 @enduml

@@ -1,6 +1,6 @@
 @startuml "estadisticas"
 
-:Usuario verificado: as userverif 
+:Usuario verificado: as userverif
 
 left to right direction
 package "Gestión de usuario" {
@@ -35,6 +35,6 @@ userverif --> (ConsultarEstadisticas)
 (ConsultarEstadisticas) <. (FiltrarEstadisticas) : <<extend>>
 
 (AnadirFormaFisica) ..> (VerDatosPersonales) : <<extend>>
-note bottom of link : CONDITION {actor == Usuario verificado} 
+note bottom of link : CONDITION {actor == Usuario verificado}
 
 @enduml

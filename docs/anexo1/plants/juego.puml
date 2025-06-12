@@ -1,6 +1,6 @@
 @startuml "juego"
 
-:Usuario verificado: as userverif 
+:Usuario verificado: as userverif
 
 package "Juego" {
     usecase AbrirJuego as "
@@ -70,7 +70,7 @@ package "Juego" {
 
 /'
  ' El usuario verificado puede abrir el juego, desde el cual se puede activar la pantalla completa.
- ' La primera vez que se abra el juego, automáticamente se calibrará la cámara. 
+ ' La primera vez que se abra el juego, automáticamente se calibrará la cámara.
  ' Después, aparecerá el menú de selección de minijuego.
  ' Desde el menú de selección de minijuego, se puede escoger el minijuego.
  ' Una vez escogido el minijuego, se puede escoger la dificultad.
@@ -87,9 +87,9 @@ note bottom of link : CONDITION {Solo una vez por sesión}
 
 ' Escoger minijuego después de abrir el juego
 (AbrirJuego) <. (EscogerMinijuego) : <<extend>>
-' Escoger dificultad después de escoger minijuego 
+' Escoger dificultad después de escoger minijuego
 (EscogerMinijuego) <. (EscogerDificultad) : <<extend>>
-' Escoger dificultad después de jugar 
+' Escoger dificultad después de jugar
 (EscogerDificultad) ..> (VolverJugar) : <<extend>>
 
 ' Jugar minijuego globos/esquivar después de escoger dificultad

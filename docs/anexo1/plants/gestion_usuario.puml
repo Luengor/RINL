@@ -60,10 +60,10 @@ userauth --> (VerDatosPersonales)
 (VerDatosPersonales) <.. (CerrarSesion) : <<extend>>
 (VerDatosPersonales) <. (VerificarCorreoElectronico) : <<extend>>
 (VerDatosPersonales) <.. (ModificarDatosPersonales) : <<extend>>
-note top of link : CONDITION {actor == Usuario verificado} 
+note top of link : CONDITION {actor == Usuario verificado}
 (MandarCorreoVerificacion) <.. (ModificarDatosPersonales) : <<include>>
 
 (VerDatosPersonales) <.. (AnadirFormaFisica) : <<extend>>
-note bottom of link : CONDITION {actor == Usuario verificado} 
+note bottom of link : CONDITION {actor == Usuario verificado}
 
 @enduml
