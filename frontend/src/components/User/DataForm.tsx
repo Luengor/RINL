@@ -3,10 +3,9 @@ import {
   ModifyUser,
   updateMeUserMePut,
   UserBase,
-  verifyUserUserVerifyVerificationCodePost,
+  sendVerificationEmailUserVerifyEmailPost,
 } from "../../client";
 import { useClient } from "../../hooks/useClient";
-import { useState } from "react";
 import { Form, hasLength, useForm } from "@mantine/form";
 import {
   Stack,
@@ -17,11 +16,9 @@ import {
   Collapse,
   Center,
   Button,
-  Modal,
-  PinInput,
 } from "@mantine/core";
 import { TbUser, TbCalendar, TbMail } from "react-icons/tb";
-import { OkNotification, ErrorNotification } from "../../utils/notifications";
+import { OkNotification, ErrorNotification, WarningNotification } from "../../utils/notifications";
 
 interface DataFormValues {
   name: string;
@@ -34,44 +31,25 @@ export default function DataForm({ user }: { user: UserBase }) {
   const { client } = useClient();
   const queryClient = useQueryClient();
 
-  /// Verify user
-  const [verifing, setVerifing] = useState(false);
-  const verifyForm = useForm({
-    name: "verify-form",
-    mode: "uncontrolled",
-    validate: {
-      pin: hasLength({ min: 6, max: 6 }, "El código debe tener 6 dígitos"),
+  // Send email mutation
+  const sendEmailMutation = useMutation({
+    mutationKey: ["send-verification-email"],
+    mutationFn: async () => {
+      await sendVerificationEmailUserVerifyEmailPost({ client: client });
     },
-  });
-
-  const verifyUserMutation = useMutation({
-    mutationKey: ["verify-user"],
-    mutationFn: async (pin: string) => {
-      await verifyUserUserVerifyVerificationCodePost({
-        client: client,
-        path: { verification_code: pin },
-      });
-    },
-
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["user-data"] });
-      setVerifing(false);
       OkNotification(
-        "Correo verificado",
-        "Tu correo electrónico ha sido verificado correctamente"
+        "Correo enviado",
+        "Hemos enviado un correo electrónico de verificación a tu correo electrónico. Por favor, revisa tu bandeja de entrada."
       );
     },
-
     onError: () => {
-      ErrorNotification("No se ha podido verificar tu correo electrónico");
-      verifyForm.setErrors({ pin: "Código incorrecto" });
+      ErrorNotification(
+        "Error al enviar el correo",
+        "No hemos podido enviar el correo electrónico de verificación. Por favor, inténtalo de nuevo más tarde."
+      );
     },
   });
-
-  const handleVerify = async () => {
-    const pin = (verifyForm.getValues().pin as string).toUpperCase();
-    verifyUserMutation.mutate(pin);
-  };
 
   /// User data form (modify)
   const dataForm = useForm<DataFormValues>({
@@ -100,15 +78,27 @@ export default function DataForm({ user }: { user: UserBase }) {
     },
 
     onSuccess: () => {
+      // Update form values
+      const newValues = dataForm.getValues();
+      const changedEmail = newValues.email !== user.email;
+      newValues.email = user.email; // Reset email to original value
+      dataForm.setValues(newValues);
+      dataForm.setInitialValues(newValues);
+      dataForm.resetDirty();
+
+      // Show notification
       OkNotification(
         "Datos modificados",
         "Tus datos han sido modificados correctamente"
       );
-      queryClient.invalidateQueries({ queryKey: ["user-data"] });
+      if (changedEmail) {
+        WarningNotification(
+          "Actualización de correo electrónico",
+          "Para que el cambio de correo electrónico surta efecto, debes verificar la nueva dirección. Revisa tu bandeja de entrada para encontrar el enlace de verificación."
+        );
+      }
 
-      // Update form values
-      dataForm.setInitialValues(dataForm.getValues());
-      dataForm.resetDirty();
+      queryClient.invalidateQueries({ queryKey: ["user-data"] });
     },
 
     meta: { errorMessage: "No se pudo modificar tus datos." },
@@ -160,16 +150,18 @@ export default function DataForm({ user }: { user: UserBase }) {
             />
             <Collapse in={!user.verified}>
               <Text c="dimmed" size="sm" span>
-                Verifica tu correo electrónico
+                Tu correo electrónico no está verificado. Para verificarlo haz
+                click en el enlace que te hemos enviado a tu correo electrónico.
+                Si no lo has recibido, puedes reenviarlo haciendo click{" "}
               </Text>
               <Text
                 style={{ cursor: "pointer" }}
                 size="sm"
                 span
                 c="orange"
-                onClick={() => setVerifing(true)}
+                onClick={() => sendEmailMutation.mutate()}
               >
-                {" aquí."}
+                aquí.
               </Text>
             </Collapse>
           </Stack>
@@ -182,36 +174,6 @@ export default function DataForm({ user }: { user: UserBase }) {
           </Collapse>
         </Stack>
       </Form>
-      <Modal
-        opened={verifing}
-        title="Verificar correo electrónico"
-        onClose={() => setVerifing(false)}
-        centered
-      >
-        <Form form={verifyForm} onSubmit={handleVerify}>
-          <Stack align="center">
-            <Text>
-              Introduce el código de verificación que te hemos enviado a{" "}
-              {user.email}
-            </Text>
-            <PinInput
-              name="pin"
-              key={verifyForm.key("pin")}
-              {...verifyForm.getInputProps("pin")}
-              length={6}
-              oneTimeCode
-            />
-            <Button
-              loading={verifyUserMutation.isPending}
-              mt="sm"
-              type="submit"
-              variant="filled"
-            >
-              Verificar
-            </Button>
-          </Stack>
-        </Form>
-      </Modal>
     </>
   );
 }

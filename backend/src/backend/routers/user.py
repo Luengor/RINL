@@ -199,10 +199,9 @@ async def update_me(
     return UserDAO.update_user(user, modifications, session)
 
 
-@router.get('me/email')
+@router.get('/me/email')
 async def update_email(
     token: str,
-    user: UserBase = Depends(get_current_verified_user),
     session: Session = Depends(get_db),
 ):
     """Update the current user's email using a verification token.
@@ -224,6 +223,13 @@ async def update_email(
 
     email = dict_token.get("sub")
     assert email
+    print(dict_token)
+
+    user = UserDAO.get_user(email, session)
+    if not user:
+        raise HTTPException(
+            status_code=404, detail="User not found"
+        )
 
     if "type" not in dict_token or dict_token["type"] != "update_email":
         raise HTTPException(
