@@ -4,6 +4,7 @@ import {
   updateMeUserMePut,
   UserBase,
   sendVerificationEmailUserVerifyEmailPost,
+  deleteMeUserMeDelete
 } from "../../client";
 import { useClient } from "../../hooks/useClient";
 import { Form, hasLength, useForm } from "@mantine/form";
@@ -16,9 +17,12 @@ import {
   Collapse,
   Center,
   Button,
+  Modal,
 } from "@mantine/core";
 import { TbUser, TbCalendar, TbMail } from "react-icons/tb";
 import { OkNotification, ErrorNotification, WarningNotification } from "../../utils/notifications";
+import { useDisclosure } from "@mantine/hooks";
+import { useNavigate } from "react-router-dom";
 
 interface DataFormValues {
   name: string;
@@ -28,8 +32,25 @@ interface DataFormValues {
 
 export default function DataForm({ user }: { user: UserBase }) {
   // Get the client
-  const { client } = useClient();
+  const { client, logout } = useClient();
   const queryClient = useQueryClient();
+
+  // Delete things
+  const [deleteModalOpened, {open, close}] = useDisclosure(false);
+  const navigate = useNavigate();
+  const handleDelete = async () => {
+    try {
+      await deleteMeUserMeDelete({ client: client });
+      OkNotification("Cuenta eliminada", "Tu cuenta ha sido eliminada correctamente.");
+      queryClient.invalidateQueries({ queryKey: ["user-data"] });
+      logout();
+      navigate("/");
+    } catch (error) {
+      ErrorNotification("Error al eliminar la cuenta", "No hemos podido eliminar tu cuenta. Por favor, inténtalo de nuevo más tarde.");
+    } finally {
+      close();
+    }
+  }
 
   // Send email mutation
   const sendEmailMutation = useMutation({
@@ -172,8 +193,42 @@ export default function DataForm({ user }: { user: UserBase }) {
               </Button>
             </Center>
           </Collapse>
+
+        <Button
+          variant="light"
+          color="red"
+          onClick={() => open()}
+          >
+            Eliminar mi cuenta
+        </Button>
         </Stack>
       </Form>
+      <Modal
+        opened={deleteModalOpened}
+        onClose={close}
+        title="Eliminar cuenta"
+        centered
+        size="lg"
+      >
+        <Stack>
+          <Text>
+            ¿Estás seguro de que quieres eliminar tu cuenta? Esta acción es
+            irreversible y eliminará todos tus datos de forma permanente.
+          </Text>
+          <Text c="red">
+            Esta acción no se puede deshacer. Asegúrate de que realmente
+            quieres eliminar tu cuenta antes de continuar.
+          </Text>
+          <Center>
+            <Button
+              color="red"
+              onClick={handleDelete}
+            >
+              Eliminar cuenta
+            </Button>
+          </Center>
+        </Stack>
+      </Modal>
     </>
   );
 }

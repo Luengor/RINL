@@ -2,6 +2,7 @@ import { Button, Card, Center, Divider, Group, Stack, Title } from "@mantine/cor
 import { LoginForm } from "../components/LoginForm";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import { useClient } from "../hooks/useClient";
 
 function UserCard() {
   const { user, logout } = useUser();
@@ -30,14 +31,14 @@ function UserCard() {
 }
 
 export default function Dashboard() {
-  const { user } = useUser();
+  const { loggedIn } = useClient();
 
-  // Login form or 
+  // Login form or
   let login_content;
-  if (user === undefined) {
+  if (loggedIn === false) {
     login_content = <LoginForm />;
   } else {
-    login_content = <UserCard />; 
+    login_content = <UserCard />;
   }
 
 

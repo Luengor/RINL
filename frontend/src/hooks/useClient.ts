@@ -3,7 +3,7 @@ import {
   createClient,
   createConfig,
 } from "@hey-api/client-fetch";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { loginForTokenLoginPost } from "../client";
 
 export function useClient() {
@@ -34,7 +34,7 @@ export function useClient() {
   });
 
   // Set the token if it exists
-  const token = localStorage.getItem("access_token");
+  const [token, setToken] = useState(localStorage.getItem("access_token"));
   if (token) {
     clientRef.current.setConfig({
       auth: token,
@@ -52,6 +52,7 @@ export function useClient() {
       },
     });
 
+    setToken(response.data.access_token);
     localStorage.setItem("access_token", response.data.access_token);
     clientRef.current.setConfig({
       auth: response.data.access_token,
@@ -67,7 +68,7 @@ export function useClient() {
   };
 
   // Logged in
-  const loggedIn = !!clientRef.current.getConfig().auth;
+  const loggedIn = !!token;
 
   // Return everything
   return { client: clientRef.current, login, logout, loggedIn };
