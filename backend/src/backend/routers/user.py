@@ -81,7 +81,7 @@ async def create_user(
         VERICIATION_EMAIL[0],
         VERICIATION_EMAIL[1].format(
             url=f"{API_URL}/user/verify?token={token}",
-            rivulet=f"{FRONTEND_URL}/public/rivulet.gif"
+            rivulet=f"{FRONTEND_URL}/rivulet.gif"
         ),
     )
 
@@ -124,7 +124,7 @@ async def send_verification_email(
         VERICIATION_EMAIL[0],
         VERICIATION_EMAIL[1].format(
             url=f"{API_URL}/user/verify?token={token}",
-            rivulet=f"{FRONTEND_URL}/public/rivulet.gif"
+            rivulet=f"{FRONTEND_URL}/rivulet.gif"
         ),
     )
 
@@ -226,7 +226,7 @@ async def update_me(
             UPDATE_EMAIL[1].format(
                 url=f"{API_URL}/user/me/email?token={token}",
                 nuevo_correo=modifications.email,
-                rivulet=f"{FRONTEND_URL}/public/rivulet.gif"
+                rivulet=f"{FRONTEND_URL}/rivulet.gif"
             ),
         )
 
