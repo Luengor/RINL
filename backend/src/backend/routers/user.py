@@ -26,7 +26,7 @@ VERICIATION_EMAIL = ("Verifica tu correo electrónico",
   <body>
     <p>Para verificar tu correo electrónico haz click en la criatura azul bailando:</p>
     <a href="{url}" target="_blank">
-      <img src="{rivulet}" alt="Bailando" style="width: 200px; height: 200px;">
+      <img src="{rivulet}" alt="Criatura azul bailando" style="width: 200px; height: 200px;">
     </a>
     <p>Si no puedes hacer click, copia y pega la siguiente URL en tu navegador:</p>
     <p><a href="{url}" target="_blank">{url}</a></p>
@@ -43,7 +43,7 @@ UPDATE_EMAIL = ("Actualiza tu correo electrónico",
   <body>
     <p>Para cambiar tu correo a "{nuevo_correo}" haz click en la criatura azul bailando:</p>
     <a href="{url}" target="_blank">
-      <img src="{rivulet}" alt="Bailando" style="width: 200px; height: 200px;">
+      <img src="{rivulet}" alt="Criatura azul bailando" style="width: 200px; height: 200px;">
     </a>
     <p>Si no puedes hacer click, copia y pega la siguiente URL en tu navegador:</p>
     <p><a href="{url}" target="_blank">{url}</a></p>
