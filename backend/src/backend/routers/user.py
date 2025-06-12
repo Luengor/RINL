@@ -17,6 +17,40 @@ router = APIRouter(
     tags=["user"],
 )
 
+VERICIATION_EMAIL = ("Verifica tu correo electrónico",
+                     """<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Para verificar tu correo electrónico haz click en la criatura azul bailando:</p>
+    <a href="{url}" target="_blank">
+      <img src="{rivulet}" alt="Bailando" style="width: 200px; height: 200px;">
+    </a>
+    <p>Si no puedes hacer click, copia y pega la siguiente URL en tu navegador:</p>
+    <p><a href="{url}" target="_blank">{url}</a></p>
+    <p>Si no has solicitado esta verificación, ignora este correo.</p>
+  </body>
+</html>""")
+
+UPDATE_EMAIL = ("Actualiza tu correo electrónico",
+                """<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Para cambiar tu correo a "{nuevo_correo}" haz click en la criatura azul bailando:</p>
+    <a href="{url}" target="_blank">
+      <img src="{rivulet}" alt="Bailando" style="width: 200px; height: 200px;">
+    </a>
+    <p>Si no puedes hacer click, copia y pega la siguiente URL en tu navegador:</p>
+    <p><a href="{url}" target="_blank">{url}</a></p>
+    <p>Si no has solicitado esta verificación, ignora este correo.</p>
+  </body>
+</html>""")
+
 
 @router.post("/", response_model=UserBase)
 async def create_user(
@@ -44,9 +78,11 @@ async def create_user(
 
     email = send_email(
         user.email,
-        "Verify your email",
-        "Please, click the link below to verify your email:\n"
-        f"{API_URL}/user/verify?token={token}",
+        VERICIATION_EMAIL[0],
+        VERICIATION_EMAIL[1].format(
+            url=f"{API_URL}/user/verify?token={token}",
+            rivulet=f"{API_URL}/static/rivulet.gif"
+        ),
     )
 
     if not email:
@@ -85,9 +121,11 @@ async def send_verification_email(
 
     email = send_email(
         user.email,
-        "Verify your email",
-        "Please, click the link below to verify your email:\n"
-        f"{API_URL}/user/verify?token={token}",
+        VERICIATION_EMAIL[0],
+        VERICIATION_EMAIL[1].format(
+            url=f"{API_URL}/user/verify?token={token}",
+            rivulet=f"{API_URL}/static/rivulet.gif"
+        ),
     )
 
     if not email:
@@ -184,9 +222,12 @@ async def update_me(
         )
         email = send_email(
             modifications.email,
-            "Verify your new email",
-            "Please, click the link below to verify your new email:\n"
-            f"{API_URL}/user/me/email?token={token}",
+            UPDATE_EMAIL[0],
+            UPDATE_EMAIL[1].format(
+                url=f"{API_URL}/user/me/email?token={token}",
+                nuevo_correo=modifications.email,
+                rivulet=f"{API_URL}/static/rivulet.gif"
+            ),
         )
 
         if not email:

@@ -2,7 +2,8 @@
 
 import smtplib
 from typing import Callable
-from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from os import environ
 
 EMAIL_HOST = environ.get('EMAIL_HOST', 'smtp.gmail.com')
@@ -44,12 +45,17 @@ def send_email(email: str, subject: str, content: str) -> bool:
         print(f'Email to {email}:\n{subject}\n{content}')
         return True
 
+    assert EMAIL_USER
+
     # Create the email
-    msg = EmailMessage()
+    msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = EMAIL_USER
     msg['To'] = email
-    msg.set_content(content)
+
+    html = MIMEText(content, 'html')
+
+    msg.attach(html)
 
     # Send the email
     s = smtplib.SMTP(EMAIL_HOST, 587)

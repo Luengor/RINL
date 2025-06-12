@@ -19,7 +19,6 @@ class UserDAO:
         Args:
             user (RegisterUserSchema): The user data to create.
             session (Session): The SQLAlchemy session to use for the database operations.
-            send_email (SendEmailType): Function to send verification email.
 
         Returns:
             UserSchema: The created user schema.
@@ -53,7 +52,6 @@ class UserDAO:
             base_user (UserSchema): The current user data.
             modify (ModifyUserSchema): The modifications to apply to the user.
             session (Session): The SQLAlchemy session to use for the database operations.
-            send_email (SendEmailType): Function to send verification email if email is changed.
 
         Returns:
             UserSchema: The updated user schema.
