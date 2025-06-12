@@ -99,9 +99,21 @@ lo que era necesario para servir la aplicación de manera independiente del \gls
 optó por Vite como alternativa, ya que permite exportar la aplicación como un sitio web estático y
 soporta TypeScript y React de forma nativa.
 
-\subsubsection{Mediapipe}
+\subsubsection{MediaPipe BlazePose}
 \label{subsubsec:mediapipe}
-
+BlazePose es un modelo de aprendizaje automático desarrollado por Google que permite detectar
+poses humanas en tiempo real a partir de imágenes o vídeos \parencite{bazarevsky2020blazepose}
+\parencite{xu2020ghum}. La decisión de utilizar BlazePose y no algún otro modelo de estimación de
+posturas como OpenPose o PoseNet son varias. OpenPose es un modelo que destaca por su precisión y
+capacidad para detectar multiples personas en una imagen, pero es muy pesado y requiere una gran
+cantidad de recursos, lo que lo hace inviable para este proyecto, puesto que se busca una solución
+ligera y rápida que funcione en dispositivos móviles y navegadores web. Tanto PoseNet como BlazePose
+son modelos diseñados para funcionar en dispositivos móviles y navegadores web, ambos son modelos
+compatibles con TensorFlow.js. Aunque BlazePose resulta algo más preciso que PoseNet en la mayoría de
+los casos \parencite{MediaPipeMirror}, se opta por BlazePose por su mejor combinación de velocidad,
+precisión y tamaño del modelo . Además, BlazePose además de las coordenadas en 2D de las
+articulaciones, también proporciona una estimación de la profundidad de las mismas, lo que puede
+ser muy útil para mejorar la precisión de la detección de posturas en el videojuego.
 
 \subsection{Herramientas utilizadas en el despliegue}
 \label{subsec:herramientas-despliegue}
