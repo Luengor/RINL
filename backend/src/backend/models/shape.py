@@ -5,7 +5,7 @@ from sqlalchemy import Integer, String, Float, ForeignKey
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy_utils import StringEncryptedType
 from backend.core.db import Base
-from backend.core.encrypt import ENCRIPTION_KEY
+from backend.core.common import ENCRIPTION_KEY
 
 
 class Shape(Base):

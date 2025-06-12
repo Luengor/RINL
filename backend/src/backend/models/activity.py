@@ -5,14 +5,14 @@ from sqlalchemy import Integer, String, Float, ForeignKey
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy_utils import StringEncryptedType
 from backend.core.db import Base
-from backend.core.encrypt import ENCRIPTION_KEY
+from backend.core.common import ENCRIPTION_KEY
 
 
 class Activity(Base):
     """Model representing a user's activity in the system.
 
     Attributes:
-        uuid (int): Auto-incrementing integer used as the primary key. 
+        uuid (int): Auto-incrementing integer used as the primary key.
         date (datetime): The date and time when the activity occurred.
         user_email (str): Email of the user associated with the activity.
         minigame (str): Name of the minigame played during the activity.
