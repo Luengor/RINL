@@ -20,7 +20,15 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         \item \nameref{anexo1:tab:obj0003}
         \item \nameref{anexo1:tab:obj0006}
     },
-    % requisitosAsociados = {},
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:registrarse}
+        \item \nameref{anexo1:tab:anexo1:tab:cu:iniciar-sesion}
+        \item \nameref{anexo1:tab:cu:mandar-correo-verificacion}
+        \item \nameref{anexo1:tab:cu:ver-datos-personales}
+        \item \nameref{anexo1:tab:cu:eliminar-cuenta}
+        \item \nameref{anexo1:tab:cu:verificar-correo-electronico}
+        \item \nameref{anexo1:tab:cu:modificar-datos-personales}
+    },
     datosEspecificos = {
         \item Identificador único del usuario
         \item Correo electrónico
@@ -47,7 +55,12 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         \item \nameref{anexo1:tab:obj0002}
         \item \nameref{anexo1:tab:obj0005}
     },
-    % requisitosAsociados = {},
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:eliminar-cuenta}
+        \item \nameref{anexo1:tab:cu:consultar-estadisticas}
+        \item \nameref{anexo1:tab:cu:filtrar-estadisticas}
+        \item \nameref{anexo1:tab:cu:ver-puntuaciones}
+    },
     datosEspecificos = {
         \item Identificador único de la actividad
         \item Fecha y hora en la que se realizó la actividad
@@ -74,7 +87,13 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         \item \nameref{anexo1:tab:obj0002}
         \item \nameref{anexo1:tab:obj0005}
     },
-    % requisitosAsociados = {},
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:ver-datos-personales}
+        \item \nameref{anexo1:tab:cu:eliminar-cuenta}
+        \item \nameref{anexo1:tab:cu:anadir-forma-fisica}
+        \item \nameref{anexo1:tab:cu:consultar-estadisticas}
+        \item \nameref{anexo1:tab:cu:filtrar-estadisticas}
+    },
     datosEspecificos = {
         \item Identificador único de la forma física
         \item Fecha y hora en la que se registró la forma física
@@ -95,7 +114,6 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
 
 \section{Requisitos no funcionales}
 \label{anexo1:sec:requisitos-no-funcionales}
-
 \requisitonf{
     id = {0001},
     nombre = {Usabilidad},
@@ -104,8 +122,33 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         intuitiva y accesible.
     }
 }{
-    % objetivosAsociados = {},
-    % requisitosAsociados = {},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0002}
+        \item \nameref{anexo1:tab:obj0004}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:registrarse}
+        \item \nameref{anexo1:tab:cu:iniciar-sesion}
+        \item \nameref{anexo1:tab:cu:mandar-correo-verificacion}
+        \item \nameref{anexo1:tab:cu:ver-datos-personales}
+        \item \nameref{anexo1:tab:cu:eliminar-cuenta}
+        \item \nameref{anexo1:tab:cu:cerrar-sesion}
+        \item \nameref{anexo1:tab:cu:verificar-correo-electronico}
+        \item \nameref{anexo1:tab:cu:modificar-datos-personales}
+        \item \nameref{anexo1:tab:cu:anadir-forma-fisica}
+        \item \nameref{anexo1:tab:cu:consultar-estadisticas}
+        \item \nameref{anexo1:tab:cu:filtrar-estadisticas}
+        \item \nameref{anexo1:tab:cu:abrir-juego}
+        \item \nameref{anexo1:tab:cu:activar-pantalla-completa}
+        \item \nameref{anexo1:tab:cu:calibrar-camara}
+        \item \nameref{anexo1:tab:cu:escoger-minijuego}
+        \item \nameref{anexo1:tab:cu:escoger-dificultad}
+        \item \nameref{anexo1:tab:cu:jugar-minijuego-globos}
+        \item \nameref{anexo1:tab:cu:jugar-minijuego-esquivar}
+        \item \nameref{anexo1:tab:cu:ver-puntuaciones}
+        \item \nameref{anexo1:tab:cu:volver-a-jugar}
+        \item \nameref{anexo1:tab:cu:volver-seleccion-minijuego}
+    }
 }
 
 \requisitonf{
@@ -116,8 +159,37 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         operativos, incluyendo móviles y ordenadores.
     }
 }{
-    % objetivosAsociados = {},
-    % requisitosAsociados = {},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+        \item \nameref{anexo1:tab:obj0003}
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+        \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:registrarse}
+        \item \nameref{anexo1:tab:cu:iniciar-sesion}
+        \item \nameref{anexo1:tab:cu:mandar-correo-verificacion}
+        \item \nameref{anexo1:tab:cu:ver-datos-personales}
+        \item \nameref{anexo1:tab:cu:eliminar-cuenta}
+        \item \nameref{anexo1:tab:cu:cerrar-sesion}
+        \item \nameref{anexo1:tab:cu:verificar-correo-electronico}
+        \item \nameref{anexo1:tab:cu:modificar-datos-personales}
+        \item \nameref{anexo1:tab:cu:anadir-forma-fisica}
+        \item \nameref{anexo1:tab:cu:consultar-estadisticas}
+        \item \nameref{anexo1:tab:cu:filtrar-estadisticas}
+        \item \nameref{anexo1:tab:cu:abrir-juego}
+        \item \nameref{anexo1:tab:cu:activar-pantalla-completa}
+        \item \nameref{anexo1:tab:cu:calibrar-camara}
+        \item \nameref{anexo1:tab:cu:escoger-minijuego}
+        \item \nameref{anexo1:tab:cu:escoger-dificultad}
+        \item \nameref{anexo1:tab:cu:jugar-minijuego-globos}
+        \item \nameref{anexo1:tab:cu:jugar-minijuego-esquivar}
+        \item \nameref{anexo1:tab:cu:ver-puntuaciones}
+        \item \nameref{anexo1:tab:cu:volver-a-jugar}
+        \item \nameref{anexo1:tab:cu:volver-seleccion-minijuego}
+    },
 }
 
 \requisitonf{
@@ -129,8 +201,26 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         así como en dispositivos con menos capacidades de cómputo.
     }
 }{
-    % objetivosAsociados = {},
-    % requisitosAsociados = {},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0001}
+        \item \nameref{anexo1:tab:obj0002}
+        \item \nameref{anexo1:tab:obj0003}
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+        \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:abrir-juego}
+        \item \nameref{anexo1:tab:cu:activar-pantalla-completa}
+        \item \nameref{anexo1:tab:cu:calibrar-camara}
+        \item \nameref{anexo1:tab:cu:escoger-minijuego}
+        \item \nameref{anexo1:tab:cu:escoger-dificultad}
+        \item \nameref{anexo1:tab:cu:jugar-minijuego-globos}
+        \item \nameref{anexo1:tab:cu:jugar-minijuego-esquivar}
+        \item \nameref{anexo1:tab:cu:ver-puntuaciones}
+        \item \nameref{anexo1:tab:cu:volver-a-jugar}
+        \item \nameref{anexo1:tab:cu:volver-seleccion-minijuego}
+    },
 }
 
 \requisitonf{
@@ -142,8 +232,21 @@ En esta sección se definen los requisitos relaccionados con el almacenamiento d
         seguro de las contraseñas.
     }
 }{
-    % objetivosAsociados = {},
-    % requisitosAsociados = {},
+    objetivosAsociados = {
+        \item \nameref{anexo1:tab:obj0004}
+        \item \nameref{anexo1:tab:obj0005}
+        \item \nameref{anexo1:tab:obj0006}
+    },
+    requisitosAsociados = {
+        \item \nameref{anexo1:tab:cu:registrarse}
+        \item \nameref{anexo1:tab:cu:iniciar-sesion}
+        \item \nameref{anexo1:tab:cu:ver-datos-personales}
+        \item \nameref{anexo1:tab:cu:verificar-correo-electronico}
+        \item \nameref{anexo1:tab:cu:modificar-datos-personales}
+        \item \nameref{anexo1:tab:cu:anadir-forma-fisica}
+        \item \nameref{anexo1:tab:cu:consultar-estadisticas}
+        \item \nameref{anexo1:tab:cu:ver-puntuaciones}
+    },
 }
 
 % Ley orgánica de protección de datos?

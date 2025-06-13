@@ -248,23 +248,26 @@
     \setkeys{keygenerica}{#1}
     \setkeys{requisitonf}{#2}
 
-    \tableshell{
+    \tableshell[ | l | X | ][
+        cellSpaceLimits = 4pt,
+        fontSize = {\small}
+    ]{
         \textbf{NFR-\keygenerica@id} & \textbf{\keygenerica@nombre} \\
         \hline
         \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
         \textbf{Autores} & Luengo Román, Alberto \\
         \textbf{Fuentes} & \keygenerica@fuentes \\
-        \textbf{Objetivos asociados} & \Block[j]{1-1}{
+        \textbf{Objetivos asociados} & \Block[l]{1-1}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \requisitonf@objetivosAsociados
             \end{itemize}
         } \\
-        \textbf{Requisitos asociados} & \Block[j]{1-1}{
+        \textbf{Requisitos asociados} & \Block[l]{1-1}{
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \requisitonf@requisitosAsociados
             \end{itemize}
         } \\
-        \textbf{Descripción} & \keygenerica@descripcion \\
+        \textbf{Descripción} & \Block[l]{1-1}{\keygenerica@descripcion} \\
         \textbf{Importancia} & \keygenerica@importancia \\
         \textbf{Urgencia} & \keygenerica@urgencia \\
         \textbf{Estado} & \keygenerica@estado \\
