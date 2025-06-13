@@ -1,2 +1,71 @@
 \chapter{Matriz de Rastreabilidad de Requisitos}
 \label{anexo1:cap:matriz}
+La matriz de rastreabilidad de requisitos relaciona cada uno de los requisitos del sistema (ya sean
+funcionales, no funcionales o de información) con los objetivos del sistema. Se crean dos tablas:
+una para los requisitos funcionales (Cuadro \ref{anexo1:tab:matriz:requisitos-funcionales}) y otra para
+los requisitos no funcionales y de información (Cuadro
+\ref{anexo1:tab:matriz:requisitos-info-nonfuncionales}).
+
+\newcommand{\XXX}[0]{\textbf{X}}
+
+\begin{table}[H]
+\begingroup
+\small
+\centering
+\begin{NiceTabular}[hvlines,cell-space-limits=3pt]{ @{} *{7}{X[c,m]@{}} }
+\CodeBefore
+    \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \cellcolor{Snow3}{1-,-1}
+\Body
+             & OBJ-0001 & OBJ-0002 & OBJ-0003 & OBJ-0004 & OBJ-0005 & OBJ-0006 \\
+    IRQ-0001 &          &          &   \XXX   &          &          &   \XXX   \\
+    IRQ-0002 &          &   \XXX   &          &          &   \XXX   &          \\
+    IRQ-0003 &          &   \XXX   &          &          &   \XXX   &          \\
+    NFR-0001 &          &   \XXX   &          &   \XXX   &          &          \\
+    NFR-0002 &   \XXX   &   \XXX   &   \XXX   &   \XXX   &   \XXX   &   \XXX   \\
+    NFR-0003 &   \XXX   &   \XXX   &   \XXX   &   \XXX   &   \XXX   &   \XXX   \\
+    NFR-0004 &          &          &          &   \XXX   &   \XXX   &   \XXX   \\
+\end{NiceTabular}
+\caption{Matriz de rastreabilidad de requisitos de información y no funcionales}
+\label{anexo1:tab:matriz:requisitos-info-nonfuncionales}
+\endgroup
+\end{table}
+
+\begin{table}
+\begingroup
+\small
+\centering
+\begin{NiceTabular}[hvlines,cell-space-limits=3pt]{ @{} *{7}{X[c,m]@{}} }
+\CodeBefore
+    \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
+    \cellcolor{Snow3}{1-,-1}
+\Body
+             & OBJ-0001 & OBJ-0002 & OBJ-0003 & OBJ-0004 & OBJ-0005 & OBJ-0006 \\
+     CU-0001 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0002 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0003 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0004 &          &          &          &   \XXX   &   \XXX   &   \XXX   \\
+     CU-0005 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0006 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0007 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0008 &          &          &          &   \XXX   &          &   \XXX   \\
+     CU-0009 &          &          &          &   \XXX   &   \XXX   &          \\
+     CU-0010 &          &          &          &   \XXX   &   \XXX   &          \\
+     CU-0011 &          &          &          &   \XXX   &   \XXX   &          \\
+     CU-0012 &          &          &          &   \XXX   &          &          \\
+     CU-0013 &          &          &          &   \XXX   &          &          \\
+     CU-0014 &   \XXX   &          &          &          &          &          \\
+     CU-0015 &   \XXX   &   \XXX   &   \XXX   &          &          &          \\
+     CU-0016 &   \XXX   &          &   \XXX   &          &          &          \\
+     CU-0017 &   \XXX   &   \XXX   &          &          &          &          \\
+     CU-0018 &   \XXX   &   \XXX   &          &          &          &          \\
+     CU-0019 &   \XXX   &          &          &          &   \XXX   &          \\
+     CU-0020 &   \XXX   &   \XXX   &          &          &          &          \\
+     CU-0021 &   \XXX   &   \XXX   &          &          &          &          \\
+\end{NiceTabular}
+\caption{Matriz de rastreabilidad de requisitos funcionales}
+\label{anexo1:tab:matriz:requisitos-funcionales}
+\endgroup
+\end{table}
+
+
