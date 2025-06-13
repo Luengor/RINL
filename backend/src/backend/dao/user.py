@@ -108,17 +108,11 @@ class UserDAO:
 
         Returns:
             bool: True if the user is successfully verified, False otherwise.
-
-        Raises:
-            HTTPException: If the user does not exist
         """
-        # Check the user exists
-        if not UserDAO.get_user(email, session):
-            return False
-
         # Verify user
         user = session.query(UserModel).filter(
             UserModel.email == email).first()
+
         if user is not None:
             user.verified = True
             session.commit()

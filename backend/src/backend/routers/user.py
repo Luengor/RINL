@@ -139,6 +139,7 @@ async def send_verification_email(
 @router.get("/verify")
 async def verify_user(
     token: str,
+    redirect: bool = True,
     session: Session = Depends(get_db),
 ):
     """Verify a user using the verification code from the token.
@@ -169,12 +170,14 @@ async def verify_user(
     # The token is a verification token, verify the user
     if not UserDAO.verify_user(email, session):
         raise HTTPException(
-            status_code=400, detail="Invalid verification code"
+            status_code=404, detail=f"User not found {email}"
         )
 
     return RedirectResponse(
         f"{VERIFY_REDIRECT_URL}?verified",
         status_code=303
+    ) if redirect else Response(
+        status_code=200, content="ok"
     )
 
 
@@ -243,6 +246,7 @@ async def update_me(
 @router.get('/me/email')
 async def update_email(
     token: str,
+    redirect: bool = True,
     session: Session = Depends(get_db),
 ):
     """Update the current user's email using a verification token.
@@ -290,6 +294,8 @@ async def update_email(
     return RedirectResponse(
         f"{VERIFY_REDIRECT_URL}?email={new_email}",
         status_code=303
+    ) if redirect else Response(
+        status_code=200, content='ok'
     )
 
 

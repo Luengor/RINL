@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from backend.models.user import User
 from backend.core.auth import NOT_VERIFIED
+from backend.core.auth_utils import create_access_token
 from .data import test_user, test_unverified_user
 
 
@@ -85,12 +86,16 @@ def test_login(client: TestClient, verified_login_token: str):
 
 
 def test_verify_user(client: TestClient, unverified_login_token: str):
-    code = test_unverified_user.verification_code
+    verify_token = create_access_token(
+        data={
+            "sub": test_unverified_user.email,
+            "type": "verify",
+        }
+    )
 
     # Verify user
-    response = client.post(
-        f"/user/verify/{code}",
-        headers={"Authorization": f"Bearer {unverified_login_token}"},
+    response = client.get(
+        f"/user/verify?token={verify_token}&redirect=false",
     )
 
     assert response.status_code == 200
@@ -106,21 +111,6 @@ def test_verify_user(client: TestClient, unverified_login_token: str):
         "year_of_birth": test_unverified_user.year_of_birth,
         "verified": True,
     }
-
-
-def test_verify_user_already_verified(client: TestClient, verified_login_token: str):
-    code = test_user.verification_code
-
-    # Verify user
-    response = client.post(
-        f"/user/verify/{code}",
-        headers={"Authorization": f"Bearer {verified_login_token}"},
-    )
-
-    # Check response
-    assert response.status_code == 400
-    assert json.loads(response.content).get(
-        "detail") == "User already verified"
 
 
 def test_update_name(client: TestClient, verified_login_token: str):
@@ -144,7 +134,7 @@ def test_update_name(client: TestClient, verified_login_token: str):
     }
 
 
-def test_update_email(client: TestClient, verified_login_token: str):
+def test_try_update_email(client: TestClient, verified_login_token: str):
     # Update user
     response = client.put(
         "/user/me",
@@ -157,30 +147,69 @@ def test_update_email(client: TestClient, verified_login_token: str):
     # Check response
     assert response.status_code == 200
     assert response.json() == {
-        "email": "test2",
+        "email": test_user.email,  # Email should not change
         "name": test_user.name,
         "year_of_birth": test_user.year_of_birth,
-        "verified": False,  # New email, not verified
+        "verified": test_user.verified,
     }
 
 
-def test_update_email_already_exists(
-    client: TestClient,
-    verified_login_token: str,
-    unverified_login_token: str,
-):
-    # Update user
-    response = client.put(
-        "/user/me",
-        headers={"Authorization": f"Bearer {verified_login_token}"},
-        json={
-            "email": test_unverified_user.email,
-        },
+def test_update_email(client: TestClient, verified_login_token: str):
+    # Create update email token
+    update_email_token = create_access_token(
+        data={
+            "sub": test_user.email,
+            "type": "update_email",
+            "new_email": "test2",
+        }
+    )
+
+    # Verify user with update email token
+    response = client.get(
+        f"/user/me/email?token={update_email_token}&redirect=false"
+    )
+
+    assert response.status_code == 200
+
+    # Check if the user email was updated
+    response = client.get(
+        "/user/me", headers={"Authorization": f"Bearer {verified_login_token}"}
+    )
+
+    # Check response
+    assert response.status_code == 200
+    assert response.json() == {
+        "email": "test2",
+        "name": test_user.name,
+        "year_of_birth": test_user.year_of_birth,
+        "verified": test_user.verified,
+    }
+
+
+def test_update_email_already_exists(client: TestClient, verified_login_token: str, unverified_login_token: str):
+    # Create update email token
+    update_email_token = create_access_token(
+        data={
+            "sub": test_user.email,
+            "type": "update_email",
+            "new_email": test_unverified_user.email,  # This email already exists
+        }
+    )
+
+    # Try to verify user with update email token
+    response = client.get(
+        f"/user/me/email?token={update_email_token}"
     )
 
     # Check response
     assert response.status_code == 400
-    assert response.json()["detail"] == "Email already taken"
+
+    # Check data did not change
+    response = client.get(
+        "/user/me", headers={"Authorization": f"Bearer {verified_login_token}"}
+    )
+    assert response.status_code == 200
+    assert response.json().get("email") == test_user.email
 
 
 def test_update_unverified_user(client: TestClient, unverified_login_token: str):
