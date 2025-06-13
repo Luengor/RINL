@@ -6,15 +6,15 @@ herramientas en tres secciones: \gls{backend}, \gls{frontend} y videojuego. Adem
 viabilidad económica y técnica del proyecto.
 
 \section{Alternativas tecnológicas}
-\label{sec:alternativas-tecnologicas}
+\label{c08:sec:alternativas-tecnologicas}
 
 \subsection{Herramientas utilizadas en el backend}
-\label{subsec:herramientas-backend}
+\label{c08:subsec:herramientas-backend}
 El \gls{backend} consiste en una API REST encargada de gestionar la lógica de negocio, el acceso a
 datos y la comunicación con el \gls{frontend}.
 
 \subsubsection{Python}
-\label{subsubsec:python}
+\label{c08:subsubsec:python}
 Python es un lenguaje de programación de alto nivel, interpretado y multipropósito. Acorde a
 la última encuesta a desarrolladores de Stack Overflow, es el tercer lenguaje más popular, después
 de JavaScript y HTML/CSS (tecnologías que también se usan en este proyecto)
@@ -32,7 +32,7 @@ destinadas a la creación de APIs REST.
 }
 
 \subsubsection{UV}
-\label{subsubsec:uv}
+\label{c08:subsubsec:uv}
 UV es un gestor de paquetes y proyectos para Python que permite crear y gestionar entornos viruales
 de forma sencilla y muy rápida \parencite{uvPython}. Se escoge UV frente a otros gestores de paquetes
 o a no usar ninguno por su simplicidad y facilidad de uso. Además, es mucho más rápido que otros como
@@ -47,7 +47,7 @@ poetry o pdm (ver figura \ref{fig:uvspeed}).
 }
 
 \subsubsection{FastAPI}
-\label{subsubsec:fastapi}
+\label{c08:subsubsec:fastapi}
 FastAPI es un \gls{framework} web para Python que permite crear APIs REST de forma muy rápida y
 sencilla \parencite{fastapi}. Se basa en el estándar OpenAPI y permite generar documentación de
 manera automática. Además, favorece la escritura de código limpio y mantenible, fomentando el uso de
@@ -56,14 +56,14 @@ Se escoge FastAPI frente a otros \glspl{framework} como Flask o Django por su si
 de desarrollo y libertad para estructurar el proyecto.
 
 \subsubsection{PostgreSQL}
-\label{subsubsec:postgresql}
+\label{c08:subsubsec:postgresql}
 Para el almacenamiento de datos se ha optado por PostgreSQL, un sistema de gestión de bases de datos
 relaccionales de código abierto \parencite{postgresql}. Se escoge PostgreSQL frente a otros sistemas
 de bases de datos por su robustez y escalabilidad. Además, es compatible con el estándar SQL,
 estudiado en la asignatura de Bases de Datos, por lo que el autor ya tiene experiencia con él.
 
 \subsubsection{SQLAlchemy}
-\label{subsubsec:sqlalchemy}
+\label{c08:subsubsec:sqlalchemy}
 SQLAlchemy es una librería de Python que proporciona un \gls{ORM} para interactuar con bases de datos
 relacionales de forma sencilla \parencite{sqlalchemy}. Permite definir modelos de datos como clases
 de Python y realizar consultas a la base de datos utilizando una sintaxis muy similar a SQL, pero
@@ -71,12 +71,12 @@ con la ventaja de realizarse todo desde Python, utilizando sus tipos de datos y 
 
 
 \subsection{Herramientas utilizadas en el frontend}
-\label{subsec:herramientas-frontend}
+\label{c08:subsec:herramientas-frontend}
 El \gls{frontend} consiste en una aplicación web que permite a los usuarios interactuar con el
 \gls{backend} y el videojuego.
 
 \subsubsection{TypeScript}
-\label{subsubsec:typescript}
+\label{c08:subsubsec:typescript}
 JavaScript es el lenguaje de programación más utilizado en el desarrollo web
 \parencite{encuestaTecnologias2024}, pero su tipado dinámico puede llevar a errores difíciles de
 detectar y a un código menos legible y manenible. TypeScript es un superconjunto de JavaScript que
@@ -84,13 +84,13 @@ añade tipado estático, eliminando muchos de estos problemas y mejorando la pro
 desarrollo \parencite{typescript}.
 
 \subsubsection{React}
-\label{subsubsec:react}
+\label{c08:subsubsec:react}
 React es una biblioteca de JavaScript para construir interfaces de usuario, desarrollada por
 Facebook \parencite{react}. Permite crear componentes reutilizables y gestionar el estado de la
 aplicación de forma sencilla.
 
 \subsubsection{Vite}
-\label{subsubsec:vite}
+\label{c08:subsubsec:vite}
 Vite es una herramienta de construcción y desarrollo de aplicaciones web gratuita y de código
 abierto \parencite{Vite} que permite crear productos de manera rápida y sencilla. Inicialmente se
 escogió NextJS como \gls{framework} para el \gls{frontend}, pero poco después de comenzar el
@@ -100,7 +100,7 @@ optó por Vite como alternativa, ya que permite exportar la aplicación como un 
 soporta TypeScript y React de forma nativa.
 
 \subsubsection{MediaPipe BlazePose}
-\label{subsubsec:mediapipe}
+\label{c08:subsubsec:mediapipe}
 BlazePose es un modelo de aprendizaje automático desarrollado por Google que permite detectar
 poses humanas en tiempo real a partir de imágenes o vídeos \parencite{bazarevsky2020blazepose}
 \parencite{xu2020ghum}. La decisión de utilizar BlazePose y no algún otro modelo de estimación de
@@ -116,9 +116,9 @@ articulaciones, también proporciona una estimación de la profundidad de las mi
 ser muy útil para mejorar la precisión de la detección de posturas en el videojuego.
 
 \subsection{Herramientas utilizadas en el despliegue}
-\label{subsec:herramientas-despliegue}
+\label{c08:subsec:herramientas-despliegue}
 \subsubsection{Docker}
-\label{subsubsec:docker}
+\label{c08:subsubsec:docker}
 Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado por Docker, una
 herramienta de contenedorización que permite empaquetar aplicaciones y sus dependencias en
 contenedores ligeros y portables \parencite{docker}. Esto permite distribuir la aplicación completa
@@ -126,7 +126,7 @@ en distintos equipos simplemente compartiendo el archivo de comfiguración y las
 realizando la instalación y despliegue de forma automática.
 
 \subsubsection{Caddy}
-\label{subsubsec:caddy}
+\label{c08:subsubsec:caddy}
 Caddy es un servidor web y proxy inverso que permite servir aplicaciones web de forma sencilla y
 rápida con un simple archivo de configuración \parencite{caddy}. Se escoge Caddy frente a otros
 servidores web como Nginx o Apache por ser muy sencillo de configurar y por crear certificados
@@ -140,7 +140,7 @@ necesidad de comprar o generar un certificado.
 }
 
 \subsection{Herramientas utilizadas en el videojuego}
-\label{subsec:herramientas-videojuego}
+\label{c08:subsec:herramientas-videojuego}
 Para el desarrollo del videojuego se ha optado por Unity, un motor de videojuegos muy popular y
 versátil que permite crear juegos en 2D y 3D de forma sencilla \parencite{unity}. Unity utiliza el
 lenguaje de programación C\# y cuenta con una gran cantidad de herramientas y recursos en línea que
@@ -152,7 +152,7 @@ inviable para este proyecto. Por esto, y por la familiaridad del autor con Unity
 motor para el desarrollo del videojuego.
 
 \section{Viabilidad económica}
-\label{sec:viabilidad-economica}
+\label{c08:sec:viabilidad-economica}
 El proyecto se ha desarrollado como parte de un trabajo académico, por lo que no se ha considerado
 un presupuesto económico para su desarrollo. Por esto, se ha optado por utilizar herramientas y
 tecnologías gratuitas y, en la medida de los posible, de código abierto. El uso de herramientas
