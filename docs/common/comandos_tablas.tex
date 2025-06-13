@@ -84,7 +84,7 @@
 
 \newcommand{\participante}[1]{
     \setkeys{participante}{#1}
-    
+
     \tableshell{
         \textbf{Participante} & \textbf{\participante@nombre} \\
         \hline
@@ -118,7 +118,7 @@
         \textbf{Fuentes} & \keygenerica@fuentes \\
         \textbf{Descripción} & \keygenerica@descripcion \\
         \ifx\objetivo@subobjetivos\empty
-            \textbf{Subobjetivos} & No procede \\ 
+            \textbf{Subobjetivos} & No procede \\
         \else
             \textbf{Subobjetivos} & \Block[j]{1-1}{
                 \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
@@ -160,12 +160,12 @@
     \setkeys{requisitoinfo}{#2}
 
     \def\parwidth{10.75cm}
-        
+
     \tableshell[ | l | X |[color=gray] X | ][
         cellSpaceLimits = 3pt,
         fontSize = {\small}
     ]{
-        \textbf{IRQ-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \textbf{IRQ-\keygenerica@id} & \bloque{\textbf{\keygenerica@nombre}} & \\
         \hline
         \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
         \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
@@ -180,10 +180,10 @@
                 \requisitoinfo@requisitosAsociados
             \end{itemize}
         \end{minipage}} \\
-        \textbf{Descripción} & \bloque{\begin{minipage}{\parwidth}\keygenerica@descripcion\end{minipage}} \\ 
+        \textbf{Descripción} & \bloque{\begin{minipage}{\parwidth}\keygenerica@descripcion\end{minipage}} \\
         \textbf{Datos específicos} & \bloque{\begin{minipage}{\parwidth}
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
-                \requisitoinfo@datosEspecificos 
+                \requisitoinfo@datosEspecificos
             \end{itemize}
         \end{minipage}} \\
         \Block[l]{2-1}{\textbf{Tiempo de vida}} & \textbf{Medio} & \textbf{Máximo} \\
@@ -228,8 +228,8 @@
         \textbf{Versión} & \actor@version \\
         \textbf{Autores} & \actor@autores \\
         \textbf{Fuentes} & \actor@fuentes \\
-        \textbf{Descripción} & \actor@descripcion \\ 
-        \textbf{Comentarios} & \actor@comentarios \\ 
+        \textbf{Descripción} & \actor@descripcion \\
+        \textbf{Comentarios} & \actor@comentarios \\
     }%
     {ACT-\actor@id\ \actor@nombre}%
     {anexo1:tab:act\actor@id}
@@ -249,7 +249,7 @@
     \setkeys{requisitonf}{#2}
 
     \tableshell{
-        \textbf{NFR-\keygenerica@id} & \textbf{\keygenerica@nombre} \\ 
+        \textbf{NFR-\keygenerica@id} & \textbf{\keygenerica@nombre} \\
         \hline
         \textbf{Versión} & 1.0 (\textbf{TODO: FECHA}) \\
         \textbf{Autores} & Luengo Román, Alberto \\
@@ -263,8 +263,8 @@
             \begin{itemize}[left=0pt, itemsep=0pt, topsep=0pt]
                 \requisitonf@requisitosAsociados
             \end{itemize}
-        } \\ 
-        \textbf{Descripción} & \keygenerica@descripcion \\ 
+        } \\
+        \textbf{Descripción} & \keygenerica@descripcion \\
         \textbf{Importancia} & \keygenerica@importancia \\
         \textbf{Urgencia} & \keygenerica@urgencia \\
         \textbf{Estado} & \keygenerica@estado \\
@@ -326,12 +326,12 @@
     \protected@edef\ncasouso{%
         \num[mode=text,reset-text-series=false,minimum-integer-digits=4]{\thencasouso}
     }
-    
+
     \tableshell[ | W{l}{2.75cm} | X[c,m] | X[11,m] | ][
         cellSpaceLimits = 4pt,
         fontSize = {\small}
     ]{
-        \textbf{UC-\ncasouso} & \bloque{\textbf{\keygenerica@nombre}} & \\ 
+        \textbf{UC-\ncasouso} & \bloque{\textbf{\keygenerica@nombre}} & \\
         \hline
         \textbf{Versión} & \bloque{1.0 (\textbf{TODO: FECHA})} \\
         \textbf{Autores} & \bloque{Luengo Román, Alberto} \\
@@ -346,13 +346,16 @@
                 \casouso@requisitosAsociados
             \end{itemize}
         \end{minipage}} \\
-        \textbf{Descripción} & \bloque{\begin{minipage}{\parwidth}\keygenerica@descripcion\end{minipage}} \\ 
+        \textbf{Descripción} & \bloque{\begin{minipage}{\parwidth}\keygenerica@descripcion\end{minipage}} \\
         \textbf{Precondición} & \bloque{\begin{minipage}{\parwidth}\casouso@precondicion\end{minipage}} \\
         \Block[l]{\thecsec-1}{\textbf{Secuencia normal}} & \textbf{Paso} & \textbf{Acción} \\
         \cline{2-3}
         \casouso@secuencia
         \textbf{Postcondición} & \bloque{\begin{minipage}{\parwidth}\casouso@postcondicion\end{minipage}} \\
         \ifx\casouso@excepciones\empty
+            \Block[l]{2-1}{\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\
+            \cline{2-3}
+            & \textemdash & \textemdash \\
         \else
             \Block[l]{\thecexc-1}{\textbf{Excepciones}} & \textbf{Paso} & \textbf{Acción} \\
             \cline{2-3}
