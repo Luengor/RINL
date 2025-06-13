@@ -1,2 +1,67 @@
 \chapter{Requisitos iniciales}
 \label{cap:requisitos}
+En este capítulo se describen los requisitos del sistema. Los requisitos se han documentado siguiendo
+la \textit{Metodología para la elicitación de requisitos de sistemas software} de
+\textcite[p.~12]{DuranBernardez}, la estructura del capítulo se asemejará a la detallada ahí. Cabe destacar
+que este capítulo es un versión resumida de los requisitos ya documentados en el \textit{Anexo I,
+Especificaciones del sistema}, en particular en el capítulo 4, \textit{Catálogo de requisitos del
+sistema.}
+
+Estos requisitos se han obtenido a partir de los objetivos del sistema, que se explican de manera resumida
+en el capítulo \ref{cap:objeto} de esta memoria y de manera más detallada en el
+\textit{Anexo I, Especificaciones del sistema}, en el capítulo 3, \textit{Objetivos del sistema}.
+
+\section{Requisitos de información}
+\label{c06:sec:requisitos-informacion}
+Los requisitos de información son aquellos que definen la información relevante para los objetivos del
+negocio que el sistema debe almacenar y gestionar \parencite[p.~34]{DuranBernardez}. En el caso de
+este proyecto, el sistema debe permitir a los usuarios jugar a actividades físicas y registrar sus
+resultados, así como gestionar su historial de formas físicas. Estas actividades y resultados se
+consultan en una aplicación web, por lo que el sistema debe almacenar y gestionar la información
+necesaria para que los usuarios puedan acceder a ella. Por esto, definimos los siguientes
+requisitos de información:
+
+\begin{itemize}
+    \item Información sobre los usuarios del sistema. Esto incluye sus datos personales, como nombre,
+          completo, correo electrónico, etc.
+
+    \item Información sobre las actividades jugadas por los usuarios. Aquí se incluye el identificador
+          de la actividad, el tiempo que se ha jugado, la fecha y hora de inicio y fin de la actividad,
+          el identificador del usuario que ha jugado la actividad, etc.
+
+    \item Información sobre el historial de formas físicas de los usuarios. Esto incluye el identificador
+          del usuario, la fecha y hora de la medición, el peso y la altura del usuario.
+\end{itemize}
+
+\section{Requisitos funcionales}
+\label{c06:sec:requisitos-funcionales}
+Los requisitos funcionales son aquellos que definen las funciones que el sistema debe realizar para
+alcanzar los objetivos del negocio \parencite[p.~37]{DuranBernardez}. Los requisitos funcionales se
+describen a través de casos de uso, una técnica para la especificación de requisitos funcionales.
+
+Para este proyecto, se han organizado los casos de uso en tres paquetes. El primero de ellos,
+\textit{Gestión de usuarios}, incluye los casos de uso relacionados con la gestión de la información
+de los usuarios, así como la gestión del acceso al sistema. El segundo paquete, \textit{Estadísticas
+y seguimiento}, incluye los casos de uso relacionados con la gestión del historial de formas físicas
+y actividades jugadas por los usuarios. Por último, el tercer paquete, \textit{Juego}, incluye los
+casos de uso relacionados con el videojuego en sí.
+
+\section{Requisitos no funcionales}
+\label{c06:sec:requisitos-no-funcionales}
+Los requisitos no funcionales son aquellos que definen las características del sistema ajenas a
+la funcionalidad del mismo, como la usabilidad, la fiabilidad, el rendimiento, la seguridad,
+la mantenibilidad. En este proyecto, se han definido los siguientes requisitos no funcionales:
+\begin{itemize}
+    \item Usabilidad: El sistema debe ser fácil de usar y accesible para todos los usuarios.
+    \item Multiplataforma: El sistema debe ser accesible desde diferentes dispositivos, como ordenadores,
+          tabletas y teléfonos móviles.
+    \item Rendimiento: El sistema debe ser capaz de gestionar un gran número de usuarios y actividades
+          sin afectar al rendimiento del sistema. Además, el sistema deberá funcionar correctamente
+          en conexiones de red lentas o inestables, así como en disposivos con menos capacidades de
+          cómputo.
+    \item Seguridad: El sistema debe garantizar la seguridad de los datos personales de los usuarios y
+          la información sobre su historial de formas físicas. Esto incluye la protección contra
+          accesos no autorizados, la encriptación de datos sensibles y la gestión adecuada de las
+          contraseñas.
+\end{itemize}
+
