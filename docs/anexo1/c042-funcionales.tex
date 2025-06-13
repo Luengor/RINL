@@ -16,7 +16,7 @@ En este sub-apartado se muestra el diagrama de todos los casos de uso del sistem
 \ref{anexo1:fig:casos-uso}), así como distintos diagramas de casos de uso agrupados por paquetes
 (figuras \ref{anexo1:fig:casos-uso-gestion-usuario}, \ref{anexo1:fig:casos-uso-estadisticas} y
 \ref{anexo1:fig:casos-uso-juego}). Estos diagramas muestran las relaciones entre los actores y los
-casos de uso, así como las relaciones entre los propios casos de uso. 
+casos de uso, así como las relaciones entre los propios casos de uso.
 
 \diagrama{
     nombre = {Casos de uso del sistema},
@@ -90,7 +90,7 @@ relacción entre ellos a través de un diagrama.
     id = {0003},
     nombre = {Usuario verificado},
     descripcion = {
-        Este actor representa a un usuario que ha iniciado sesión en el sistema y ha verificado su 
+        Este actor representa a un usuario que ha iniciado sesión en el sistema y ha verificado su
         correo electrónico
     },
     comentarios = {
@@ -210,8 +210,8 @@ relacción entre ellos a través de un diagrama.
     },
     longsecuencia = {1},
     secuencia = {%
-        & 1 & El sistema envía un correo electrónico al usuario con un codigo alfanumérico de
-              verificación \\
+        & 1 & El sistema envía un correo electrónico al usuario con un enlace para verificar su
+              cuenta \\
     },
 }
 
@@ -220,7 +220,7 @@ relacción entre ellos a través de un diagrama.
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
         actor \nameref{anexo1:tab:act0002} entre en la sección de datos personales ya sea desde el
-        menú o en el caso de uso \nameref{anexo1:tab:cu:iniciar-sesion} 
+        menú o en el caso de uso \nameref{anexo1:tab:cu:iniciar-sesion}
     },
 }{
     key = {ver-datos-personales},
@@ -251,7 +251,7 @@ relacción entre ellos a través de un diagrama.
     nombre = {Eliminar cuenta},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0002} pulse el botón de eliminar cuenta en el menú principal 
+        actor \nameref{anexo1:tab:act0002} pulse el botón de eliminar cuenta en el menú principal
     },
 }{
     key = {eliminar-cuenta},
@@ -325,8 +325,8 @@ relacción entre ellos a través de un diagrama.
     nombre = {Verificar correo electrónico},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0002} pulse el botón de verificar correo electrónico en el menú
-        principal
+        actor \nameref{anexo1:tab:act0002} pulse el enlace de verificación en el correo electronico
+        enviado durante el registro o la modificación del correo electrónico
     },
 }{
     key = {verificar-correo-electronico},
@@ -343,23 +343,22 @@ relacción entre ellos a través de un diagrama.
     precondicion = {%
         El actor no debe ser \nameref{anexo1:tab:act0003} % Usuario verificado
     },
-    longsecuencia = {4},
+    longsecuencia = {3},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de verificar correo electrónico \\
-        & 2 & El sistema muestra un formulario para introducir el código de verificación mandado al
-              correo electrónico del usuario durante el registro \\
-        & 3 & El actor introduce el código de verificación y pulsa el botón de verificar \\
-        & 4 & El sistema valida el código introducido y, si es correcto, verifica al usuario \\
+        & 1 & El actor \nameref{anexo1:tab:act0002} Pulsa el enlace para verificar su correo electrónico
+              o copia y pega el enlace en su navegador\\
+        & 2 & El sistema valida el código incluído en el enlace. Si es correcto el usuario es verificado\\
+        & 3 & Si el código incluía un correo electrónico nuevo, el sistema actualiza el correo electrónico
+              del usuario \\
     },
     postcondicion = {%
         El actor pasa a tener el rol \nameref{anexo1:tab:act0003} % Usuario verificado
     },
     longexcepciones = {2},
     excepciones = {%
-        & 2 & Si el actor cancela la verificación, el sistema vuelve al menú principal y el caso
-              uso termina \\
-        & 4 & Si el código es incorrecto, el sistema muestra un mensaje de error indicando que el
-              código es incorrecto y se vuelve al paso 2 \\
+        & 2 & Si el código es incorrecto, el sistema muestra un mensaje de error y el caso de uso termina \\
+        & 3 & Si el nuevo correo electrónico ya está en uso, el sistema muestra un mensaje de error
+              indicando que el correo electrónico ya está en uso y el caso de uso termina \\
     },
 }
 
@@ -389,13 +388,13 @@ relacción entre ellos a través de un diagrama.
               pulsa el botón de guardar cambios \\
         & 2 & El sistema valida la información introducida y, si es correcta, actualiza los datos del
               usuario \\
-        & 3 & Si el usuario ha modificado su correo electrónico, el actor pasa a tener el rol
-              \nameref{anexo1:tab:act0002} y se realiza el caso de uso \nameref{anexo1:tab:cu:mandar-correo-verificacion} \\
+        & 3 & Si el usuario intenta modificar su correo electrónico, se realiza el caso de uso
+              \nameref{anexo1:tab:cu:mandar-correo-verificacion} y se aplaza la modificación del correo
+              hasta que el usuario complete el caso de uso
+              \nameref{anexo1:tab:cu:verificar-correo-electronico} \\
     },
     postcondicion = {%
         Los datos del actor son modificados en el sistema.
-        Si el correo electrónico ha sido modificado, el actor pasa a tener el rol
-        \nameref{anexo1:tab:act0002} % Usuario autenticado
     },
     longexcepciones = {1},
     excepciones = {%
@@ -428,7 +427,7 @@ relacción entre ellos a través de un diagrama.
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de añadir forma física \\
         & 2 & El sistema muestra un formulario \\
         & 3 & El actor rellena el formalario con la información de la forma física y pulsa el botón de
-              añadir \\ 
+              añadir \\
         & 4 & El sistema valida la información introducida y, si es válida, añade la forma física al
               historial del usuario \\
     },
@@ -663,7 +662,7 @@ relacción entre ellos a través de un diagrama.
     },
     postcondicion = {%
         El actor \nameref{anexo1:tab:act0003} ha seleccionado una dificultad y el sistema guarda la
-        selección para la adaptación del minijuego escogido 
+        selección para la adaptación del minijuego escogido
     },
 }
 
