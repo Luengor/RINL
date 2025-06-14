@@ -66,6 +66,9 @@ package "Juego" {
     Extensiones:
     Escoger minijuego
     "
+
+    usecase DetectarPostura as "UC-0022
+    Detectar postura"
 }
 
 /'
@@ -103,5 +106,16 @@ note bottom of link : CONDITION {Solo una vez por sesión}
 (Puntuacion) <. (VolverJugar) : <<extend>>
 
 (AbrirJuego) <. (PantallaCompleta) : <<extend>>
+
+' skinparam linetype ortho
+' Basicamente todo el juego incluye la detección de postura
+(DetectarPostura) <.. (Calibrar) : <<include>>
+(DetectarPostura) <.. (EscogerMinijuego) : <<include>>
+(DetectarPostura) <. (EscogerDificultad) : <<include>>
+(DetectarPostura) <.. (JugarGlobos) : <<include>>
+(DetectarPostura) <. (JugarEsquivar) : <<include>>
+(DetectarPostura) <.. (Puntuacion) : <<include>>
+(DetectarPostura) <. (VolverJugar) : <<include>>
+(DetectarPostura) <. (VolverMenuJuego) : <<include>>
 
 @enduml
