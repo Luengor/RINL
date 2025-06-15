@@ -292,9 +292,11 @@ package "Unity" #LightYellow {
         - JSConnector: JSConnector
         - rinlBody: RINLBody
         - activityData: dict
+        - calibrationData: dict
 
         + GetJSConnector() : JSConnector
         + GetRINLBody() : RINLBody
+        + GetCalibrationData() : dict
         + Pause() : None
         + Resume() : None
         + ChangeScene(sceneName: str) : None
@@ -353,6 +355,9 @@ package "Unity" #LightYellow {
         en el frontend como para enviar los datos de las actividades realizadas
         en el juego.
     end note
+
+    package "BallonGame" #BUSINESS {}
+    package "DodgeGame" #BUSINESS {}
 
     ' Relaciones entre clases del juego
     GameController -> JSConnector : uses >
