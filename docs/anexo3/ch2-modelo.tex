@@ -1,0 +1,102 @@
+\chapter{Modelo de planificacion}
+\label{anexo3:cap:modelo}
+Para la planificación del proyecto se ha utilizado un modelo ágil, específicamente Scrumban, que
+combina elementos de Scrum y Kanban. Se ha optado por un enfoque con una gestión ágil en lugar
+de una gestión predictiva por varias razones. La principal es la falta de experiencia previa a
+la hora de realizar estimaciones de esfuerzo y tamaño, especialmente estimaciones muy a largo
+plazo, principalmente debido a la falta de experiencia en el desarrollo de software complejo:
+no puedo estimar con precisión el esfuerzo necesario para compeltar tareas que aun no sé
+qué tan complejas van a ser.
+
+El desarrollo ágil permite una mayor flexibilidad y adaptabilidad a los cambios, lo que es
+especialmente útil en proyectos donde los requisitos pueden evolucionar a lo largo del tiempo
+\parencites{AgileManifesto}[p.~16]{abrahamsson2017agile}. La planificación ágil resuelve justo
+el problema de la incapacidad de estimar el esfuerzo necesario para completar la totalidad del
+proyecto al inicio, limitándose a estimar el esfuerzo de las tareas más inmediatas
+\parencite[p.~2]{robert2003agile}.
+
+La flexibilidad del modelo ágil surge del hecho de que el proyecto se divide en iteraciones muy
+cortas o sprints, lo que permite que el equipo de desarrollo se enfoque en un conjunto reducido
+de tareas a la vez \parencite{AgileManifesto}. Esto no solo facilita la planificación y el
+seguimiento del progreso, sino que también permite una retroalimentación continua y la posibilidad
+de ajustar el enfoque según las necesidades cambiantes del proyecto. Además, puesto que estos sprints
+son cortos y frecuentes, el equipo puede internalizar rápidamente la cantidad de trabajo que se puede
+realizar en un período de tiempo determinado, lo que mejora la capacidad de estimación a medida que
+el proyecto avanza \parencite[p.~3]{robert2003agile}.
+
+\diagrama{
+    nombre = {Planificación ágil (Imagen de Planbox, Creative Commons)},
+    archivo = {anexo3/imgs/agile.png},
+    etiqueta = {anexo3:fig:agile},
+}
+
+\section{Scrum}
+\label{anexo3:sec:scrum}
+Scrum es un marco de trábajo ligero y ágil que se utiliza para gestionar proyectos de
+desarrollo de software \parencite{schwaber2020scrum}. Scrum se basa en la idea de que el
+conocimiento proviene de la experiencia y que se deben tomar decisiones basadas en hechos
+observables y no en suposiciones. Además, Scrum fomenta la autoorganización e intenta reducir
+el desperdicio de tiempo y recursos al enfocarse en la entrega continua de valor al cliente.
+
+\subsection{Sprints}
+\label{anexo3:subsec:sprints}
+Scrum organiza el trabajo en ciclos cortos llamados sprints, que suelen durar entre una y cuatro
+semanas. Cada sprint se debe considerar como un mini-proyecto que tiene un objetivo claro y
+un conjunto de tareas a completar. Aumentar o disminuer la duración de los sprints afecta de
+manera proporcional a la cantidad de trabajo realizado, pero también al riesgo de que dicho
+trabajo no sea de calidad o no cumpla con los requisitos del cliente \parencite{schwaber2020scrum}.
+
+Un sprint comienza con una planificación, donde el equipo selecciona un conjunto de tareas del
+backlog del producto que se compromete a completar durante el sprint. Durante el sprint, el
+equipo trabaja en las tareas seleccionadas y realiza reuniones diarias para revisar el progreso
+y ajustar el enfoque si es necesario. Al final del sprint, ocurren el \textit{Sprint Review} y el
+\textit{Sprint Retrospective}. En el \textit{Sprint Review}, el equipo presenta el trabajo realizado
+y recibe retroalimentación del cliente y otros interesados. En el \textit{Sprint Retrospective}, el
+equipo reflexiona sobre el sprint y discute qué funcionó bien, qué no funcionó y cómo se puede
+mejorar en el próximo sprint \parencite{schwaber2020scrum}.
+
+\subsection{Roles}
+\label{anexo3:subsec:roles}
+Scrum define tres roles principales: el Product Owner, el Scrum Master y el equipo de desarrollo.
+El Product Owner es responsable de definir y priorizar los requisitos del producto, asegurando
+que el equipo trabaje en las tareas más importantes para el cliente. El Scrum Master es el encargado
+de facilitar el proceso de Scrum, eliminando obstáculos y asegurando que el equipo siga las gúias
+establecidas. El equipo de desarrollo es el que realiza el trabajo técnico, desarrollando el software
+y cumpliendo los requisitos del Product Owner \parencite{schwaber2020scrum}.
+
+En este proyecto, ya que es un proyecto personal, se asume que el rol de Product Owner, Scrum Master
+y equipo de desarrollo son desempeñados por la misma persona, es decir, yo.
+
+\subsection{Artefactos}
+\label{anexo3:subsec:artefactos}
+Scrum define tres artefactos principales: el Product Backlog, el Sprint Backlog y el Incremento.
+El Product Backlog es una lista priorizada de las tareas necesarias para mejorar el estado del
+producto, que se actualiza continuamente a medida que se identifican nuevas tareas o se transladan
+tareas a los sprints. El Sprint Backlog es una lista de las tareas seleccionadas para un sprint
+concreto, que se compromete a completar durante ese sprint. El Incremento es el resultado del
+trabajo realizado durante un sprint, que debe ser un producto funcional y potencialmente
+liberable al cliente \parencite{schwaber2020scrum}.
+
+\section{Kanban}
+\label{anexo3:sec:kanban}
+Kanban es un método ágil para gestionar el trabajo y mejorar la eficiencia en los procesos de
+desarrollo de software \parencite{LAGEJUNIOR201013}. Se basa en la visualización del flujo de trabajo
+en columnas (ver Figura \ref{anexo3:sec:kanban}), donde cada una representa un estado del proceso como
+puede ser ``Por hacer'', ``En proceso'' y ``Hecho''. Esto permite al equipo ver el estado actual de las
+tareas e identificar de manera rápdia aquellas tareas que estén bloqueadas, necesiten antención o estén
+en riesgo de retraso.
+
+\diagrama{
+    nombre = {Panel de Kanban (Imagen de Jeff.Iasovski, Creative Commons)},
+    archivo = {anexo3/imgs/kanban.png},
+    etiqueta = {anexo3:fig:kanban},
+}
+
+\section{Scrumban}
+\label{anexo3:sec:scrumban}
+Scrumban es un enfoque híbrido que combina elementos de Scrum y Kanban, diseñado para
+proporcionar la flexibilidad de Kanban con la estructura de Scrum \parencite{Stoica2016AnalyzingAD}.
+De la misma manera que Scrum, Scrumban utiliza sprints para organizar el trabajo en ciclos cortos,
+pero también incorpora la visualización del flujo de trabajo de Kanban para mostrar el estado de
+las tareas en cada sprint. Además, Scrum añade la planificación de sprints y las reuniones
+diarias, lo que permite al equipo revisar el progreso apoyándose en lo aportado por Kanban.
