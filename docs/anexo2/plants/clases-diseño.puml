@@ -194,10 +194,16 @@ package "React" %lighten("#PaleGreen", 15) {
         '' Puramente componentes
         class "LoginForm" <<Component>> #LightGreen  {}
         class "CurrentShapeCard" <<Component>> #LightGreen  {}
-        class "DataForm" <<Component>> #LightGreen  {}
+        class "DataForm" <<Component>> #LightGreen  {
+            + userData: UserData
+        }
         class "UserData" <<Component>> #LightGreen  {}
         class "UserStats" <<Component>> #LightGreen  {}
-        class "Navbar" <<Component>> #LightGreen  {}
+        class "Navbar" <<Component>> #LightGreen  {
+            + toplink: NavbarLink
+            + mainLinks: list[NavbarLink]
+            + bottomLinks: list[NavbarLink]
+        }
 
         '' Relaciones entre componentes
         Dashboard --> "LoginForm" : uses >
@@ -228,6 +234,13 @@ package "React" %lighten("#PaleGreen", 15) {
         a la API del backend. Se genera automaticamente a partir de la
         especificación OpenAPI del backend, que FastAPI provee.
     end note
+
+    ' El Cliente de Unity se comunica con Media
+    class UnityClient #LightGreen {
+        - unity_location: String
+        + sendUnityMessage(gameobject: String, metod: String, data: dict) : None
+
+    }
 
     ' La App crea y gestiona el ApiClient
     App -> ApiClient : creates >
