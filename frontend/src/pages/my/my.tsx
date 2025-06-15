@@ -14,6 +14,7 @@ import Data from "./data";
 import Stats from "./stats";
 import { useClient } from "../../hooks/useClient";
 import { useUser } from "../../hooks/useUser";
+import { NotFoundPage } from "../../components/NotFound/NotFound";
 
 export default function My() {
   // Get the client
@@ -137,7 +138,7 @@ export default function My() {
             <Route path="data" element={<Data />} />
             <Route path="stats" element={<Stats />} />
             <Route path="jugar" element={<Media />} />
-            <Route path="*" element={<div>404</div>} />
+            <Route path="*" element={<NotFoundPage/>} />
           </Routes>
         </AppShell.Main>
       </AppShell>
