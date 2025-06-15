@@ -1,7 +1,8 @@
 \chapter{Modelo de planificacion}
 \label{anexo3:cap:modelo}
-Para la planificación del proyecto se ha utilizado un modelo ágil, específicamente Scrumban, que
-combina elementos de Scrum y Kanban. Se ha optado por un enfoque con una gestión ágil en lugar
+Para la planificación del proyecto se ha utilizado un modelo ágil, específicamente Scrum, una
+metodología ágil que se basa en la entrega incremental y la colaboración continua entre
+el equipo de desarrollo y los interesados. Se ha optado por un enfoque con una gestión ágil en lugar
 de una gestión predictiva por varias razones. La principal es la falta de experiencia previa a
 la hora de realizar estimaciones de esfuerzo y tamaño, especialmente estimaciones muy a largo
 plazo, principalmente debido a la falta de experiencia en el desarrollo de software complejo:
@@ -55,15 +56,6 @@ y recibe retroalimentación del cliente y otros interesados. En el \textit{Sprin
 equipo reflexiona sobre el sprint y discute qué funcionó bien, qué no funcionó y cómo se puede
 mejorar en el próximo sprint \parencite{schwaber2020scrum}.
 
-\subsection{Roles}
-\label{anexo3:subsec:roles}
-Scrum define tres roles principales: el Product Owner, el Scrum Master y el equipo de desarrollo.
-El Product Owner es responsable de definir y priorizar los requisitos del producto, asegurando
-que el equipo trabaje en las tareas más importantes para el cliente. El Scrum Master es el encargado
-de facilitar el proceso de Scrum, eliminando obstáculos y asegurando que el equipo siga las gúias
-establecidas. El equipo de desarrollo es el que realiza el trabajo técnico, desarrollando el software
-y cumpliendo los requisitos del Product Owner \parencite{schwaber2020scrum}.
-
 \subsection{Artefactos}
 \label{anexo3:subsec:artefactos}
 Scrum define tres artefactos principales: el Product Backlog, el Sprint Backlog y el Incremento.
@@ -74,13 +66,11 @@ concreto, que se compromete a completar durante ese sprint. El Incremento es el 
 trabajo realizado durante un sprint, que debe ser un producto funcional y potencialmente
 liberable al cliente \parencite{schwaber2020scrum}.
 
-\section{Kanban}
-\label{anexo3:sec:kanban}
-Kanban es un método ágil para gestionar el trabajo y mejorar la eficiencia en los procesos de
-desarrollo de software \parencite{LAGEJUNIOR201013}. Se basa en la visualización del flujo de trabajo
-en columnas (ver Figura \ref{anexo3:sec:kanban}), donde cada una representa un estado del proceso como
-puede ser ``Por hacer'', ``En proceso'' y ``Hecho''. Además, tiene varias diferencias con Scrum, como
-la ausencia de roles definidos o la falta de sprints.
+Para representar gráficamente el proceso del sprint se ha utilizado un panel similar al de Kanban
+(ver Figura \ref{anexo3:fig:kanban}), doonde cada columna representa un estado del proceso
+como puede ser ``Por hacer'', ``En proceso'' y ``Hecho''. Este panel permite visualizar el flujo de
+trabajo y el progreso del equipo durante el sprint, facilitando la identificación de cuellos de botella
+y la gestión del trabajo pendiente.
 
 \diagrama{
     nombre = {Panel de Kanban (Imagen de Jeff.Iasovski, Creative Commons)},
@@ -88,20 +78,37 @@ la ausencia de roles definidos o la falta de sprints.
     etiqueta = {anexo3:fig:kanban},
 }
 
-\section{Scrumban}
-\label{anexo3:sec:scrumban}
-Scrumban es un enfoque híbrido que combina elementos de Scrum y Kanban, diseñado para
-proporcionar la flexibilidad de Kanban con la estructura de Scrum \parencite{Stoica2016AnalyzingAD}.
-De la misma manera que Scrum, Scrumban utiliza sprints para organizar el trabajo en ciclos cortos
-(a poder ser más cortos que en Scrum), pero también incorpora la visualización del flujo de trabajo
-de Kanban para mostrar el estado de las tareas en cada sprint. Kanban proporciona un límite de trabajo
-en cada sección del flujo, que se cumple con el objetivo de evitar la sobrecarga del equipo. Esto
-se consigue, por ejemplo, limitando el número de tareas que pueden estar en la columna ``En proceso''
-o reduciendo la longitud de los sprints para disminuir la cantidad de trabajo total del ciclo
-\parencite{Scrumban}.
+\subsection{Roles}
+\label{anexo3:subsec:roles}
+Scrum define tres roles principales: el Product Owner, el Scrum Master y el equipo de desarrollo.
+El Product Owner es responsable de definir y priorizar los requisitos del producto, asegurando
+que el equipo trabaje en las tareas más importantes para el cliente. El Scrum Master es el encargado
+de facilitar el proceso de Scrum, eliminando obstáculos y asegurando que el equipo siga las gúias
+establecidas. El equipo de desarrollo es el que realiza el trabajo técnico, desarrollando el software
+y cumpliendo los requisitos del Product Owner \parencite{schwaber2020scrum}.
 
-En Scrumban, al igual que en Kanban, no existen roles definidos, haciendo que todos los miembros del
-equipo de desarrollo sean responsables de la planificación y ejecución del trabajo. Esto implica,
-entre otras cosas, que es el propio equipo el encargado de priorizar las tareas y decidir cuáles
-se deben realizar en cada sprint \parencite{Scrumban}.
+% \section{Kanban}
+% \label{anexo3:sec:kanban}
+% Kanban es un método ágil para gestionar el trabajo y mejorar la eficiencia en los procesos de
+% desarrollo de software \parencite{LAGEJUNIOR201013}. Se basa en la visualización del flujo de trabajo
+% en columnas (ver Figura \ref{anexo3:sec:kanban}), donde cada una representa un estado del proceso como
+% puede ser ``Por hacer'', ``En proceso'' y ``Hecho''. Además, tiene varias diferencias con Scrum, como
+% la ausencia de roles definidos o la falta de sprints.
+
+% \section{Scrumban}
+% \label{anexo3:sec:scrumban}
+% Scrumban es un enfoque híbrido que combina elementos de Scrum y Kanban, diseñado para
+% proporcionar la flexibilidad de Kanban con la estructura de Scrum \parencite{Stoica2016AnalyzingAD}.
+% De la misma manera que Scrum, Scrumban utiliza sprints para organizar el trabajo en ciclos cortos
+% (a poder ser más cortos que en Scrum), pero también incorpora la visualización del flujo de trabajo
+% de Kanban para mostrar el estado de las tareas en cada sprint. Kanban proporciona un límite de trabajo
+% en cada sección del flujo, que se cumple con el objetivo de evitar la sobrecarga del equipo. Esto
+% se consigue, por ejemplo, limitando el número de tareas que pueden estar en la columna ``En proceso''
+% o reduciendo la longitud de los sprints para disminuir la cantidad de trabajo total del ciclo
+% \parencite{Scrumban}.
+%
+% En Scrumban, al igual que en Kanban, no existen roles definidos, haciendo que todos los miembros del
+% equipo de desarrollo sean responsables de la planificación y ejecución del trabajo. Esto implica,
+% entre otras cosas, que es el propio equipo el encargado de priorizar las tareas y decidir cuáles
+% se deben realizar en cada sprint \parencite{Scrumban}.
 
