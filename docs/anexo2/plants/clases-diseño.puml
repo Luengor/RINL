@@ -131,6 +131,10 @@ package "Backend" %lighten("#87CEFB", 20) {
 
 
     package "Schemas" #LightSteelBlue {
+        object BaseModel #LightSteelBlue {
+            + metadata: MetaData
+        }
+
         object "UserSchema" #LightSteelBlue {
             + email: String
             + name: String
@@ -154,6 +158,11 @@ package "Backend" %lighten("#87CEFB", 20) {
             + token_type: String
         }
     }
+
+    BaseModel <|- UserSchema : inherits >
+    BaseModel <|- ActivitySchema : inherits >
+    BaseModel <|- ShapeSchema : inherits >
+    BaseModel <|- TokenSchema : inherits >
 
     note right of "Schemas"
         Los esquemas son clases que definen la estructura
