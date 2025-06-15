@@ -147,7 +147,33 @@ package "Backend" {
         de los datos que se envían y reciben a través de la API.
         Se utilizan para validar y serializar los datos.
     end note
+
+
+    '' Relaciones entre clases del backend
+    ' Los routers dependen de los DAOs para acceder a la base de datos
+    AuthRouter ..> AuthDAO : depends on
+    UserRouter ..> UserDAO : depends on
+    ActivityRouter ..> ActivityDAO : depends on
+    ShapeRouter ..> ShapeDAO : depends on
+
+    ' Los Routers utilizan los esquemas como argumentos y respuestas
+    AuthRouter     -left-> "TokenSchema" : creates, receives, returns
+    UserRouter     --> "UserSchema" : creates, receives, returns
+    ActivityRouter --> "ActivitySchema" : creates, receives, returns
+    ShapeRouter    --> "ShapeSchema" : creates, receives, returns
+
+    ' Los DAOs utilizan los esquemas para crear y devolver datos
+    ActivityDAO -> "ActivitySchema" : creates, returns
+    AuthDAO     -> "UserSchema" : returns
+    ShapeDAO    -> "ShapeSchema" : creates, returns
+    UserDAO     -> "UserSchema" : creates, returns
 }
+
+' Los DAOs gestionan los modelos de datos
+ShapeDAO -> "Shape" : creates, manages
+ActivityDAO -> "Activity" : creates, manages
+UserDAO -> "User" : creates, manages
+AuthDAO -> "User" : manages
 
 ''' El frontend (react)
 /'
