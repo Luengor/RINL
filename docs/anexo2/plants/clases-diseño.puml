@@ -11,8 +11,8 @@ skinparam roundCorner 0
 left to right direction
 
 ''' El modelo
-package "Modelos de Datos" {
-    object "User" {
+package "Modelos de Datos" %lighten("#IndianRed", 40) {
+    object "User" %lighten("#IndianRed", 20) {
         + uuid: Integer
         + email: String
         + hashed_password: String
@@ -21,7 +21,7 @@ package "Modelos de Datos" {
         + year_of_birth: Integer
     }
 
-    object "Activity" {
+    object "Activity" %lighten("#IndianRed", 20) {
         + uuid: Integer
         + date: Date
         + minigame: String
@@ -32,7 +32,7 @@ package "Modelos de Datos" {
         + user_email: String
     }
 
-    object "Shape" {
+    object "Shape" %lighten("#IndianRed", 20) {
         + uuid: Integer
         + date: Date
         + weight: Float
@@ -151,57 +151,54 @@ package "Backend" %lighten("#87CEFB", 20) {
 
     '' Relaciones entre clases del backend
     ' Los routers dependen de los DAOs para acceder a la base de datos
-    AuthRouter ..> AuthDAO : depends on
-    UserRouter ..> UserDAO : depends on
-    ActivityRouter ..> ActivityDAO : depends on
-    ShapeRouter ..> ShapeDAO : depends on
+    AuthRouter ..> AuthDAO : depends on >
+    UserRouter ..> UserDAO : depends on >
+    ActivityRouter ..> ActivityDAO : depends on >
+    ShapeRouter ..> ShapeDAO : depends on >
 
     ' Los Routers utilizan los esquemas como argumentos y respuestas
-    AuthRouter     -left-> "TokenSchema" : creates, receives, returns
-    UserRouter     --> "UserSchema" : creates, receives, returns
-    ActivityRouter --> "ActivitySchema" : creates, receives, returns
-    ShapeRouter    --> "ShapeSchema" : creates, receives, returns
+    AuthRouter     -left-> "TokenSchema" : creates, receives, returns >
+    UserRouter     --> "UserSchema" : creates, receives, returns >
+    ActivityRouter --> "ActivitySchema" : creates, receives, returns >
+    ShapeRouter    --> "ShapeSchema" : creates, receives, returns >
 
     ' Los DAOs utilizan los esquemas para crear y devolver datos
-    ActivityDAO -> "ActivitySchema" : creates, returns
-    AuthDAO     -> "UserSchema" : returns
-    ShapeDAO    -> "ShapeSchema" : creates, returns
-    UserDAO     -> "UserSchema" : creates, returns
+    ActivityDAO -> "ActivitySchema" : creates, returns >
+    AuthDAO     -> "UserSchema" : returns >
+    ShapeDAO    -> "ShapeSchema" : creates, returns >
+    UserDAO     -> "UserSchema" : creates, returns >
 }
 
 ' Los DAOs gestionan los modelos de datos
-ShapeDAO -> "Shape" : creates, manages
-ActivityDAO -> "Activity" : creates, manages
-UserDAO -> "User" : creates, manages
-AuthDAO -> "User" : manages
+ShapeDAO -> "Shape" : creates, manages >
+ActivityDAO -> "Activity" : creates, manages >
+UserDAO -> "User" : creates, manages >
+AuthDAO -> "User" : uses >
 
 ''' El frontend (react)
-package "Frotend" {
-    package "React" {
-        package "Components" {
-            '' Páginas de verdad
-            class "Dashboard" <<Component>> {}
-            class "Login" <<Component>> {}
-            class "Media" <<Component>> {}
-            class "My" <<Component>> {}
-            class "NotFound" <<Component>> {}
+package "React" %lighten("#PaleGreen", 15) {
+    package "Components" %lighten("#PaleGreen", 5) {
+        '' Páginas de verdad
+        class "Dashboard" <<Component>> #LightGreen {}
+        class "Login" <<Component>> #LightGreen  {}
+        class "Media" <<Component>> #LightGreen  {}
+        class "My" <<Component>> #LightGreen  {}
+        class "NotFound" <<Component>> #LightGreen  {}
 
-            '' Puramente componentes
-            class "LoginForm" <<Component>> {}
-            class "CurrentShapeCard" <<Component>> {}
-            class "DataForm" <<Component>> {}
-            class "UserData" <<Component>> {}
-            class "UserStats" <<Component>> {}
-            class "Navbar" <<Component>> {}
-        }
-
-        class "UnityClient" {}
-
-        class "App" {}
-
-        class "ApiClient" {}
+        '' Puramente componentes
+        class "LoginForm" <<Component>> #LightGreen  {}
+        class "CurrentShapeCard" <<Component>> #LightGreen  {}
+        class "DataForm" <<Component>> #LightGreen  {}
+        class "UserData" <<Component>> #LightGreen  {}
+        class "UserStats" <<Component>> #LightGreen  {}
+        class "Navbar" <<Component>> #LightGreen  {}
     }
 
+    class "UnityClient" #LightGreen  {}
+
+    class "App" #LightGreen  {}
+
+    class "ApiClient" #LightGreen  {}
 }
 
 
