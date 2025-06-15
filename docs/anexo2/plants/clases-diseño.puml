@@ -49,6 +49,8 @@ package "Modelos de Datos" {
 
 ''' El backend
 package "Backend" {
+    ' Clase de FastAPI de la que dependan los routers?
+
     package "API Routers" {
 
         class "AuthRouter" <<Router>> {
@@ -94,8 +96,8 @@ package "Backend" {
         }
 
         class "AuthDAO" {
-            + get_user(uuid: int) -> User | None
-            + get_user_by_email(email: str) -> User | None
+            + get_user(uuid: int) -> UserSchema | None
+            + get_user_by_email(email: str) -> UserSchema | None
         }
 
         class "ShapeDAO" {
@@ -105,7 +107,13 @@ package "Backend" {
             + delete_shape(uuid: int, user_email: str) -> None
         }
 
-        class "UserDAO" {}
+        class "UserDAO" {
+            + create_user(user: UserSchema) -> UserSchema
+            + update_user(current_user: UserSchema, modification: UserSchema) -> UserSchema
+            + get_user(email: str) -> UserSchema | None
+            + verify_user(token: str) -> bool
+            + delete_user(current_user: UserSchema) -> None
+        }
     }
 
 
