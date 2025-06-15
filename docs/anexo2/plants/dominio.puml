@@ -23,6 +23,7 @@ package "Dominio" {
         - minijuego: String
         - duración: Float
         - puntuación: Float
+        - puntos_actividad: Float
         - datos_extra: String
     }
 
