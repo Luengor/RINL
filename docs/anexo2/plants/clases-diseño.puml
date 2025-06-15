@@ -242,6 +242,8 @@ package "React" %lighten("#PaleGreen", 15) {
 
     }
 
+    Media ..> UnityClient : uses >
+
     ' La App crea y gestiona el ApiClient
     App -> ApiClient : creates >
 
@@ -267,17 +269,84 @@ note left of App
 end note
 
 ''' El juego
+package "Unity" #LightYellow {
+    class "GameController" #BUSINESS {
+        - static singleton: GameController
+        - JSConnector: JSConnector
+        - rinlBody: RINLBody
+        - activityData: dict
 
-/'
- ' package "Unity" {
- '     class "GameController" {
- '         - static singleton: GameController
- '     }
- '
- '     class "JSConnector" { }
- '
- ' }
- '/
+        + GetJSConnector() : JSConnector
+        + GetRINLBody() : RINLBody
+        + Pause() : None
+        + Resume() : None
+        + ChangeScene(sceneName: str) : None
+        + SetActivityData(minigame: str, duration: int, score: int, extra_data: str) : None
+        + GetActivityData() : dict
+        + SendActivityData() : None
+    }
+    note right of "GameController"
+        El GameController es la clase principal del juego. Se encarga de gestionar
+        el estado del juego, las escenas y la comunicación con el frontend a través
+        del JSConnector.
+    end note
+
+    class "RINLBody" #BUSINESS {
+        - activityPoints : int
+
+        + GetActivityPoints() : int
+        + ResetActivityPoints() : None
+    }
+    note right of "RINLBody"
+        RINLBody es la clase que se encarga de representar el cuerpo del usuario
+        a partir de las posturas que el JSConector recibe del frontend.
+    end note
+
+    class "SceneScript" #BUSINESS {
+        + static instance: SceneScript
+        + objects: list[GameObject]
+        + animator: Animator
+
+        + GetObject(name: str) : GameObject | None
+        + SwitchScene(sceneName: str) : None
+    }
+    note right of "SceneScript"
+        El SceneScript es una clase que se encarga de gestionar los objetos
+        de la escena y cambiar entre escenas. Se utiliza para cargar objetos,
+        animaciones y llevar el hilo conductor del juego.
+    end note
+
+    class "JSConnector" #BUSINESS {
+        - latestLandmarks: list[Landmark]
+        - imageSize: Vector2
+
+        - SendToReact(type: str, payload: str) : None
+        - SendAck(functionName: str)
+        + GetImageSize() : Vector2
+        + GetLatestLandmarks() : list[Landmark]
+        + SetBodyPosotion(landmarks: str) : None
+        + SetVideoSize(sizeString: str) : None
+        + SetCurrentShape(shapeString: str) : None
+        + SetCurrentUser(userString: str) : None
+        + CreateActivity(activity: dict) : None
+    }
+    note right of "JSConnector"
+        El JSConnector es una clase que se encarga de enviar y recibir mensajes
+        entre el juego y el frontend. Se utiliza tanto para recibir las posturas
+        en el frontend como para enviar los datos de las actividades realizadas
+        en el juego.
+    end note
+
+    ' Relaciones entre clases del juego
+    GameController -> JSConnector : uses >
+    RINLBody ..> JSConnector : uses >
+    RINLBody ..> GameController : uses >
+    SceneScript ..> GameController : uses >
+}
+
+'' Relaciones entre el juego y el frontend
+JSConnector <..up.> UnityClient : uses
+
 
 
 @enduml
