@@ -177,6 +177,12 @@ AuthDAO -> "User" : uses >
 
 ''' El frontend (react)
 package "React" %lighten("#PaleGreen", 15) {
+    class "App" #LightGreen {
+        - static singleton: App
+        - ApiClient: ApiClient
+        + render()
+    }
+
     package "Components" %lighten("#PaleGreen", 5) {
         '' Páginas de verdad
         class "Dashboard" <<Component>> #LightGreen {}
@@ -192,15 +198,62 @@ package "React" %lighten("#PaleGreen", 15) {
         class "UserData" <<Component>> #LightGreen  {}
         class "UserStats" <<Component>> #LightGreen  {}
         class "Navbar" <<Component>> #LightGreen  {}
+
+        '' Relaciones entre componentes
+        Dashboard --> "LoginForm" : uses >
+
+        Login --> "LoginForm" : uses >
+
+        My --> "Navbar" : uses >
+        My --> "UserData" : uses >
+        My --> "UserStats" : uses >
+        My --> "Media" : uses >
+        My --> "NotFound" : uses >
+
+        UserData -> "DataForm" : uses >
+        UserData --> "CurrentShapeCard" : uses >
     }
 
-    class "UnityClient" #LightGreen  {}
+    App --> "Dashboard" : uses >
+    App --> "Login" : uses >
+    App --> "Media" : uses >
+    App --> "My" : uses >
+    App --> "NotFound" : uses >
 
-    class "App" #LightGreen  {}
+    class "ApiClient" #LightGreen  {
+        - auth_token: str
+    }
+    note right of "ApiClient"
+        El APIClient es una clase que se encarga de abstraer las peticiones HTTP
+        a la API del backend. Se genera automaticamente a partir de la
+        especificación OpenAPI del backend, que FastAPI provee.
+    end note
 
-    class "ApiClient" #LightGreen  {}
+    ' La App crea y gestiona el ApiClient
+    App -> ApiClient : creates >
+
+    ' Los componentes dependen del ApiClient para hacer peticiones a la API
+    LoginForm ..> ApiClient : uses >
+    Media ..> ApiClient : uses >
+    CurrentShapeCard .> ApiClient : uses >
+    DataForm ..> ApiClient : uses >
+    Dashboard ..> ApiClient : uses >
+    Login ..> ApiClient : uses >
+    My ..> ApiClient : uses >
+    UserStats ..> ApiClient : uses >
 }
 
+' Relaciones entre el frontend y el backend
+App ..> AuthRouter : uses >
+App ..> UserRouter : uses >
+App ..> ActivityRouter : uses >
+App ..> ShapeRouter : uses >
+note left of App
+    Los componentes del frontend utilizan la API a través del
+    APIClient, encargado de abstraer las peticiones HTTP.
+end note
+
+''' El juego
 
 /'
  ' package "Unity" {
