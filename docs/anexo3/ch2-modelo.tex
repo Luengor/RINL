@@ -64,9 +64,6 @@ de facilitar el proceso de Scrum, eliminando obstáculos y asegurando que el equ
 establecidas. El equipo de desarrollo es el que realiza el trabajo técnico, desarrollando el software
 y cumpliendo los requisitos del Product Owner \parencite{schwaber2020scrum}.
 
-En este proyecto, ya que es un proyecto personal, se asume que el rol de Product Owner, Scrum Master
-y equipo de desarrollo son desempeñados por la misma persona, es decir, yo.
-
 \subsection{Artefactos}
 \label{anexo3:subsec:artefactos}
 Scrum define tres artefactos principales: el Product Backlog, el Sprint Backlog y el Incremento.
@@ -82,9 +79,8 @@ liberable al cliente \parencite{schwaber2020scrum}.
 Kanban es un método ágil para gestionar el trabajo y mejorar la eficiencia en los procesos de
 desarrollo de software \parencite{LAGEJUNIOR201013}. Se basa en la visualización del flujo de trabajo
 en columnas (ver Figura \ref{anexo3:sec:kanban}), donde cada una representa un estado del proceso como
-puede ser ``Por hacer'', ``En proceso'' y ``Hecho''. Esto permite al equipo ver el estado actual de las
-tareas e identificar de manera rápdia aquellas tareas que estén bloqueadas, necesiten antención o estén
-en riesgo de retraso.
+puede ser ``Por hacer'', ``En proceso'' y ``Hecho''. Además, tiene varias diferencias con Scrum, como
+la ausencia de roles definidos o la falta de sprints.
 
 \diagrama{
     nombre = {Panel de Kanban (Imagen de Jeff.Iasovski, Creative Commons)},
@@ -96,7 +92,16 @@ en riesgo de retraso.
 \label{anexo3:sec:scrumban}
 Scrumban es un enfoque híbrido que combina elementos de Scrum y Kanban, diseñado para
 proporcionar la flexibilidad de Kanban con la estructura de Scrum \parencite{Stoica2016AnalyzingAD}.
-De la misma manera que Scrum, Scrumban utiliza sprints para organizar el trabajo en ciclos cortos,
-pero también incorpora la visualización del flujo de trabajo de Kanban para mostrar el estado de
-las tareas en cada sprint. Además, Scrum añade la planificación de sprints y las reuniones
-diarias, lo que permite al equipo revisar el progreso apoyándose en lo aportado por Kanban.
+De la misma manera que Scrum, Scrumban utiliza sprints para organizar el trabajo en ciclos cortos
+(a poder ser más cortos que en Scrum), pero también incorpora la visualización del flujo de trabajo
+de Kanban para mostrar el estado de las tareas en cada sprint. Kanban proporciona un límite de trabajo
+en cada sección del flujo, que se cumple con el objetivo de evitar la sobrecarga del equipo. Esto
+se consigue, por ejemplo, limitando el número de tareas que pueden estar en la columna ``En proceso''
+o reduciendo la longitud de los sprints para disminuir la cantidad de trabajo total del ciclo
+\parencite{Scrumban}.
+
+En Scrumban, al igual que en Kanban, no existen roles definidos, haciendo que todos los miembros del
+equipo de desarrollo sean responsables de la planificación y ejecución del trabajo. Esto implica,
+entre otras cosas, que es el propio equipo el encargado de priorizar las tareas y decidir cuáles
+se deben realizar en cada sprint \parencite{Scrumban}.
+
