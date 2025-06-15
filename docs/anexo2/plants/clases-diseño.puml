@@ -1,0 +1,187 @@
+@startuml "clasesDiseño"
+
+' Cosas bonitas
+skinparam linetype ortho
+' skinparam class {
+'     BackgroundColor #7ACFF5
+' }
+hide circle
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+left to right direction
+
+''' El modelo
+package "Modelos de Datos" {
+    object "User" {
+        + uuid: Integer
+        + email: String
+        + hashed_password: String
+        + verified: Boolean
+        + name: String
+        + year_of_birth: Integer
+    }
+
+    object "Activity" {
+        + uuid: Integer
+        + date: Date
+        + minigame: String
+        + duration: Float
+        + score: Float
+        + activity_points: Float
+        + extra_data: String
+        + user_email: String
+    }
+
+    object "Shape" {
+        + uuid: Integer
+        + date: Date
+        + weight: Float
+        + height: Float
+        + user_email: String
+    }
+
+    ' Un usuario puede tener muchas actividades y formas físicas
+    User "1" --- "0..*" Activity : Realiza >
+    User "1" --- "0..*" Shape : Registra >
+}
+
+
+
+''' El backend
+package "Backend" {
+    package "API Routers" {
+
+        class "AuthRouter" <<Router>> {
+            + login_for_token(form_data: dict) -> Token
+            + check_token(token: str) -> str
+        }
+
+        class "UserRouter" <<Router>> {
+            + create_user(user: UserSchema) -> UserSchema
+            + send_verification_email(current_user: UserSchema) -> None
+            + verify_user(token: str) -> None
+            + get_me(current_user: UserSchema) -> UserSchema
+            + update_me(modifications: UserSchema, current_user: UserSchema) -> UserSchema
+            + update_email(token: str) -> None
+            + delete_me(current_user: UserSchema) -> None
+        }
+
+        class "ActivityRouter" <<Router>> {
+            + create_activity(activity: ActivitySchema, current_user: UserSchema) -> ActivitySchema
+            + get_activities(current_user: UserSchema, minigame_filter: str | None = None, from_date: str | None = None, to_date: str | None = None) -> list[ActivitySchema]
+            + delete_activity(uuid: int, current_user: UserSchema) -> None
+        }
+
+        class "ShapeRouter" <<Router>> {
+            + create_shape(shape: ShapeSchema, current_user: UserSchema) -> ShapeSchema
+            + get_shapes(current_user: UserSchema, from_date: str | None = None, to_date: str | None = None) -> list[ShapeSchema]
+            + get_current_shape(current_user: UserSchema) -> ShapeSchema | None
+            + delete_shape(uuid: int, current_user: UserSchema) -> None
+        }
+
+    }
+    note right of "API Routers"
+        Cabe destacar que los routers <b>no</b> son realmente clases.
+        Realmente se trata de funciones agrupadas en módulos que se llaman de manera automática al recibir una petición HTTP.
+    end note
+
+
+    package "DAO" {
+        class "ActivityDAO" {
+            + create_activity(activity: ActivitySchema, user_email: str) -> ActivitySchema
+            + get_activities(user_email: str, minigame_filter: str | None, from_date: datetime, to_date: datetime) -> list[ActivitySchema]
+            + delete_activity(uuid: int, user_email: str) -> None
+        }
+
+        class "AuthDAO" {
+            + get_user(uuid: int) -> User | None
+            + get_user_by_email(email: str) -> User | None
+        }
+
+        class "ShapeDAO" {
+            + create_shape(shape: ShapeSchema, user_email: str) -> ShapeSchema
+            + get_shapes(user_email: str, from_date: datetime, to_date: datetime) -> list[ShapeSchema]
+            + get_current_shape(user_email: str) -> ShapeSchema | None
+            + delete_shape(uuid: int, user_email: str) -> None
+        }
+
+        class "UserDAO" {}
+    }
+
+
+    package "Schemas" {
+        object "UserSchema" {
+            + email: String
+            + name: String
+            + year_of_birth: Integer
+        }
+        object "ActivitySchema" {
+            + date: Date
+            + minigame: String
+            + duration: Float
+            + score: Float
+            + activity_points: Float
+            + extra_data: String
+        }
+        object "ShapeSchema" {
+            + date: Date
+            + weight: Float
+            + height: Float
+        }
+        object "TokenSchema" {
+            + access_token: String
+            + token_type: String
+        }
+    }
+
+    note right of "Schemas"
+        Los esquemas son clases que definen la estructura
+        de los datos que se envían y reciben a través de la API.
+        Se utilizan para validar y serializar los datos.
+    end note
+}
+
+''' El frontend (react)
+/'
+ ' package "Frotend" {
+ '     package "React" {
+ '         package "Components" {
+ '             '' Páginas de verdad
+ '             class "Dashboard" <<Component>> {}
+ '             class "Login" <<Component>> {}
+ '             class "Media" <<Component>> {}
+ '             class "My" <<Component>> {}
+ '             class "NotFound" <<Component>> {}
+ '
+ '             '' Puramente componentes
+ '             class "LoginForm" <<Component>> {}
+ '             class "CurrentShapeCard" <<Component>> {}
+ '             class "DataForm" <<Component>> {}
+ '             class "UserData" <<Component>> {}
+ '             class "UserStats" <<Component>> {}
+ '             class "Navbar" <<Component>> {}
+ '         }
+ '
+ '         class "UnityClient" Component {}
+ '
+ '         class "App" {}
+ '
+ '         class "ApiClient" {}
+ '     }
+ '
+ ' }
+ '/
+
+/'
+ ' package "Unity" {
+ '     class "GameController" {
+ '         - static singleton: GameController
+ '     }
+ '
+ '     class "JSConnector" { }
+ '
+ ' }
+ '/
+
+
+@enduml
