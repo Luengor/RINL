@@ -1,10 +1,23 @@
-\chapter{Modelo del análisis}
+\chapter{Análisis del sistema}
 \label{anexo2:cap:analisis}
+\textbf{TODO}
 
 \section{Modelo del dominio}
 \label{anexo2:sec:modelo-dominio}
+El modelo del dominio es una representación conceptual de los objetos y las relacciones entre ellos
+en el sistema. Representa, de manera muy general y sin entrar en detalles de implementanción, tanto
+el comportamiento como los atributos de los objetos que forman parte del sistema
+\parencite{DomainModel}.
 
-\section{Realización de los casos de uso}
-\label{anexo2:sec:realizacion-casos-uso-analisis}
+De manera muy general, el funcionamiento de el sistema se puede resumir en: los usuarios del sistema
+se registran y pueden modficar sus datos personales. Estos usuarios pueden registrar su forma física,
+así como modificarlas y consultarlas. Además, el sistema ofrece una serie de actividades que los usuarios
+pueden realizar, y que una vez realizadas quedan resgistradas en el sistema. Los usuarios pueden
+consultar las actividades que han realizado, así como las estadísticas de su forma física.
 
-
+\diagrama{
+    nombre = {Modelo del dominio},
+    archivo = {anexo2/diagramas/ModeloDominio.pdf},
+    etiqueta = {anexo2:fig:modelo-dominio},
+    forzarPosicion = {sí pls},
+}
