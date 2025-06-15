@@ -183,6 +183,18 @@ package "React" %lighten("#PaleGreen", 15) {
         + render()
     }
 
+    class PoseLandmarker #LightGreen {
+        + close() : None
+        + setOptions(modelType: str, detectionConfidence: float, trackingConfidence: float) : None
+        + detect(image: Image) : list[Landmark]
+        + detectFromVideo(video: Video) : list[Landmark]
+    }
+    note top of "PoseLandmarker"
+        PoseLandmarker es la clase que se encarga de detectar las posturas del usuario
+        a partir de las imágenes o vídeos que recibe del frontend. Utiliza la biblioteca
+        MediaPipe para realizar la detección de posturas.
+    end note
+
     package "Components" %lighten("#PaleGreen", 5) {
         '' Páginas de verdad
         class "Dashboard" <<Component>> #LightGreen {}
@@ -228,18 +240,23 @@ package "React" %lighten("#PaleGreen", 15) {
 
     class "ApiClient" #LightGreen  {
         - auth_token: str
+        ---
+        ...
     }
     note right of "ApiClient"
         El APIClient es una clase que se encarga de abstraer las peticiones HTTP
         a la API del backend. Se genera automaticamente a partir de la
         especificación OpenAPI del backend, que FastAPI provee.
+        Contiene métodos para llamar a todas las rutas de la API.
     end note
+
+    ' Media posee a mediapipe
+    Media --> PoseLandmarker : creates, uses >
 
     ' El Cliente de Unity se comunica con Media
     class UnityClient #LightGreen {
         - unity_location: String
         + sendUnityMessage(gameobject: String, metod: String, data: dict) : None
-
     }
 
     Media ..> UnityClient : uses >
@@ -345,8 +362,7 @@ package "Unity" #LightYellow {
 }
 
 '' Relaciones entre el juego y el frontend
-JSConnector <..up.> UnityClient : uses
-
+JSConnector <..up.> UnityClient : uses (A través de eventos de JavaScript)
 
 
 @enduml
