@@ -48,17 +48,17 @@ package "Modelos de Datos" {
 
 
 ''' El backend
-package "Backend" {
+package "Backend" %lighten("#87CEFB", 20) {
     ' Clase de FastAPI de la que dependan los routers?
 
-    package "API Routers" {
+    package "API Routers" #LightBlue {
 
-        class "AuthRouter" <<Router>> {
+        class "AuthRouter" <<Router>> #LightBlue {
             + login_for_token(form_data: dict) -> Token
             + check_token(token: str) -> str
         }
 
-        class "UserRouter" <<Router>> {
+        class "UserRouter" <<Router>> #LightBlue {
             + create_user(user: UserSchema) -> UserSchema
             + send_verification_email(current_user: UserSchema) -> None
             + verify_user(token: str) -> None
@@ -68,13 +68,13 @@ package "Backend" {
             + delete_me(current_user: UserSchema) -> None
         }
 
-        class "ActivityRouter" <<Router>> {
+        class "ActivityRouter" <<Router>> #LightBlue {
             + create_activity(activity: ActivitySchema, current_user: UserSchema) -> ActivitySchema
             + get_activities(current_user: UserSchema, minigame_filter: str | None = None, from_date: str | None = None, to_date: str | None = None) -> list[ActivitySchema]
             + delete_activity(uuid: int, current_user: UserSchema) -> None
         }
 
-        class "ShapeRouter" <<Router>> {
+        class "ShapeRouter" <<Router>> #LightBlue {
             + create_shape(shape: ShapeSchema, current_user: UserSchema) -> ShapeSchema
             + get_shapes(current_user: UserSchema, from_date: str | None = None, to_date: str | None = None) -> list[ShapeSchema]
             + get_current_shape(current_user: UserSchema) -> ShapeSchema | None
@@ -88,26 +88,26 @@ package "Backend" {
     end note
 
 
-    package "DAO" {
-        class "ActivityDAO" {
+    package "DAO" #LightCyan {
+        class "ActivityDAO" #LightCyan {
             + create_activity(activity: ActivitySchema, user_email: str) -> ActivitySchema
             + get_activities(user_email: str, minigame_filter: str | None, from_date: datetime, to_date: datetime) -> list[ActivitySchema]
             + delete_activity(uuid: int, user_email: str) -> None
         }
 
-        class "AuthDAO" {
+        class "AuthDAO" #LightCyan {
             + get_user(uuid: int) -> UserSchema | None
             + get_user_by_email(email: str) -> UserSchema | None
         }
 
-        class "ShapeDAO" {
+        class "ShapeDAO" #LightCyan {
             + create_shape(shape: ShapeSchema, user_email: str) -> ShapeSchema
             + get_shapes(user_email: str, from_date: datetime, to_date: datetime) -> list[ShapeSchema]
             + get_current_shape(user_email: str) -> ShapeSchema | None
             + delete_shape(uuid: int, user_email: str) -> None
         }
 
-        class "UserDAO" {
+        class "UserDAO" #LightCyan {
             + create_user(user: UserSchema) -> UserSchema
             + update_user(current_user: UserSchema, modification: UserSchema) -> UserSchema
             + get_user(email: str) -> UserSchema | None
@@ -117,13 +117,13 @@ package "Backend" {
     }
 
 
-    package "Schemas" {
-        object "UserSchema" {
+    package "Schemas" #LightSteelBlue {
+        object "UserSchema" #LightSteelBlue {
             + email: String
             + name: String
             + year_of_birth: Integer
         }
-        object "ActivitySchema" {
+        object "ActivitySchema" #LightSteelBlue {
             + date: Date
             + minigame: String
             + duration: Float
@@ -131,12 +131,12 @@ package "Backend" {
             + activity_points: Float
             + extra_data: String
         }
-        object "ShapeSchema" {
+        object "ShapeSchema" #LightSteelBlue {
             + date: Date
             + weight: Float
             + height: Float
         }
-        object "TokenSchema" {
+        object "TokenSchema" #LightSteelBlue {
             + access_token: String
             + token_type: String
         }
@@ -176,35 +176,34 @@ UserDAO -> "User" : creates, manages
 AuthDAO -> "User" : manages
 
 ''' El frontend (react)
-/'
- ' package "Frotend" {
- '     package "React" {
- '         package "Components" {
- '             '' Páginas de verdad
- '             class "Dashboard" <<Component>> {}
- '             class "Login" <<Component>> {}
- '             class "Media" <<Component>> {}
- '             class "My" <<Component>> {}
- '             class "NotFound" <<Component>> {}
- '
- '             '' Puramente componentes
- '             class "LoginForm" <<Component>> {}
- '             class "CurrentShapeCard" <<Component>> {}
- '             class "DataForm" <<Component>> {}
- '             class "UserData" <<Component>> {}
- '             class "UserStats" <<Component>> {}
- '             class "Navbar" <<Component>> {}
- '         }
- '
- '         class "UnityClient" Component {}
- '
- '         class "App" {}
- '
- '         class "ApiClient" {}
- '     }
- '
- ' }
- '/
+package "Frotend" {
+    package "React" {
+        package "Components" {
+            '' Páginas de verdad
+            class "Dashboard" <<Component>> {}
+            class "Login" <<Component>> {}
+            class "Media" <<Component>> {}
+            class "My" <<Component>> {}
+            class "NotFound" <<Component>> {}
+
+            '' Puramente componentes
+            class "LoginForm" <<Component>> {}
+            class "CurrentShapeCard" <<Component>> {}
+            class "DataForm" <<Component>> {}
+            class "UserData" <<Component>> {}
+            class "UserStats" <<Component>> {}
+            class "Navbar" <<Component>> {}
+        }
+
+        class "UnityClient" {}
+
+        class "App" {}
+
+        class "ApiClient" {}
+    }
+
+}
+
 
 /'
  ' package "Unity" {
