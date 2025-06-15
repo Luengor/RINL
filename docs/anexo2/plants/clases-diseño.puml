@@ -12,6 +12,14 @@ left to right direction
 
 ''' El modelo
 package "Modelos de Datos" %lighten("#IndianRed", 40) {
+    object "Base" %lighten("#IndianRed", 20) {
+        + metadata: MetaData
+    }
+    note left of "Base"
+        Base es la clase base de SQLAlchemy que contiene
+        los metadatos comunes a todos los modelos.
+    end note
+
     object "User" %lighten("#IndianRed", 20) {
         + uuid: Integer
         + email: String
@@ -39,6 +47,11 @@ package "Modelos de Datos" %lighten("#IndianRed", 40) {
         + height: Float
         + user_email: String
     }
+
+    ' Relacciones de abstracción entre los modelos
+    Base <|-- User : inherits >
+    Base <|-- Activity : inherits >
+    Base <|-- Shape : inherits >
 
     ' Un usuario puede tener muchas actividades y formas físicas
     User "1" --- "0..*" Activity : Realiza >
