@@ -1,0 +1,8 @@
+@startuml FiltrarEstadísticas
+
+!include common.puml
+
+Verified -> US : El usuario cambia los filtros\nseleccionados en la página de estadísticas.
+return El sistema actualiza los filtros\ny muestra las estadísticas filtradas.
+
+@enduml

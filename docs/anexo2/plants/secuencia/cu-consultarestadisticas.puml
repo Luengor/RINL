@@ -6,7 +6,6 @@ entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
 entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
 
 Verified -> US : El usuario abre la página de estadísticas\no cambia los filtros seleccionados
-note right #LightGreen: El componente también\nenvía los filtros\nseleccionados.
 
 US -> ApiClient : getActivitiesActivityGet()
 ApiClient -> ActivityR : GET /activities
@@ -31,5 +30,6 @@ return 200 OK list[ShapeSchema]
 return list[ShapeSchema]
 
 return Muestra las estadísticas de las activades\ny el seguimiento de la forma física
+note left #LightGreen : Lo mostrado se filtra según los filtros\nescogidos por el usuario.
 
 @enduml
