@@ -13,31 +13,34 @@ AuthDAO -> UserDAO : get_user(email)
 UserDAO -> UserEntity : query(userData)
 
 alt El usuario existe y la contraseña es correcta
-    UserEntity -> UserDAO : UserEntity
-    UserDAO -> AuthDAO : UserSchema
+    autoactivate off
+    UserEntity --> UserDAO : UserEntity
+    UserDAO --> AuthDAO : UserSchema
 
     AuthDAO --> AuthR : Token
     AuthR --> ApiClient : 200 OK
     ApiClient --> LF : OK
-    LF -> My : show()
-    My --> Anon : Muestra página personal
+
+    LF -> My ++: show()
+    My --> Anon --: Muestra página personal
 
 else El usuario no existe
-    UserEntity -> UserDAO : None
-    UserDAO -> AuthDAO : None
+    UserEntity --> UserDAO : None
+    UserDAO --> AuthDAO : None
 
     AuthDAO --> AuthR : HTTPException
     AuthR --> ApiClient : 401 Unauthorized
     ApiClient --> LF : Unauthorized
     LF -> Anon : Muestra error de usuario o contraseña incorrectos
 else La contraseña es incorrecta
-    UserEntity -> UserDAO : UserEntity
-    UserDAO -> AuthDAO : UserSchema
+    autoactivate on
+    UserEntity --> UserDAO : UserEntity
+    UserDAO --> AuthDAO : UserSchema
 
     AuthDAO --> AuthR : HTTPException
     AuthR --> ApiClient : 401 Unauthorized
     ApiClient --> LF : Unauthorized
-    LF -> Anon : Muestra error de usuario o contraseña incorrectos
+    LF --> Anon : Muestra error de usuario o contraseña incorrectos
 end
 
 @enduml
