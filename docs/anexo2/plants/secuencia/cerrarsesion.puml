@@ -1,0 +1,32 @@
+@startuml CerrarSesion
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+autoactivate off
+Auth -> DataForm ++ : Pulsa el botón de cerrar sesión
+DataForm --> Auth : Muestra un mensaje de confirmación
+alt Usuario confirma
+    Auth -> DataForm : Confirma el cierre de sesión
+
+    autoactivate on
+
+    DataForm -> ApiClient : logout()
+
+    autoactivate off
+    ApiClient -> ApiClient : Borra el token de sesión
+    autoactivate on
+
+    ApiClient --> DataForm : ok
+    DataForm -> Dashboard : show()
+    Dashboard --> Auth : Devuelve a la página de inicio
+
+else Usuario cancela
+    autoactivate off
+    Auth -> DataForm  : Cancela el cierre de sesión
+    DataForm --> Auth : Vuelve a mostrar los datos personales
+end
+
+@enduml
