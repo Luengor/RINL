@@ -24,16 +24,18 @@
 \newcommand{\diagrama}[1]{
     \setkeys{diagrama}{#1}
 
+    \begingroup
     \ifx\diagrama@forzarPosicion\empty
         \begin{figure}[!ht]
     \else
         \begin{figure}[H]
     \fi
-        \centering
+        \center
         \includegraphics[width=\diagrama@width]{\diagrama@archivo}
         \caption{\diagrama@nombre}
         \label{\diagrama@etiqueta}
     \end{figure}
+    \endgroup
 }
 
 \makeatother
