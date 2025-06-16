@@ -1,0 +1,41 @@
+hide footbox
+skinparam roundCorner 0
+!theme plain
+
+hide unlinked
+
+' Participantes usuarios
+actor "Usuario sin autenticar" as Anon
+actor "Usuario autenticado" as Auth
+actor "Usuario verificado" as Verified
+actor "Sistema" as System
+
+' Clases de React
+participant "LoginForm" as LF <<Component>> #LightGreen
+
+participant "My" as My <<Component>> #LightGreen
+
+participant "PoseLandmarker" as PL #LightGreen
+participant "ApiClient" as ApiClient #LightGreen
+
+' Clases del backend
+participant "AuthRouter" as AuthR <<Router>> #LightBlue
+participant "ActivityRouter" as ActivityR <<Router>> #LightBlue
+participant "ShapeRouter" as ShapeR <<Router>> #LightBlue
+participant "UserRouter" as UserR <<Router>> #LightBlue
+
+participant "AuthDAO" as AuthDAO #LightCyan
+participant "ActivityDAO" as ActivityDAO #LightCyan
+participant "ShapeDAO" as ShapeDAO #LightCyan
+participant "UserDAO" as UserDAO #LightCyan
+
+participant "ActivitySchema" as ActivitySchema #LightSteelBlue
+participant "ShapeSchema" as ShapeSchema #LightSteelBlue
+participant "UserSchema" as UserSchema #LightSteelBlue
+participant "TokenSchema" as AuthSchema #LightSteelBlue
+
+' ' Clases de modelos
+' create entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
