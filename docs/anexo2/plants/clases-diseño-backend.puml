@@ -1,0 +1,153 @@
+@startuml "clasesDiseñoBackend"
+
+' Cosas bonitas
+skinparam linetype ortho
+' skinparam class {
+'     BackgroundColor #7ACFF5
+' }
+hide circle
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+left to right direction
+
+''' El modelo
+package "Modelos de Datos" %lighten("#IndianRed", 40) { }
+
+''' El backend
+package "Backend" %lighten("#87CEFB", 20) {
+    ' Clase de FastAPI de la que dependan los routers?
+
+    package "API Routers" #LightBlue {
+
+        class "AuthRouter" <<Router>> #LightBlue {
+            + login_for_token(form_data: dict) -> Token
+            + check_token(token: str) -> str
+        }
+
+        class "UserRouter" <<Router>> #LightBlue {
+            + create_user(user: UserSchema) -> UserSchema
+            + send_verification_email(current_user: UserSchema) -> None
+            + verify_user(token: str) -> None
+            + get_me(current_user: UserSchema) -> UserSchema
+            + update_me(modifications: UserSchema, current_user: UserSchema) -> UserSchema
+            + update_email(token: str) -> None
+            + delete_me(current_user: UserSchema) -> None
+        }
+
+        class "ActivityRouter" <<Router>> #LightBlue {
+            + create_activity(activity: ActivitySchema, current_user: UserSchema) -> ActivitySchema
+            + get_activities(current_user: UserSchema, minigame_filter: str | None = None, from_date: str | None = None, to_date: str | None = None) -> list[ActivitySchema]
+            + delete_activity(uuid: int, current_user: UserSchema) -> None
+        }
+
+        class "ShapeRouter" <<Router>> #LightBlue {
+            + create_shape(shape: ShapeSchema, current_user: UserSchema) -> ShapeSchema
+            + get_shapes(current_user: UserSchema, from_date: str | None = None, to_date: str | None = None) -> list[ShapeSchema]
+            + get_current_shape(current_user: UserSchema) -> ShapeSchema | None
+            + delete_shape(uuid: int, current_user: UserSchema) -> None
+        }
+
+    }
+    note right of "API Routers"
+        Cabe destacar que los routers <b>no</b> son realmente clases.
+        Realmente se trata de funciones agrupadas en módulos que se llaman de manera automática al recibir una petición HTTP.
+    end note
+
+
+    package "DAO" #LightCyan {
+        class "ActivityDAO" #LightCyan {
+            + create_activity(activity: ActivitySchema, user_email: str) -> ActivitySchema
+            + get_activities(user_email: str, minigame_filter: str | None, from_date: datetime, to_date: datetime) -> list[ActivitySchema]
+            + delete_activity(uuid: int, user_email: str) -> None
+        }
+
+        class "AuthDAO" #LightCyan {
+            + get_user(uuid: int) -> UserSchema | None
+            + get_user_by_email(email: str) -> UserSchema | None
+        }
+
+        class "ShapeDAO" #LightCyan {
+            + create_shape(shape: ShapeSchema, user_email: str) -> ShapeSchema
+            + get_shapes(user_email: str, from_date: datetime, to_date: datetime) -> list[ShapeSchema]
+            + get_current_shape(user_email: str) -> ShapeSchema | None
+            + delete_shape(uuid: int, user_email: str) -> None
+        }
+
+        class "UserDAO" #LightCyan {
+            + create_user(user: UserSchema) -> UserSchema
+            + update_user(current_user: UserSchema, modification: UserSchema) -> UserSchema
+            + get_user(email: str) -> UserSchema | None
+            + verify_user(token: str) -> bool
+            + delete_user(current_user: UserSchema) -> None
+        }
+    }
+
+
+    package "Schemas" #LightSteelBlue {
+        object BaseModel #LightSteelBlue {
+            + metadata: MetaData
+        }
+
+        object "UserSchema" #LightSteelBlue {
+            + email: String
+            + name: String
+            + year_of_birth: Integer
+        }
+        object "ActivitySchema" #LightSteelBlue {
+            + date: Date
+            + minigame: String
+            + duration: Float
+            + score: Float
+            + activity_points: Float
+            + extra_data: String
+        }
+        object "ShapeSchema" #LightSteelBlue {
+            + date: Date
+            + weight: Float
+            + height: Float
+        }
+        object "TokenSchema" #LightSteelBlue {
+            + access_token: String
+            + token_type: String
+        }
+    }
+
+    BaseModel <|--- UserSchema : inherits >
+    BaseModel <|--- ActivitySchema : inherits >
+    BaseModel <|--- ShapeSchema : inherits >
+    BaseModel <|--- TokenSchema : inherits >
+
+    note right of "Schemas"
+        Los esquemas son clases que definen la estructura
+        de los datos que se envían y reciben a través de la API.
+        Se utilizan para validar y serializar los datos.
+    end note
+
+
+    '' Relaciones entre clases del backend
+    ' Los routers dependen de los DAOs para acceder a la base de datos
+    AuthRouter ..> AuthDAO : depends on >
+    UserRouter ..> UserDAO : depends on >
+    ActivityRouter ..> ActivityDAO : depends on >
+    ShapeRouter ..> ShapeDAO : depends on >
+
+    ' Los Routers utilizan los esquemas como argumentos y respuestas
+    AuthRouter     -left-> "TokenSchema" : creates, receives, returns >
+    UserRouter     --> "UserSchema" : creates, receives, returns >
+    ActivityRouter --> "ActivitySchema" : creates, receives, returns >
+    ShapeRouter    --> "ShapeSchema" : creates, receives, returns >
+
+    ' Los DAOs utilizan los esquemas para crear y devolver datos
+    ActivityDAO -> "ActivitySchema" : creates, returns >
+    AuthDAO     -> "UserSchema" : returns >
+    ShapeDAO    -> "ShapeSchema" : creates, returns >
+    UserDAO     -> "UserSchema" : creates, returns >
+}
+
+' Los DAOs gestionan los modelos de datos
+ShapeDAO --> "Modelos de Datos" : creates, manages >
+ActivityDAO --> "Modelos de Datos" : creates, manages >
+AuthDAO --> "Modelos de Datos" : manages >
+UserDAO --> "Modelos de Datos" : creates, manages >
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml "clasesDiseñoModelos"
+
+' Cosas bonitas
+skinparam linetype ortho
+' skinparam class {
+'     BackgroundColor #7ACFF5
+' }
+hide circle
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+
+''' El modelo
+package "Modelos de Datos" %lighten("#IndianRed", 40) {
+    object "Base" %lighten("#IndianRed", 20) {
+        + metadata: MetaData
+    }
+    note left of "Base"
+        Base es la clase base de SQLAlchemy que contiene
+        los metadatos comunes a todos los modelos.
+    end note
+
+    object "User" %lighten("#IndianRed", 20) {
+        + uuid: Integer
+        + email: String
+        + hashed_password: String
+        + verified: Boolean
+        + name: String
+        + year_of_birth: Integer
+    }
+
+    object "Activity" %lighten("#IndianRed", 20) {
+        + uuid: Integer
+        + date: Date
+        + minigame: String
+        + duration: Float
+        + score: Float
+        + activity_points: Float
+        + extra_data: String
+        + user_email: String
+    }
+
+    object "Shape" %lighten("#IndianRed", 20) {
+        + uuid: Integer
+        + date: Date
+        + weight: Float
+        + height: Float
+        + user_email: String
+    }
+
+    ' Relacciones de abstracción entre los modelos
+    Base <|--- User : inherits >
+    Base <|-left- Activity : inherits >
+    Base <|- Shape : inherits >
+
+    ' Un usuario puede tener muchas actividades y formas físicas
+    User "1" --- "0..*" Activity : Realiza >
+    User "1" --- "0..*" Shape : Registra >
+}
+
+@enduml

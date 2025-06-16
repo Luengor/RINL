@@ -1,0 +1,140 @@
+@startuml "clasesDiseñoReact"
+
+' Cosas bonitas
+skinparam linetype ortho
+' skinparam class {
+'     BackgroundColor #7ACFF5
+' }
+hide circle
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+left to right direction
+
+''' El backend
+package "Backend" %lighten("#87CEFB", 20) { }
+
+''' El frontend (react)
+package "React" %lighten("#PaleGreen", 15) {
+    class "App" #LightGreen {
+        - static singleton: App
+        - ApiClient: ApiClient
+        + render()
+    }
+
+    class PoseLandmarker #LightGreen {
+        + close() : None
+        + setOptions(modelType: str, detectionConfidence: float, trackingConfidence: float) : None
+        + detect(image: Image) : list[Landmark]
+        + detectFromVideo(video: Video) : list[Landmark]
+    }
+    note right of "PoseLandmarker"
+        PoseLandmarker es la clase que se encarga de detectar las posturas del usuario
+        a partir de las imágenes o vídeos que recibe del frontend. Utiliza la biblioteca
+        MediaPipe para realizar la detección de posturas.
+    end note
+
+    package "Components" %lighten("#PaleGreen", 5) {
+        '' Páginas de verdad
+        class "Dashboard" <<Component>> #LightGreen {}
+        class "Login" <<Component>> #LightGreen  {}
+        class "Media" <<Component>> #LightGreen  {}
+        class "My" <<Component>> #LightGreen  {}
+        class "NotFound" <<Component>> #LightGreen  {}
+
+        '' Puramente componentes
+        class "LoginForm" <<Component>> #LightGreen  {}
+        class "CurrentShapeCard" <<Component>> #LightGreen  {}
+        class "DataForm" <<Component>> #LightGreen  {
+            + userData: UserData
+        }
+        class "UserData" <<Component>> #LightGreen  {}
+        class "UserStats" <<Component>> #LightGreen  {}
+        class "Navbar" <<Component>> #LightGreen  {
+            + toplink: NavbarLink
+            + mainLinks: list[NavbarLink]
+            + bottomLinks: list[NavbarLink]
+        }
+
+        '' Relaciones entre componentes
+        Dashboard --> "LoginForm" : uses >
+
+        Login --> "LoginForm" : uses >
+
+        My --> "Navbar" : uses >
+        My --> "UserData" : uses >
+        My --> "UserStats" : uses >
+        My --> "Media" : uses >
+        My --> "NotFound" : uses >
+
+        UserData -> "DataForm" : uses >
+        UserData --> "CurrentShapeCard" : uses >
+    }
+    note top of "Components"
+        Los componentes son los elementos
+        reutilizables de react que
+        componen la interfaz de usuario.
+        Algunos de ellos son páginas
+        completas, mientras que otros son
+        componentes más pequeños que se
+        utilizan en varias páginas.
+    end note
+
+    App --> "Dashboard" : uses >
+    App --> "Login" : uses >
+    App --> "Media" : uses >
+    App --> "My" : uses >
+    App --> "NotFound" : uses >
+
+    class "ApiClient" #LightGreen  {
+        - auth_token: str
+        ---
+        ...
+    }
+    note right of "ApiClient"
+        El APIClient es una clase que se encarga de abstraer las peticiones HTTP
+        a la API del backend. Se genera automaticamente a partir de la
+        especificación OpenAPI del backend, que FastAPI provee.
+        Contiene métodos para llamar a todas las rutas de la API.
+    end note
+
+    ' Media posee a mediapipe
+    Media --> PoseLandmarker : creates, uses >
+
+    ' El Cliente de Unity se comunica con Media
+    class UnityClient #LightGreen {
+        - unity_location: String
+        + sendUnityMessage(gameobject: String, metod: String, data: dict) : None
+    }
+
+    Media ..> UnityClient : uses >
+
+    ' La App crea y gestiona el ApiClient
+    App -> ApiClient : creates >
+
+    ' Los componentes dependen del ApiClient para hacer peticiones a la API
+    LoginForm ..> ApiClient : uses >
+    Media ..> ApiClient : uses >
+    CurrentShapeCard .> ApiClient : uses >
+    DataForm ..> ApiClient : uses >
+    Dashboard ..> ApiClient : uses >
+    Login ..> ApiClient : uses >
+    My ..> ApiClient : uses >
+    UserStats ..> ApiClient : uses >
+}
+
+' Relaciones entre el frontend y el backend
+App .> Backend : uses >
+note left of App
+    Los componentes del frontend utilizan la API a través del
+    APIClient, encargado de abstraer las peticiones HTTP.
+end note
+
+''' El juego
+package "Unity" #LightYellow {
+}
+
+'' Relaciones entre el juego y el frontend
+Unity <..up.> UnityClient : uses (A través de eventos de JavaScript)
+
+
+@enduml
