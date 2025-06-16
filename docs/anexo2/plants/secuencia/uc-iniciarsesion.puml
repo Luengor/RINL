@@ -8,8 +8,8 @@ entity "User" as UserEntity %lighten("#IndianRed", 20)
 Anon -> LF : Completa formulario de inicio de sesión
 LF -> ApiClient : loginForTokenPost(userData)
 ApiClient -> AuthR: POST /login
-AuthR -> AuthDAO : get_user(userData: UserSchema)
-AuthDAO -> UserDAO : get_user(userData: UserSchema)
+AuthR -> AuthDAO : get_user(email)
+AuthDAO -> UserDAO : get_user(email)
 UserDAO -> UserEntity : query(userData)
 
 alt El usuario existe y la contraseña es correcta

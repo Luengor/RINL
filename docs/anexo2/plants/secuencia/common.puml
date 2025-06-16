@@ -1,5 +1,6 @@
 hide footbox
 skinparam roundCorner 0
+autoactivate on
 !theme plain
 
 hide unlinked
@@ -13,7 +14,10 @@ actor "Sistema" as System
 ' Clases de React
 participant "LoginForm" as LF <<Component>> #LightGreen
 
+participant "Dashboard" as Dashboard <<Component>> #LightGreen
 participant "My" as My <<Component>> #LightGreen
+participant "UserData" as UserData <<Component>> #LightGreen
+participant "DataForm" as DataForm <<Component>> #LightGreen
 
 participant "PoseLandmarker" as PL #LightGreen
 participant "ApiClient" as ApiClient #LightGreen

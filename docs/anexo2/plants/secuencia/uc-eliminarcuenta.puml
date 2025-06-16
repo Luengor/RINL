@@ -1,0 +1,41 @@
+@startuml EliminarCuenta
+
+!include common.puml
+entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+autoactivate off
+
+Auth -> DataForm ++ : Pulsa el botón de eliminar cuenta
+DataForm --> Auth : Muestra un mensaje de confirmación
+
+
+alt Usuario confirma
+    Auth -> DataForm : Confirma la eliminación de cuenta
+
+    autoactivate on
+
+    DataForm -> ApiClient : deleteMeUserDelete()
+    ApiClient -> UserR : DELETE /user/me
+    UserR -> UserDAO : delete_user(email)
+    UserDAO -> UserEntity : delete(email)
+    destroy UserEntity
+
+    UserDAO --> UserR : ok
+    UserR --> ApiClient : ok
+    ApiClient --> DataForm : ok
+    DataForm --> Dashboard : show()
+
+    autoactivate off
+    Dashboard -> Auth : Devuelve a la página de inicio
+
+else Usuario cancela
+    autoactivate on
+
+    Auth -> DataForm  : Cancela la eliminación de cuenta
+    DataForm --> Auth : Vuelve a mostrar los datos personales
+end
+
+
+@enduml

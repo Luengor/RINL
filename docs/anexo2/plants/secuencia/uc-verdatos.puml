@@ -1,0 +1,19 @@
+@startuml VerDatosPersonales
+
+!include common.puml
+entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+Auth -> UserData : Entra en la página de datos personales
+UserData -> ApiClient : get_user_data()
+ApiClient -> UserR : GET /user
+UserR -> UserDAO : get_user(email)
+UserDAO -> UserEntity : query(email)
+UserEntity --> UserDAO : UserEntity
+UserDAO --> UserR : UserSchema
+UserR --> ApiClient : userData
+ApiClient --> UserData : userData
+UserData --> Auth : Muestra los datos personales
+
+@enduml
