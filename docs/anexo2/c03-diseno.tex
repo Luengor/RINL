@@ -95,7 +95,11 @@ de clases en cuatro imágenes, una por cada paquete mencionado anteriormente (fi
 las relaciones a clases de paquetes externos se muestran como dependencias al paquete, y no
 como relaciones directas a las clases. Igualmente, se incluye una imagen que muestra
 el diagrama completo, aunque es de difícil lectura debido a la gran cantidad de clases
-y relaciones que contiene (figura \ref{anexo2:fig:diagrama-clases-diseno}).
+y relaciones que contiene (figura \ref{anexo2:fig:diagrama-clases-diseno}), así como
+una imagen que muestra únicamente los paquetes y sus relaciones
+(figura \ref{anexo2:fig:paquetes-clases-diseno}). El diagrama de clases completo
+también se encuentra disponible en el repositorio del proyecto%
+\footnote{\url{https://github.com/Luengor/RINL/blob/fullapp/docs/anexo2/diagramas}}.
 
 \diagrama{
     nombre = {Diagrama de clases de diseño (modelos de datos)},
@@ -137,15 +141,18 @@ y relaciones que contiene (figura \ref{anexo2:fig:diagrama-clases-diseno}).
 
 \end{landscape}
 
-\begin{landscape}
-\thispagestyle{empty}
 \diagrama{
     nombre = {Diagrama de clases de diseño (completo)},
     archivo = {anexo2/diagramas/clasesDiseño.pdf},
     etiqueta = {anexo2:fig:diagrama-clases-diseno},
-    width = 1.8\textwidth,
+    width = 1\textwidth,
 }
-\end{landscape}
+
+\diagrama{
+    nombre = {Diagrama de paquetes de clases de diseño},
+    archivo = {anexo2/diagramas/clasesDiseñoPaquetes.pdf},
+    etiqueta = {anexo2:fig:paquetes-clases-diseno},
+}
 
 \section{Realización de los casos de uso}
 \label{anexo2:sec:realizacion-casos-uso-diseno}

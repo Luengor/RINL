@@ -1,0 +1,57 @@
+@startuml "clasesDiseñoPaquetes"
+
+' Cosas bonitas
+skinparam linetype ortho
+' skinparam class {
+'     BackgroundColor #7ACFF5
+' }
+hide circle
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+
+''' El modelo
+package "Modelos de Datos" %lighten("#IndianRed", 40) { }
+
+''' El backend
+package "Backend" %lighten("#87CEFB", 20) {
+    ' Clase de FastAPI de la que dependan los routers?
+
+    package "API Routers" #LightBlue { }
+
+    package "DAO" #LightCyan { }
+
+    package "Schemas" #LightSteelBlue { }
+
+    '' Relaciones entre clases del backend
+    ' Los routers dependen de los DAOs para acceder a la base de datos
+    "API Routers" ..> "DAO" : depends on >
+
+    ' Los Routers utilizan los esquemas como argumentos y respuestas
+    "API Routers" ..> "Schemas" : uses >
+
+    ' Los DAOs utilizan los esquemas para crear y devolver datos
+    "DAO" ...> "Schemas" : uses >
+}
+
+' Los DAOs gestionan los modelos de datos
+"DAO" --> "Modelos de Datos" : creates, manages >
+
+''' El frontend (react)
+package "React" %lighten("#PaleGreen", 15) {
+    package "Components" %lighten("#PaleGreen", 5) {}
+}
+
+' Relaciones entre el frontend y el backend
+"React" .up.> "API Routers" : uses
+
+''' El juego
+package "Unity" #LightYellow {
+    package "BallonGame" #BUSINESS {}
+    package "DodgeGame" #BUSINESS {}
+}
+
+'' Relaciones entre el juego y el frontend
+"React" <..up.> "Unity" : uses
+
+
+@enduml

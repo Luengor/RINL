@@ -386,10 +386,13 @@ package "Unity" #LightYellow {
     RINLBody ..> JSConnector : uses >
     RINLBody ..> GameController : uses >
     SceneScript ..> GameController : uses >
+
+    ' Relaciones entre los paquetes de juego
+    SceneScript .> BallonGame : manages >
+    SceneScript .> DodgeGame : manages >
 }
 
 '' Relaciones entre el juego y el frontend
-JSConnector <..up.> UnityClient : uses (A través de eventos de JavaScript)
-
+JSConnector <..down.> UnityClient : uses (A través de eventos de JavaScript)
 
 @enduml
