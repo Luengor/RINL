@@ -1,0 +1,32 @@
+@startuml VerificarCorreo
+
+!include common.puml
+entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+Auth -> DataForm : Pulsa el botón de verificar en el correo enviado
+DataForm -> ApiClient : verifyEmail(token)
+ApiClient -> UserR : POST /verify
+
+alt Token válido
+    UserR -> UserDAO : verify_user(email)
+    UserDAO -> UserSchema : query(email, verify)
+
+    UserSchema --> UserDAO : ok
+    UserDAO --> UserR : ok
+    autoactivate off
+    UserR --> ApiClient : ok
+    ApiClient --> DataForm : ok
+
+    DataForm --> Auth : Muestra un mensaje de éxito
+
+else Token inválido
+    autoactivate on
+    UserR --> ApiClient : 400 Invalid verification token
+    ApiClient --> DataForm : error
+    DataForm --> Auth : Muestra un mensaje de error
+end
+
+
+@enduml
