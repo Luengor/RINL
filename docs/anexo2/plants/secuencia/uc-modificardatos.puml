@@ -1,0 +1,30 @@
+@startuml ModificarDatos
+
+!include common.puml
+entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+Verified -> DataForm : Modifica los datos personales y hace click en "Guardar"
+DataForm -> ApiClient : updateMeUserMePut(userData)
+ApiClient -> UserR : PUT /user/me
+
+autoactivate off
+alt Si se está modificando el correo
+    ref over UserR, UserDAO : Mandar correo de verificación
+    UserR -> UserR : Eliminar correo de la modificación
+end
+autoactivate on
+
+UserR -> UserDAO : update_user(UserSchema, userData)
+
+
+UserDAO -> UserEntity : update(userData)
+
+return UserEntity
+return UserSchema
+return 200 OK UserSchema
+return ok(userData)
+return Muestra mensaje de éxito y los datos actualizados
+
+@enduml
