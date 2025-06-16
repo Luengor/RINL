@@ -6,9 +6,9 @@ los patrones de diseño utilizados, las tecnologías empleadas, etc., por lo que
 una representación muy concreta de la solución planteada en el análisis \parencite{IBMDesignModel}.
 
 Este capítulo se divide en varias secciones que describen los diferentes aspectos mencionados
-anteriormente. En primer lugar, se presenta los patrónes de diseño utilizados para
+anteriormente. En primer lugar, se presenta los patrones de diseño utilizados para
 construir el sistema. A continuación se muestra el diagrama de clases, que representa todos los objetos
-y sus relacciones en el sistema. Finalmente, se presenta la realización de los casos de uso (definidos
+y sus relaciones en el sistema. Finalmente, se presenta la realización de los casos de uso (definidos
 en el \primerAnexo) y el diagrama de despliegue, que muestra como se desplegará
 el sistema en un entorno real.
 
@@ -22,7 +22,7 @@ entender la estructura del sistema y el posterior diagrama de clases
 \subsection{Cliente-servidor}
 \label{anexo2:sec:cliente-servidor}
 El patrón de diseño arquitectónico escogido para el sistema es el patrón cliente-servidor. Este patrón
-divide las tareas del sistema entre los proovedores de servicios (servidores) y aquellos que consumen
+divide las tareas del sistema entre los provedores de servicios (servidores) y aquellos que consumen
 dichos servicios (clientes) \parencite{SunDistributedSystems}. En el caso de este sistema en concreto,
 nos encontramos con un servidor que proporciona las funcionalidades necesarias para el funcionamiento
 del sistema y otro servidor que proporciona la interfaz de usuario, que es consumida por los clientes
@@ -51,6 +51,61 @@ facilita la modificación y mantenimiento de distintas secciones del sistema de 
 El diagrama de clases de diseño, a diferencia del de análisis (\ref{anexo2:fig:modelo-dominio}), es
 mucho más detallado, mostrando las clases tal y como se implementarán en el sistema, incluyendo
 los atributos y métodos de cada clase, así como las relaciones entre ellas.
+
+Se han distribuído las clases en cuatro paquetes, que representan distintas partes del sistema:
+\begin{itemize}
+    \item \textbf{Modelos de datos:} contiene las clases que representan los datos persistentes del
+        sistema, en particular los usuarios, las actividades y las formas físicas. En la implementación
+        real, estas clases se corresponden con las tablas de la base de datos y con las clases creadas
+        por el \gls{ORM}. En el caso de esta aplicación, se utiliza la biblioteca \texttt{SQLAlchemy}%
+        \footnote{\url{https://docs.sqlalchemy.org/en/20/}} para gestionar la base de datos, por lo que
+        estas clases heredan de la clase \texttt{Base} de \texttt{SQLAlchemy}.
+    \item \textbf{Backend:} contiene las clases que implementan la lógica de negocio del sistema, incluyendo
+        los controladores que gestionan las peticiones de los clientes y los sistemas que interactúan con
+        la base de datos. Contiene tres subpaquetes:
+        \begin{itemize}
+            \item \textbf{Schemas:} contiene las clases que definen los esquemas de validación
+                de los datos recibidos por el servidor, utilizando la librería \texttt{Pydantic}
+                \footnote{\url{https://docs.pydantic.dev/latest/}}. Debido a esto, estas clases
+                heredan de la clase \texttt{BaseModel} de \texttt{Pydantic}.
+                Estas clases también son utilizadas por los \textit{routers} y los \textit{DAO}
+                para realizar las operaciones de acceso a datos, desacoplando así la
+                representación de los datos en la base de datos con la usada en el \gls{backend}.
+            \item \textbf{DAO:} contiene las clases que implementan el patrón \gls{dao}, que
+                se encargan de acceder a los datos almacenados en la base de datos.
+            \item \textbf{Routers:} contiene las clases que implementan los \textit{routers} de
+                \texttt{FastAPI}\footnote{\url{https://fastapi.tiangolo.com/}}, que son los encargados
+                de gestionar las peticiones HTTP recibidas por el servidor y de invocar los métodos
+                de los \textit{DAO} para acceder a los datos.
+        \end{itemize}
+    \item \textbf{React:} contiene las clases que implementan la interfaz de usuario del sistema,
+        utilizando la biblioteca \texttt{React}\footnote{\url{https://react.dev/}}. Las clases
+        contenidas en el subpaquete \texttt{components} son los componentes de \texttt{React}
+        creados para la interfaz de usuario.
+    \item \textbf{Unity:} contiene las clases principales del videojuego de Unity. Para la descripción
+        en el diagrama, se han omitido los detalles de las clases existentes para jugar ambos minijuegos,
+        centrándose en las clases que implementan la lógica principal de control y detección de posturas,
+        puesto que son las que más complejidad estructural aportan al sistema.
+\end{itemize}
+
+Debido a la gran cantidad de clases que componen el sistema, se ha optado por dividir el diagrama
+de clases en cuatro imágenes, una por cada paquete mencionado anteriormente (figuras
+\ref{anexo2:fig:clases-modelos}, \ref{anexo2:fig:clases-backend},
+ \ref{anexo2:fig:clases-react} y \ref{anexo2:fig:clases-unity}). En estos diagramas
+las relaciones a clases de paquetes externos se muestran como dependencias al paquete, y no
+como relaciones directas a las clases. Igualmente, se incluye una imagen que muestra
+el diagrama completo, aunque es de difícil lectura debido a la gran cantidad de clases
+y relaciones que contiene (figura \ref{anexo2:fig:diagrama-clases-diseno}).
+
+\begin{landscape}
+\thispagestyle{empty}
+\diagrama{
+    nombre = {Diagrama de clases de diseño (completo)},
+    archivo = {anexo2/diagramas/clasesDiseño.pdf},
+    etiqueta = {anexo2:fig:diagrama-clases-diseno},
+    width = 1.8\textwidth,
+}
+\end{landscape}
 
 \section{Realización de los casos de uso}
 \label{anexo2:sec:realizacion-casos-uso-diseno}
