@@ -1,0 +1,35 @@
+@startuml AñadirForma
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+
+autoactivate off
+
+Verified -> CSC ++ : Pulsa el botón de añadir forma
+CSC --> Verified : Muestra formulario de añadir forma
+
+alt El usuario completa el formulario
+    Verified -> CSC : Completa formulario de añadir forma y pulsa "Añadir"
+
+    alt La forma es válida
+        CSC -> ApiClient ++ : createShapeShapePost(shapeData)
+        ApiClient -> ShapeR ++: POST /shape
+        ShapeR -> ShapeDAO ++: create_shape(ShapeSchema, UserSchema)
+
+        create entity "Shape" as Shape %lighten("#IndianRed", 20)
+        ShapeDAO -> Shape : create(shapeData)
+
+        ShapeDAO --> ShapeR -- : ShapeSchema
+        return 200 OK ShapeSchema
+        return ok(shapeData)
+        CSC --> Verified : Muestra mensaje de éxito y la forma añadida
+
+    else La forma no es válida
+        CSC --> Verified : Muestra mensaje de error y limpia el formulario
+    end
+else El usuario cancela la operación
+    CSC --> Verified -- : Cierra el formulario sin hacer nada
+end
+
+@enduml

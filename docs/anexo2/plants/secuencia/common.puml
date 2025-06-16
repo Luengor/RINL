@@ -16,6 +16,7 @@ participant "LoginForm" as LF <<Component>> #LightGreen
 
 participant "Dashboard" as Dashboard <<Component>> #LightGreen
 participant "My" as My <<Component>> #LightGreen
+participant "CSC" as CSC <<Component>> #LightGreen
 participant "UserData" as UserData <<Component>> #LightGreen
 participant "DataForm" as DataForm <<Component>> #LightGreen
 
