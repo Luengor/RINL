@@ -1,0 +1,35 @@
+@startuml ConsultarEstadisticas
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+Verified -> US : El usuario abre la página de estadísticas\no cambia los filtros seleccionados
+note right #LightGreen: El componente también\nenvía los filtros\nseleccionados.
+
+US -> ApiClient : getActivitiesActivityGet()
+ApiClient -> ActivityR : GET /activities
+ActivityR -> ActivityDAO : get_activities(email, filtros)
+ActivityDAO -> ShapeEntity : query(email, filtros)
+
+return list[ActivitySchema]
+return list[ActivitySchema]
+return 200 OK list[ActivitySchema]
+autoactivate off
+ApiClient --> US : list[ActivitySchema]
+
+US -> ApiClient : getShapesShapeGet()
+autoactivate on
+ApiClient -> ShapeR : GET /shapes
+ShapeR -> ShapeDAO : get_shapes(email, filtros)
+ShapeDAO -> ShapeEntity : query(email, filtros)
+
+return list[ShapeSchema]
+return list[ShapeSchema]
+return 200 OK list[ShapeSchema]
+return list[ShapeSchema]
+
+return Muestra las estadísticas de las activades\ny el seguimiento de la forma física
+
+@enduml
