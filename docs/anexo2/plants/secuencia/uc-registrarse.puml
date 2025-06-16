@@ -2,23 +2,25 @@
 
 !include common.puml
 
-' autonumber 1.1
 Anon -> LF : Solicita registrarse
+autoactivate off
 LF --> Anon : Muestra formulario de registro
 
-' autonumber 2.1
 Anon -> LF : Completa formulario de registro
-' autonumber 2.1.1
+autoactivate on
 LF -> ApiClient : createUserUserPost(userData)
-' autonumber 2.1.1
 ApiClient -> UserR : POST /user
-' autonumber 2.1.1.1
 UserR -> UserDAO : create_user(userData: UserSchema)
 
 alt El usuario no existe
     create entity "User" as UserEntity %lighten("#IndianRed", 20)
+
+    autoactivate off
     UserDAO -> UserEntity : create(userData)
+
     UserDAO --> UserR : UserSchema
+
+    ref over UserR, UserDAO : Mandar correo de verificación
 
     UserR --> ApiClient : 200 Created
     ApiClient --> LF : ok
@@ -26,10 +28,11 @@ alt El usuario no existe
     ref over Anon, LF : Iniciar sesión
 
 else El usuario ya existe
+    autoactivate on
     UserDAO --> UserR : HTTPException
     UserR --> ApiClient : 400 User already exists
     ApiClient --> LF : User already exists
-    LF -> Anon : Muestra error de usuario ya existente
+    LF --> Anon : Muestra error de usuario ya existente
 end
 
 @enduml
