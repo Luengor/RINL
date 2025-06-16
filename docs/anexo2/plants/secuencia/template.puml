@@ -1,4 +1,4 @@
-' @startuml
+startuml
 
 !include common.puml
 ' entity "User" as UserEntity %lighten("#IndianRed", 20)
