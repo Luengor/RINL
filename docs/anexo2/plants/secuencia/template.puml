@@ -1,0 +1,8 @@
+startuml
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+@enduml

@@ -11,7 +11,7 @@ Anon -> LF : Completa formulario de registro
 ' autonumber 2.1.1
 LF -> ApiClient : createUserUserPost(userData)
 ' autonumber 2.1.1
-ApiClient -> UserR : POST /user?userData
+ApiClient -> UserR : POST /user
 ' autonumber 2.1.1.1
 UserR -> UserDAO : create_user(userData: UserSchema)
 
@@ -22,8 +22,8 @@ alt El usuario no existe
 
     UserR --> ApiClient : 200 Created
     ApiClient --> LF : ok
-    LF -> My : show()
-    My --> Anon : Muestra página personal
+
+    ref over Anon, LF : Iniciar sesión
 
 else El usuario ya existe
     UserDAO --> UserR : HTTPException

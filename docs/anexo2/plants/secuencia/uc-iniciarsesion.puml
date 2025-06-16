@@ -1,0 +1,43 @@
+@startuml IniciarSesión
+
+!include common.puml
+entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+Anon -> LF : Completa formulario de inicio de sesión
+LF -> ApiClient : loginForTokenPost(userData)
+ApiClient -> AuthR: POST /login
+AuthR -> AuthDAO : get_user(userData: UserSchema)
+AuthDAO -> UserDAO : get_user(userData: UserSchema)
+UserDAO -> UserEntity : query(userData)
+
+alt El usuario existe y la contraseña es correcta
+    UserEntity -> UserDAO : UserEntity
+    UserDAO -> AuthDAO : UserSchema
+
+    AuthDAO --> AuthR : Token
+    AuthR --> ApiClient : 200 OK
+    ApiClient --> LF : OK
+    LF -> My : show()
+    My --> Anon : Muestra página personal
+
+else El usuario no existe
+    UserEntity -> UserDAO : None
+    UserDAO -> AuthDAO : None
+
+    AuthDAO --> AuthR : HTTPException
+    AuthR --> ApiClient : 401 Unauthorized
+    ApiClient --> LF : Unauthorized
+    LF -> Anon : Muestra error de usuario o contraseña incorrectos
+else La contraseña es incorrecta
+    UserEntity -> UserDAO : UserEntity
+    UserDAO -> AuthDAO : UserSchema
+
+    AuthDAO --> AuthR : HTTPException
+    AuthR --> ApiClient : 401 Unauthorized
+    ApiClient --> LF : Unauthorized
+    LF -> Anon : Muestra error de usuario o contraseña incorrectos
+end
+
+@enduml
