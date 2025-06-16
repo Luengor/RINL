@@ -10,7 +10,6 @@ autoactivate off
 Auth -> DataForm ++ : Pulsa el botón de eliminar cuenta
 DataForm --> Auth : Muestra un mensaje de confirmación
 
-
 alt Usuario confirma
     Auth -> DataForm : Confirma la eliminación de cuenta
 
@@ -25,14 +24,12 @@ alt Usuario confirma
     UserDAO --> UserR : ok
     UserR --> ApiClient : ok
     ApiClient --> DataForm : ok
-    DataForm --> Dashboard : show()
+    DataForm -> Dashboard : show()
 
+    Dashboard --> Auth : Devuelve a la página de inicio
     autoactivate off
-    Dashboard -> Auth : Devuelve a la página de inicio
 
 else Usuario cancela
-    autoactivate on
-
     Auth -> DataForm  : Cancela la eliminación de cuenta
     DataForm --> Auth : Vuelve a mostrar los datos personales
 end
