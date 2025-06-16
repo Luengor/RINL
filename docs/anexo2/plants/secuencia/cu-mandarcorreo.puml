@@ -1,0 +1,24 @@
+@startuml MandarCorreoVerificacion
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+System -> AuthR : send_verification_email(userSchema, new_email | None)
+
+autoactivate off
+AuthR -> AuthR : Enviar correo de verificación
+note right of AuthR #LightBlue
+    Si se proporciona un nuevo correo electrónico,
+    se envía a este nuevo correo un código para actualizarlo.
+    Si no, se envía al correo electrónico para
+    verificar la cuenta.
+end note
+
+autoactivate on
+
+AuthR --> System : Correo enviado
+
+
+@enduml
