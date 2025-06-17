@@ -30,6 +30,11 @@ class ShapeDAO:
             HTTPException: If the shape is invalid or if there is an internal server error.
         """
         try:
+            # Use current date if the given one is timezone naive
+            if shape.date.tzinfo is None:
+                shape.date = shape.date.replace(
+                    tzinfo=datetime.now().astimezone().tzinfo)
+
             shape_model = ShapeModel(
                 date=shape.date,
                 weight=shape.weight,

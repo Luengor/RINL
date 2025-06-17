@@ -30,6 +30,11 @@ class ActivityDAO:
             HTTPException: If the activity is invalid or if there is an internal server error.
         """
         try:
+            # Use current date if the given one is timezone naive
+            if activity.date.tzinfo is None:
+                activity.date = activity.date.replace(
+                    tzinfo=datetime.now().astimezone().tzinfo)
+
             activity_model = ActivityModel(
                 date=activity.date,
                 user_email=user.email,
