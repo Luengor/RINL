@@ -424,10 +424,12 @@
         \ifx\sprinttable@restantes\empty\else
             \Block[r]{1-1}{\textbf{Restantes:}} & \sprinttable@restantes \\
         \fi
-        \Block[r]{1-1}{\textbf{Completados:}} & \sprinttable@completados \\
+        \ifx\sprinttable@completados\empty\else
+            \Block[r]{1-1}{\textbf{Completados:}} & \sprinttable@completados \\
+        \fi
     }%
-    {Sprint: \sprinttable@nombre}%
-    {anexo1:tab:sprint\sprinttable@id}
+    {\sprinttable@nombre}%
+    {anexo3:tab:sprint\sprinttable@id}
 }
 
 \makeatother
