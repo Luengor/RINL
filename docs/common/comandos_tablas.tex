@@ -387,4 +387,47 @@
     \stepcounter{ncasouso}
 }
 
+% Sprints
+\define@key{sprinttable}{nombre}{\def\sprinttable@nombre{#1}}
+\define@key{sprinttable}{id}{\def\sprinttable@id{#1}}
+\define@key{sprinttable}{tabla}{\def\sprinttable@tabla{#1}}
+\define@key{sprinttable}{total}{\def\sprinttable@total{#1}}
+\define@key{sprinttable}{restantes}{\def\sprinttable@restantes{#1}}
+\define@key{sprinttable}{completados}{\def\sprinttable@completados{#1}}
+\define@key{sprinttable}{anadidos}{\def\sprinttable@anadidos{#1}}
+
+\presetkeys{sprinttable}{
+    nombre = {Nombre del sprinttable},
+    id = {0},
+    tabla = {hola & 1sp \\},
+    total = {0},
+    completados = {0},
+    restantes = {},
+    anadidos = {},
+}{}
+
+\newcommand{\sprinttable}[1]{
+    \setkeys{sprinttable}{#1}
+
+    \tableshell[ | X | c | ]{
+        \Block{1-2}{\begin{minipage}{\textwidth}
+            \centering
+            \textbf{Sprint: \sprinttable@nombre}
+        \end{minipage}} \\
+        \hline
+        \sprinttable@tabla
+        \hline
+        \Block[r]{1-1}{\textbf{Total:}} & \sprinttable@total \\
+        \ifx\sprinttable@anadidos\empty\else
+            \Block[r]{1-1}{\textbf{Añadidos:}} & \sprinttable@anadidos \\
+        \fi
+        \ifx\sprinttable@restantes\empty\else
+            \Block[r]{1-1}{\textbf{Restantes:}} & \sprinttable@restantes \\
+        \fi
+        \Block[r]{1-1}{\textbf{Completados:}} & \sprinttable@completados \\
+    }%
+    {Sprint: \sprinttable@nombre}%
+    {anexo1:tab:sprint\sprinttable@id}
+}
+
 \makeatother
