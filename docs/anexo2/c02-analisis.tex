@@ -1,13 +1,13 @@
 \chapter{Análisis del sistema}
 \label{anexo2:cap:analisis}
-\textbf{TODO}
 
 \section{Modelo del dominio}
 \label{anexo2:sec:modelo-dominio}
 El modelo del dominio es una representación conceptual de los objetos y las relaciones entre ellos
 en el sistema. Representa, de manera muy general y sin entrar en detalles de implementación, tanto
 el comportamiento como los atributos de los objetos que forman parte del sistema
-\parencite{DomainModel}.
+\parencite{DomainModel}. Se representa en forma de diagrama de clases en la figura
+\ref{anexo2:fig:modelo-dominio}.
 
 De manera muy general, el funcionamiento del sistema se puede resumir en: los usuarios del sistema
 se registran y pueden modificar sus datos personales. Estos usuarios pueden registrar su forma física,
@@ -19,5 +19,42 @@ consultar las actividades que han realizado, así como las estadísticas de su f
     nombre = {Modelo del dominio},
     archivo = {anexo2/diagramas/ModeloDominio.pdf},
     etiqueta = {anexo2:fig:modelo-dominio},
-    forzarPosicion = {sí pls},
 }
+
+\section{Arquitectura del sistema}
+\label{anexo2:sec:arquitectura-sistema}
+El sistema está compuesto por cuatro componentes principales: la base de datos, una \gls{api} que
+proporciona acceso a estos datos y a la lógica de negocio, el \gls{frontend} que proporciona una
+página web para interactuar con el sistema y un videojuego desarrollado en Unity exportado a WebGL
+y que se incluye en el \gls{frontend}.
+
+El patrón de diseño arquitectónico escogido para el sistema es el patrón cliente-servidor. Este patrón
+divide las tareas del sistema entre los proveedores de servicios (servidores) y aquellos que consumen
+dichos servicios (clientes) \parencite{SunDistributedSystems}. En el caso de este sistema en concreto,
+nos encontramos con un servidor que proporciona las funcionalidades necesarias para el funcionamiento
+del sistema y otro servidor que proporciona la interfaz de usuario, que es consumida por los clientes
+a través de un navegador web. Esta separación en tres capas, presentación, lógica de negocio y
+acceso a datos, se conoce como arquitectura en tres capas \parencites{Ibm2025Apr}. Esta arquitectura
+permite desacoplar la estructura de los datos de la presentación de los mismos, lo que facilita
+la evolución del sistema y la reutilización de los componentes \parencite[p.~3]{nyabuto2024architectural}.
+
+\section{Diagrama de clases}
+\label{anexo2:sec:diagrama-clases-analisis}
+El diagrama de clases del análisis es una representación de los objetos y sus relaciones en el
+sistema más detallada que el modelo del dominio, pero sin llegar a especificar aspectos de la
+implementación como lo hace el diagrama de clases de diseño.
+
+En la figura \ref{anexo2:fig:diagrama-clases-analisis}, se puede apreciar la arquitectura del
+sistema tal y como se describe en el apartado \nameref{anexo2:sec:arquitectura-sistema}, cada
+capa está representada de un color diferente y se pueden observar las relaciones entre estas.
+
+\diagrama{
+    nombre = {Diagrama de clases del análisis},
+    archivo = {anexo2/diagramas/ClasesAnalisis.pdf},
+    etiqueta = {anexo2:fig:diagrama-clases-analisis},
+}
+
+\section{Diagrama de despliegue}
+\label{anexo2:sec:diagrama-despliegue}
+
+

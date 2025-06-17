@@ -14,22 +14,9 @@ el sistema en un entorno real.
 
 \section{Patrones de diseño}
 \label{anexo2:sec:patron-diseno}
-En el diseño del sistema se han utilizado varios patrones de diseño arquitectónico y de software. En
-esta sección se describen los patrones utilizados y su justificación. Esto será de gran ayuda para
-entender la estructura del sistema y el posterior diagrama de clases
-(\ref{anexo2:fig:diagrama-clases-diseno}).
-
-\subsection{Cliente-servidor}
-\label{anexo2:sec:cliente-servidor}
-El patrón de diseño arquitectónico escogido para el sistema es el patrón cliente-servidor. Este patrón
-divide las tareas del sistema entre los provedores de servicios (servidores) y aquellos que consumen
-dichos servicios (clientes) \parencite{SunDistributedSystems}. En el caso de este sistema en concreto,
-nos encontramos con un servidor que proporciona las funcionalidades necesarias para el funcionamiento
-del sistema y otro servidor que proporciona la interfaz de usuario, que es consumida por los clientes
-a través de un navegador web. Esta separación en tres capas, presentación, lógica de negocio y
-acceso a datos, se conoce como arquitectura en tres capas \parencites{Ibm2025Apr}. Esta arquitectura
-permite desacoplar la estructura de los datos de la presentación de los mismos, lo que facilita
-la evolución del sistema y la reutilización de los componentes \parencite[p.~3]{nyabuto2024architectural}.
+En el diseño del sistema se han utilizado varios patrones de diseño de software. En esta sección se
+describen los patrones utilizados y su justificación. Esto será de gran ayuda para entender la
+estructura del sistema y el posterior diagrama de clases (\ref{anexo2:fig:diagrama-clases-diseno}).
 
 \subsection{\glsfirst{dao}}
 \label{anexo2:sec:dao}
@@ -161,5 +148,3 @@ también se encuentra disponible en el repositorio del proyecto%
 \label{anexo2:sec:realizacion-casos-uso-diseno}
 \input{anexo2/c033-cu.tex}
 
-\section{Diagrama de despliegue}
-\label{anexo2:sec:diagrama-despliegue}
