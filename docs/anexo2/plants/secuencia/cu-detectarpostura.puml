@@ -1,0 +1,35 @@
+@startuml DetectarPostura
+
+skinparam roundCorner 0
+
+participant PoseLandmarker as PL #LightGreen
+participant UnityClient as UC #LightGreen
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+autoactivate off
+
+loop Detectar postura del usuario
+
+    -> PL ++ : predict(frame, time)
+    PL -> PL : Procesa el frame para\ndetectar la postura del usuario
+    PL -> UC ++ : sendUnityMessage(landmarks)
+    UC -> JSConnector ++ : GameObject.SendMessage("JSConnector", "SetBodyPosition", landmarks)
+    JSConnector -> JSConnector : Guarda los nuevos\ndatos del cuerpo
+
+end
+
+    ...Eventualmente...
+
+loop Actualizar postura del usuario
+
+    RINLBody -> JSConnector : GetLandmarks()
+    JSConnector --> RINLBody : Landmarks
+    RINLBody -> RINLBody : Actualiza la posición del cuerpo\nen la escena de Unity
+
+end
+
+@enduml

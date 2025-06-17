@@ -1,0 +1,19 @@
+@startuml AbrirJuego
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+autoactivate off
+
+Verified -> Media ++ : El usuario abre la página del\njuego desde el menú principal
+
+create PoseLandmarker as PL #LightGreen
+Media -> PL ++ : createPoseLandmarker(capacidadDelModelo)
+
+create UnityClient as UC #LightGreen
+Media -> UC ++ : useUnityClient()
+
+Media -> Verified -- : Muestra la pantalla del juego
+
+@enduml

@@ -11,18 +11,25 @@ actor "Usuario autenticado" as Auth
 actor "Usuario verificado" as Verified
 actor "Sistema" as System
 
+
 ' Clases de React
 participant "LoginForm" as LF <<Component>> #LightGreen
 
 participant "Dashboard" as Dashboard <<Component>> #LightGreen
 participant "My" as My <<Component>> #LightGreen
 participant "CSC" as CSC <<Component>> #LightGreen
+participant "Media" as Media <<Component>> #LightGreen
 participant "UserStats" as US <<Component>> #LightGreen
 participant "UserData" as UserData <<Component>> #LightGreen
 participant "DataForm" as DataForm <<Component>> #LightGreen
 
-participant "PoseLandmarker" as PL #LightGreen
 participant "ApiClient" as ApiClient #LightGreen
+
+' Unity
+participant "RINLBody" as RINLBody #BUSINESS
+participant "JSConnector" as JSConnector #BUSINESS
+participant "GameController" as GameController #BUSINESS
+participant "SceneScript" as SceneScript #BUSINESS
 
 ' Clases del backend
 participant "AuthRouter" as AuthR <<Router>> #LightBlue

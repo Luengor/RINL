@@ -1,0 +1,15 @@
+@startuml PantallaCompleta
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+
+participant UnityClient as UC #LightGreen
+
+Verified -> Media : El usuario hace click en el botón de pantalla completa
+Media -> UC : requestFullscreen()
+return
+return La página presenta el juego en pantalla completa
+
+@enduml
