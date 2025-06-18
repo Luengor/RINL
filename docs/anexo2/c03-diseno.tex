@@ -148,3 +148,28 @@ también se encuentra disponible en el repositorio del proyecto%
 \label{anexo2:sec:realizacion-casos-uso-diseno}
 \input{anexo2/c033-cu.tex}
 
+\section{Diagrama de despliegue}
+\label{anexo2:sec:diagrama-despliegue}
+En esta sección se presenta el diagrama de despliegue del sistema. Se compone de dos nodos: el
+cliente, que accede al sistema a través de un navegador web, y el servidor (desplegado en
+\url{https://rinl.soymilk.lueng.org/}) que proporciona el sistema al completo. Las distintas
+partes que forman el sistema están contenidas en contenedores de Docker
+\footnote{\url{https://www.docker.com/}}, que permiten ejecutar el sistema de manera aislada y
+realizar un despliegue sencillo y reproducible en cualquier entorno que soporte Docker. También
+existe un proceso de Caddy\footnote{\url{https://caddyserver.com/}} que se encarga de
+proporcionar el certificado SSL y de redirigir las peticiones al contenedor correspondiente
+según la ruta de la petición.
+
+Actualmente, el sistema se encuentra desplegado en un solo servidor, pero gracias a la división
+de las distintas partes del sistema en contenedores, distribuir la aplicación entre distintos
+hosts es una tarea sencilla: sería suficiente con desplegar los contenedores en los diferentes
+equipos y configurar el \gls{frontend} y el \gls{backend} para que se comuniquen entre ellos
+correctamente, así como configurar el proxy inverso de Caddy para que redirija las peticiones
+a los lugares correctos.
+
+\diagrama{
+    nombre = {Diagrama de despliegue},
+    archivo = {anexo2/diagramas/Despliegue.pdf},
+    etiqueta = {anexo2:fig:diagrama-despliegue},
+    width = 1\textwidth,
+}

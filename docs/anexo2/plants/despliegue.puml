@@ -1,0 +1,49 @@
+@startuml Despliegue
+
+left to right direction
+skinparam linetype ortho
+skinparam RoundCorner 0
+
+node Cliente <<Device>> {
+    node "Navegador Web" <<Execution environment>> {
+    }
+}
+
+node "Servidor\n(rinl.soymilk.lueng.org)" <<Device>> as Servidor {
+    node "Proxy" <<Execution environment>> {
+        artifact "Caddyfile" <<Artifact>> as Caddyfile
+    }
+
+    node "Frontend" <<Container>> {
+        node "Vite" <<Execution environment>> {
+            artifact "App.ts" <<Artifact>> as App
+        }
+    }
+
+    node "Backend" <<Container>> {
+        node "FastAPI" <<Execution environment>> {
+            artifact "main.py" <<Artifact>> as Main
+            artifact "models" <<Artifact>> as Models
+            artifact "schemas" <<Artifact>> as Schemas
+            artifact "routers" <<Artifact>> as Routers
+            artifact "dao" <<Artifact>> as Dao
+        }
+    }
+
+    node "Base de Datos" <<Container>> {
+        node "PostgreSQL" <<Execution environment>> {
+            artifact "db" <<Artifact>> as Db
+        }
+    }
+
+    artifact ".env" <<Artifact>> as Env
+
+    Backend -- Frontend
+    Backend -up--- "Base de Datos"
+    Backend -- Env
+    Frontend -- Env
+}
+
+Cliente -- Servidor
+
+@enduml
