@@ -1,0 +1,27 @@
+@startuml EscogerDificultad
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+autoactivate off
+
+activate RINLBody
+ref over RINLBody : Detectar postura
+
+RINLBody ->> SceneScript ++ : El usuario posiciona una de sus manos\nsobre un botón de dificultad
+SceneScript -->> RINLBody : Mustra la información de la dificultad
+SceneScript -->> RINLBody : Muestra un círculo creciente en la mano
+
+alt El usuario no mueve la mano
+    ...2 segundos después...
+    SceneScript -> SceneScript : Se selecciona la dificultad escogida.
+
+    ref over RINLBody, SceneScript : Jugar minijuego globos / Jugar minijuego esquivar
+
+else El usuario mueve la mano
+    SceneScript -->> RINLBody : Se oculta el círculo creciente
+
+end
+
+@enduml

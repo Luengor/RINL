@@ -1,0 +1,25 @@
+@startuml CalibrarCamara
+
+!include common.puml
+' entity "User" as UserEntity %lighten("#IndianRed", 20)
+' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+autoactivate off
+
+activate RINLBody
+activate SceneScript
+
+||10|
+ref over Verified, RINLBody : Detectar postura
+
+||10|
+SceneScript -> Verified : Se muestran las instrucciones\nde calibración
+
+||10|
+loop Hasta que la cámara esté calibrada
+    ||10|
+    ref over Verified, RINLBody : Detectar postura
+    RINLBody ->> SceneScript : Calibración
+end
+
+@enduml

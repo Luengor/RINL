@@ -14,10 +14,10 @@ autoactivate off
 
 loop Detectar postura del usuario
 
-    -> PL ++ : predict(frame, time)
+    ->> PL ++ : predict(frame, time)
     PL -> PL : Procesa el frame para\ndetectar la postura del usuario
-    PL -> UC ++ : sendUnityMessage(landmarks)
-    UC -> JSConnector ++ : GameObject.SendMessage("JSConnector", "SetBodyPosition", landmarks)
+    PL ->> UC ++ : sendUnityMessage(landmarks)
+    UC ->> JSConnector ++ : GameObject.SendMessage("JSConnector", "SetBodyPosition", landmarks)
     JSConnector -> JSConnector : Guarda los nuevos\ndatos del cuerpo
 
 end
