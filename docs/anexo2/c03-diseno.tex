@@ -148,6 +148,35 @@ también se encuentra disponible en el repositorio del proyecto%
 \label{anexo2:sec:realizacion-casos-uso-diseno}
 \input{anexo2/c033-cu.tex}
 
+\section{Diseño de la base de datos}
+\label{anexo2:sec:diseno-base-datos}
+El diseño de la base de datos es muy similar al modelo del dominio
+(\ref{anexo2:fig:modelo-dominio}), ya que las clases que representan los datos en el sistema
+se corresponden con las tablas de la base de datos. Aquí mostramos el diagrama de la base de
+datos tanto en forma de diagrama entidad-relación (DER) en la figura
+\ref{anexo2:fig:diagrama-er}, como de la manera mostrada por la extensión de postgresql para
+VsCode \footnote\url{https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql}
+en la figura \ref{anexo2:fig:diagrama-er-vscode}.
+
+Un dato a destacar es que, aunque los identificadores de las tablas se denominen \texttt{uuid},
+son en realidad números enteros autoincrementales. Esto se debe a que SQLite%
+\footnote{\url{https://www.sqlite.org/}}, que es utilzado para los tests unitarios, no soporta el
+tipo de dato \texttt{uuid}.
+
+\diagrama{
+    nombre = {Diagrama entidad-relación de la base de datos},
+    archivo = {anexo2/diagramas/ER.pdf},
+    etiqueta = {anexo2:fig:diagrama-er},
+    width = 1\textwidth,
+}
+
+\diagrama{
+    nombre = {Diagrama entidad-relación de la base de datos (VsCode)},
+    archivo = {anexo2/diagramas/database.png},
+    etiqueta = {anexo2:fig:diagrama-er-vscode},
+    width = 1\textwidth,
+}
+
 \section{Diagrama de despliegue}
 \label{anexo2:sec:diagrama-despliegue}
 En esta sección se presenta el diagrama de despliegue del sistema. Se compone de dos nodos: el
@@ -173,3 +202,8 @@ a los lugares correctos.
     etiqueta = {anexo2:fig:diagrama-despliegue},
     width = 1\textwidth,
 }
+
+\section{Diseño de la interfaz de usuario}
+\label{anexo2:sec:diseno-interfaz-usuario}
+TODO
+

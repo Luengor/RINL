@@ -1,0 +1,40 @@
+@startuml ER
+
+skinparam linetype ortho
+' skinparam class {
+'     BackgroundColor #7ACFF5
+' }
+hide circle
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+
+class "Usuario" {
+    - uuid: Integer
+    - email: String
+    - contraseña: String
+    - nombre: String
+    - fechaNacimiento: Date
+}
+
+class "Actividad" {
+    - uuid: Integer
+    - fecha: Date
+    - minijuego: String
+    - duración: Float
+    - puntuación: Float
+    - puntos_actividad: Float
+    - datos_extra: String
+}
+
+class "FormaFísica" {
+    - uuid: Integer
+    - fecha: Date
+    - peso: Float
+    - altura: Float
+}
+
+' Un usuario puede tener muchas actividades y formas físicas
+Usuario ||---o{ Actividad
+Usuario ||---o{ FormaFísica
+
+@enduml
