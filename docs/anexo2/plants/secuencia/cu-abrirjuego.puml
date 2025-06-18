@@ -1,9 +1,6 @@
 @startuml AbrirJuego
 
 !include common.puml
-' entity "User" as UserEntity %lighten("#IndianRed", 20)
-' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
-' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
 autoactivate off
 
 Verified -> Media ++ : El usuario abre la página del\njuego desde el menú principal
@@ -13,6 +10,25 @@ Media -> PL ++ : createPoseLandmarker(capacidadDelModelo)
 
 create UnityClient as UC #LightGreen
 Media -> UC ++ : useUnityClient()
+
+participant "JSConnector" as JSConnector #BUSINESS
+
+' Enviar información a Unity
+Media -> UC : sendUserData(data)
+activate JSConnector
+UC ->> JSConnector : sendUnityMessage("JSConnector", "SetVideoSize", videoSize)
+JSConnector -> JSConnector : setVideoSize(videoSize)
+JSConnector -->> UC : sendAck("SetVideoSize")
+
+UC ->> JSConnector: sendUnityMessage("JSConnector", "SetCurrentShape", shape)
+JSConnector -> JSConnector : setCurrentShape(shape)
+JSConnector -->> UC : sendAck("SetCurrentShape")
+
+UC ->> JSConnector: sendUnityMessage("JSConnector", "SetCurrentUser", user)
+JSConnector -> JSConnector : setCurrentUser(user)
+JSConnector -->> UC : sendAck("SetCurrentUser")
+
+UC --> Media --: ok
 
 Media -> Verified -- : Muestra la pantalla del juego
 

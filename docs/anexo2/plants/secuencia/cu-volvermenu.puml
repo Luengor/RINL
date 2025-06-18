@@ -1,0 +1,25 @@
+@startuml VolverMenu
+
+!include common.puml
+
+participant "GameController" as GameController #BUSINESS
+
+autoactivate off
+
+activate RINLBody
+ref over RINLBody : Detectar postura
+
+RINLBody ->> SceneScript ++ : El usuario posiciona una de sus manos\nsobre el botón de volver al menú principal
+SceneScript -->> Verified: Muestra un círculo creciente en la mano
+
+alt El usuario no mueve la mano
+    ...2 segundos después...
+    SceneScript -> GameController : ChangeScene("MainMenu")
+    GameController --> Verified: Se muestra la escena del menú principal
+
+else El usuario mueve la mano
+    SceneScript -->> Verified: Se oculta el círculo creciente
+
+end
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml JugarGlobos
+
+!include common.puml
+
+autoactivate off
+
+activate RINLBody
+||5|
+ref over Verified, RINLBody : Detectar postura
+
+RINLBody -> SceneScript ++ : El usuario comienza el videojuego
+
+loop Hasta que el
+    SceneScript -->> Verified :
+    RINLBody ->> SceneScript : Explota el globo tocándolo con la mano
+end
+
+ref over Verified, RINLBody, SceneScript : Ver puntuaciones
+
+@enduml

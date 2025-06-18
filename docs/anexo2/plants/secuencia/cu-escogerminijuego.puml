@@ -1,25 +1,22 @@
 @startuml EscogerMinijuego
 
 !include common.puml
-' entity "User" as UserEntity %lighten("#IndianRed", 20)
-' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
-' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
 autoactivate off
 
 activate RINLBody
 ref over RINLBody : Detectar postura
 
 RINLBody ->> SceneScript ++ : El usuario posiciona una de sus manos\nsobre un botón de minijuego
-SceneScript -->> RINLBody : Muestra un círculo creciente en la mano
+SceneScript -->> Verified : Muestra un círculo creciente en la mano
 
 alt El usuario no mueve la mano
     ...2 segundos después...
     SceneScript -> SceneScript : Se selecciona el minijuego escogido.
 
-    ref over RINLBody, SceneScript : Escoger dificultad
+    ref over Verified, RINLBody, SceneScript : Escoger dificultad
 
 else El usuario mueve la mano
-    SceneScript -->> RINLBody : Se oculta el círculo creciente
+    SceneScript -->> Verified : Se oculta el círculo creciente
 
 end
 

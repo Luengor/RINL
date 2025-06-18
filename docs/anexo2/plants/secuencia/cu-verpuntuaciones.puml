@@ -1,0 +1,45 @@
+@startuml VerPuntuaciones
+
+hide footbox
+skinparam roundCorner 0
+!theme plain
+
+actor "Usuario verificado" as Verified
+participant "SceneScript" as SceneScript #BUSINESS
+participant "RINLBody" as RINLBody #BUSINESS
+participant "GameController" as GameController #BUSINESS
+participant "JSConnector" as JSConnector #BUSINESS
+participant UnityClient as UC #LightGreen
+participant "ApiClient" as ApiClient #LightGreen
+participant "ActivityRouter" as ActivityR <<Router>> #LightBlue
+participant "ActivityDAO" as ActivityDAO #LightCyan
+
+activate SceneScript
+SceneScript -> RINLBody ++: GetActivityPoints()
+RINLBody --> SceneScript --: ActivityPoints
+
+|||
+
+SceneScript -> GameController ++: SetActivityData(ActivityPoints, ActivityData)
+GameController --> SceneScript : ok
+SceneScript -> GameController : CreateActivity()
+GameController -> JSConnector ++ : CreateActivity\n(ActivityData)
+
+JSConnector ->> UC ++ : SendToReact\n("activity", ActivityData)
+UC -> ApiClient ++ : createActivityActivityPost\n(ActivityData)
+ApiClient -> ActivityR ++ : POST /activity
+ActivityR -> ActivityDAO ++ : createActivity\n(ActivitySchema, UserSchema)
+
+create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+ActivityDAO -> ActivityEntity : create(activity)
+return ok
+return 200 OK
+return ok
+deactivate
+
+JSConnector --> GameController --: ok
+GameController -> SceneScript --: ok
+
+SceneScript -> Verified --: Muestra la pantalla\nde puntuaciones
+
+@enduml
