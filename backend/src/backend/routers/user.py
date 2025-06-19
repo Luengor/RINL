@@ -1,12 +1,11 @@
 """User API router for managing user-related operations."""
 
 from fastapi import APIRouter, Depends, Response, HTTPException
-from fastapi.responses import RedirectResponse
 from jwt.exceptions import InvalidTokenError
 from sqlalchemy.orm import Session
 from backend.core.auth import get_current_user, get_current_verified_user
 from backend.core.auth_utils import create_access_token, decode_token
-from backend.core.common import API_URL, VERIFY_REDIRECT_URL, FRONTEND_URL
+from backend.core.common import API_URL, VERIFY_URL, FRONTEND_URL
 from backend.core.db import get_db
 from backend.core.mail import get_send_email, SendEmailType
 from backend.dao.user import UserDAO
@@ -94,6 +93,76 @@ async def create_user(
     return UserDAO.create_user(user, session)
 
 
+@router.post("/me/email-token")
+async def verify_email_token(
+    token: str,
+    user: UserBase = Depends(get_current_user),
+    session: Session = Depends(get_db),
+):
+    """Verify the email token for the current user.
+
+    This function is an endpoint.
+
+    Args:
+        token (str): The verification token to verify.
+        user (UserBase): The current user, automatically injected by FastAPI.
+        session (Session): The database session, automatically injected by FastAPI.
+    Returns:
+        Response: A response indicating the email has been verified.
+    """
+    # Decode the token
+    try:
+        dict_token = decode_token(token)
+    except InvalidTokenError:
+        raise HTTPException(
+            status_code=400, detail="Invalid verification token")
+
+    # Check that the token is for the correct user
+    email = dict_token.get("sub")
+    if not email or email != user.email:
+        raise HTTPException(
+            status_code=400, detail="Verification token does not match user"
+        )
+
+    # Get the type of the token
+    token_type = dict_token.get("type")
+    if not token_type:
+        raise HTTPException(
+            status_code=400, detail="Invalid token type"
+        )
+
+    # If the type is 'verify', verify the user
+    if token_type == "verify":
+        if not UserDAO.verify_user(email, session):
+            raise HTTPException(
+                status_code=404, detail=f"User not found {email}"
+            )
+
+        return Response(status_code=200, content="ok")
+
+    # If the type is 'update_email', update the user's email
+    if token_type == "update_email":
+        new_email = dict_token.get("new_email")
+        if not new_email:
+            raise HTTPException(
+                status_code=400, detail="New email not provided"
+            )
+
+        # Update the user's email
+        UserDAO.update_user(
+            user,
+            ModifyUser(email=new_email),
+            session,
+        )
+
+        return Response(status_code=200, content="ok")
+
+    # If the type is not recognized, raise an error
+    raise HTTPException(
+        status_code=400, detail="Invalid verification token"
+    )
+
+
 @router.post("/verify-email")
 async def send_verification_email(
     user: UserBase = Depends(get_current_user),
@@ -123,7 +192,7 @@ async def send_verification_email(
         user.email,
         VERICIATION_EMAIL[0],
         VERICIATION_EMAIL[1].format(
-            url=f"{API_URL}/user/verify?token={token}",
+            url=f"{VERIFY_URL}?verify={token}",
             rivulet=f"{FRONTEND_URL}/rivulet.gif"
         ),
     )
@@ -134,51 +203,6 @@ async def send_verification_email(
         )
 
     return Response(status_code=200, content="ok")
-
-
-@router.get("/verify")
-async def verify_user(
-    token: str,
-    redirect: bool = True,
-    session: Session = Depends(get_db),
-):
-    """Verify a user using the verification code from the token.
-
-    This function is an endpoint.
-
-    Args:
-        token(dict[str, Any]): The token containing the verification code, automatically injected by FastAPI.
-        session (Session): The database session, automatically injected by FastAPI.
-    Returns:
-        Response: A response indicating the user has been verified.
-    """
-    # Get the user from the verification token
-    try:
-        dict_token = decode_token(token)
-    except InvalidTokenError:
-        raise HTTPException(
-            status_code=400, detail="Invalid verification token")
-
-    email = dict_token.get("sub")
-    assert email
-
-    if "type" not in dict_token or dict_token["type"] != "verify":
-        raise HTTPException(
-            status_code=400, detail="Invalid verification token"
-        )
-
-    # The token is a verification token, verify the user
-    if not UserDAO.verify_user(email, session):
-        raise HTTPException(
-            status_code=404, detail=f"User not found {email}"
-        )
-
-    return RedirectResponse(
-        f"{VERIFY_REDIRECT_URL}?verified",
-        status_code=303
-    ) if redirect else Response(
-        status_code=200, content="ok"
-    )
 
 
 @router.get("/me", response_model=UserBase)
@@ -227,7 +251,7 @@ async def update_me(
             modifications.email,
             UPDATE_EMAIL[0],
             UPDATE_EMAIL[1].format(
-                url=f"{API_URL}/user/me/email?token={token}",
+                url=f"{VERIFY_URL}?verify={token}",
                 nuevo_correo=modifications.email,
                 rivulet=f"{FRONTEND_URL}/rivulet.gif"
             ),
@@ -241,62 +265,6 @@ async def update_me(
         modifications.email = None  # Clear the email to avoid updating it directly
 
     return UserDAO.update_user(user, modifications, session)
-
-
-@router.get('/me/email')
-async def update_email(
-    token: str,
-    redirect: bool = True,
-    session: Session = Depends(get_db),
-):
-    """Update the current user's email using a verification token.
-
-    This function is an endpoint.
-
-    Args:
-        token (str): The verification token to update the email.
-        session (Session): The database session, automatically injected by FastAPI.
-    Returns:
-        str: The new email of the user.
-    """
-    # Get the user from the verification token
-    try:
-        dict_token = decode_token(token)
-    except InvalidTokenError:
-        raise HTTPException(
-            status_code=400, detail="Invalid verification token")
-
-    email = dict_token.get("sub")
-    assert email
-    print(dict_token)
-
-    user = UserDAO.get_user(email, session)
-    if not user:
-        raise HTTPException(
-            status_code=404, detail="User not found"
-        )
-
-    if "type" not in dict_token or dict_token["type"] != "update_email":
-        raise HTTPException(
-            status_code=400, detail="Invalid verification token"
-        )
-
-    # The token is an update email token, update the user email
-    new_email = dict_token["new_email"]
-    assert new_email
-
-    UserDAO.update_user(
-        user,
-        ModifyUser(email=new_email),
-        session,
-    )
-
-    return RedirectResponse(
-        f"{VERIFY_REDIRECT_URL}?email={new_email}",
-        status_code=303
-    ) if redirect else Response(
-        status_code=200, content='ok'
-    )
 
 
 @router.delete("/me")

@@ -6,7 +6,7 @@ import {
   TbAB,
 } from "react-icons/tb";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AppShell, Button, Modal, Stack } from "@mantine/core";
 import Media from "../../components/Media/Media";
 import { Navbar } from "../../components/Navbar/Navbar";
@@ -15,13 +15,15 @@ import Stats from "./stats";
 import { useClient } from "../../hooks/useClient";
 import { useUser } from "../../hooks/useUser";
 import { NotFoundPage } from "../../components/NotFound/NotFound";
+import { verifyEmailTokenUserMeEmailTokenPost } from "../../client";
+import { ErrorNotification, OkNotification } from "../../utils/notifications";
 
 export default function My() {
   // Get the client
-  const { logout } = useClient();
+  const { logout, client } = useClient();
 
   // Get user data
-  const { user, userStatus, verified, hasShape } = useUser();
+  const { user, userStatus, verified, hasShape, refetch: user_refetch } = useUser();
 
   // Current page
   const location = useLocation();
@@ -59,6 +61,57 @@ export default function My() {
     }
     setActive(active);
   }, [location, active, user, userStatus, navigate]);
+
+  // Check for a verify=token in the URL to verify an email
+  const verified_tokens = useRef<string[]>([]);
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("verify");
+
+    // If no token, do nothing
+    if (!token || verified_tokens.current.includes(token)) {
+      return;
+    }
+
+    verified_tokens.current.push(token);
+    console.log("Verifying email with token:", token, verified_tokens.current);
+
+    // Verify the email if the token is present
+    const verifyEmail = async () => {
+      try {
+        await verifyEmailTokenUserMeEmailTokenPost({
+          client: client,
+          query: { token: token },
+        })
+
+        OkNotification(
+          "Correo electrónico verificado",
+          "Tu correo electrónico ha sido verificado correctamente."
+        );
+
+        console.log("Email verified successfully");
+        user_refetch();
+
+      } catch (error) {
+        ErrorNotification(
+          "Error al verificar el correo electrónico",
+          "El token de verificación no es válido o ha expirado."
+        )
+        console.error("Error verifying email:", error);
+      }
+
+    }
+
+    verifyEmail()
+
+    // Remove the token from the URL
+    params.delete("verify");
+    navigate({
+      pathname: location.pathname,
+      search: params.toString(),
+    });
+
+  }, [client, location.pathname, location.search, navigate]);
 
   // Logout
   const [logoutModal, setLogoutModal] = useState(false);

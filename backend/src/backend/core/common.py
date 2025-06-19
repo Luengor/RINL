@@ -9,10 +9,9 @@ API_URL = os.environ.get("VITE_API_URL", "")
 """The base URL for the API, used for constructing full URLs in the application."""
 assert API_URL != "", "VITE_API_URL must be set in the environment variables."
 
-VERIFY_REDIRECT_URL = os.environ.get(
-    "VERIFY_REDIRECT_URL", "")
-"""The URL to redirect to after email verification, typically the frontend application URL."""
-assert VERIFY_REDIRECT_URL != "", "VERIFY_REDIRECT_URL must be set in the environment variables."
+VERIFY_URL = os.environ.get("VERIFY_URL", "")
+"""The URL for email verification, used in the verification process."""
+assert VERIFY_URL != "", "VERIFY_URL must be set in the environment variables."
 
 FRONTEND_URL = os.environ.get("FRONTEND_URL", "")
 """The URL of the frontend application, used for CORS and other integrations."""

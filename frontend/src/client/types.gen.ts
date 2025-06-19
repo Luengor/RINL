@@ -183,6 +183,31 @@ export type CreateUserUserPostResponses = {
 
 export type CreateUserUserPostResponse = CreateUserUserPostResponses[keyof CreateUserUserPostResponses];
 
+export type VerifyEmailTokenUserMeEmailTokenPostData = {
+    body?: never;
+    path?: never;
+    query: {
+        token: string;
+    };
+    url: '/user/me/email-token';
+};
+
+export type VerifyEmailTokenUserMeEmailTokenPostErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type VerifyEmailTokenUserMeEmailTokenPostError = VerifyEmailTokenUserMeEmailTokenPostErrors[keyof VerifyEmailTokenUserMeEmailTokenPostErrors];
+
+export type VerifyEmailTokenUserMeEmailTokenPostResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};
+
 export type SendVerificationEmailUserVerifyEmailPostData = {
     body?: never;
     path?: never;
@@ -191,31 +216,6 @@ export type SendVerificationEmailUserVerifyEmailPostData = {
 };
 
 export type SendVerificationEmailUserVerifyEmailPostResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
-
-export type VerifyUserUserVerifyGetData = {
-    body?: never;
-    path?: never;
-    query: {
-        token: string;
-    };
-    url: '/user/verify';
-};
-
-export type VerifyUserUserVerifyGetErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type VerifyUserUserVerifyGetError = VerifyUserUserVerifyGetErrors[keyof VerifyUserUserVerifyGetErrors];
-
-export type VerifyUserUserVerifyGetResponses = {
     /**
      * Successful Response
      */
@@ -276,31 +276,6 @@ export type UpdateMeUserMePutResponses = {
 };
 
 export type UpdateMeUserMePutResponse = UpdateMeUserMePutResponses[keyof UpdateMeUserMePutResponses];
-
-export type UpdateEmailUsermeEmailGetData = {
-    body?: never;
-    path?: never;
-    query: {
-        token: string;
-    };
-    url: '/userme/email';
-};
-
-export type UpdateEmailUsermeEmailGetErrors = {
-    /**
-     * Validation Error
-     */
-    422: HttpValidationError;
-};
-
-export type UpdateEmailUsermeEmailGetError = UpdateEmailUsermeEmailGetErrors[keyof UpdateEmailUsermeEmailGetErrors];
-
-export type UpdateEmailUsermeEmailGetResponses = {
-    /**
-     * Successful Response
-     */
-    200: unknown;
-};
 
 export type GetActivitiesActivityGetData = {
     body?: never;

@@ -23,6 +23,7 @@ import { TbUser, TbCalendar, TbMail } from "react-icons/tb";
 import { OkNotification, ErrorNotification, WarningNotification } from "../../utils/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 interface DataFormValues {
   name: string;
@@ -34,6 +35,7 @@ export default function DataForm({ user }: { user: UserBase }) {
   // Get the client
   const { client, logout } = useClient();
   const queryClient = useQueryClient();
+  console.log("User data in DataForm:", user);
 
   // Delete things
   const [deleteModalOpened, {open, close}] = useDisclosure(false);
@@ -90,6 +92,31 @@ export default function DataForm({ user }: { user: UserBase }) {
           : null,
     },
   });
+
+  // Update data form if user changes and its not dirty
+  useEffect(() => {
+    if (dataForm.isDirty()) return; // Don't update if form is dirty
+
+    // Check if the values are the same
+    if (
+      dataForm.getValues().name === user.name &&
+      dataForm.getValues().email === user.email &&
+      dataForm.getValues().year_of_birth === user.year_of_birth
+    ) {
+      return; // No need to update if values are the same
+    }
+
+    // Update form values with user data
+    const newValues = {
+      name: user.name,
+      email: user.email,
+      year_of_birth: user.year_of_birth,
+    };
+    dataForm.setValues(newValues);
+    dataForm.setInitialValues(newValues);
+    dataForm.resetDirty();
+
+  }, [dataForm, user]);
 
   // Update user data
   const updateUserMutation = useMutation({
