@@ -10,7 +10,6 @@ import "@mantine/notifications/styles.css";
 import { createTheme, MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import {
-  MutationCache,
   QueryCache,
   QueryClient,
   QueryClientProvider,
