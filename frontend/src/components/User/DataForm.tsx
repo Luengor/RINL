@@ -149,6 +149,19 @@ export default function DataForm({ user }: { user: UserBase }) {
       queryClient.invalidateQueries({ queryKey: ["user-data"] });
     },
 
+    onError: (err: any) => {
+      const detail = (err.detail as string).toLowerCase();
+
+      if (detail.includes("email")) {
+        ErrorNotification(
+          "El correo electrónico ya está en uso por otra cuenta. Por favor, utiliza otro correo electrónico.",
+          "Error al modificar el correo electrónico"
+        );
+
+        dataForm.setFieldError("email", "El correo electrónico ya está en uso por otra cuenta.");
+      }
+    },
+
     meta: { errorMessage: "No se pudo modificar tus datos." },
   });
 

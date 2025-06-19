@@ -27,14 +27,16 @@ const queryClient = new QueryClient({
     },
   }),
 
-  mutationCache: new MutationCache({
-    onError: (error, variables, context, mutation) => {
-      console.log("Error in mutation: ", error, variables, context, mutation);
+  defaultOptions: {
+    mutations: {
+      onError(error, variables, context) {
+        console.log("Error in mutation: ", error, variables, context);
 
-      if (mutation.meta.errorMessage)
-        ErrorNotification(mutation.meta.errorMessage as string);
-    },
-  }),
+        // if (mutation.meta.errorMessage)
+          // ErrorNotification(mutation.meta.errorMessage as string);
+      },
+    }
+  }
 });
 
 const theme = createTheme({

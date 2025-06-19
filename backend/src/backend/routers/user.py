@@ -239,6 +239,13 @@ async def update_me(
         UserBase: The updated user with basic details.
     """
     if modifications.email and modifications.email != user.email:
+        # Check if the new email is already in use
+        new_mail_user = UserDAO.get_user(modifications.email, session)
+        if new_mail_user:
+            raise HTTPException(
+                status_code=400, detail="Email already in use"
+            )
+
         # If the email is being changed, send a verification email
         token = create_access_token(
             data={
