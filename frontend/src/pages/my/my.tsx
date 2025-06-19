@@ -144,6 +144,54 @@ export default function My() {
     },
   ];
 
+  // Check if the user is on mobile to move the navbar to the top
+  const isMobile = window.innerWidth <= window.innerHeight;
+  console.log("isMobile:", isMobile);
+  let navbar;
+  if (isMobile) {
+    navbar = (
+      <AppShell.Header p="md">
+        <Navbar
+          row={true}
+          topLink={{
+            icon: TbAB,
+            label: "Dashboard",
+            onClick: () => navigate("/"),
+          }}
+          mainLinks={links}
+          bottomLinks={[
+            {
+              icon: TbLogout,
+              label: "Salir",
+              onClick: () => setLogoutModal(true),
+            },
+          ]}
+        />
+      </AppShell.Header>
+    );
+  } else {
+    navbar = (
+      <AppShell.Navbar p="md">
+        <Navbar
+          row={false}
+          topLink={{
+            icon: TbAB,
+            label: "Dashboard",
+            onClick: () => navigate("/"),
+          }}
+          mainLinks={links}
+          bottomLinks={[
+            {
+              icon: TbLogout,
+              label: "Salir",
+              onClick: () => setLogoutModal(true),
+            },
+          ]}
+        />
+      </AppShell.Navbar>
+    );
+  }
+
   return (
     <>
       <Modal
@@ -164,26 +212,18 @@ export default function My() {
         navbar={{
           width: 100,
           breakpoint: "100px",
+          collapsed: {
+            mobile: true,
+            desktop: isMobile,
+          }
+        }}
+        header={{
+          height: 60,
+          collapsed: !isMobile,
         }}
         padding="xl"
       >
-        <AppShell.Navbar p="md">
-          <Navbar
-            topLink={{
-              icon: TbAB,
-              label: "Dashboard",
-              onClick: () => navigate("/"),
-            }}
-            mainLinks={links}
-            bottomLinks={[
-              {
-                icon: TbLogout,
-                label: "Salir",
-                onClick: () => setLogoutModal(true),
-              },
-            ]}
-          />
-        </AppShell.Navbar>
+        {navbar}
 
         <AppShell.Main h="69px">
           <Routes>

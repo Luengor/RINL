@@ -1,4 +1,13 @@
-.navbar {
+.navbarrow {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-items: center;
+}
+
+.navbarcolumn {
   width: 100%;
   height: 100%;
   display: flex;
@@ -6,6 +15,7 @@
   align-items: center;
   justify-items: center;
 }
+
 
 .navbarMain {
   flex: 1;

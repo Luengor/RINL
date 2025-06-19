@@ -1,11 +1,15 @@
-import { Button, Card, Center, Divider, Group, Stack, Title } from "@mantine/core";
+import { Button, Card, Center, Divider, Group, Loader, Stack, Title } from "@mantine/core";
 import { LoginForm } from "../components/LoginForm";
 import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../hooks/useClient";
 
-function UserCard() {
-  const { user, logout } = useUser();
+// Pass as props to the UserCard component
+interface UserCardProps {
+  logout: () => void;
+}
+
+function UserCard({ logout }: UserCardProps) {
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -17,7 +21,7 @@ function UserCard() {
     <Center w="100%" h="100%">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Stack>
-          <Title order={2}>Bienvenido, {user.name}!</Title>
+          <Title order={2}>Hola de nuevo!</Title>
           <Button onClick={() => navigate("/my/data")} variant="light" fullWidth>
             Ir a mi perfil
           </Button>
@@ -31,16 +35,20 @@ function UserCard() {
 }
 
 export default function Dashboard() {
-  const { loggedIn } = useClient();
+  const { logout, loggedIn } = useClient();
 
   // Login form or
   let login_content;
-  if (loggedIn === false) {
-    login_content = <LoginForm />;
-  } else {
-    login_content = <UserCard />;
+  if (loggedIn) {
+    login_content = <UserCard logout={logout} />;
   }
-
+  else {
+    login_content = (
+      <Center w="100%" h="100%">
+        <LoginForm />
+      </Center>
+    );
+  }
 
   return (
     <>
