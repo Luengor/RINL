@@ -1,6 +1,5 @@
-import { Button, Card, Center, Divider, Group, Loader, Stack, Title } from "@mantine/core";
+import { Button, Card, Center, Divider, Group, Stack, Title } from "@mantine/core";
 import { LoginForm } from "../components/LoginForm";
-import { useUser } from "../hooks/useUser";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../hooks/useClient";
 
