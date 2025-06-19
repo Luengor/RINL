@@ -94,8 +94,9 @@ def test_verify_user(client: TestClient, unverified_login_token: str):
     )
 
     # Verify user
-    response = client.get(
-        f"/user/verify?token={verify_token}&redirect=false",
+    response = client.post(
+        f"/user/me/email-token?token={verify_token}",
+        headers={"Authorization": f"Bearer {unverified_login_token}"},
     )
 
     assert response.status_code == 200
@@ -165,8 +166,9 @@ def test_update_email(client: TestClient, verified_login_token: str):
     )
 
     # Verify user with update email token
-    response = client.get(
-        f"/user/me/email?token={update_email_token}&redirect=false"
+    response = client.post(
+        f"/user/me/email-token?token={update_email_token}",
+        headers={"Authorization": f"Bearer {verified_login_token}"},
     )
 
     assert response.status_code == 200
@@ -197,8 +199,9 @@ def test_update_email_already_exists(client: TestClient, verified_login_token: s
     )
 
     # Try to verify user with update email token
-    response = client.get(
-        f"/user/me/email?token={update_email_token}"
+    response = client.post(
+        f"/user/me/email-token?token={update_email_token}",
+        headers={"Authorization": f"Bearer {verified_login_token}"},
     )
 
     # Check response
