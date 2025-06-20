@@ -12,6 +12,7 @@
 \define@key{diagrama}{etiqueta}{\def\diagrama@etiqueta{#1}}
 \define@key{diagrama}{width}{\def\diagrama@width{#1}}
 \define@key{diagrama}{forzarPosicion}{\def\diagrama@forzarPosicion{#1}}
+\define@key{diagrama}{fuente}{\def\diagrama@fuente{#1}}
 
 \presetkeys{diagrama}{
     nombre = {Diagrama},
@@ -19,6 +20,7 @@
     etiqueta = {fig:diagrama},
     width = 0.8\textwidth,
     forzarPosicion = {},
+    fuente = {},
 }{}
 
 \newcommand{\diagrama}[1]{
@@ -32,7 +34,12 @@
     \fi
         \centering
         \includegraphics[width=\diagrama@width]{\diagrama@archivo}
-        \caption{\diagrama@nombre}
+        \ifx\diagrama@fuente\empty
+            \caption[\diagrama@nombre]{\diagrama@nombre}
+        \else
+            \caption[\diagrama@nombre]{\diagrama@nombre}
+            \small \textit{Fuente: \diagrama@fuente}
+        \fi
         \label{\diagrama@etiqueta}
     \end{figure}
     \endgroup

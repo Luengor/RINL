@@ -149,6 +149,7 @@ relacción entre ellos a través de un diagrama.
         & 3 & Si el usuario ya existe, el sistema muestra un mensaje de error indicando que el
               correo electrónico ya está en uso y se vuelve al paso 2 \\
     },
+    frecuencia = {Pocas veces al día},
 }
 
 \casouso{
@@ -186,6 +187,7 @@ relacción entre ellos a través de un diagrama.
         & 2 & Si el usuario no existe o la contraseña es incorrecta, el sistema muestra un mensaje de
               error indicando que las credenciales son incorrectas y se vuelve al paso 1 \\
     },
+    frecuencia = {Varias veces al día}
 }
 
 \casouso{
@@ -213,6 +215,7 @@ relacción entre ellos a través de un diagrama.
         & 1 & El sistema envía un correo electrónico al usuario con un enlace para verificar su
               cuenta \\
     },
+    frecuencia = {Pocas veces al día},
 }
 
 \casouso{
@@ -245,6 +248,7 @@ relacción entre ellos a través de un diagrama.
     secuencia = {%
         & 1 & El sistema muestra los datos personales y la forma física actual del usuario \\
     },
+    frecuencia = {Muchas veces al día}
 }
 
 \casouso{
@@ -284,6 +288,7 @@ relacción entre ellos a través de un diagrama.
         & 2 & Si el actor no confirma la eliminación, el sistema vuelve al menú principal y el
               caso de uso termina \\
     },
+    frecuencia = {Pocas veces a la semana}
 }
 
 \casouso{
@@ -319,6 +324,7 @@ relacción entre ellos a través de un diagrama.
         & 2 & Si el actor no confirma el cierre de sesión, el sistema vuelve al menú principal y
               el caso de uso termina \\
     },
+    frecuencia = {Varias veces al día}
 }
 
 \casouso{
@@ -361,6 +367,7 @@ relacción entre ellos a través de un diagrama.
         & 3 & Si el nuevo correo electrónico ya está en uso, el sistema muestra un mensaje de error
               indicando que el correo electrónico ya está en uso y el caso de uso termina \\
     },
+    frecuencia = {Pocas veces al día}
 }
 
 \casouso{
@@ -402,6 +409,7 @@ relacción entre ellos a través de un diagrama.
         & 2 & Si la información introducida es inválida, el sistema muestra un mensaje de error
               indicando que los datos son inválidos y se vuelve al paso 1 \\
     },
+    frecuencia = {Pocas veces al día}
 }
 
 \casouso{
@@ -442,6 +450,7 @@ relacción entre ellos a través de un diagrama.
         & 4 & Si la información introducida es inválida, el sistema muestra un mensaje de error
               indicando que los datos son inválidos y se vuelve al paso 2 \\
     },
+    frecuencia = {Muchas veces al día}
 }
 
 \casouso{
@@ -473,6 +482,7 @@ relacción entre ellos a través de un diagrama.
         & 2 & El sistema muestra las estadísticas del usuario, incluyendo el historial de formas
               físicas y las puntuaciones de los minijuegos \\
     },
+    frecuencia = {Muchas veces al día}
 }
 
 \casouso{
@@ -506,6 +516,7 @@ relacción entre ellos a través de un diagrama.
     postcondicion = {%
         Las estadísticas del usuario son filtradas según el filtro seleccionado
     },
+    frecuencia = {Muchas veces al día}
 }
 
 \casouso{
@@ -540,6 +551,7 @@ relacción entre ellos a través de un diagrama.
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de jugar \\
         & 2 & El sistema muestra el menú del juego \\
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -566,6 +578,7 @@ relacción entre ellos a través de un diagrama.
         & 1 & El usuario \nameref{anexo1:tab:act0003} pulsa el botón de activar pantalla completa \\
         & 2 & El sistema cambia el modo de visualización a pantalla completa \\
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -602,6 +615,7 @@ relacción entre ellos a través de un diagrama.
         & 1 & El sistema detecta la postura del actor \nameref{anexo1:tab:act0003} y la envía a la
               actividad correspondiente \\
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -636,6 +650,7 @@ relacción entre ellos a través de un diagrama.
     postcondicion = {%
         La cámara queda calibrada para la sesión actual
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -674,6 +689,7 @@ relacción entre ellos a través de un diagrama.
         El actor \nameref{anexo1:tab:act0003} ha seleccionado un minijuego y el sistema guarda la
         selección para su posterior uso
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -713,6 +729,7 @@ relacción entre ellos a través de un diagrama.
         El actor \nameref{anexo1:tab:act0003} ha seleccionado una dificultad y el sistema guarda la
         selección para la adaptación del minijuego escogido
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -746,6 +763,7 @@ relacción entre ellos a través de un diagrama.
         & 3 & El sistema guarda la puntuación obtenida y se ejecuta el caso de uso
               \nameref{anexo1:tab:cu:ver-puntuaciones} \\
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -779,6 +797,7 @@ relacción entre ellos a través de un diagrama.
         & 3 & El sistema guarda la puntuación obtenida y se ejecuta el caso de uso
               \nameref{anexo1:tab:cu:ver-puntuaciones} \\
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -823,6 +842,7 @@ relacción entre ellos a través de un diagrama.
     postcondicion = {%
         La puntuación obtenida en el minijuego es guardada en el historial del usuario
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -850,6 +870,7 @@ relacción entre ellos a través de un diagrama.
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a jugar \\
         & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad} \\
     },
+    frecuencia = {Muchas veces al día},
 }
 
 \casouso{
@@ -877,4 +898,5 @@ relacción entre ellos a través de un diagrama.
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver al menú principal \\
         & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego} \\
     },
+    frecuencia = {Muchas veces al día},
 }
