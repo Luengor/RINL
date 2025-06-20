@@ -81,11 +81,14 @@ public class RINLBody : MonoBehaviour
 
     private void Start()
     {
+        // Disable de alert panel (it shoulden't be enabled anyways, but just in case)
+        alertPanel.SetActive(false);
+
         // Get the hand renderers
         leftHandRenderer = leftHand.GetChild(0).gameObject;
         rightHandRenderer = rightHand.GetChild(0).gameObject;
 
-        // Get the body landmarks from the points object 
+        // Get the body landmarks from the points object
         for (int i = 0; i < Constants.LANDMARKS; i++)
             bodyLandmarks[i] = points.GetChild(i);
 
@@ -107,7 +110,7 @@ public class RINLBody : MonoBehaviour
                 segmentObjects[i + part.segments.Length].transform.localScale = Vector3.one * part.segments[i].jointSize;
             }
 
-            // If end object is set, set it as a child of the last joint 
+            // If end object is set, set it as a child of the last joint
             if (!string.IsNullOrEmpty(part.moveEndObject))
             {
                 Transform endObject = transform.Find(part.moveEndObject);
@@ -185,11 +188,11 @@ public class RINLBody : MonoBehaviour
 
     private Vector3 GetLandmarkPosition(int index)
     {
-        // Get the last position and the new landmark position 
+        // Get the last position and the new landmark position
         Vector3 lastPos = bodyLandmarks[index].localPosition;
         Vector3 newWorldPos = landmarks.points[index];
 
-        // If the body is not fixed, add the hip position to the new position 
+        // If the body is not fixed, add the hip position to the new position
         if (!fixedPosition)
         {
             // If the ground height is used, add the hips y position and subtract the ground height
@@ -210,7 +213,7 @@ public class RINLBody : MonoBehaviour
         // Save the previous speed
         float lastSpeed = bodyLandmarkSpeeds[index].magnitude / pointScale;
 
-        // Calculate the new position 
+        // Calculate the new position
         Vector3 pos = Vector3.SmoothDamp(lastPos, newPos, ref bodyLandmarkSpeeds[index], pointSmoothTime, pointMaxSpeed * pointScale, Time.fixedDeltaTime);
 
         // Get the new speed
@@ -242,7 +245,7 @@ public class RINLBody : MonoBehaviour
         if (displacementTimer > displacementTime)
         {
             alertPanel.SetActive(true);
-            alertText.text = displacedText; 
+            alertText.text = displacedText;
             GameController.Instance.Pause();
             Debug.Log("Body is displaced");
         }
@@ -300,10 +303,10 @@ public class RINLBody : MonoBehaviour
         // Move
         leftHand.localPosition =
             (bodyLandmarks[(int)LandmarkNames.LeftWrist].localPosition + bodyLandmarks[(int)LandmarkNames.LeftIndex].localPosition) * .5f;
-        
+
         rightHand.localPosition =
             (bodyLandmarks[(int)LandmarkNames.RightWrist].localPosition + bodyLandmarks[(int)LandmarkNames.RightIndex].localPosition) * .5f;
-        
+
         // Scale
         if (!showHands)
         {
@@ -323,7 +326,7 @@ public class RINLBody : MonoBehaviour
 
             if (GameController.Instance.JsConnector.LatestLandmarks.image[(int)LandmarkNames.LeftWrist].InImage())
                 leftHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
-            
+
             if (GameController.Instance.JsConnector.LatestLandmarks.image[(int)LandmarkNames.RightWrist].InImage())
                 rightHandRenderer.transform.localScale = handScale * pointScale * Vector3.one;
         }
@@ -343,7 +346,7 @@ public class RINLBody : MonoBehaviour
             (bounds.center.y - landmarks.groundHeight) * pointScale + transform.position.y, // no ground offset here?
             transform.position.z
         );
-        
+
         bounds.size *= pointScale;
 
         return bounds;

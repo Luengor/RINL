@@ -83,6 +83,7 @@ MonoBehaviour:
   points: {fileID: 8356356047639814346}
   alertPanel: {fileID: 4443193237183678014}
   alertText: {fileID: 1787232035931191892}
+  displacedText: "Vuelve a la posici\xF3n de calibraci\xF3n para continuar"
   bodyParent: {fileID: 2672463152825817913}
   bodySegmentPrefab: {fileID: 8735158112686826300, guid: 46fac49c469992c18926e76673f6e8f0, type: 3}
   bodyJointPrefab: {fileID: 936261108643257975, guid: 205a99237a1ff40939caf7f726ec4c8d, type: 3}
@@ -1681,7 +1682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6478236905785241819
 RectTransform:
   m_ObjectHideFlags: 0
