@@ -181,7 +181,7 @@ export default function Media() {
               if (inputVideoRef.current)
                 inputVideoRef.current.srcObject = videoStream;
             }}
-            hidden
+            style={{ position: "absolute", right: 'var(--mantine-spacing-xl)', bottom: 'var(--mantine-spacing-xl)', width: "20%", objectFit: "cover", opacity: 0.8 }}
             autoPlay
             playsInline
           />
