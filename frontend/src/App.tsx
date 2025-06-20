@@ -19,11 +19,11 @@ function App() {
       </Route>
       <Route path="/media" element={<Media />} />
       <Route path="/mediadebug" element={<MediaDebug />} />
-      <Route element={<PrivateRoutes requireLogin={true} route={"/login"} />}>
+      <Route element={<PrivateRoutes requireLogin={true} route={"/"} />}>
         <Route path="/my/*" element={<My />} />
       </Route>
 
-      <Route path="*" element={<NotFoundPage />} /> 
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
