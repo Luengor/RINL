@@ -314,7 +314,7 @@ actividad que sirviera para limpiar el código y mejorar su legibilidad.
     id={8},
     tabla={
         Limpiar el código del cuerpo                                      & 3 \\
-        Enviar tamaño del video al juego de unity además de los landmarks & 1 \\
+        Enviar tamaño del video al juego de Unity además de los landmarks & 1 \\
         Calcular los bounds del cuerpo                                    & 2 \\
         Detectar distancia a la cámara                                    & 4 \\
         Escena de calibración                                             & 8 \\
@@ -353,7 +353,7 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
     nombre={Más Unity},
     id={9},
     tabla={
-        Menú principal en unity                                                                          & 3 \\
+        Menú principal en Unity                                                                          & 3 \\
         Utilizar Movenet en vez de Mediapipe                                                             & 4 \\
         Utilizar solo los landmarks en dos dimensiones                                                   & 5 \\
         Cambiar iconos del frontend para que no tarde tanto en cargar                                    & 1 \\
@@ -383,11 +383,11 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
 
 Durante este sprint se buscó mejorar el sistema en general, añadiendo nuevas funcionalidades y
 arreglando errores en los distintos sistemas de la aplicación. Las funcionalidades añadidas
-fureon varias, como la posibilidad de añadir más formas físicas, modificar los datos del usuario,
+fueron varias, como la posibilidad de añadir más formas físicas, modificar los datos del usuario,
 ocultar la barra de navegación al jugar, entre otras. También se modificó la manera en la que se
 ejecutaban los tests, haciendo que se ejecutaran en un entorno más controlado.
 
-Al final de este sprint se completaron 22 de las 28 puntos de historia planificados, dejando seis
+Al final de este sprint se completaron 22 de los 28 puntos de historia planificados, dejando seis
 para las siguientes semanas. Viendo el \textit{burndown report} (figura \ref{anexo3:fig:burndown10}),
 se puede ver que se dedicó bastante tiempo a tareas que se estimaron con pocos puntos de historia,
 lo que supuso un retraso en el avance del sprint, dando como resultado que se completaran menos tareas
@@ -430,7 +430,7 @@ de las planificadas inicialmente.
 }
 
 
-\section{Sprint 11: Más unity}
+\section{Sprint 11: Más Unity}
 \label{anexo3:sec:sprint11}
 
 Durante este sprint se buscó mejorar el sistema en Unity, añadiendo más funcionalidades y corrigiendo
@@ -448,7 +448,7 @@ los posibles por tener tareas a medio hacer, se decidió aumentar el número de 
 para este sprint.
 
 \sprinttable{
-    nombre={Más unity},
+    nombre={Más Unity},
     id={11},
     tabla={
         Probar animaciones 2D                                       & 4 \\
@@ -470,7 +470,7 @@ para este sprint.
 }
 
 \diagrama{
-    nombre={Burndown del sprint: Más unity},
+    nombre={Burndown del sprint: Más Unity},
     archivo={anexo3/sprints/sprint11.pdf},
     etiqueta={anexo3:fig:burndown11},
     width=\textwidth,
@@ -481,9 +481,13 @@ para este sprint.
 \section{Sprint 12: Aún más Unity}
 \label{anexo3:sec:sprint12}
 
-No hay descripción del sprint.
+El objetivo de este sprint fue muy similar al anterior: mejorar el sistema en Unity añadiendo más
+funcionalidades y corrigiendo errores. En este caso, se buscó mejorar la calidad del movimiento del
+jugador puesto que daba la sensación de que la representación del cuerpo iba algo retrasada respecto
+a la posición real del usuario.
 
-Explicación del sprint...
+La planificación realizada para este sprint fue acertada, sin ningun contratiempo. No hubo retrasos
+ni tiempo muerto sin tareas que hacer.
 
 \sprinttable{
     nombre={Aún más Unity},
@@ -516,9 +520,23 @@ Explicación del sprint...
 \section{Sprint 13: Cosas varias y pensar en el nuevo minijuego}
 \label{anexo3:sec:sprint13}
 
-Do random little things and think a lot on the new minigame
+Para este sprint se buscó arreglar problemas de los diferentes sistemas del proyecto, así
+como pensar en un nuevo minijuego que se podría implementar en el futuro. Se pensaron varias
+cosas y se probaron algunas de ellas para ver cómo podrían funcionar. Entre ellas se
+encontraban un juego de hacer de portero, pero se parecía mucho al de explotar globos o un
+juego de \enquote{aparcar} un avión (figura \ref{anexo3:fig:aparcar-avion}), pero se descartó
+por la complejidad que supondría. Finalmente, se decidió crear un minijuego de esquivar
+obstáculos con el cuerpo.
 
-Explicación del sprint...
+\diagrama{
+    nombre = {\enquote{Aparcar} un avión},
+    fuente = {\url{https://www.grupooneair.com/airport-marshalls/}},
+    archivo = {anexo3/imgs/plane.png},
+    etiqueta = {anexo3:fig:aparcar-avion},
+}
+
+Este sprint se completó con éxito, aunque la planificación no fue del todo acertada. La fecha
+de finalización se retrasó un poco para poder completar todas las tareas planificadas.
 
 \sprinttable{
     nombre={Cosas varias y pensar en el nuevo minijuego},
@@ -528,7 +546,7 @@ Explicación del sprint...
         Enpoint para reenviar verificación de email                                 & 1 \\
         Enviar correo de verificación al modificar el email                         & 2 \\
         Form de los datos del usuario                                               & 2 \\
-        Cambiar el tiempo de chaché de las queries de react-query                   & 1 \\
+        Cambiar el tiempo de caché de las queries de react-query                    & 1 \\
         Organizar scripts de Unity                                                  & 1 \\
         Mover los bounds del cuerpo al centrarlo                                    & 2 \\
         Añadir una nueva forma física debería invalidar el caché de las actividades & 1 \\
@@ -553,20 +571,26 @@ Explicación del sprint...
 \section{Sprint 14: Nuevo minijuego}
 \label{anexo3:sec:sprint14}
 
-Starting pretty late
+El objetivo de este sprint era crear el minijuego de esquivar obstáculos con el cuerpo, que se
+había pensado en el sprint anterior. Este minijuego consistiría en esquivar obstáculos que
+fueran apareciendo en la pantalla, utilizando el cuerpo del usuario para esquivarlos. También
+se buscó crear un sistema de alertas para Unity, que permitiera mostrar mensajes al usuario
+cuando este se alejara demasiado de la posición de calibración.
 
-Explicación del sprint...
+Como se puede ver en el \textit{burndown report} (figura \ref{anexo3:fig:burndown14}), el sprint
+comenzó más tarde de lo esperado debido a que el sprint anterior se alargó más de lo esperado.
+Probablemente por esto, se dejaron tres puntos de historia sin completar.
 
 \sprinttable{
     nombre={Nuevo minijuego},
     id={14},
     tabla={
-        Sistema de alertas para unity                              & 4 \\
+        Sistema de alertas para Unity                              & 4 \\
         Test para minijuego de esquivar                            & 8 \\
         Intro para minijuego de esquivar                           & 4 \\
         Escoger dificultad para esquivar                           & 4 \\
         Fin de minijuego de esquivar (terminar actividad y puntos) & 3 \\
-        Los pies del juegador se unden?                            & 4 \\
+        Los pies del jugador se hunden?                            & 4 \\
     },
     total={27},
     anadidos={},
@@ -586,9 +610,10 @@ Explicación del sprint...
 \section{Sprint 15: Cosas varias}
 \label{anexo3:sec:sprint15}
 
-No hay descripción del sprint.
-
-Explicación del sprint...
+Durante este sprint se buscó arreglar problemas en los diferentes sistemas del proyecto y
+añadir funcionalidades menos relevantes. Se completó la tarea pendiente del sprint pasado
+(\enquote{Fin de minijuego de esquivar (terminar actividad y puntos)}), que se había dejado sin
+completar por falta de tiempo.
 
 \sprinttable{
     nombre={Cosas varias},
@@ -599,7 +624,7 @@ Explicación del sprint...
         Penalizar por tocar globos con la mano equivocada                         & 3 \\
         Forzar un logout al cambiar el correo está mal                            & 3 \\
         El sexo del usuario no se usa para nada, se puede eliminar                & 2 \\
-        Utilizar los bounds de la cámara en vez de perdir al usuario que se mueva & 3 \\
+        Utilizar los bounds de la cámara en vez de pedir al usuario que se mueva  & 3 \\
         Utilizar object pools para los globos                                     & 2 \\
         Obstáculos visibles en el minijuego de esquivar                           & 4 \\
     },
@@ -621,9 +646,14 @@ Explicación del sprint...
 \section{Sprint 16: Cosas varias 2}
 \label{anexo3:sec:sprint16}
 
-No hay descripción del sprint.
+Al igual que el sprint anterior, este sprint se centró en arreglar problemas de diferentes partes
+del proyecto y añadir funcionalidades menos relevantes. Sin embargo, a partir de este sprint y
+hasta el final del mes de mayo, el desarrollo del proyecto se ralentizó bastante. Esto se debió
+a que comenzaba la primera convocatoria de exámenes de la carrera y llegaban las fechas de entrega
+de varios trabajos.
 
-Explicación del sprint...
+Por esto, y aunque se estableción una carga de trabajo menor para este sprint, se completó solo la
+mitad de los puntos de historia planificados.
 
 \sprinttable{
     nombre={Cosas varias 2},
@@ -654,9 +684,13 @@ Explicación del sprint...
 \section{Sprint 17: Progreso?}
 \label{anexo3:sec:sprint17}
 
-No hay descripción del sprint.
+Este sprint tuvo el mismo objetivo y problemas que el anterior. Se buscó hacer cosas de menos
+tamaño pero el progreso fue poco notable. Se completaron 8 de los 17 puntos de historia
+planificados, lo que supuso un avance menor del esperado.
 
-Explicación del sprint...
+Puesto que se preveía que la siguiente semana el progreso fuera aún menor, se decidió no realizar
+un sprint. Por tanto, el siguiente sprint se haría con los exámenes ya terminados y con más tiempo
+para trabajar en el proyecto.
 
 \sprinttable{
     nombre={Progreso?},
@@ -688,9 +722,11 @@ Explicación del sprint...
 \section{Sprint 18: Toca TFG}
 \label{anexo3:sec:sprint18}
 
-No hay descripción del sprint.
+El objetivo de este sprint era hacer cosas más simples y pequeñas. Excepción de esto fue aprender
+algo de Latex, puesto que se quería utilizar para la documentación del proyecto.
 
-Explicación del sprint...
+El sprint comenzó más tarde de lo que debería de manera normal, ya que se había decidido no
+trabajar en esto hasta terminar los exámenes finales.
 
 \sprinttable{
     nombre={Toca TFG},
@@ -720,9 +756,16 @@ Explicación del sprint...
 \section{Sprint 19: Documentación y arreglar cosas}
 \label{anexo3:sec:sprint19}
 
-No hay descripción del sprint.
+Esta fue la primera semana de trabajo en la que se dedicó la totalidad del tiempo al proyecto, por
+lo que se pudo avanzar mucho más de lo que se había hecho en los sprints anteriores. El objetivo
+principal del sprint fue documentar el proyecto y arreglar algunas cosas que se habían quedado
+pendientes en sprints anteriores.
 
-Explicación del sprint...
+El sprint comenzó con 32 puntos de historia planificados, muchos más de los que se habían
+completado en ningún sprint anterior. Aun así, se completarían estos puntos de historia a mitad
+de sprint y sería necesario añadir más tareas. Esta adición de tareas provó no ser suficiente
+dos días después, por lo que se volvieron a añadir más tareas, hasta un total de 50 puntos de
+historia.
 
 \sprinttable{
     nombre={Documentación y arreglar cosas},
@@ -742,7 +785,7 @@ Explicación del sprint...
         Cambiar las tablas de IRQ a las nuevas y cambiar la bibliografía & 2 \\
         Tablas de actores                                                & 3 \\
         Tablas de participantes                                          & 2 \\
-        Arreglar portadas documentos                                     & 2 \\
+        Arreglar las portadas de los documentos                          & 2 \\
         Hacer comando para las tablas de caso de uso                     & 2 \\
         Arreglar referencias para tablas                                 & 2 \\
         Acabar la introducción                                           & 3 \\
@@ -760,5 +803,58 @@ Explicación del sprint...
     width=\textwidth,
     forzarPosicion={si pls},
 }
+
+
+\section{Sprint 20: Mucha documentación}
+\label{anexo3:sec:sprint20}
+
+Este sprint, como el anterior, se centró en la documentación del proyecto. También se corrigieron
+algunos errores y se añadieron algunas funcionalidades menores. Algunas de las tareas no
+relacionadas con la documentación consistieron en desplegar la aplicación en un servidor,
+utilizar tokens JWT en lugar de códigos de verificación y arreglar algunos tests.
+
+La planificación para este sprint fue muy acertada, ya que se completaron todas las tareas
+planificadas poco antes de la fecha límite. Solo fue necesario añadir dos puntos de historia
+para completar el sprint.
+
+\sprinttable{
+    nombre={Mucha documentación},
+    id={20},
+    tabla={
+        Listar requisitos funcionales (cu)                                            & 5 \\
+        Arreglar el texto informativo unity                                           & 1 \\
+        Escribir objeto memoria                                                       & 3 \\
+        Escribir requisitos iniciales memoria                                         & 3 \\
+        Escribir estudio de alternativas y viabilidad memoria                         & 5 \\
+        Eliminar cuenta de usuario                                                    & 2 \\
+        Rellenar tablas casos de uso                                                  & 7 \\
+        Diagrama de casos de uso                                                      & 6 \\
+        Despliegue en soymilk                                                         & 3 \\
+        Esquema anexo 2                                                               & 3 \\
+        Investigar diagramas de clase/secuencia de TFGs que tengan página web / juego & 2 \\
+        Matriz de rastreabilidad                                                      & 4 \\
+        Subojetivos, objetivos asociados y requisitos asociados                       & 2 \\
+        El paquete de gestión de usuario igual se puede partir                        & 3 \\
+        Usar tokens JWT en todos lados                                                & 4 \\
+        Extraer Sprints de Jira con Python                                            & 4 \\
+        Cambiar casos de uso para lo de los tokens                                    & 1 \\
+        Arreglar tests usuarios por tokens                                            & 2 \\
+        Hacer gráficos con los datos de jira                                          & 5 \\
+        Caso de uso abstracto detectar postura                                        & 2 \\
+    },
+    total={67},
+    anadidos={2},
+    restantes={},
+    completados={},
+}
+
+\diagrama{
+    nombre={Burndown del sprint: Mucha documentación},
+    archivo={anexo3/sprints/sprint20.pdf},
+    etiqueta={anexo3:fig:burndown20},
+    width=\textwidth,
+    forzarPosicion={si pls},
+}
+
 
 
