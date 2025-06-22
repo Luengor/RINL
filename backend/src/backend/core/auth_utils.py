@@ -19,7 +19,8 @@ ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 """Dependency for OAuth2 password bearer token authentication."""
 
-pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto", argon2__type="ID",
+                           argon2__time_cost=2, argon2__memory_cost=19456, argon2__parallelism=1)
 """Password context for hashing and verifying passwords using argon2."""
 
 
