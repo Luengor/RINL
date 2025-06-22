@@ -71,14 +71,69 @@ pwd_context = CryptContext(
 
 \section{Autenticación y autorización}
 \label{anexo4:sec:autenticacion}
+La autenticación y autorización son dos aspectos fundamentales para garantizar la seguridad de los
+sistemas informáticos. La primera se encarga de verificar la identidad de un usuario, de confirmar
+que es quien dice ser, mientras que la segunda se encarga de determinar que acciones puede realizar
+ese usuario una vez se ha autenticado.
 
-\subsection{Verificación}
-\label{anexo4:sec:verificacion}
-% hablar de como es necesario un correo para todo
+En esta aplicación, se utiliza un sistema de autenticación basado en tokens JWT para gestionar las
+sesiones de usuario y otras funcionalidades relacionadas con la seguridad. Por otro lado, en
+cuanto a la autorización, en la aplicación no existen diferentes roles de usuario, solo se
+distingue entre usuarios que hayan verificado su correo electrónico y aquellos que no lo han hecho.
 
 \subsection{JWT}
 \label{anexo4:sec:jwt}
-% localstorage
+El sistema de autenticación de la aplicación se basa en el uso de tokens JWT (JSON Web Tokens).
+Un token JWT es una forma compacta y segura de representar y transmitir información entre dos
+partes. Estos tokens contienen una serie de afirmaciones (claims) que pueden ser verificadas y
+firmadas digitalmente, lo que garantiza la integridad y autenticidad de la información contenida
+en ellos \parencite{rfc7519}.
+
+En la aplicación se usan tokens para varias labores, como la autenticación de usuarios, la
+verificación de correos electrónicos y la actualización de estos. El procedimiento que se sigue
+para el caso de la autenticación de usuarios es el siguiente:
+\begin{enumerate}
+    \item El usuario envía sus credenciales (correo electrónico y contraseña) a la API.
+    \item La API verifica las credenciales y, si son correctas, genera un token JWT que contiene
+          el identificador del usuario y la fecha de expiración del token. Este token se firma
+          con una clave secreta que solo la API conoce para poder verificar su autenticidad.
+    \item El usuario recibe el token y lo almacena en su cliente.
+    \item En cada solicitud posterior a la API, el usuario incluye el token en el encabezado de
+          autorización de la solicitud.
+    \item La API verifica el token, comprobando su firma y asegurándose de que no ha expirado. Si
+          el token es válido, la API permite el acceso a los recursos solicitados. Si no, responde
+          con un error de autenticación.
+\end{enumerate}
+
+El mayor riesgo de seguridad asociado al uso de tokens JWT es el robo del token por parte de un
+atacante. Para que un ataque de este tipo tenga éxito, el atacante debe conseguir acceder al token
+del usuario antes de que este expire (en la aplicación, el tiempo de expiración de \textit{todos}
+los tokens es solo de 15 minutos). Es un riesgo que se mitiga utilizando HTTPS para cifrar las
+comunicaciones entre el cliente y la API y teniendo en cuenta que, el almacenamiento de los tokens
+en el cliente, es privado para cada sitio web.
+
+Las maneras en las que un atacante podría robar un token se limitarían entonces a impersonar la
+página web de la aplicación para robar el usuario y contraseña y obtener ellos mismos el token, o
+ganar acceso al dispositivo del usuario para robar el token directamente.
+
+\subsection{Verificación}
+\label{anexo4:sec:verificacion}
+Para hacer uso de la mayoría de las funcionalidades de la aplicación es necesario que el usuario
+verifique su correo electrónico. Para ello, se envía un correo electrónico al usuario con un
+enlace para verificarlo. Cabe destacar que, para poder utilizar dicho enlace, el usuario debe
+haber iniciado sesión en la aplicación, evitando así que el receptor incorrecto de un correo
+de verificación pueda hacer uso de él.
+
+Esta obligación de verificación es una medida de seguridad que ayuda a prevenir el registro de
+cuentas falsas o spam, ya que requiere que el usuario tenga acceso al correo electrónico
+proporcionado durante el registro para poder hacer uso de él.
+
+\diagrama{
+    nombre = {Token JWT de actualización de correo electrónico},
+    fuente = {Propia},
+    etiqueta = {anexo4:fig:jwt},
+    archivo = {anexo4/imgs/jwt.png},
+}
 
 \section{Seguridad de las conexiones}
 \label{anexo4:sec:conexiones}
