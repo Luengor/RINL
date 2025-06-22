@@ -33,6 +33,8 @@ introducirlos en la base de datos y justo antes de devolverlos al usuario. El ci
 utilizando una clave de cifrado que se almacena en el entorno de ejecución de la aplicación, lo que
 garantiza que no se almacena en la base de datos ni en el código fuente de la aplicación.
 
+% Mencionar que no se guarda el feed de la cámara
+
 \subsection{Contraseñas}
 \label{anexo4:sec:contrasenas}
 Para el almacenamiento de contraseñas, se utiliza el algoritmo de \gls{hash} \texttt{argon2}. Argon2 fue el
@@ -137,10 +139,58 @@ proporcionado durante el registro para poder hacer uso de él.
 
 \section{Seguridad de las conexiones}
 \label{anexo4:sec:conexiones}
+Otro aspecto importante de la seguridad de la aplicación es la protección de las conexiones entre
+el cliente y el servidor. Para ello, se utilizan varias medidas de seguridad que garantizan la
+confidencialidad e integridad de los datos transmitidos.
 
 \subsection{HTTPS}
 \label{anexo4:sec:conexiones-https}
+Para proteger las conexiones entre el cliente y el servidor, se utiliza HTTPS, que cifra las
+comunicaciones entre el cliente y el servidor utilizando TLS (Transport Layer Security). Esto
+garantiza que los datos transmitidos entre el cliente y el servidor no puedan ser interceptados ni
+modificados por terceros durante su tránsito. Así, ataques como el robo de credenciales o el
+acceso a datos sensibles se vuelven mucho más difíciles de llevar a cabo.
+
+La elección de utilizar la versión segura de HTTP fue, en realidad, completamente obligatoria, puesto
+que el uso de la cámara web y el micrófono del dispositivo del usuario requiere que la conexión sea
+segura en todos los navegadores modernos \parencite{MDNGetUserMedia}.
 
 \subsection{CORS}
 \label{anexo4:sec:conexiones-cors}
+El uso de CORS (Cross-Origin Resource Sharing) es una medida de seguridad que permite a los
+navegadores web controlar el acceso a recursos de diferentes orígenes. En la API de la aplicación,
+se ha configurado CORS para permitir el acceso solo desde el origen correcto
+(\url{https://rinl.soymilk.lueng.org}) y para permitir el uso de los métodos HTTP necesarios para la
+interacción con la API.
+
+Cabe destacar que CORS es solo una medida de seguridad del lado del cliente, es decir, su navegador
+deberá cumplir con las restricciones de CORS para acceder a la API. Esto no significa que la API
+deniegue el acceso a otros orígenes, sino que los navegadores no realizarán las solicitudes a menos
+que su origen esté permitido. Por lo tanto, es importante tener en cuenta que CORS no es una
+solución de seguridad completa, sino una medida adicional para proteger la aplicación de ataques
+de tipo cross-site scripting (XSS) y cross-site request forgery (CSRF).
+
+\begin{lstlisting}[
+    language=Python,
+    caption={Configuración de CORS en la API}, captionpos=b,
+    label={anexo4:lst:cors-config}]
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from backend.core.common import FRONTEND_URL
+
+app = FastAPI(
+    title="RINL",
+    root_path="/api",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[FRONTEND_URL],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT",
+                   "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
+\end{lstlisting}
+
 
