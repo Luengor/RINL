@@ -1,15 +1,61 @@
 \chapter{Plan de seguridad}
 \label{anexo4:cap:seguridad}
+En este capítulo se describen los aspectos de seguridad más relevantes para el correcto
+funcionamiento de la aplicación. Se abordarán temas importantes para la seguridad de la aplicación,
+como el almacenamiento de datos, el saneamiento de entradas, la autenticación y autorización, y
+la seguridad de las conexiones. Además, se discutirán las medidas implementadas para garantizar la
+protección de los datos y la privacidad de los usuarios.
 
 \section{Almacenamiento de datos}
 \label{anexo4:sec:almacenamiento}
+Uno de los tipos de vulnerabilidad más comunes en aplicaciones web es la exposición de grandes
+cantidades de datos sensibles sobre usuarios, como contraseñas, correos electrónicos, números de
+teléfono, etc. Para evitar este tipo de problemas, es fundamental implementar medidas de seguridad
+adecuadas en el almacenamiento de datos.
+
+En el caso del despliegue actual de la aplicación, la base de datos no es accesible directamente desde
+Internet, lo que reduce significativamente el riesgo de exposición de datos sensibles, al no ser posible
+acceder a esta desde el exterior. Sin embargo, puesto que se puede acceder a la base de datos desde la
+\gls{api} de la aplicación, es importante implementar medidas de seguridad adicionales para proteger
+la información almacenada.
 
 \subsection{Datos sensibles}
 \label{anexo4:sec:datos-sensibles}
+Tratándose de una aplicación que realiza un seguimiento de la forma física de los usuarios y recopila
+datos como peso, altura, edad, etc., es crucial proteger la información sensible de los usuarios. Por
+esto, ciertos campos de datos sensibles se almacenan en la base de datos de forma cifrada. Esto permite
+que, incluso si un atacante logra acceder a la base de datos, no podrá obtener información sensible
+sin las claves de cifrado adecuadas.
+
+En la aplicación se utiliza el paquete \texttt{sqlalchemy\_utils} para el cifrado de datos sensible. Este
+utiliza internamente el algoritmo de cifrado simétrico \texttt{AES-256} para cifrar los datos antes de
+introducirlos en la base de datos y justo antes de devolverlos al usuario. El cifrado se realiza
+utilizando una clave de cifrado que se almacena en el entorno de ejecución de la aplicación, lo que
+garantiza que no se almacena en la base de datos ni en el código fuente de la aplicación.
 
 \subsection{Contraseñas}
 \label{anexo4:sec:contrasenas}
-% Bcrypt
+Para el almacenamiento de contraseñas, se utiliza el algoritmo de \gls{hash} \texttt{argon2}. Argon2 fue el
+algoritmo ganador del concurso \textit{Password Hashing Competition} en 2015 y es ampliamente recomendado
+por su seguridad y resistencia a ataques de fuerza bruta \parencite{OWASPPasswordStorage}. El algoritmo
+permite ajustar tres parámetros: el tiempo de ejecución, la memoria utilizada y el nivel de paralelismo,
+lo que permite adaptarlo a las capacidades del hardware y aumentar la seguridad. Se puede ver la configuración
+utilizada en el listado \ref{anexo4:lst:argon2-config}.
+
+\begin{lstlisting}[
+    language=Python,
+    caption={Configuración de \texttt{argon2} en la aplicación}, captionpos=b,
+    label={anexo4:lst:argon2-config}]
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(
+    schemes = ["argon2"], deprecated = "auto",
+    argon2__type = "ID",
+    argon2__time_cost = 2,
+    argon2__memory_cost = 19456,
+    argon2__parallelism = 1
+)
+\end{lstlisting}
 
 \subsection{Derecho al olvido}
 \label{anexo4:sec:derecho-al-olvido}

@@ -23,7 +23,6 @@
 \clearpage
 \pagebreak
 
-
 \mainmatter
 %% Índices
 \tableofcontents
@@ -42,6 +41,13 @@
 \input{anexo4/ch2-seguridad.tex}
 
 \backmatter
+\chapter{Glosario}
+\begingroup
+    \renewcommand{\clearpage}{}
+    \renewcommand{\glossarysection}[2][]{}
+    \printglossary
+\endgroup
+
 \printbibliography
 
 \end{document}
