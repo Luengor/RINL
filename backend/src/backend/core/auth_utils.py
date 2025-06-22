@@ -19,8 +19,8 @@ ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 """Dependency for OAuth2 password bearer token authentication."""
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-"""Password context for hashing and verifying passwords using bcrypt."""
+pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
+"""Password context for hashing and verifying passwords using argon2."""
 
 
 # Passwords
@@ -38,7 +38,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    """Hash a password using bcrypt.
+    """Hash a password using argon2.
 
     Args:
         password (str): The plain text password to hash.

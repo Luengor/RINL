@@ -8,7 +8,7 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
-    "bcrypt>=4.3.0",
+    "argon2-cffi>=25.1.0",
     "cryptography>=45.0.3",
     "fastapi[standard]>=0.115.12",
     "passlib>=1.7.4",
