@@ -3,8 +3,7 @@
 En este capítulo se pretende recoger las normas y referencias seguidas, así como las herramientas
 utilizadas en el desarrollo del proyecto. Se divide en cinco secciones: en la primera se explica
 la metodología utilizada, en la segunda las herramientas, en la tercera los modelos de detección
-de posturas, en la cuarta los prototipos y en la quinta las métricas utilizadas para evaluar
-el proyecto.
+de posturas y en la cuarta los prototipos de la interfaz de usuario.
 
 \section{Métodos}
 \label{sec:metodos}
@@ -32,7 +31,7 @@ Para el desarrollo del \gls{backend} de la aplicación se ha utilizado el \gls{f
 {https://fastapi.tiangolo.com/}, un \gls{framework} moderno y rápido para construir API con Python 3.7+
 basado en estándares como \texttt{OpenAPI} y \texttt{JSON Schema} \parencite{fastapi}.
 
-Junto a este framework, se han utilizado varias bibliotecas y herramientas para facilitar el desarrollo
+Junto a este \gls{framework}, se han utilizado varias bibliotecas y herramientas para facilitar el desarrollo
 y la gestión del proyecto. Entre ellas, destacan:
 \begin{itemize}
     \item \texttt{Pydantic}: una biblioteca para la validación de datos. Utilizada para definir los modelos de
@@ -83,11 +82,47 @@ las funcionalidades del motor.
 
 \subsection{Despliegue}
 \label{sec:despliegue}
-% Docker, Caddy, el servidor de oracle?
+Para el despliegue de la aplicación se ha utilizado \tech{Docker}{https://www.docker.com/}, una
+plataforma de contenedores que permite empaquetar aplicaciones y sus dependencias en contenedores
+aislados que se pueden ejecutar en cualquier entorno. Esto facilita el despliegue y la gestión de
+la aplicación, ya que con la configuración adecuada y las fuentes del proyecto se puede reproducir
+el entorno del despliegue en cualquier máquina.
+
+Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha utilizado \tech{Caddy}
+{https://caddyserver.com/}, un servidor web y proxy inverso que permite servir aplicaciones web con
+muy poca configuración. En la aplicación, se utiliza Caddy como proxy inverso para servir públicamente
+el \gls{frontend} en la ruta \url{https://rinl.soymilk.lueng.org/} y el \gls{backend} en la subruta
+\url{https://rinl.soymilk.lueng.org/api/}. Además, Caddy se encarga de gestionar los certificados
+SSL/TLS de forma automática, lo que simplifica la configuración del servidor.
+
+Por último, el despliegue de la aplicación se ha realizado en un servidor virtual privado (VPS) proporcionado
+por Oracle Cloud en su nivel gratuito. Este servidor se ha configurado para ejecutar los contenedores de Docker
+que contienen el sistema completo.
 
 \subsection{Gestión del proyecto y documentación}
 \label{sec:gestion-proyecto}
-% Jira, Sphinx, Latex, PlantUML, Wireflow, Matplotlib
+% Sphinx si lo uso
+Para la planificación y gestión de los sprints del proyecto se ha utilizado la aplicación web
+\tech{Jira}{https://www.atlassian.com/software/jira}, una herramienta de gestión de proyectos que
+permite crear y gestionar tareas y sprints de forma sencilla. Jira es ampliamente utilizado en la
+industria del software y ofrece una gran cantidad de funcionalidades para la gestión de proyectos
+de varias metodologías, incluyendo Scrum.
+
+Para la creación de los diagramas presentes en este documento y los anexos se han utilizado varias
+herramientas, dependiendo del tipo de diagrama. Para los diagramas relacionados con la ingeniería
+del software, como diagramas de clases, de secuencia o de flujo, se ha utilizado \tech{PlantUML}
+{https://plantuml.com/}, una herramienta que permite crear diagramas a partir de texto, lo que facilita
+su creación y edición. Para los diagramas de flujo de la interfaz de usuario se ha utilizado
+\tech{Wireflow}{https://app.wireflow.co/}, una herramienta sencilla y rápida que permite visualizar
+el flujo de la interfaz de usuario y las interacciones entre las diferentes pantallas. Por último,
+para los diagramas de burndown de los sprints se ha utilizado la biblioteca de Python
+\tech{Matplotlib}{https://matplotlib.org/}, una biblioteca de visualización de datos que ha permitido
+crear gráficos a partir de los datos exportados desde Jira.
+
+El documento como tal se ha redactado utilizando \LaTeX, un sistema de composición de textos que
+permite crear documentos de alta calidad tipográfica. Permite, entre otras cosas, la creación de
+comandos personalizados, la inclusión de referencias cruzadas, la creación de índices y tablas
+de contenido de manera automática, y la inclusión de bibliografía y glosario de forma sencilla.
 
 \subsection{Control de versiones}
 \label{sec:control-versiones}
@@ -127,14 +162,14 @@ aplicación.
     etiqueta = {fig:wireflow},
 }
 
-\section{Métricas}
-\label{sec:metricas}
-Durante el desarrollo del proyecto era necesario evaluar el correcto funcionamiento de la aplicación,
-así como la precisión de la detección de posturas. Aunque para el segundo de estos aspectos el
-proceso de validación consistió en probar la aplicación múltiples veces durante el desarrollo de
-la misma, para el primero se definieron una serie de pruebas unitarias para garantizar el correcto
-funcionamiento de la \gls{api}. Las pruebas unitarias se comenzaron a definir en los primeros sprints
-del desarrollo, una vez se creó la estructura de la \gls{api} y se implementaron las primeras
-funciones. Estas pruebas, que se ejecutan de manera casi automática, permiten verificar que cada nueva
-versión del código no introduce errores en las funcionalidades ya implementadas.
+% \section{Métricas}
+% \label{sec:metricas}
+% Durante el desarrollo del proyecto era necesario evaluar el correcto funcionamiento de la aplicación,
+% así como la precisión de la detección de posturas. Aunque para el segundo de estos aspectos el
+% proceso de validación consistió en probar la aplicación múltiples veces durante el desarrollo de
+% la misma, para el primero se definieron una serie de pruebas unitarias para garantizar el correcto
+% funcionamiento de la \gls{api}. Las pruebas unitarias se comenzaron a definir en los primeros sprints
+% del desarrollo, una vez se creó la estructura de la \gls{api} y se implementaron las primeras
+% funciones. Estas pruebas, que se ejecutan de manera casi automática, permiten verificar que cada nueva
+% versión del código no introduce errores en las funcionalidades ya implementadas.
 
