@@ -33,8 +33,8 @@ destinadas a la creación de APIs REST.
 
 \subsubsection{UV}
 \label{c08:subsubsec:uv}
-UV es un gestor de paquetes y proyectos para Python que permite crear y gestionar entornos viruales
-de forma sencilla y muy rápida \parencite{uvPython}. Se escoge UV frente a otros gestores de paquetes
+\tech{UV}{https://docs.astral.sh/uv/} es un gestor de paquetes y proyectos para Python que permite crear y gestionar entornos viruales
+de forma sencilla y muy rápida. Se escoge UV frente a otros gestores de paquetes
 o a no usar ninguno por su simplicidad y facilidad de uso. Además, es mucho más rápido que otros como
 poetry o pdm (ver figura \ref{fig:uvspeed}).
 
@@ -48,8 +48,8 @@ poetry o pdm (ver figura \ref{fig:uvspeed}).
 
 \subsubsection{FastAPI}
 \label{c08:subsubsec:fastapi}
-FastAPI es un \gls{framework} web para Python que permite crear APIs REST de forma muy rápida y
-sencilla \parencite{fastapi}. Se basa en el estándar OpenAPI y permite generar documentación de
+\tech{FastAPI}{https://fastapi.tiangolo.com/} es un \gls{framework} web para Python que permite crear
+APIs REST de forma muy rápida y sencilla. Se basa en el estándar OpenAPI y permite generar documentación de
 manera automática. Además, favorece la escritura de código limpio y mantenible, fomentando el uso de
 la composición y la reutilización de código a través de su sistema de inyección de dependencias. %
 Se escoge FastAPI frente a otros \glspl{framework} como Flask o Django por su simplicidad, rapidez
@@ -57,18 +57,27 @@ de desarrollo y libertad para estructurar el proyecto.
 
 \subsubsection{PostgreSQL}
 \label{c08:subsubsec:postgresql}
-Para el almacenamiento de datos se ha optado por PostgreSQL, un sistema de gestión de bases de datos
-relaccionales de código abierto \parencite{postgresql}. Se escoge PostgreSQL frente a otros sistemas
+Para el almacenamiento de datos se ha optado por \tech{PostgreSQL}{https://www.postgresql.org/}, un
+sistema de gestión de bases de datos relacionales de código abierto. Se escoge PostgreSQL frente a otros sistemas
 de bases de datos por su robustez y escalabilidad. Además, es compatible con el estándar SQL,
 estudiado en la asignatura de Bases de Datos, por lo que el autor ya tiene experiencia con él.
 
 \subsubsection{SQLAlchemy}
 \label{c08:subsubsec:sqlalchemy}
-SQLAlchemy es una librería de Python que proporciona un \gls{ORM} para interactuar con bases de datos
-relacionales de forma sencilla \parencite{sqlalchemy}. Permite definir modelos de datos como clases
-de Python y realizar consultas a la base de datos utilizando una sintaxis muy similar a SQL, pero
+\tech{SQLAlchemy}{https://www.sqlalchemy.org/} es una librería de Python que proporciona un \gls{ORM}
+para interactuar con bases de datos relacionales de forma sencilla. Permite definir modelos de datos
+como clases de Python y realizar consultas a la base de datos utilizando una sintaxis muy similar a SQL, pero
 con la ventaja de realizarse todo desde Python, utilizando sus tipos de datos y estructuras.
 
+La alternativa a utilizar un \gls{ORM} sería realizar las consultas directamente a la base de datos
+utilizando SQL, lo que puede ser más eficiente en algunos casos, pero también más propenso a errores
+y menos mantenible. También supondría un problema de seguridad, puesto que las consultas directas a las
+bases de datos son más propensas a sufrir ataques de inyección SQL, por lo que se debería prestar
+especial atención a la validación de los datos introducidos por el usuario. Por último, realizar las
+consultas directamente a la base de datos daría lugar a un código más acoplado y menos reutilizable:
+cambiar la base de datos por otra distinta supondría tener que cambiar todas las consultas realizadas
+en el código, mientras que utilizando un \gls{ORM} se puede cambiar la base de datos sin necesidad de
+modificar el código, siempre que sea compatible con la herramienta escogida.
 
 \subsection{Herramientas utilizadas en el frontend}
 \label{c08:subsec:herramientas-frontend}
@@ -81,25 +90,29 @@ JavaScript es el lenguaje de programación más utilizado en el desarrollo web
 \parencite{encuestaTecnologias2024}, pero su tipado dinámico puede llevar a errores difíciles de
 detectar y a un código menos legible y mantenible. TypeScript es un superconjunto de JavaScript que
 añade tipado estático, eliminando muchos de estos problemas y mejorando la productividad del
-desarrollo \parencite{typescript}.
+desarrollo.
 
 \subsubsection{React}
 \label{c08:subsubsec:react}
-React es una biblioteca de JavaScript para construir interfaces de usuario, desarrollada por
-Facebook \parencite{react}. Permite crear componentes reutilizables y gestionar el estado de la
-aplicación de forma sencilla.
+\tech{React}{https://react.dev/} es una biblioteca de JavaScript para construir interfaces de usuario,
+desarrollada por Facebook. Permite crear componentes reutilizables y gestionar el estado de la aplicación
+de forma sencilla. Se escoge React frente a otras bibliotecas como Vue por su popularidad y mayor
+flexibilidad, aunque su curva de aprendizaje pueda ser más pronunciada.
 
 % React query?
 
 \subsubsection{Vite}
 \label{c08:subsubsec:vite}
-Vite es una herramienta de construcción y desarrollo de aplicaciones web gratuita y de código
-abierto \parencite{Vite} que permite crear productos de manera rápida y sencilla. Inicialmente se
+\tech{Vite}{https://vitejs.dev/} es una herramienta de construcción y desarrollo de aplicaciones web gratuita
+y de código abierto que permite crear productos de manera rápida y sencilla. Inicialmente se
 escogió NextJS como \gls{framework} para el \gls{frontend}, pero poco después de comenzar el
 desarrollo se descartó, puesto que no permitía exportar la aplicación web como un sitio estático,
-lo que era necesario para servir la aplicación de manera independiente del \gls{backend}. Se
-optó por Vite como alternativa, ya que permite exportar la aplicación como un sitio web estático y
-soporta TypeScript y React de forma nativa.
+lo que era necesario para servir la aplicación de manera independiente del \gls{backend}. Esto
+suponía tener que crear un servidor independiente para servir la aplicación, lo que parecía
+innecesario para un proyecto de este tipo.
+
+Se optó entonces por Vite como alternativa, ya que permite exportar la aplicación como un sitio web
+estático y soporta TypeScript y React de forma nativa.
 
 \subsubsection{MediaPipe BlazePose}
 \label{c08:subsubsec:mediapipe}
@@ -121,16 +134,21 @@ ser muy útil para mejorar la precisión de la detección de posturas en el vide
 \label{c08:subsec:herramientas-despliegue}
 \subsubsection{Docker}
 \label{c08:subsubsec:docker}
-Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado por Docker, una
-herramienta de contenedorización que permite empaquetar aplicaciones y sus dependencias en
-contenedores ligeros y portables \parencite{docker}. Esto permite distribuir la aplicación completa
+Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado por \tech{Docker}
+{https://www.docker.com/}, una herramienta de contenedorización que permite empaquetar aplicaciones
+y sus dependencias en contenedores ligeros y portables. Esto permite distribuir la aplicación completa
 en distintos equipos simplemente compartiendo el archivo de configuración y las fuentes del proyecto,
 realizando la instalación y despliegue de forma automática.
 
+Se escoge utilizar una herramienta de contenedorización para facilitar el despliegue en máquinas
+distintas y evitar problemas de compatibilidad entre entornos. Se ha optado por Docker frente a
+otras herramientas como \tech{Podman}{https://podman.io/} simplemente por su popularidad y porque
+ya tenía experiencia previa con él.
+
 \subsubsection{Caddy}
 \label{c08:subsubsec:caddy}
-Caddy es un servidor web y proxy inverso que permite servir aplicaciones web de forma sencilla y
-rápida con un simple archivo de configuración \parencite{caddy}. Se escoge Caddy frente a otros
+\tech{Caddy}{https://caddyserver.com/} es un servidor web y proxy inverso que permite servir aplicaciones
+web de forma sencilla y rápida con un simple archivo de configuración. Se escoge Caddy frente a otros
 servidores web como Nginx o Apache por ser muy sencillo de configurar y por crear certificados
 SSL de forma automática y gratuita, lo que permite servir la aplicación de forma segura sin
 necesidad de comprar o generar un certificado.
@@ -143,11 +161,11 @@ necesidad de comprar o generar un certificado.
 
 \subsection{Herramientas utilizadas en el videojuego}
 \label{c08:subsec:herramientas-videojuego}
-Para el desarrollo del videojuego se ha optado por Unity, un motor de videojuegos muy popular y
-versátil que permite crear juegos en 2D y 3D de forma sencilla \parencite{unity}. Unity utiliza el
+Para el desarrollo del videojuego se ha optado por \tech{Unity}{https://unity.com/}, un motor de videojuegos
+muy popular y versátil que permite crear juegos en 2D y 3D de forma sencilla. Unity utiliza el
 lenguaje de programación C\# y cuenta con una gran cantidad de herramientas y recursos en línea que
-facilitan el desarrollo de videojuegos. Se consideró Godot como alternativa, pero se descartó puesto
-que el motor aun se encuentra en desarrollo muy activo y suele sufrir cambios frecuentes que pueden
+facilitan el desarrollo de videojuegos. Se consideró Godot como alternativa, pero se descartó, puesto
+que el motor aún se encuentra en desarrollo muy activo y suele sufrir cambios frecuentes que pueden
 romper la compatibilidad con versiones anteriores. Por otro lado, Unreal Engine no soporta exportar
 a WebGL \parencite{noWebExportUnrealReddit} \parencite{noWebExportUnreal}, lo que hace su uso
 inviable para este proyecto. Por esto, y por la familiaridad del autor con Unity, se optó por este
