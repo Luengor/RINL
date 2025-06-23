@@ -96,7 +96,7 @@ aplicación de forma sencilla.
 Vite es una herramienta de construcción y desarrollo de aplicaciones web gratuita y de código
 abierto \parencite{Vite} que permite crear productos de manera rápida y sencilla. Inicialmente se
 escogió NextJS como \gls{framework} para el \gls{frontend}, pero poco después de comenzar el
-desarrollo se descartó puesto que no permitía exportar la aplicación web como un sitio estático,
+desarrollo se descartó, puesto que no permitía exportar la aplicación web como un sitio estático,
 lo que era necesario para servir la aplicación de manera independiente del \gls{backend}. Se
 optó por Vite como alternativa, ya que permite exportar la aplicación como un sitio web estático y
 soporta TypeScript y React de forma nativa.
@@ -107,13 +107,13 @@ BlazePose es un modelo de aprendizaje automático desarrollado por Google que pe
 poses humanas en tiempo real a partir de imágenes o vídeos \parencite{bazarevsky2020blazepose}
 \parencite{xu2020ghum}. La decisión de utilizar BlazePose y no algún otro modelo de estimación de
 posturas como OpenPose o PoseNet son varias. OpenPose es un modelo que destaca por su precisión y
-capacidad para detectar multiples personas en una imagen, pero es muy pesado y requiere una gran
+capacidad para detectar múltiples personas en una imagen, pero es muy pesado y requiere una gran
 cantidad de recursos, lo que lo hace inviable para este proyecto, puesto que se busca una solución
 ligera y rápida que funcione en dispositivos móviles y navegadores web. Tanto PoseNet como BlazePose
 son modelos diseñados para funcionar en dispositivos móviles y navegadores web, ambos son modelos
 compatibles con TensorFlow.js. Aunque BlazePose resulta algo más preciso que PoseNet en la mayoría de
 los casos \parencite{MediaPipeMirror}, se opta por BlazePose por su mejor combinación de velocidad,
-precisión y tamaño del modelo . Además, BlazePose además de las coordenadas en 2D de las
+precisión y tamaño del modelo. Además, BlazePose además de las coordenadas en 2D de las
 articulaciones, también proporciona una estimación de la profundidad de las mismas, lo que puede
 ser muy útil para mejorar la precisión de la detección de posturas en el videojuego.
 
@@ -124,7 +124,7 @@ ser muy útil para mejorar la precisión de la detección de posturas en el vide
 Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado por Docker, una
 herramienta de contenedorización que permite empaquetar aplicaciones y sus dependencias en
 contenedores ligeros y portables \parencite{docker}. Esto permite distribuir la aplicación completa
-en distintos equipos simplemente compartiendo el archivo de comfiguración y las fuentes del proyecto,
+en distintos equipos simplemente compartiendo el archivo de configuración y las fuentes del proyecto,
 realizando la instalación y despliegue de forma automática.
 
 \subsubsection{Caddy}
@@ -157,7 +157,7 @@ motor para el desarrollo del videojuego.
 \label{c08:sec:viabilidad-economica}
 El proyecto se ha desarrollado como parte de un trabajo académico, por lo que no se ha considerado
 un presupuesto económico para su desarrollo. Por esto, se ha optado por utilizar herramientas y
-tecnologías gratuitas y, en la medida de los posible, de código abierto. El uso de herramientas
+tecnologías gratuitas y, en la medida de los posibles, de código abierto. El uso de herramientas
 gratuitas y de código abierto permite reducir el coste del proyecto respecto a utilizar herramientas
 de pago, pero también puede limitar las funcionalidades y el soporte disponible. Esto se puede
 remediar utilizando herramientas más populares y con una comunidad activa que, aunque no ofrezcan
