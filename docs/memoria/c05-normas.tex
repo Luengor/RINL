@@ -1,7 +1,10 @@
 \chapter{Normas y referencias}
 \label{cap:normas}
 En este capítulo se pretende recoger las normas y referencias seguidas, así como las herramientas
-utilizadas en el desarrollo del proyecto.
+utilizadas en el desarrollo del proyecto. Se divide en cinco secciones: en la primera se explica
+la metodología utilizada, en la segunda las herramientas, en la tercera los modelos de detección
+de posturas, en la cuarta los prototipos y en la quinta las métricas utilizadas para evaluar
+el proyecto.
 
 \section{Métodos}
 \label{sec:metodos}
@@ -17,6 +20,78 @@ adaptabilidad a los cambios. Para más información sobre la planificación del 
 
 \section{Herramientas}
 \label{sec:herramientas}
+En esta sección se detallarán las herramientas software utilizadas durante el desarrollo del
+proyecto de forma resumida. Para reducir la extensión de este capítulo, se agruparán las
+herramientas en categorías y se explicará brevemente su uso. Una descripción más detallada
+de algunas de las herramientas utilizadas y la razón de su elección sobre otras se puede encontrar
+en el capítulo \textit{\nameref{c08:sec:alternativas-tecnologicas}}.
+
+\subsection{Desarrollo del \Gls{backend}}
+\label{sec:desarrollo-api}
+Para el desarrollo del \gls{backend} de la aplicación se ha utilizado el \gls{framework} \tech{FastAPI}
+{https://fastapi.tiangolo.com/}, un \gls{framework} moderno y rápido para construir API con Python 3.7+
+basado en estándares como \texttt{OpenAPI} y \texttt{JSON Schema} \parencite{fastapi}.
+
+Junto a este framework, se han utilizado varias bibliotecas y herramientas para facilitar el desarrollo
+y la gestión del proyecto. Entre ellas, destacan:
+\begin{itemize}
+    \item \texttt{Pydantic}: una biblioteca para la validación de datos. Utilizada para definir los modelos de
+        datos de entrada y salida de la \gls{api}, garantizando que los datos cumplen con los tipos y formatos
+        esperados.
+
+    \item \texttt{PyJWT}: una biblioteca para la creación y verificación de tokens JWT (JSON Web Tokens).
+        Utilizada para la autenticación y autorización de usuarios en la \gls{api}.
+
+    \item \texttt{Pytest}: una biblioteca para la realización de pruebas unitarias y de integración.
+        Se integra de manera muy sencilla con el código existente, permitiendo definir pruebas para
+        las diferentes funcionalidades de la \gls{api} y ejecutarlas de forma automática.
+
+    \item \texttt{SQLAlchemy}: el \gls{ORM} utilizado para interactuar con la base de datos de forma
+        sencilla y segura. Permite interactuar con varios tipos de bases de datos relacionales,
+        para interactuar con PostgreSQL se ha utilizado el paquete \texttt{psycopg2}.
+
+    \item \texttt{Uvicorn}: un servidor \gls{asgi} ligero y rápido para ejecutar aplicaciones como FastAPI.
+        Es utilizado para servir la \gls{api} tanto en producción como en desarrollo, donde además permite
+        la recarga automática del código al detectar cambios, facilitando el desarrollo.
+\end{itemize}
+
+Como se ha mencionado entre la lista de herramientas, se ha utilizado \tech{PostgreSQL}
+{https://www.postgresql.org/} como sistema de gestión de bases de datos relacional para almacenar
+la información de la aplicación.
+
+Para la gestión de las dependencias del proyecto, así como para la creación de un entorno virtual se
+ha utilizado \tech{UV}{https://docs.astral.sh/uv/}. Esta herramienta permite gestionar las dependencias
+de forma sencilla y rápida, además de crear un entorno virtual aislado para el proyecto. Esto es
+especialmente útil para evitar conflictos entre las dependencias de diferentes proyectos y garantizar
+que el proyecto se ejecuta en un entorno controlado y reproducible. Además, es mucho más rápido que el
+resto de gestores de dependencias \parencite{Katabattuni2024Nov}.
+
+\subsection{Desarrollo Web}
+\label{sec:desarrollo-web}
+% Vite, React, Mantine, Tanstack-Query, hey openapi, Typescript, bun
+
+\subsection{Videojuego}
+\label{sec:videojuego}
+Para el desarrollo del videojuego se ha utilizado el motor de videojuegos \tech{Unity}
+{https://unity.com/}, un motor de videojuegos multiplataforma que permite crear juegos en 2D y 3D.
+Unity es ampliamente utilizado en la industria de los videojuegos y ofrece una gran cantidad de
+herramientas y recursos para hacer videojuegos de forma sencilla y rápida.
+
+Junto a Unity, se ha utilizado el lenguaje de programación \texttt{C\#} para el desarrollo del
+videojuego, ya que es el lenguaje de programación principal de Unity y permite acceder a todas
+las funcionalidades del motor.
+
+\subsection{Despliegue}
+\label{sec:despliegue}
+% Docker, Caddy, el servidor de oracle?
+
+\subsection{Gestión del proyecto y documentación}
+\label{sec:gestion-proyecto}
+% Jira, Sphinx, Latex, PlantUML, Wireflow, Matplotlib
+
+\subsection{Control de versiones}
+\label{sec:control-versiones}
+
 
 \section{Modelos}
 \label{sec:modelos}
@@ -59,7 +134,7 @@ así como la precisión de la detección de posturas. Aunque para el segundo de 
 proceso de validación consistió en probar la aplicación múltiples veces durante el desarrollo de
 la misma, para el primero se definieron una serie de pruebas unitarias para garantizar el correcto
 funcionamiento de la \gls{api}. Las pruebas unitarias se comenzaron a definir en los primeros sprints
-del desarrollo, una vez el se creó la estructura de la \gls{api} y se implementaron las primeras
+del desarrollo, una vez se creó la estructura de la \gls{api} y se implementaron las primeras
 funciones. Estas pruebas, que se ejecutan de manera casi automática, permiten verificar que cada nueva
 versión del código no introduce errores en las funcionalidades ya implementadas.
 
