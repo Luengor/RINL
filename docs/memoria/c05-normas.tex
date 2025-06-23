@@ -68,6 +68,43 @@ resto de gestores de dependencias \parencite{Katabattuni2024Nov}.
 \subsection{Desarrollo Web}
 \label{sec:desarrollo-web}
 % Vite, React, Mantine, Tanstack-Query, hey openapi, Typescript, bun
+En el \gls{frontend} de la aplicación se ha utilizado el \gls{framework} \tech{React}
+{https://react.dev/}, una biblioteca de JavaScript para construir interfaces de usuario que permite
+crear componentes reutilizables y gestionar el estado de la aplicación. Junto a React, se ha
+utilizado \tech{Vite}{https://vitejs.dev/} como servidor de desarrollo y herramienta de
+construcción. Vite, al igual que FastAPI, permite la recarga automática del código al detectar
+cambios.
+
+Para facilitar el desarrollo, se han utilizado varias bibliotecas y herramientas:
+\begin{itemize}
+    \item \tech{Mantine}{https://mantine.dev/}: una biblioteca de componentes de interfaz de usuario
+        para React que proporciona una gran cantidad de plantillas y componentes ya diseñados, así
+        como varias opciones de personalización. Esto permite centrarse en el desarrollo de la interfaz
+        y la lógica sin tener que preocuparse demasiado por el diseño de los componenetes más básicos.
+
+    \item \tech{Hey OpenAPI}{https://heyopenapi.com/}: una herramienta que permite generar código
+        fuente de cliente para hacer uso de una \gls{api} a partir de su especificación OpenAPI.
+        En este caso, se ha utilizado para generar el código fuente del cliente utilizado para
+        interactuar con el \gls{backend} de la aplicación.
+
+    \item \tech{TanStack Query}{https://tanstack.com/query/latest}: una biblioteca para la gestión de
+        consultas en aplicaciones React que permite simplificar la obtención y el almacenamiento en caché
+        de datos asíncronos. Se utiliza junto a Hey OpenAPI para gestionar las consultas a la \gls{api}
+        de forma sencilla y eficiente.
+\end{itemize}
+
+Todas estas herramientas, así como las dependencias del proyecto, se gestionan a través de \tech{Bun}
+{https://bun.sh/}, un gestor de dependencias y entorno de ejecución para JavaScript y TypeScript que
+ofrece una gran velocidad de instalación y ejecución. Para el despliegue sin embargo, se ha utilizado
+el más conocido \tech{Node.js}{https://nodejs.org/}, ya que es el entorno de ejecución más utilizado
+para aplicaciones web.
+
+Por último, todo el código del \gls{frontend} se ha escrito en \tech{TypeScript}
+{https://www.typescriptlang.org/}, un superconjunto de JavaScript que añade tipado estático y otras
+funcionalidades que facilitan el desarrollo y la limpieza del código. Junto a TypeScript, se ha
+utilizado \tech{TSX}{https://tsx.is/}, un lenguaje de programación que permite escribir código
+TypeScript embebido en archivos HTML, lo que facilita la creación de componentes de interfaz
+de usuario en React.
 
 \subsection{Videojuego}
 \label{sec:videojuego}
@@ -126,7 +163,13 @@ de contenido de manera automática, y la inclusión de bibliografía y glosario 
 
 \subsection{Control de versiones}
 \label{sec:control-versiones}
-
+Puesto que soy dado a cometer errores, se ha utilizado un sistema de control de versiones para
+gestionar el código fuente del proyecto. En concreto, se han utilizado \tech{Git}{https://git-scm.com/}
+y \tech{GitHub}{https://github.com/}. \texttt{Git} es una herramienta de control de versiones
+distribuído que permite llevar un registro de los cambios realizados en el código fuente y colaborar
+con otros desarrolladores. GitHub por su parte es una plataforma de alojamiento de código fuente que,
+además de utilizar Git, ofrece funcionalidades adicionales como la ejecución de acciones automáticas
+al realizar cambios en el código o la gestión de incidencias, todo desde una cómoda interfaz web.
 
 \section{Modelos}
 \label{sec:modelos}
@@ -153,7 +196,14 @@ aplicación.
 
 \section{Prototipos}
 \label{sec:prototipos}
-% Diagrama de flujo de la interfaz (UX flow diagram)
+Durante el desarrollo del proyecto no se crearon muchos prototipos de la interfaz de usuarios, ya
+que se utilizó un enfoque de desarrollo ágil y se fue modificando y adaptando la interfaz a medida
+que avanzaba el proyecto. Sin embargo, sí se creó un prototipo inicial de la navegación de la
+aplicación que muestra las diferentes pantallas y como se relacionan entre sí. Este prototipo
+se creó utilizando la herramienta \tech{Wireflow}{https://app.wireflow.co/}, una herramienta
+sencilla y rápida para crear diagramas de flujo de la interfaz de usuario. El resultado de este
+prototipo se puede ver en la figura \ref{fig:wireflow}.
+
 \diagrama{
     nombre = {Flujo de la interfaz},
     fuente = {Propia, Creado con Wireflow (\url{https://app.wireflow.co/})},
