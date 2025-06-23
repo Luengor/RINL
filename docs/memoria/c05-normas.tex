@@ -1,13 +1,65 @@
 \chapter{Normas y referencias}
 \label{cap:normas}
+En este capítulo se pretende recoger las normas y referencias seguidas, así como las herramientas
+utilizadas en el desarrollo del proyecto.
 
 \section{Métodos}
+\label{sec:metodos}
+Para el desarrollo del proyecto se ha seguido una metodología ágil, en concreto Scrum. Se escogió
+una metodología ágil debido a que es de gran utilidad para proyectos de desarrollo en los que
+pueden surgir cambios en los requisitos o problemas técnicos no previstos que afectarían mucho
+a una planificación predictiva \parencite{robert2003agile}. Scrum por su parte es un marco de trabajo
+ligero que agrupa el trabajo en ciclos cortos llamados sprints, con duración entre una y cuatro semanas,
+donde se planifica el trabajo a realizar y se revisa al final del ciclo \parencite{schwaber2020scrum}.
+
+Este nivel reducido de planificación es más sencillo de realizar y permite un mayor grado de
+adaptabilidad a los cambios. Para más información sobre la planificación del proyecto, ver el \tercerAnexo.
 
 \section{Herramientas}
+\label{sec:herramientas}
 
 \section{Modelos}
+\label{sec:modelos}
+Para la detección de posturas en tiempo real se ha utilizado una red neuronal convolucional,
+BlazePose, un modelo de aprendizaje profundo diseñado para la detección de posturas humanas en
+imágenes y vídeos \parencites{bazarevsky2020blazepose}{xu2020ghum}. Este modelo es capaz de
+detectar y rastrear 33 puntos clave (ver figura \ref{fig:blazepose}) del cuerpo humano en tiempo
+real, lo que lo hace ideal para aplicaciones de seguimiento de posturas y análisis de movimiento.
+Además, incluye junto a las posiciones de los puntos clave en la imagen, la confianza de la
+detección y la visibilidad de cada punto, así como una representación de los puntos en 3D.
+
+Las razones para escoger BlazePose sobre otros modelos de detección de posturas se detallan
+en el capítulo \textit{\nameref{c08:sec:alternativas-tecnologicas}}, en el apartado dedicado al modelo de
+detección de posturas (\ref{c08:subsubsec:mediapipe}). De forma resumida, BlazePose ofrecía un
+buen equilibrio entre precisión y velocidad de procesamiento, lo que lo hacía adecuado para esta
+aplicación.
+
+\diagrama{
+    nombre = {Detección de posturas con BlazePose},
+    fuente = {Google, Creative Commons},
+    archivo = {memoria/fotos/pl.png},
+    etiqueta = {fig:blazepose},
+}
 
 \section{Prototipos}
+\label{sec:prototipos}
+% Diagrama de flujo de la interfaz (UX flow diagram)
+\diagrama{
+    nombre = {Flujo de la interfaz},
+    fuente = {Propia, Creado con Wireflow (\url{https://app.wireflow.co/})},
+    archivo = {memoria/fotos/wireflow.jpg},
+    width = 0.9\textwidth,
+    etiqueta = {fig:wireflow},
+}
 
 \section{Métricas}
+\label{sec:metricas}
+Durante el desarrollo del proyecto era necesario evaluar el correcto funcionamiento de la aplicación,
+así como la precisión de la detección de posturas. Aunque para el segundo de estos aspectos el
+proceso de validación consistió en probar la aplicación múltiples veces durante el desarrollo de
+la misma, para el primero se definieron una serie de pruebas unitarias para garantizar el correcto
+funcionamiento de la \gls{api}. Las pruebas unitarias se comenzaron a definir en los primeros sprints
+del desarrollo, una vez el se creó la estructura de la \gls{api} y se implementaron las primeras
+funciones. Estas pruebas, que se ejecutan de manera casi automática, permiten verificar que cada nueva
+versión del código no introduce errores en las funcionalidades ya implementadas.
 
