@@ -35,6 +35,8 @@ acceso a datos, se conoce como arquitectura en tres capas \parencites{Ibm2025Apr
 permite desacoplar la estructura de los datos de la presentación de los mismos, lo que facilita
 la evolución del sistema y la reutilización de los componentes \parencite[p.~3]{nyabuto2024architectural}.
 
+% MVC?
+
 \subsection{\glsfirst{dao}}
 \label{anexo2:sec:dao}
 El servidor encargado de proporcionar las funcionalidades del sistema utiliza el patrón de diseño
@@ -50,6 +52,31 @@ facilita la modificación y mantenimiento de distintas secciones del sistema de 
     archivo = {anexo2/imgs/dao.png},
     etiqueta = {anexo2:fig:dao},
 }
+
+\subsection{Singleton}
+\label{anexo2:sec:singleton}
+El patrón de diseño singleton se utiliza en Unity para garantizar que solo exista una instancia de
+la clase \texttt{GameController} al mismo tiempo y exista un acceso global a ella. Esto permite
+centralizar algunas de las funcionalidades comunes del videojuego evitando la creación de múltiples
+instancias de la misma clase que podrían interferir entre sí y provocar comportamientos inesperados.
+Este patrón es especialmente útil en el contexto de un videojuego, donde muchas veces es necesario
+mantener un estado global que debe ser accesible desde diferentes partes del código como la configuración
+actual del juego o el estado de las actividades \parencite{GameProgrammingPatterns}.
+
+En esta aplicación, la clase \texttt{GameController} es la encargada de gestionar la configuración del
+juego y de mantener referencias a objetos importantes de la escena, como pueden ser el visualizador de
+posturas (\texttt{RINLBody}), el sistema de guiones para la escena (\texttt{SceneScript}) o el
+comunicador con el \gls{backend} (\texttt{JSConnector}). Se puede ver un diagrama de este patrón para
+el caso de la aplicación en la figura \ref{anexo2:fig:singleton}.
+
+\diagrama{
+    nombre = {Singleton},
+    fuente = {Propia, creado en diagrams.net},
+    archivo = {anexo2/imgs/singleton.pdf},
+    etiqueta = {anexo2:fig:singleton},
+}
+
+% Request Reply para unity y react?
 
 \section{Diagrama de clases}
 \label{anexo2:sec:diagrama-clases-diseno}
