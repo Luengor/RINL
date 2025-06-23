@@ -33,7 +33,10 @@ introducirlos en la base de datos y justo antes de devolverlos al usuario. El ci
 utilizando una clave de cifrado que se almacena en el entorno de ejecución de la aplicación, lo que
 garantiza que no se almacena en la base de datos ni en el código fuente de la aplicación.
 
-% Mencionar que no se guarda el feed de la cámara
+También es importante destacar aquí que ni el video utilizado para la detección de posturas ni los
+datos de las posturas detectadas se almacenan en la base de datos o transmiten fuera del cliente.
+Estos datos se procesan directamente en el navegador del usuario y no se envían a la \gls{api} ni se almacenan
+en ningún lugar.
 
 \subsection{Contraseñas}
 \label{anexo4:sec:contrasenas}
@@ -61,15 +64,45 @@ pwd_context = CryptContext(
 
 \subsection{Derecho al olvido}
 \label{anexo4:sec:derecho-al-olvido}
+El derecho al olvido (o derecho a la supresión) es un derecho que permite a los usuarios solicitar
+la eliminación de sus datos personales de una aplicación o servicio \parencite{EuropeanParliament2016a}.
+En la aplicación, se ha implementado una funcionalidad que permite a los usuarios eliminar su cuenta
+y todos sus datos asociados (sus formas físicas y actividades realizadas) de forma permanente del
+sistema.
 
 \section{Saneamiento de entradas}
 \label{anexo4:sec:saneamiento-entradas}
+El saneamiento de entradas es una práctica de seguridad que consiste en validar y limpiar los datos
+que recibe una aplicación para evitar diversos problemas. Si un actor malintencionado quisiera
+atacar el sistema, uno de los primeros sitios por los que podría intentar hacerlo es a través
+de las entradas que recibe la aplicación. Dos de los ataques más comunes que se pueden realizar
+contra una aplicación web como la de este proyecto son el \gls{xss} y las inyecciones SQL.
 
-\subsection{Validación de datos}
-\label{anexo4:sec:validacion-datos}
+El ataque de \gls{xss} consiste en inyectar código JavaScript malicioso en una página web para que
+las víctimas lo ejecuten en su navegador con sus permisos. Normalmente, este tipo de ataques se realizan
+estableciendo un campo público del sistema, como un comentario o el propio nombre del usuario con un
+script que se ejecuta al cargar la página.
 
-\subsection{Saneamiento de entradas}
-\label{anexo4:sec:saneamiento-entradas-2}
+Sin embargo, en la aplicación desarrollada, no es posible consultar ningún dato introducido por otro usuario,
+por lo que este tipo de ataques no son posibles. Además, si se muestra algún dato introducido por el usuario,
+como su nombre, se hace de forma segura, puesto que los valores embebidos en archivos \gls{tsx} se escapan
+automáticamente, evitando así la inyección de código JavaScript.
+
+El otro tipo de ataque común es la inyección SQL, que consiste en inyectar código SQL malicioso en
+una consulta SQL para manipular la base de datos de forma no autorizada. Para evitar este tipo de
+ataques, la aplicación debería ser capaz de validar y limpiar las entradas que recibe antes de
+procesarlas. En la solución desarrollada se utiliza el \gls{ORM} \texttt{SQLAlchemy}
+\footnote{\url{https://www.sqlalchemy.org/}} para interactuar con la base de datos, lo que ayuda a
+prevenir este tipo de ataques, ya que \texttt{SQLAlchemy} utiliza consultas parametrizadas para
+evitar la inyección de código SQL malicioso.
+
+Por último, otro aspecto importante a destacar es que, en la aplicación, se ha implementado
+un sistema de validación de entradas que asegura que los datos introducidos por el usuario cumplen
+con ciertos criterios antes de ser procesados. Esto se realiza con la ayuda de \texttt{Pydantic}%
+\footnote{\url{https://docs.pydantic.dev/latest/}}, una biblioteca de validación de datos que
+permite definir modelos de datos y validar las entradas de forma sencilla y eficiente. Gracias a
+esta validación, se evita que se introduzcan datos cuyos tipos o formatos no sean los esperados,
+lo que ayuda a prevenir errores y vulnerabilidades en la aplicación.
 
 \section{Autenticación y autorización}
 \label{anexo4:sec:autenticacion}
@@ -95,15 +128,15 @@ En la aplicación se usan tokens para varias labores, como la autenticación de 
 verificación de correos electrónicos y la actualización de estos. El procedimiento que se sigue
 para el caso de la autenticación de usuarios es el siguiente:
 \begin{enumerate}
-    \item El usuario envía sus credenciales (correo electrónico y contraseña) a la API.
-    \item La API verifica las credenciales y, si son correctas, genera un token JWT que contiene
+    \item El usuario envía sus credenciales (correo electrónico y contraseña) a la \gls{api}.
+    \item La \gls{api} verifica las credenciales y, si son correctas, genera un token JWT que contiene
           el identificador del usuario y la fecha de expiración del token. Este token se firma
-          con una clave secreta que solo la API conoce para poder verificar su autenticidad.
+          con una clave secreta que solo la \gls{api} conoce para poder verificar su autenticidad.
     \item El usuario recibe el token y lo almacena en su cliente.
-    \item En cada solicitud posterior a la API, el usuario incluye el token en el encabezado de
+    \item En cada solicitud posterior a la \gls{api}, el usuario incluye el token en el encabezado de
           autorización de la solicitud.
-    \item La API verifica el token, comprobando su firma y asegurándose de que no ha expirado. Si
-          el token es válido, la API permite el acceso a los recursos solicitados. Si no, responde
+    \item La \gls{api} verifica el token, comprobando su firma y asegurándose de que no ha expirado. Si
+          el token es válido, la \gls{api} permite el acceso a los recursos solicitados. Si no, responde
           con un error de autenticación.
 \end{enumerate}
 
@@ -111,7 +144,7 @@ El mayor riesgo de seguridad asociado al uso de tokens JWT es el robo del token 
 atacante. Para que un ataque de este tipo tenga éxito, el atacante debe conseguir acceder al token
 del usuario antes de que este expire (en la aplicación, el tiempo de expiración de \textit{todos}
 los tokens es solo de 15 minutos). Es un riesgo que se mitiga utilizando HTTPS para cifrar las
-comunicaciones entre el cliente y la API y teniendo en cuenta que, el almacenamiento de los tokens
+comunicaciones entre el cliente y la \gls{api} y teniendo en cuenta que, el almacenamiento de los tokens
 en el cliente, es privado para cada sitio web.
 
 Las maneras en las que un atacante podría robar un token se limitarían entonces a impersonar la
@@ -127,8 +160,8 @@ haber iniciado sesión en la aplicación, evitando así que el receptor incorrec
 de verificación pueda hacer uso de él.
 
 Esta obligación de verificación es una medida de seguridad que ayuda a prevenir el registro de
-cuentas falsas o spam, ya que requiere que el usuario tenga acceso al correo electrónico
-proporcionado durante el registro para poder hacer uso de él.
+cuentas falsas o spam, evitando que usuarios malintencionados puedan crear cuentas con correos
+que no les pertenecen.
 
 \diagrama{
     nombre = {Token JWT de actualización de correo electrónico},
@@ -158,21 +191,21 @@ segura en todos los navegadores modernos \parencite{MDNGetUserMedia}.
 \subsection{CORS}
 \label{anexo4:sec:conexiones-cors}
 El uso de CORS (Cross-Origin Resource Sharing) es una medida de seguridad que permite a los
-navegadores web controlar el acceso a recursos de diferentes orígenes. En la API de la aplicación,
+navegadores web controlar el acceso a recursos de diferentes orígenes. En la \gls{api} de la aplicación,
 se ha configurado CORS para permitir el acceso solo desde el origen correcto
 (\url{https://rinl.soymilk.lueng.org}) y para permitir el uso de los métodos HTTP necesarios para la
-interacción con la API.
+interacción con la \gls{api}.
 
 Cabe destacar que CORS es solo una medida de seguridad del lado del cliente, es decir, su navegador
-deberá cumplir con las restricciones de CORS para acceder a la API. Esto no significa que la API
+deberá cumplir con las restricciones de CORS para acceder a la \gls{api}. Esto no significa que la \gls{api}
 deniegue el acceso a otros orígenes, sino que los navegadores no realizarán las solicitudes a menos
 que su origen esté permitido. Por lo tanto, es importante tener en cuenta que CORS no es una
 solución de seguridad completa, sino una medida adicional para proteger la aplicación de ataques
-de tipo cross-site scripting (XSS) y cross-site request forgery (CSRF).
+de tipo \gls{xss} y \gls{csrf}.
 
 \begin{lstlisting}[
     language=Python,
-    caption={Configuración de CORS en la API}, captionpos=b,
+    caption={Configuración de CORS en la \gls{api}}, captionpos=b,
     label={anexo4:lst:cors-config}]
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -193,4 +226,41 @@ app.add_middleware(
 )
 \end{lstlisting}
 
+\section{Pruebas unitarias}
+\label{anexo4:sec:pruebas}
+Se conoce como prueba unitaria a un test que se realiza sobre una unidad de código, sobre la
+cantidad más pequeña de código que se puede probar de forma aislada. Para la aplicación
+desarrollada, se ha utilizado el framework de pruebas \texttt{pytest}
+\footnote{\url{https://docs.pytest.org/en/stable/}} para implementar las pruebas unitarias.
+
+Aunque las pruebas unitarias no son una medida de seguridad en sí mismas, son una herramienta
+importante para garantizar la ausencia de errores y, por tanto, de vulnerabilidades en la
+aplicación. Algunos de los tests unitarios implementados en la aplicación consisten en realizar
+acciones que deberían fallar si la aplicación no se comporta de forma segura, como intentar
+acceder a datos sensibles sin la autenticación adecuada o intentar realizar acciones no autorizadas.
+
+\begin{lstlisting}[
+    language=Python,
+    caption={Test unitario de actualización de usuario no verificado}, captionpos=b,
+    label={anexo4:lst:test-update-unverified-user}]
+def test_update_unverified_user(
+        client: TestClient,
+        unverified_login_token: str):
+    # Update user
+    response = client.put(
+        "/user/me",
+        headers = {
+            "Authorization": f"Bearer {unverified_login_token}"
+        },
+        json={
+            "email": "test2",
+            "name": "test2",
+            "year_of_birth": 2001,
+        },
+    )
+
+    # Check response
+    assert response.status_code == 400
+    assert response.json()["detail"] == NOT_VERIFIED.detail
+\end{lstlisting}
 
