@@ -14,34 +14,37 @@ node "Servidor\n(rinl.soymilk.lueng.org)" <<Device>> as Servidor {
         artifact "Caddyfile" <<Artifact>> as Caddyfile
     }
 
-    node "Frontend" <<Container>> {
-        node "Vite" <<Execution environment>> {
-            artifact "App.ts" <<Artifact>> as App
+    node "Docker engine" <<Execution environment>> {
+        artifact "docker-compose.yml" <<Deployment spec>> as DockerCompose
+        artifact ".env" <<Artifact>> as Env
+
+        node "Frontend" <<Container>> {
+            artifact "Dockerfile" <<Deployment spec>> as FrontendDockerfile
+
+            node "Vite" <<Execution environment>> {
+                artifact "App.ts" <<Artifact>> as VApp
+            }
         }
-    }
 
-    node "Backend" <<Container>> {
-        node "FastAPI" <<Execution environment>> {
-            artifact "main.py" <<Artifact>> as Main
-            artifact "models" <<Artifact>> as Models
-            artifact "schemas" <<Artifact>> as Schemas
-            artifact "routers" <<Artifact>> as Routers
-            artifact "dao" <<Artifact>> as Dao
+        node "Backend" <<Container>> {
+            artifact "Dockerfile" <<Deployment spec>> as BackendDockerfile
+
+            node "FastAPI" <<Execution environment>> {
+                artifact "app" <<Artifact>> as FApp
+            }
         }
-    }
 
-    node "Base de Datos" <<Container>> {
-        node "PostgreSQL" <<Execution environment>> {
-            artifact "db" <<Artifact>> as Db
+        node "Base de Datos" <<Container>> as DB {
+            node "PostgreSQL" <<Execution environment>> {
+                artifact "db" <<Artifact>> as Db
+            }
         }
+
+        DB -- Backend
+        Backend -- Frontend
+        Env ..> Backend : "<<deploy>>"
+        Env ..> Frontend : "<<deploy>>"
     }
-
-    artifact ".env" <<Artifact>> as Env
-
-    Backend -- Frontend
-    Backend -up--- "Base de Datos"
-    Backend -- Env
-    Frontend -- Env
 }
 
 Cliente -- Servidor
