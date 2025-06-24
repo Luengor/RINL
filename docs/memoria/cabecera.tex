@@ -31,8 +31,8 @@ de dispositivos, desde ordenadores fijos hasta teléfonos móviles.
 Los minijuegos desarrollados requieren que el usuario realice diferentes movimientos corporales,
 como saltar, agacharse o intentar alcanzar un objeto con las manos, lo que proporciona una
 experiencia de usuario lúdica y activa. En cada una de las sesiones de juego se registran tanto
-la puntuación obtenida como la intensidad de actividad física realizada en forma de \textit{puntos
-de actividad}. Esto permite al usuario llevar un control de la cantidad y calidad del ejercicio
+la puntuación obtenida como la intensidad de actividad física realizada en forma de \enquote{\textit{puntos
+de actividad}}. Esto permite al usuario llevar un control de la cantidad y calidad del ejercicio
 realizado, todo desde la misma aplicación.
 
 Este proyecto demuestra la viabilidad de crear un sistema de entretenimiento y ejercicio capaz de
@@ -42,6 +42,36 @@ convencional, sin necesidad de dispositivos de entrada especializados ni de equi
 
 \chapter{Abstract}
 \label{cap:abstract}
+Interaction in video games has evolved beyond conventional devices such as keyboard and mice,
+especially in the field of rehabilitation and physical exercise (exergames), which uses specialized
+input devices such as motion sensors, depth cameras or specific controllers to offer a more natural
+and intuitive experience. However, these specialized devices are often expensive or specific to a
+type of game, which limits their accessibility and general use.
+
+This thesis addresses this limitation by designing and developing an entertainment and exercise
+system that uses human body posture detection via a camera as its primary input method. To do this,
+a posture detection system based on the 3D Pose estimation model MediaPipe BlazePose will be used,
+which extracts the position of key points on the human body in real time from images captured by a
+conventional camera. This model is capable of detecting up to 33 joint points, as well as generating
+a three-dimensional representation of the body's posture. This information will be used to control
+several mini-games developed in the Unity game engine, which will be run in a web browser via WebGL.
+
+The end result is a web platform that allows users to keep track of their fitness and physical activity,
+as well as play two different mini-games that use posture detection to interact with the user. This is a
+multiplatform web app, with the only requirement being the use of a modern web browser and a conventional
+camera. The system has the ability to adapt the quality of the body detection to the computing capabilities
+of the device running the application. Thanks to this, the product can be used on a wide variety of devices,
+from desktop computers to mobile phones.
+
+The mini-games developed require the user to perform different body movements, such as jumping, crouching,
+or reaching for an object with their hands, providing a playful and active user experience. In each game
+session, both the score obtained and the intensity of physical activity performed are recorded in the form
+of \enquote{activity points}. This allows the user to keep track of the quantity and quality of the exercise
+performed, all from the same application.
+
+This project demonstrates the feasibility of creating an entertainment and exercise system capable of
+detecting and analyzing the human body's posture in real time using only a conventional camera,
+without the need for specialized input devices or high-performance equipment.
 
 
 \chapter{Agradecimientos}
