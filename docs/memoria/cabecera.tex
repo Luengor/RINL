@@ -3,10 +3,46 @@
 
 \chapter{Resumen}
 \label{cap:resumen}
+La interacción en videojuegos ha evolucionado más allá de los dispositivos convencionales como el
+teclado y el ratón, especialmente en el ámbito de la rehabilitación y el ejercicio físico
+(\textit{exergames}), que utilizan dispositivos de entrada especializados como sensores de
+movimiento, cámaras de profundidad o mandos específicos para ofrecer una experiencia más natural
+e intuitiva. Sin embargo, estos dispositivos especializados suelen ser costosos y específicos para
+un tipo de juego o actividad, lo que limita su accesibilidad y uso general.
+
+Este trabajo de fin de grado aborda dicha limitación mediante el diseño y desarrollo de un sistema de
+entretenimiento y ejercicio que utiliza la detección de posturas del cuerpo humano a través de una cámara
+como método de entrada principal.
+Para ello, se utilizará un sistema de detección de posturas basado en el modelo de inteligencia artificial
+MediaPipe BlazePose, que extrae la posición de puntos clave del cuerpo humano en tiempo real a partir de
+imágenes capturadas por una cámara convencional. Este modelo es capaz de detectar hasta 33 puntos
+articulares, así como generar una representación tridimensional de la postura del cuerpo humano.
+Esta información será usada para controlar varios minijuegos desarrollados en el motor de videojuegos
+Unity, que se ejecutarán en un navegador web a través de WebGL.
+
+El resultado final es una plataforma web que permite al usuario mantener un registro de su forma y
+actividad física, así como jugar a dos minijuegos distintos que utilizan la detección de posturas
+para interactuar con el usuario. Esta aplicación web es multiplataforma, teniendo como único requisito
+la utilización de un navegador web moderno y una cámara convencional. El sistema tiene la capacidad
+de adaptar la calidad de la detección corporal a las capacidades de cómputo del dispositivo ejecutando
+la aplicación. Gracias a esto, se consigue que el producto pueda ser utilizado en una amplia variedad
+de dispositivos, desde ordenadores fijos hasta teléfonos móviles.
+
+Los minijuegos desarrollados requieren que el usuario realice diferentes movimientos corporales,
+como saltar, agacharse o intentar alcanzar un objeto con las manos, lo que proporciona una
+experiencia de usuario lúdica y activa. En cada una de las sesiones de juego se registran tanto
+la puntuación obtenida como la intensidad de actividad física realizada en forma de \textit{puntos
+de actividad}. Esto permite al usuario llevar un control de la cantidad y calidad del ejercicio
+realizado, todo desde la misma aplicación.
+
+Este proyecto demuestra la viabilidad de crear un sistema de entretenimiento y ejercicio capaz de
+detectar y analizar la postura del cuerpo humano en tiempo real utilizando únicamente una cámara
+convencional, sin necesidad de dispositivos de entrada especializados ni de equipos de alto rendimiento.
 
 
 \chapter{Abstract}
 \label{cap:abstract}
+
 
 \chapter{Agradecimientos}
 \label{cap:agradecimientos}
