@@ -35,7 +35,45 @@ acceso a datos, se conoce como arquitectura en tres capas \parencites{Ibm2025Apr
 permite desacoplar la estructura de los datos de la presentación de los mismos, lo que facilita
 la evolución del sistema y la reutilización de los componentes \parencite[p.~3]{nyabuto2024architectural}.
 
-% MVC?
+\subsection{Modelo Vista Controlador}
+\label{anexo2:sec:mvc}
+El patrón de diseño MVC se utiliza en la capa de presentación del sistema, en específico en las vistas
+de React. Este patrón separa la lógica en tres componentes principales: el modelo, que representa los
+datos del sistema y la lógica de negocio; la vista, que es la interfaz de usuario que mustra los datos
+del modelo; y el controlador, que es el encargado de gestionar la interacción del usuario con la
+vista y de actualizar el modelo en función de las acciones del usuario \parencite{NorfolkDevelopers2015Dec}.
+Esta separación permite una mayor flexibilidad y reutilización del código, ya que cada componente
+puede ser modificado o reemplazado sin afectar a lo demás, siempre que se mantenga la interfaz entre
+ellos.
+
+En el caso de este sistema, la vista está representada por los componentes de React, que son responsables
+de mostrar los datos del modelo y de gestionar la interacción con el usuario. El controlador sería
+el cliente encargado de realizar las peticiones al servidor, en este caso la clase \texttt{APIClient}
+junto a los \textit{hooks} de React que se encargan de gestionar las peticiones y de actualizar
+el estado de la aplicación\footnotemark. Por último, el modelo está representado por la API del
+\gls{backend}, que proporciona los datos y la lógica de negocio del sistema. También se podría considerar
+como parte del modelo al caché de datos que se almacena en el navegador del cliente, aunque se consideraría
+como una fuente de verdad alternativa.
+
+Así, cuando el usuario interactúa con la vista, esta envía las acciones al controlador, que a su vez
+realiza las peticiones al servidor para alterar el modelo. Una vez el modelo ha sido actualizado, este
+cambio se reflejará en la vista gracias a la reactividad de los componentes de React, completando la
+comunicación triangular propia de MVC como se puede ver en la figura \ref{anexo2:fig:mvc}
+\parencite{PatternOrientedSoftwareArchitecture}.
+
+\diagrama{
+    nombre = {Modelo Vista Controlador},
+    fuente = {RegisFrey, Public domain, via Wikimedia Commons},
+    archivo = {anexo2/imgs/mvc.png},
+    width = 0.5\textwidth,
+    etiqueta = {anexo2:fig:mvc},
+}
+
+\footnotetext{%
+En la aplicación se utiliza la biblioteca \texttt{React Query} (\url{https://react-query.tanstack.com/})
+para gestionar las peticiones al servidor y almacenar los datos en caché. Estas peticiones las realiza
+la clase \texttt{APIClient}, que es la encargada de comunicarse con el servidor y de asegurar que los datos
+tienen el formato correcto.}
 
 \subsection{\glsfirst{dao}}
 \label{anexo2:sec:dao}
