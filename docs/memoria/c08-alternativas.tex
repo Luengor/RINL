@@ -173,6 +173,7 @@ motor para el desarrollo del videojuego.
 
 \section{Viabilidad económica}
 \label{c08:sec:viabilidad-economica}
+\subsection{Costes}
 El proyecto se ha desarrollado como parte de un trabajo académico, por lo que no se ha considerado
 un presupuesto económico para su desarrollo. Por esto, se ha optado por utilizar herramientas y
 tecnologías gratuitas y, en la medida de los posibles, de código abierto. El uso de herramientas
@@ -183,16 +184,34 @@ el servicio técnico que una herramienta de pago, sí que ofrecen una gran canti
 y recursos en línea que pueden ayudar a resolver problemas y mejorar la productividad del
 desarrollo.
 
+Uno de los costes a tener en cuenta es el alojamiento del \gls{backend} y el \gls{frontend}, así
+como del dominio. Actualmente, se está utilizando un servidor de Oracle Cloud gratuito para
+albergar el proyecto, pero la máquina virtual no tiene las mejores prestaciones y puede
+verse limitada en cuanto a recursos. Además, en el caso de que el proyecto se comercializase,
+sería necesario adquirir más servidores para distribuir la carga de mejor manera, así como un
+servidor dedicado para el almacenamiento de los datos del sistema.
+
+Por ejemplo, si quisiéramos alojar el proyecto en un servidor de Google Cloud, el coste sería
+de aproximadamente de 40\texteuro\ al mes por un servidor con 4 vCPUs, 16 GB de RAM y 10GB de disco
+(con una permanencia de 3 años). A esto habría que sumarle el coste del almacenamiento de datos,
+que serían unos 10\texteuro\ mensuales por 500 GB de almacenamiento en Google Cloud
+\parencite{googleCloudPricing}.
+
+Por otro lado, el dominio utilizado (\texttt{lueng.org}) es el dominio personal del autor,
+por lo que no se ha considerado un coste para el proyecto. Sin embargo, si se quisiera utilizar
+este como dominio del proyecto, habría que tener en cuenta el coste de renovación anual, que es
+de aproximadamente $8.71$\texteuro\ .
+
+Por último, cabe destacar que Unity, el motor de videojuegos utilizado, en su versión gratuita,
+impone un límite de ingresos anuales de 200.000\texteuro\ para poder utilizarlo sin pagar una licencia
+\parencite{unityPlans}. Si el proyecto superase este límite, sería necesario adquirir una licencia
+de pago, lo que podría suponer un coste significativo.
+
+\subsection{Comercialización}
 Para comercializar el proyecto, se podría optar por un modelo de negocio basado en publicidad,
 donde se mostrarían anuncios en la aplicación y el videojuego. Otra opción sería ofrecer el servicio
 a cambio de una un pago único o una suscripción, que permitiría financiar el desarrollo del proyecto
 y mantenerlo actualizado.
 
-Cabe destacar que Unity, el motor de videojuegos utilizado, en su versión gratuita, impone un límite
-de ingresos anuales de 200.000\texteuro\ para poder utilizarlo sin pagar una licencia
-\parencite{unityPlans}. Si el proyecto superase este límite, sería necesario adquirir una licencia
-de pago, lo que podría suponer un coste significativo.
-
 
 % 23 semanas de desarrollo
-
