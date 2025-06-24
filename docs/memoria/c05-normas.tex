@@ -212,8 +212,33 @@ prototipo se puede ver en la figura \ref{fig:wireflow}.
     etiqueta = {fig:wireflow},
 }
 
-% \section{Métricas}
-% \label{sec:metricas}
+\section{Métricas}
+\label{sec:metricas}
+Durante el desarrollo del proyecto se han utilizado métricas de rendimiento para determinar si la
+aplicación cumple con los requisitos de velocidad y precisión necesarios para su correcto funcionamiento.
+Esto ha consistido principalmente en realizar análisis del rendimiento del videojuego desarrollado, puesto
+este es el componente más exigente de la aplicación. Para ello, se ha utilizado el propio motor de Unity, que
+ofrece herramientas para medir el rendimiento del videojuego, como el uso de la CPU y la GPU y muestra de
+manera desglosada el tiempo de ejecución de cada uno de los componentes del videojuego (ver
+\ref{fig:unity-performance}). Con el mismo objetivo, se ha utilizado el propio profiler de Chrome para
+medir el rendimiento del videojuego una vez exportado (ver \ref{fig:chrome-performance}).
+
+\diagrama{
+    nombre = {Análisis de rendimiento del videojuego},
+    fuente = {Propia, Captura del profiler de Unity},
+    archivo = {memoria/fotos/unity_profile.png},
+    etiqueta = {fig:unity-performance},
+    width = 1\textwidth,
+}
+
+\diagrama{
+    nombre = {Análisis de rendimiento del videojuego},
+    fuente = {Propia, Captura del profiler de Chrome},
+    archivo = {memoria/fotos/chrome_profile.png},
+    etiqueta = {fig:chrome-performance},
+    width = 1\textwidth,
+}
+
 % Durante el desarrollo del proyecto era necesario evaluar el correcto funcionamiento de la aplicación,
 % así como la precisión de la detección de posturas. Aunque para el segundo de estos aspectos el
 % proceso de validación consistió en probar la aplicación múltiples veces durante el desarrollo de
