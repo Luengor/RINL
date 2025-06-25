@@ -7,7 +7,7 @@ También se dará la magnitud de exposición al riesgo, en este caso definida co
 la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
 
 % Probabilidad: Muy improbable (1), improbable (2), Posible (3), Probable (4), Muy probable (5)
-% Impacto: Inegligible (1), Bajo (2), Moderado (3), Alto (4), Catastrófico (5)
+% Impacto: Insignificante (1), Bajo (2), Moderado (3), Alto (4), Catastrófico (5)
 
 \riesgo{
     id = {R1},
@@ -96,3 +96,39 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     exposicion = {Riesgo medio (6)},
 }
 
+% Tabla terrible
+% \begin{landscape}
+
+\begin{table}[p]
+\begingroup
+\centering
+\NiceMatrixOptions{
+    cell-space-limits = 2pt,
+}
+\makebox[\textwidth] {
+\begin{NiceTabular}[width=20cm,hvlines]{ | c | *{5}{X[5,c,m] |} }
+\CodeBefore
+    \cellcolor[HTML]{5CA283}{2-2,4-2,6-2,8-2,10-2,6-3,8-3,10-3,8-4,10-4,10-5,10-6} % Verde
+    \cellcolor[HTML]{F1BD6C}{2-3,4-3,4-4,6-4,6-5,8-5,8-6} % Amarillo
+    \cellcolor[HTML]{EC8D71}{2-4,2-5,4-5,2-6,4-6,6-6} % Rojo
+    \cellcolor[HTML]{EEEBE9}{1-,-1} % Gris para bordes
+\Body
+      \rule{0pt}{5ex} & \textbf{Insignificante} & \textbf{Bajo} & \textbf{Moderado} & \textbf{Alto} & \textbf{Catastrófico} \\
+      \Block{2-1}{5 \\ Muy \\ probable}   & \textbf{5}  &\textbf{10}  &\textbf{15}  &\textbf{20}  &\textbf{25}  \\
+      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
+      \Block{2-1}{4 \\ Probable}          & \textbf{4}  & \textbf{8}  &\textbf{12}  &\textbf{16}  &\textbf{20}  \\
+      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
+      \Block{2-1}{3 \\ Posible}           & \textbf{3}  & \textbf{6}  & \textbf{9}  &\textbf{12}  &\textbf{15}  \\
+      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
+      \Block{2-1}{2 \\ Improbable}        & \textbf{2}  & \textbf{4}  & \textbf{6}  & \textbf{8}  &\textbf{10}  \\
+      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
+      \Block{2-1}{1 \\ Muy \\ improbable} & \textbf{1}  & \textbf{2}  & \textbf{3}  & \textbf{4}  & \textbf{5}  \\
+      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
+\end{NiceTabular}
+}
+\caption{Matriz de riesgos del proyecto}
+\label{tab:riesgos}
+\endgroup
+\end{table}
+
+% \end{landscape}
