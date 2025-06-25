@@ -20,7 +20,7 @@ la última encuesta a desarrolladores de Stack Overflow, es el tercer lenguaje m
 de JavaScript y HTML/CSS (tecnologías que también se usan en este proyecto)
 \parencite{encuestaTecnologias2024}. La ventaja de utilizar un lenguaje popular es que hay una gran
 cantidad de herramienta, documentación y comunidad que pueden ayudar a resolver problemas y
-mejorar la productividad del desarrollo. Se escoge Python frente a otros lenguaje como JavaScript o
+mejorar la productividad del desarrollo. Se escoge Python frente a otros lenguajes como JavaScript o
 Java porque es un lenguaje ya conocido por el autor y tiene una gran cantidad de bibliotecas
 destinadas a la creación de APIs REST.
 
@@ -33,10 +33,10 @@ destinadas a la creación de APIs REST.
 
 \subsubsection{UV}
 \label{c08:subsubsec:uv}
-\tech{UV}{https://docs.astral.sh/uv/} es un gestor de paquetes y proyectos para Python que permite crear y gestionar entornos viruales
-de forma sencilla y muy rápida. Se escoge UV frente a otros gestores de paquetes
-o a no usar ninguno por su simplicidad y facilidad de uso. Además, es mucho más rápido que otros como
-poetry o pdm (ver figura \ref{fig:uvspeed}).
+\tech{UV}{https://docs.astral.sh/uv/} es un gestor de paquetes y proyectos para Python que permite
+crear y gestionar entornos virtuales de forma sencilla y muy rápida. Se escoge UV frente a otros gestores
+de paquetes o a no usar ninguno por su simplicidad y facilidad de uso. Además, es mucho más rápido que
+otros como \tech{poetry}{https://python-poetry.org/} o el propio \tech{pip}{https://pip.pypa.io/en/stable/} (ver figura \ref{fig:uvspeed}).
 
 % fuente de esto?
 \diagrama{
@@ -49,11 +49,21 @@ poetry o pdm (ver figura \ref{fig:uvspeed}).
 \subsubsection{FastAPI}
 \label{c08:subsubsec:fastapi}
 \tech{FastAPI}{https://fastapi.tiangolo.com/} es un \gls{framework} web para Python que permite crear
-APIs REST de forma muy rápida y sencilla. Se basa en el estándar OpenAPI y permite generar documentación de
+API REST de forma muy rápida y sencilla. Se basa en el estándar OpenAPI y permite generar documentación de
 manera automática. Además, favorece la escritura de código limpio y mantenible, fomentando el uso de
-la composición y la reutilización de código a través de su sistema de inyección de dependencias. %
-Se escoge FastAPI frente a otros \glspl{framework} como Flask o Django por su simplicidad, rapidez
-de desarrollo y libertad para estructurar el proyecto.
+la composición y la reutilización de código a través de su sistema de inyección de dependencias.
+
+Se escoge FastAPI frente a otros \glspl{framework} como \tech{Flask}
+{https://flask.palletsprojects.com/en/stable/} o \tech{Django}{https://www.djangoproject.com/} por
+su simplicidad, rapidez de desarrollo y libertad para estructurar el proyecto. Flask es una herramienta
+muy ligera y flexible que permite crear cualquier tipo de aplicación web, pero no está diseñada
+específicamente para crear API REST, por lo que requiere más trabajo para implementar funcionalidades
+como la validación de datos o la generación de documentación. Por otro lado, Django es un \gls{framework}
+muy completo y robusto que permite crear una gran variedad de aplicaciones web sin necesidad de
+bibliotecas adicionales, pero su complejidad y tamaño lo hacen menos adecuado para un proyecto
+pequeño como este. FastAPI se encuentra en un punto intermedio entre ambos: está específicamente
+diseñado para el desarrollo de API REST, pero es lo suficientemente ligero y flexible
+como para adaptarse a las necesidades del proyecto.
 
 \subsubsection{PostgreSQL}
 \label{c08:subsubsec:postgresql}
@@ -64,7 +74,7 @@ estudiado en la asignatura de Bases de Datos, por lo que el autor ya tiene exper
 
 \subsubsection{SQLAlchemy}
 \label{c08:subsubsec:sqlalchemy}
-\tech{SQLAlchemy}{https://www.sqlalchemy.org/} es una librería de Python que proporciona un \gls{ORM}
+\tech{SQLAlchemy}{https://www.sqlalchemy.org/} es una biblioteca de Python que proporciona un \gls{ORM}
 para interactuar con bases de datos relacionales de forma sencilla. Permite definir modelos de datos
 como clases de Python y realizar consultas a la base de datos utilizando una sintaxis muy similar a SQL, pero
 con la ventaja de realizarse todo desde Python, utilizando sus tipos de datos y estructuras.
@@ -96,10 +106,15 @@ desarrollo.
 \label{c08:subsubsec:react}
 \tech{React}{https://react.dev/} es una biblioteca de JavaScript para construir interfaces de usuario,
 desarrollada por Facebook. Permite crear componentes reutilizables y gestionar el estado de la aplicación
-de forma sencilla. Se escoge React frente a otras bibliotecas como Vue por su popularidad y mayor
-flexibilidad, aunque su curva de aprendizaje pueda ser más pronunciada.
+de forma sencilla. Se escoge React frente a otras bibliotecas como \tech{Vue}{https://vuejs.org/} por su
+popularidad y mayor flexibilidad, aunque su curva de aprendizaje pueda ser más pronunciada.
 
-% React query?
+Junto a React, se ha optado por utilizar \tech{React Router}{https://reactrouter.com/} para la
+gestión de rutas y navegación en la aplicación, \tech{React Query}{https://tanstack.com/query/latest/} para
+la gestión de datos y la comunicación con el \gls{backend} y \tech{Hey OpenAPI}{https://heyopenapi.com/}
+para la generación automática de código a partir de la documentación OpenAPI del \gls{backend}. Estas
+herramientas fueron elegidas por su compatibilidad con React y su capacidad para mejorar la productividad
+del desarrollo, todas ellas muy populares y con una gran comunidad detrás.
 
 \subsubsection{Vite}
 \label{c08:subsubsec:vite}
