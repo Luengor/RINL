@@ -49,7 +49,8 @@ utilizada en el listado \ref{anexo4:lst:argon2-config}.
 
 \begin{lstlisting}[
     language=Python,
-    caption={Configuración de \texttt{argon2} en la aplicación}, captionpos=b,
+    style=estilo,
+    caption={Configuración de \texttt{argon2} en la aplicación},
     label={anexo4:lst:argon2-config}]
 from passlib.context import CryptContext
 
@@ -205,7 +206,8 @@ de tipo \gls{xss} y \gls{csrf}.
 
 \begin{lstlisting}[
     language=Python,
-    caption={Configuración de CORS en la \gls{api}}, captionpos=b,
+    style=estilo,
+    caption={Configuración de CORS en la \gls{api}},
     label={anexo4:lst:cors-config}]
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -241,7 +243,8 @@ acceder a datos sensibles sin la autenticación adecuada o intentar realizar acc
 
 \begin{lstlisting}[
     language=Python,
-    caption={Test unitario de actualización de usuario no verificado}, captionpos=b,
+    style=estilo,
+    caption={Test unitario de actualización de usuario no verificado},
     label={anexo4:lst:test-update-unverified-user}]
 def test_update_unverified_user(
         client: TestClient,
