@@ -1,13 +1,91 @@
-\chapter{Restricciones, alcance e hipótesis}
+\chapter{Hipótesis, restricciones y alcance}
 \label{cap:hipotesis}
-En este capítulo se describen las restricciones del proyecto, el alcance del mismo y las hipótesis
-planteadas sobre el impacto que tendrá el sistema desarrollado en el ámbito del problema a resolver.
-
-\section{Restricciones}
-\label{sec:restricciones}
-
-\section{Alcance}
-\label{sec:alcance}
+En este capítulo se describe la idea central que el proyecto trata de validar, las limitaciones
+técnicas y de alcance que acotan el trabajo, y el impacto esperado que el sistema tendrá en el
+ámbito del problema a resolver.
 
 \section{Hipótesis}
 \label{sec:hipotesis}
+
+\section{Restricciones y alcance}
+\label{sec:restricciones}
+Esta sección describe las condiciones y limitaciones que han afectado al desarrollo de la aplicación.
+Estas restricciones se han derivado a partir de los requisitos no funcionales del proyecto, que se
+detallan en el \primerAnexo. De manera resumida, estas restricciones son: usabilidad, multiplataforma,
+rendimiento y seguridad.
+
+\subsection{Restricciones debido al hardware/software del usuario}
+El hardware y software que los usuarios utilizan para ejecutar la aplicación deberían afectar lo
+menos posible al correcto funcionamiento de la aplicación. Sin embargo, existen algunos factores
+que tienen un impacto considerable en la calidad de ejecución del sistema.
+
+El primero de estos es la calidad de la cámara que el usuario posea. La precisión y fiabilidad de
+la detección de posturas dependen directamente de la calidad de la cámara del usuario. Cámaras con
+muy poca resolución o en malas condiciones pueden afectar negativamente a la experiencia de juego.
+
+El segundo se trata de la capacidad de cómputo del equipo. Aunque el sistema adapta la calidad de
+la detección al dispositivo utilizado, los equipos de bajo rendimiento podrían experimentar una
+menor fluidez o peor precisión en la detección para poder ejecutarse en tiempo real
+\parencites{bazarevsky2020blazepose}{MediaPipeMirror}.
+
+\subsection{Restricciones debido a las condiciones del entorno}
+El entorno en el que lleva a cabo la actividad también puede influir en la calidad de la detección.
+Para que la detección de posturas funcione de manera óptima es necesario cumplir una serie requisitos:
+\begin{itemize}
+    \item Encontrarse en un ambiente con suficiente luz ambiental. En situaciones con poca luz
+        o con luces y sombras muy fuertes la calidad de detección de posturas puede disminuir
+        drásticamente.
+
+    \item Tener un fondo sencillo y estático. El seguimiento de posturas funciona mejor cuando
+        no existen otros elementos que se muevan además del usuario.
+
+    \item Relacionado con el anterior, es importante vestir con ropa que permita distinguir al
+        usuario del fondo. La ropa más holgada y menos ajustada también empeora la calidad de
+        detección.
+
+    \item La distancia a la cámara es el último de los factores clave para el funcionamiento de
+        la identificación de posturas. El usuario debería situarse a una distancia adecuada para
+        que el cuerpo completo fuera visible en la cámara, pero no mucho más de 4 metros, donde
+        la precisión de la detección comienza a caer.
+\end{itemize}
+
+\subsection{Restricciones debido a la tecnología utilizada}
+El uso de ciertas tecnologías también impone una serie de restricciones sobre el producto final.
+La primera de estas es la precisión del modelo de inteligencia artificial utilizado. Aunque
+MediaPipe BlazePose es bastante avanzado, tiene varios límites en su precisión y no es infalible.
+Como se menciona en la tarjeta de descripción del modelo, \enquote{la finalidad del modelo no
+es para ser usado en decisiones de vida o muerte} y \enquote{para casos en los que puntos del
+cuerpo están presentes, pero son difíciles de definir estos se anotan como estimaciones
+y una postura por defecto} \parencite{bazarevsky2020blazepose}.
+
+Otra tecnología que limita los dispositivos en los que puede ejecutarse esta aplicación son
+los navegadores web. El navegador utilizado debe soportar \tech{WebGL}%
+{https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API} y \tech{WebAssembly}%
+{https://developer.mozilla.org/en-US/docs/WebAssembly} para el funcionamiento del videojuego, así
+como la interfaz \tech{MediaDevices}%
+{https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia} para el acceso a la
+cámara. Estas tres tecnologías están muy extendidas la mayoría de navegadores actuales en sus
+últimas versiones, pero es posible que en alguna versión más antigua o en un navegador más
+desconocido no estén disponible o no funcionen correctamente.
+
+\subsection{Alcance funcional del proyecto}
+Como cabe de esperar, el alcance del proyecto ha sido limitado. Esto se puede ver en varios
+aspectos, uno de ellos siendo el número de minijuegos implementados. El sistema se centra en el
+desarrollo de dos actividades distintas. El objetivo del proyecto no es crear una plataforma de
+\glspl{exergame} con un catálogo extenso, sino validar que la tecnología existente es suficiente
+para crear este tipo de videojuegos.
+
+Por otro lado, otra limitación del proyecto es el sistema de medición utilizado para registrar
+las actividades físicas. La unidad de medida utilizada se basa en \enquote{puntos de actividad},
+una medida propia de la aplicación que indica cuanto movimiento se ha realizado con el cuerpo,
+teniendo en cuenta la distribución de peso en las distintas partes de este.
+
+Se ha escogido utilizar esta medida en vez de otras más comunes como calorías por lo complejo
+y poco preciso que sería un sistema para calcularlas. Para que estas estimaciones sean cercanas
+a la realidad suelen ser necesarias pruebas invasivas, equipo específico o más datos como el
+pulso del usuario durante el ejercicio \parencite{nonInvasiveCalories}. Debido a esto, se
+decidió alejarse las calorías para no provocar confusión sobre la información aportada.
+
+\section{Impacto}
+\label{sec:impacto}
+
