@@ -1,2 +1,98 @@
 \chapter{Análisis de riesgos}
 \label{cap:riesgos}
+En este capítulo se realizará un análisis de los posibles riesgos que pueden afectar al proyecto,
+así como de las medidas que se pueden tomar para mitigarlos. Se clasificarán según la probabilidad
+de que ocurran y el impacto que tendrían en el sistema, ambos valores enteros entre uno y cinco.
+También se dará la magnitud de exposición al riesgo, en este caso definida como el producto de
+la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
+
+% Probabilidad: Muy improbable (1), improbable (2), Posible (3), Probable (4), Muy probable (5)
+% Impacto: Inegligible (1), Bajo (2), Moderado (3), Alto (4), Catastrófico (5)
+
+\riesgo{
+    id = {R1},
+    nombre = {Baja adopción},
+    descripcion = {%
+        Aunque el sistema se haya diseñado para eliminar las barreras de entrada a los \glspl{exergame},
+        el público puede ser reacio a adoptar esta nueva forma de hacer ejercicio. Es posible que la
+        novedad no sea suficiente para atraer a los usuarios.
+    },
+    probabilidad = {Posible (3)},
+    impacto = {Alto (4)},
+    exposicion = {Riesgo medio (12)},
+}
+
+% Insatisfacción por imprecisión y latencia 4 3
+\riesgo{
+    id = {R2},
+    nombre = {Insatisfacción por imprecisión y latencia},
+    descripcion = {%
+        La calidad de la experiencia dada por el producto creado depende en gran medida de la detección
+        de posturas en tiempo real a través de la cámara. A pesar de la capacidad de adaptar la calidad
+        del seguimiento, los dispositivos de gamas más bajas verán reducidos el rendimiento y/o la
+        calidad de la detección, afectando a la jugabilidad.
+    },
+    probabilidad = {Probable (4)},
+    impacto = {Moderado (3)},
+    exposicion = {Riesgo medio (12)},
+}
+
+% Falta de profundidad y rejugabilidad 4 4
+\riesgo{
+    id = {R3},
+    nombre = {Falta de profundidad y rejugabilidad},
+    descripcion = {%
+        El producto se lanza únicamente con dos minijuegos posibles. Estos dos minijuegos son
+        experiencias completas, que permiten escoger diferentes niveles de dificultad, aumentando
+        la rejugabilidad y el tiempo de vida de la aplicación. Sin embargo, es probable que, tras
+        poco tiempo, los jugadores pierdan el interés por las pocas opciones disponibles, afectando
+        al uso de la plataforma.
+    },
+    probabilidad = {Probable (4)},
+    impacto = {Alto (4)},
+    exposicion = {Riesgo alto (16)},
+}
+
+% Dependencia del entorno 5 3
+\riesgo{
+    id = {R4},
+    nombre = {Dependencia del entorno},
+    descripcion = {%
+        La eficacia del modelo de detección de posturas depende en gran medida de factores externos
+        como la calidad de la iluminación o la complejidad del fondo de la escena. Estas condiciones,
+        bastante comunes en entornos domésticos, pueden afectar a la fiabilidad de la detección,
+        haciendo que la aplicación sea inutilizable para los usuarios.
+    },
+    probabilidad = {Muy probable (5)},
+    impacto = {Moderado (3)},
+    exposicion = {Riesgo alto (15)},
+}
+
+% Problemas de compatibilidad 2 4
+\riesgo{
+    id = {R5},
+    nombre = {Problemas de compatibilidad},
+    descripcion = {%
+        El proyecto se ejecuta en navegadores utilizando \texttt{WebGL}, \texttt{WebAssembly} y
+        \texttt{MediaDevices}. Las implementaciones de estas tecnologías pueden variar
+        significativamente entre navegadores web y sistemas operativos, lo que podría llevar a
+        errores o a caídas de rendimiento imprevistas.
+    },
+    probabilidad = {Improbable (2)},
+    impacto = {Alto (4)},
+    exposicion = {Riesgo medio (8)},
+}
+
+% Obsolescencia tecnológica 3 2
+\riesgo{
+    id = {R6},
+    nombre = {Obsolescencia tecnológica},
+    descripcion = {%
+        Existe el riesgo de que las tecnologías utilizadas se vuelvan obsoletas, haciendo la labor
+        de mantenimiento más compleja.
+    },
+    probabilidad = {Posible (3)},
+    impacto = {Bajo (2)},
+    exposicion = {Riesgo medio (6)},
+}
+

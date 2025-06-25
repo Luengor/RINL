@@ -6,10 +6,12 @@
 
 \define@key{tableshell}{cellSpaceLimits}{\def\tableshell@CellSpaceLimits{#1}}
 \define@key{tableshell}{fontSize}{\def\tableshell@FontSize{#1}}
+\define@key{tableshell}{width}{\def\tableshell@width{#1}}
 
 \presetkeys{tableshell}{
     cellSpaceLimits = 4pt,
     fontSize = \normalsize,
+    width = 15cm,
 }{}
 
 \NewDocumentCommand{\tableshell}{ O{ | l | X | } O{} m m m}{
@@ -25,7 +27,7 @@
     }
     \tableshell@FontSize
     \makebox[\textwidth] {
-    \begin{NiceTabular}[width=15cm]{ #1 }
+    \begin{NiceTabular}[width=\tableshell@width]{ #1 }
     \CodeBefore
         \rowcolor{Snow3}{1}
         \rowcolors{2}{Snow2}{Snow1}[respect-blocks]
@@ -430,6 +432,41 @@
     }%
     {\sprinttable@nombre}%
     {anexo3:tab:sprint\sprinttable@id}
+}
+
+
+% Tabla para los riesgos
+\define@key{riesgo}{id}{\def\riesgo@id{#1}}
+\define@key{riesgo}{nombre}{\def\riesgo@nombre{#1}}
+\define@key{riesgo}{descripcion}{\def\riesgo@descripcion{#1}}
+\define@key{riesgo}{probabilidad}{\def\riesgo@probabilidad{#1}}
+\define@key{riesgo}{impacto}{\def\riesgo@impacto{#1}}
+\define@key{riesgo}{exposicion}{\def\riesgo@exposicion{#1}}
+
+\presetkeys{riesgo}{
+    id = {-},
+    nombre = {Nombre del riesgo},
+    descripcion = {Descripción del riesgo},
+    probabilidad = {1},
+    impacto = {2},
+    exposicion = {1 * 2},
+}{}
+
+\newcommand{\riesgo}[1]{
+    \setkeys{riesgo}{#1}
+
+    \tableshell[ | l | X | ][
+        width = 1.1\textwidth
+    ]{
+        \textbf{Riesgo \riesgo@id} & \textbf{\riesgo@nombre} \\
+        \hline
+        \textbf{Descripción} & \riesgo@descripcion \\
+        \textbf{Probabilidad} & \riesgo@probabilidad \\
+        \textbf{Impacto} & \riesgo@impacto \\
+        \textbf{Exposición} & \riesgo@exposicion \\
+    }%
+    {Riesgo \riesgo@id\ \riesgo@nombre}%
+    {tab:riesgo\riesgo@id}
 }
 
 \makeatother
