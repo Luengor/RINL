@@ -36,8 +36,8 @@ package "Dominio" {
 }
 
 ' Un usuario puede tener muchas actividades y formas físicas
-Usuario "1" --- "0..*" Actividad : Realiza >
-Usuario "1" --- "0..*" FormaFísica : Registra >
+Usuario "1" *-- "0..*" Actividad : Realiza >
+Usuario "1" *-- "0..*" FormaFísica : Registra >
 
 ' note right of Dominio
 '     Los usuarios del sistema son representados por

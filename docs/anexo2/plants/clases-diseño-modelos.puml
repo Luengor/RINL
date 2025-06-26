@@ -53,8 +53,8 @@ package "Modelos de Datos" %lighten("#IndianRed", 40) {
     Base <|- Shape : inherits >
 
     ' Un usuario puede tener muchas actividades y formas físicas
-    User "1" --- "0..*" Activity : Realiza >
-    User "1" --- "0..*" Shape : Registra >
+    User "1" *--- "0..*" Activity : Realiza >
+    User "1" *--- "0..*" Shape : Registra >
 }
 
 @enduml
