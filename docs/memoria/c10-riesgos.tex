@@ -6,6 +6,12 @@ de que ocurran y el impacto que tendrían en el sistema, ambos valores enteros e
 También se dará la magnitud de exposición al riesgo, en este caso definida como el producto de
 la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
 
+Cada uno de los riesgos se documenta en forma de tabla, en la que se especifica su nombre, una breve
+descripción, el plan de mitigación, la probabilidad de que ocurra, el impacto que tendría en el
+sistema y la magnitud de exposición al riesgo. Por último, se incluye una matriz de riesgos
+que permite visualizar de forma rápida la magnitud de exposición al riesgo de cada uno de los
+riesgos identificados (ver cuadro \ref{tab:riesgos}).
+
 % Probabilidad: Muy improbable (1), improbable (2), Posible (3), Probable (4), Muy probable (5)
 % Impacto: Insignificante (1), Bajo (2), Moderado (3), Alto (4), Catastrófico (5)
 
@@ -20,6 +26,11 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     probabilidad = {Posible (3)},
     impacto = {Alto (4)},
     exposicion = {Riesgo medio (12)},
+    mitigacion = {%
+        Se podría realizar una campaña de marketing para promover el producto, destacando sus
+        ventajas frente a otros productos similares. También se podría aumentar la cantidad y
+        calidad de los juegos disponibles, para atraer a un público más amplio.
+    }
 }
 
 % Insatisfacción por imprecisión y latencia 4 3
@@ -35,6 +46,13 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     probabilidad = {Probable (4)},
     impacto = {Moderado (3)},
     exposicion = {Riesgo medio (12)},
+    mitigacion = {%
+        Se podría mejorar la calidad de la detección de posturas mediante un modelo entrenado
+        espcíficamente para este caso de uso, o bien mediante algún sistema de limpieza de la entrada
+        de la cámara. Sin embargo, estas soluciones son muy limitadas, ya que realizar limpiezas o
+        utilizar mejores modelos de detección requiere un mayor consumo de recursos, lo que vuelve
+        a limitar el rendimiento en dispositivos de gamas más bajas.
+    }
 }
 
 % Falta de profundidad y rejugabilidad 4 4
@@ -51,6 +69,11 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     probabilidad = {Probable (4)},
     impacto = {Alto (4)},
     exposicion = {Riesgo alto (16)},
+    mitigacion = {%
+        Se podría aumentar la cantidad de minijuegos disponibles, o bien añadir más niveles de
+        dificultad a los ya existentes. También se podría añadir un sistema de recompensas o otro
+        tipo de incentivo para que los jugadores sigan jugando.
+    }
 }
 
 % Dependencia del entorno 5 3
@@ -66,6 +89,11 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     probabilidad = {Muy probable (5)},
     impacto = {Moderado (3)},
     exposicion = {Riesgo alto (15)},
+    mitigacion = {%
+        Más allá de hacerse con un modelo de detección de posturas más robusto, no hay mucho que se
+        pueda hacer para mitigar este riesgo. Se podría añadir un sistema de calibración que permita
+        al usuario diferenciarse del fondo o algo similar, pero esto no es una solución definitiva.
+    }
 }
 
 % Problemas de compatibilidad 2 4
@@ -81,6 +109,12 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     probabilidad = {Improbable (2)},
     impacto = {Alto (4)},
     exposicion = {Riesgo medio (8)},
+    mitigacion = {%
+        La mayoría de los navegadores modernos son compatibles con estas tecnologías, por lo que
+        es poco probable que se produzcan problemas de compatibilidad. Sin embargo, se recomienda
+        realizar pruebas exhaustivas en diferentes navegadores y sistemas operativos para asegurarse
+        de que el producto funciona correctamente en todos ellos.
+    }
 }
 
 % Obsolescencia tecnológica 3 2
@@ -94,11 +128,17 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     probabilidad = {Posible (3)},
     impacto = {Bajo (2)},
     exposicion = {Riesgo medio (6)},
+    mitigacion = {%
+        Se recomienda mantener el proyecto actualizado y utilizar tecnologías que sean ampliamente
+        utilizadas y soportadas por la comunidad. Además, se podría considerar la posibilidad de
+        migrar a otras tecnologías si es necesario. Especialmente, es muy importante mantenerse al día
+        con las actualizaciones de los modelos de detección de posturas, ya que suponen una parte
+        crítica del sistema.
+    }
 }
 
 % Tabla terrible
-% \begin{landscape}
-
+\begin{landscape}
 \begin{table}[p]
 \begingroup
 \centering
@@ -106,29 +146,29 @@ la probabilidad y el impacto \parencite[p.~56]{MariaMedicion}.
     cell-space-limits = 2pt,
 }
 \makebox[\textwidth] {
-\begin{NiceTabular}[width=20cm,hvlines]{ | c | *{5}{X[5,c,m] |} }
+\begin{NiceTabular}[width=20cm,hvlines,first-row,first-col]{ | c | *{5}{X[5,c,m] |} }
 \CodeBefore
     \cellcolor[HTML]{5CA283}{2-2,4-2,6-2,8-2,10-2,6-3,8-3,10-3,8-4,10-4,10-5,10-6} % Verde
     \cellcolor[HTML]{F1BD6C}{2-3,4-3,4-4,6-4,6-5,8-5,8-6} % Amarillo
     \cellcolor[HTML]{EC8D71}{2-4,2-5,4-5,2-6,4-6,6-6} % Rojo
     \cellcolor[HTML]{EEEBE9}{1-,-1} % Gris para bordes
 \Body
-      \rule{0pt}{5ex} & \textbf{Insignificante} & \textbf{Bajo} & \textbf{Moderado} & \textbf{Alto} & \textbf{Catastrófico} \\
-      \Block{2-1}{5 \\ Muy \\ probable}   & \textbf{5}  &\textbf{10}  &\textbf{15}  &\textbf{20}  &\textbf{25}  \\
-      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
-      \Block{2-1}{4 \\ Probable}          & \textbf{4}  & \textbf{8}  &\textbf{12}  &\textbf{16}  &\textbf{20}  \\
-      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
-      \Block{2-1}{3 \\ Posible}           & \textbf{3}  & \textbf{6}  & \textbf{9}  &\textbf{12}  &\textbf{15}  \\
-      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
-      \Block{2-1}{2 \\ Improbable}        & \textbf{2}  & \textbf{4}  & \textbf{6}  & \textbf{8}  &\textbf{10}  \\
-      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
-      \Block{2-1}{1 \\ Muy \\ improbable} & \textbf{1}  & \textbf{2}  & \textbf{3}  & \textbf{4}  & \textbf{5}  \\
-      \rule{0pt}{5ex}                     &      -      &      -      &      -      &      -      &     -       \\
+     & \Block{1-6}{Magnitud del impacto} \\
+    \Block{10-1}{\rotate Probabilidad de ocurrencia} & \rule{0pt}{5ex} & \textbf{Insignificante} & \textbf{Bajo} & \textbf{Moderado} & \textbf{Alto} & \textbf{Catastrófico} \\
+     & \Block{2-1}{5 \\ Muy \\ probable}   & \textbf{5}  &\textbf{10}  &\textbf{15}  &\textbf{20}  &\textbf{25}  \\
+     & \rule{0pt}{5ex}                     &&&R4: Dependencia del entorno&&\\
+     & \Block{2-1}{4 \\ Probable}          & \textbf{4}  & \textbf{8}  &\textbf{12}  &\textbf{16}  &\textbf{20}  \\
+     & \rule{0pt}{5ex}                     &&&R2: Insatisfacción por precisión y latencia&R3: Falta de profundidad y rejugabilidad&\\
+     & \Block{2-1}{3 \\ Posible}           & \textbf{3}  & \textbf{6}  & \textbf{9}  &\textbf{12}  &\textbf{15}  \\
+     & \rule{0pt}{5ex}                     &&R6: Obsolescencia tecnológica&&R1: Baja adopción&\\
+     & \Block{2-1}{2 \\ Improbable}        & \textbf{2}  & \textbf{4}  & \textbf{6}  & \textbf{8}  &\textbf{10}  \\
+     & \rule{0pt}{5ex}                     &&&&R5: Problemas de compatibilidad&\\
+     & \Block{2-1}{1 \\ Muy \\ improbable} & \textbf{1}  & \textbf{2}  & \textbf{3}  & \textbf{4}  & \textbf{5}  \\
+     & \rule{0pt}{5ex}                     &&&&&\\
 \end{NiceTabular}
 }
 \caption{Matriz de riesgos del proyecto}
 \label{tab:riesgos}
 \endgroup
 \end{table}
-
-% \end{landscape}
+\end{landscape}

@@ -442,6 +442,7 @@
 \define@key{riesgo}{probabilidad}{\def\riesgo@probabilidad{#1}}
 \define@key{riesgo}{impacto}{\def\riesgo@impacto{#1}}
 \define@key{riesgo}{exposicion}{\def\riesgo@exposicion{#1}}
+\define@key{riesgo}{mitigacion}{\def\riesgo@mitigacion{#1}}
 
 \presetkeys{riesgo}{
     id = {-},
@@ -450,6 +451,7 @@
     probabilidad = {1},
     impacto = {2},
     exposicion = {1 * 2},
+    mitigacion = {No procede},
 }{}
 
 \newcommand{\riesgo}[1]{
@@ -464,6 +466,7 @@
         \textbf{Probabilidad} & \riesgo@probabilidad \\
         \textbf{Impacto} & \riesgo@impacto \\
         \textbf{Exposición} & \riesgo@exposicion \\
+        \textbf{Mitigación} & \riesgo@mitigacion \\
     }%
     {Riesgo \riesgo@id\ \riesgo@nombre}%
     {tab:riesgo\riesgo@id}
