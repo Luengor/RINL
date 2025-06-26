@@ -91,6 +91,39 @@ facilita la modificación y mantenimiento de distintas secciones del sistema de 
     etiqueta = {anexo2:fig:dao},
 }
 
+\subsection{Inyección de dependencias}
+\label{anexo2:sec:inyeccion-dependencias}
+La inyección de dependencias es una técnica de programación en la que las dependencias de una clase
+se proporcionan desde el exterior, en lugar de ser creadas por la propia clase
+\parencite{DepInyectionStackOVerflow}. Esto no es patrón de diseño como tal, sino una técnica que
+engloba a varios patrones de diseño como pueden ser la inyección de constructor, la inyección de
+método o la inyección de propiedad por mencionar algunos. La inyección de dependencias permite
+desacoplar las clases entre sí, permitiendo que una clase dependa de una interfaz en lugar de una
+implementación concreta, lo que facilita la reutilización, el mantenimiento y la prueba de los
+componentes individuales del sistema \parencite{Seemann2025Jun}.
+
+En la aplicación, la inyección de dependencias se utiliza en el módulo del \gls{backend}, donde
+las clases que implementan los \gls{dao} y los \textit{routers} de \texttt{FastAPI} reciben como
+parámetro las dependencias que necesitan para funcionar, como por ejemplo la conexión a la base de
+datos, funciones específicas de la aplicación como puede ser el envío de correos electrónicos o
+otros datos como el actor actual del sistema. Esto facilita enormemente la prueba de las clases,
+puesto que se pueden proporcionar implementaciones alternativas de las dependencias para realizar
+las pruebas unitarias. En el caso propio de la aplicación, la dependencia a la base de datos se
+reemplaza por una conexión a una base de datos SQLite local y la función de envío de correos
+electrónicos se reemplaza por una función que simplemente imprime el correo electrónico en la
+consola, evitando así el envío de correos electrónicos reales durante las pruebas.
+
+Se puede ver un diagrama representando la inyección de dependencias para el envío de correos
+electrónicos en la figura \ref{anexo2:fig:inyeccion-dependencias}.
+
+\diagrama{
+    nombre = {Inyección de dependencias},
+    fuente = {Propia, creado en diagrams.net},
+    archivo = {anexo2/imgs/DepIny.pdf},
+    width = 1\textwidth,
+    etiqueta = {anexo2:fig:inyeccion-dependencias},
+}
+
 \subsection{Singleton}
 \label{anexo2:sec:singleton}
 El patrón de diseño singleton se utiliza en Unity para garantizar que solo exista una instancia de
