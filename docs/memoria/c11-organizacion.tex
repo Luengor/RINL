@@ -1,6 +1,65 @@
 \chapter{Organización y gestión del proyecto}
 \label{cap:organizacion}
-
 \section{Organización}
+\label{sec:organizacion}
+En esta sección se pretende describir la organización del proyecto que se ha llevado a cabo, desde
+la arquitectura más general a los detalles de los componentes individuales y las pruebas
+realizadas.
+
+\subsection{Arquitectura del sistema}
+El proyecto desarrollado se trata de una aplicación web que permite el registro de usuarios
+y ofrece una serie de minijuegos. Estos juegos han sido desarrollados en \texttt{Unity} e
+incluidos en una aplicación web de \texttt{React}. La información sobre los usuarios y las
+actividades realizadas se almacena en un servidor independiente, al que se accede a través de
+una \gls{api}.
+
+La arquitectura del sistema sigue el patrón cliente-servidor, en específico, es una arquitectura
+en tres capas. Cada una de las capas tiene una funcionalidad limitada, lo que facilita el
+mantenimiento de la aplicación. En este caso concreto nos encontramos con un servidor que
+proporciona la funcionalidad de la lógica de negocio, otro que nos provee con el acceso persistente
+a datos de la aplicación y un último que sirve y presenta la interfaz gráfica a los usuarios.
+
+Esta diferenciación entre capas se puede ver en la figura \ref{fig:paquetes-clases-diseno}. Cada
+capa estaría compuesta por un paquete (a excepción de la interfaz, que se compone tanto del
+paquete \enquote{Unity} y \enquote{React}).
+
+\diagrama{
+    nombre = {Diagrama de paquetes de clases de diseño},
+    archivo = {anexo2/diagramas/clasesDiseñoPaquetes.pdf},
+    etiqueta = {fig:paquetes-clases-diseno},
+}
+
+\subsection{Diseño de componentes}
+
+\subsection{Proceso de desarrollo}
+
+\subsection{Pruebas y verificación}
 
 \section{Gestión del proyecto}
+\label{sec:gestion}
+En esta sección se desarrollarán tanto los recursos utilizados durante el desarrollo del proyecto y
+un resumen de la planificación temporal detallada en el \tercerAnexo.
+
+\subsection{Recursos utilizados}
+% Hardware, software y recursos personales
+Podemos agrupar los recursos utilizados en tres categorías: recursos de hardware, software y
+recursos personales.
+
+Los recursos de hardware se refieren a los equipos físicos utilzados para construir el sistema. En
+este caso se trata de mi ordenador portátil (HP Victus 16-e0xxx\footnote{https://support.hp.com/ar-es/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-e0000/model/2100371558?sku=6X738U8})
+y mi teléfono móvil (Samsung Galaxy A35 5G\footnote{https://www.samsung.com/levant/smartphones/galaxy-a/galaxy-a35-5g-awesome-lemon-256gb-sm-a356ezyvmea/}).
+Ambos dispositivos tienen cámaras integradas, lo que hace posible utilizarlos para probar el
+producto.
+
+Entre los recursos de software se encuentran aquellos programas y herramientas utilizados durante el
+desarrollo del proyecto. No se mencionarán aquí bibliotecas o \glspl{framework} utilizados, sino herramientas
+más genéricas. Para una descripción de todas las herramientas del código ver el apartado \ref{sec:herramientas}
+
+Para la escritura del código se han utilizado los editores \tech{Code}{https://code.visualstudio.com/}
+y \tech{NeoVim}{https://neovim.io/}. Para probar la aplicación creada se han usado los navegadores web
+\tech{Firefox}{https://www.mozilla.org/en-US/firefox/new/} y \tech{Chromium}
+{https://www.chromium.org/chromium-projects/}. Para el desarrollo del videojuego se ha utilizado el motor
+Unity mencionado anteriormente. Por último, como sistema de control de versiones se han utilizado tanto
+\tech{Git}{https://git-scm.com/} como \tech{GitHub}{https://github.com/}.
+
+\subsection{Planificación temporal}

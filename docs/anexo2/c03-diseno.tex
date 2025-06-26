@@ -18,7 +18,7 @@ En el diseño del sistema se han utilizado varios patrones de diseño de softwar
 describen los patrones utilizados y su justificación. Esto será de gran ayuda para entender la
 estructura del sistema y el posterior diagrama de clases (\ref{anexo2:fig:diagrama-clases-diseno}).
 
-\subsection{Cliente servidor}
+\subsection{Cliente-servidor}
 \label{anexo2:subsec:cliente-servidor}
 El sistema está compuesto por cuatro componentes principales: la base de datos, una \gls{api} que
 proporciona acceso a estos datos y a la lógica de negocio, el \gls{frontend} que proporciona una
@@ -28,12 +28,13 @@ y que se incluye en el \gls{frontend}.
 El patrón de diseño arquitectónico escogido para el sistema es el patrón cliente-servidor. Este patrón
 divide las tareas del sistema entre los proveedores de servicios (servidores) y aquellos que consumen
 dichos servicios (clientes) \parencite{SunDistributedSystems}. En el caso de este sistema en concreto,
-nos encontramos con un servidor que proporciona las funcionalidades necesarias para el funcionamiento
-del sistema y otro servidor que proporciona la interfaz de usuario, que es consumida por los clientes
-a través de un navegador web. Esta separación en tres capas, presentación, lógica de negocio y
-acceso a datos, se conoce como arquitectura en tres capas \parencites{Ibm2025Apr}. Esta arquitectura
-permite desacoplar la estructura de los datos de la presentación de los mismos, lo que facilita
-la evolución del sistema y la reutilización de los componentes \parencite[p.~3]{nyabuto2024architectural}.
+nos encontramos con un servidor que proporciona la funcionalidad de la lógica de negocio, otro servidor
+encargado de realizar el acceso persistente a datos y un último que proporciona la interfaz de usuario
+, que es consumida por los clientes a través de un navegador web. Esta separación en tres capas,
+presentación, lógica de negocio y acceso a datos, se conoce como arquitectura en tres capas
+\parencites{Ibm2025Apr}. Esta, permite desacoplar la estructura de los datos de la presentación de los
+mismos, lo que facilita la evolución del sistema y la reutilización de los componentes
+\parencite[p.~3]{nyabuto2024architectural}.
 
 \subsection{Modelo Vista Controlador}
 \label{anexo2:sec:mvc}
