@@ -12,6 +12,7 @@ import { LoginForm } from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { useClient } from "../hooks/useClient";
 import { useEffect, useRef, useState } from "react";
+import useBackground from "../hooks/useBackground";
 
 // Pass as props to the UserCard component
 interface UserCardProps {
@@ -84,88 +85,7 @@ export default function Dashboard() {
 
   // Canvas ref
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    // Configuración de cosas
-    const text = "RINL";
-    const fontSize = 120;
-    const fontFamily = "Helvetica, Arial, sans-serif";
-    const fontWeight = "900";
-    const textColor = "rgba(229, 231, 235, 0.5)";
-    const scrollSpeed = 0.8;
-
-    interface Column {
-      x: number;
-      y: number;
-      speed: number;
-    }
-    let columns: Column[] = [];
-    let canvasWidth = window.innerWidth;
-    let canvasHeight = window.innerHeight;
-
-    // Setup hay que hacerlo si se redimensiona la ventana así que lo metemos en una función
-    function setup() {
-      canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight;
-      canvas.width = canvasWidth;
-      canvas.height = canvasHeight;
-
-      ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-      const textMetrics = ctx.measureText(text);
-      const textWidth = textMetrics.width;
-
-      const columnWidth = textWidth + 150;
-      const numColumns = Math.ceil(canvasWidth / columnWidth) + 1;
-
-      columns = [];
-      for (let i = 0; i < numColumns; i++) {
-        columns.push({
-          x: i * columnWidth - 100,
-          y: Math.random() * canvasHeight,
-          speed: Math.max(scrollSpeed + (Math.random() - 0.5) * 1, 0),
-        });
-      }
-    }
-
-    let animationFrameId: number | null = null;
-
-    // la animación
-    function animate() {
-      ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
-      ctx.fillStyle = textColor;
-      ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-      ctx.textAlign = "left";
-
-      columns.forEach((col) => {
-        ctx.fillText(text, col.x, col.y % (canvasHeight + fontSize));
-        ctx.fillText(text, col.x, (col.y + (canvasHeight + fontSize) / 2) % (canvasHeight + fontSize));
-
-        col.y += col.speed;
-      });
-
-      animationFrameId = requestAnimationFrame(animate);
-    }
-
-    // Redraw canvas if window is resized
-    window.addEventListener("resize", setup);
-
-    // Start the animation
-    setup();
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", setup);
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-    };
-  }, [canvasRef]);
+  useBackground({ canvasRef });
 
   return (
     <>

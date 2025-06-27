@@ -2,6 +2,13 @@ import { useEffect, useState } from "react";
 
 interface RINLBackProps {
   canvasRef: React.RefObject<HTMLCanvasElement>;
+  text?: string;
+  fontSize?: number;
+  fontFamily?: string;
+  fontWeight?: string;
+  textColor?: string;
+  scrollSpeed?: number;
+  columnSep?: number;
 }
 
 export default function useBackground(props: RINLBackProps) {
@@ -21,12 +28,13 @@ export default function useBackground(props: RINLBackProps) {
     if (!ctx) return;
 
     // Configuración de cosas
-    const text = "RINL";
-    const fontSize = 120;
-    const fontFamily = "Helvetica, Arial, sans-serif";
-    const fontWeight = "900";
-    const textColor = "rgba(229, 231, 235, 0.5)";
-    const scrollSpeed = 0.8;
+    const text = props.text || "RINL";
+    const fontSize = props.fontSize || 120;
+    const fontFamily = props.fontFamily || "Helvetica, Arial, sans-serif";
+    const fontWeight = props.fontWeight || "900";
+    const textColor = props.textColor || "rgba(229, 231, 235, 0.5)";
+    const scrollSpeed = props.scrollSpeed || 0.8;
+    const columnSep = props.columnSep || 100;
 
     interface Column {
       x: number;
@@ -48,7 +56,7 @@ export default function useBackground(props: RINLBackProps) {
       const textMetrics = ctx.measureText(text);
       const textWidth = textMetrics.width;
 
-      const columnWidth = textWidth + 150;
+      const columnWidth = textWidth + columnSep;
       const numColumns = Math.ceil(canvasWidth / columnWidth) + 1;
 
       columns = [];
