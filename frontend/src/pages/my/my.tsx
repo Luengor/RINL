@@ -3,7 +3,7 @@ import {
   TbDeviceGamepad,
   TbLogout,
   TbUser,
-  TbAB,
+  TbHome
 } from "react-icons/tb";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -154,7 +154,7 @@ export default function My() {
         <Navbar
           row={true}
           topLink={{
-            icon: TbAB,
+            icon: TbHome,
             label: "Dashboard",
             onClick: () => navigate("/"),
           }}
@@ -175,7 +175,7 @@ export default function My() {
         <Navbar
           row={false}
           topLink={{
-            icon: TbAB,
+            icon: TbHome,
             label: "Dashboard",
             onClick: () => navigate("/"),
           }}

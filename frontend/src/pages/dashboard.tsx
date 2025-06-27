@@ -13,7 +13,7 @@ function UserCard({ logout }: UserCardProps) {
 
   function handleLogout() {
     logout();
-    navigate("/dashboard");
+    navigate("/");
   }
 
   return (
