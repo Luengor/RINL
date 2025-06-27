@@ -5,6 +5,7 @@ import {
 } from "@hey-api/client-fetch";
 import { useRef } from "react";
 import { loginForTokenLoginPost } from "../client";
+import { useNavigate } from "react-router-dom";
 
 export function useClient() {
   // API url
@@ -20,26 +21,33 @@ export function useClient() {
     )
   );
 
+  const navigate = useNavigate();
+
   // Logout the user if the token is invalid
   clientRef.current.interceptors.response.use(async (response) => {
-    if (response.status === 401 && clientRef.current.getConfig().auth) {
-      // Unauthorized, remove the token
-      localStorage.removeItem("access_token");
-      clientRef.current.setConfig({
-        auth: null,
-      });
+    if (response.status === 401) {
+      // Unauthorized, logout
+      logout();
+
+      // Redirect to login page
+      navigate("/");
     }
 
     return response;
   });
 
-  function hasToken() {
-    return !!localStorage.getItem("access_token");
+  function getToken() {
+    return localStorage.getItem("access_token");
   }
-  if (hasToken()) {
+  if (getToken() !== null) {
     // Set the token in the client if it exists
     clientRef.current.setConfig({
       auth: localStorage.getItem("access_token"),
+    });
+  } else {
+    // If no token, set auth to null
+    clientRef.current.setConfig({
+      auth: null,
     });
   }
 
@@ -70,7 +78,22 @@ export function useClient() {
 
   // Check if the user is logged in
   function loggedIn() {
-    return hasToken();
+    const token = getToken();
+    if (token === null) {
+      return false;
+    }
+
+    // Check if the expiration date of the token is in the past
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const expirationDate = new Date(payload.exp * 1000);
+    if (expirationDate < new Date()) {
+      // Token is expired, remove it
+      logout();
+      return false;
+    }
+
+    // Token is valid
+    return true;
   }
 
   // Return everything
