@@ -53,6 +53,7 @@ export function useClient() {
     });
 
     setToken(response.data.access_token);
+    setLoggedIn(true);
     localStorage.setItem("access_token", response.data.access_token);
     clientRef.current.setConfig({
       auth: response.data.access_token,
@@ -62,13 +63,15 @@ export function useClient() {
   // Logout function
   const logout = () => {
     localStorage.removeItem("access_token");
+    setToken(null);
+    setLoggedIn(false);
     clientRef.current.setConfig({
       auth: null,
     });
   };
 
   // Logged in
-  const loggedIn = !!token;
+  const [loggedIn, setLoggedIn] = useState(!!token);
 
   // Return everything
   return { client: clientRef.current, login, logout, loggedIn };
