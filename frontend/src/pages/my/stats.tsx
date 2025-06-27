@@ -19,8 +19,9 @@ import {
   LineChart,
   LineChartProps,
 } from "@mantine/charts";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useClient } from "../../hooks/useClient";
+import useBackground from "../../hooks/useBackground";
 
 interface ApiData {
   activity: ActivityUuid[];
@@ -158,6 +159,20 @@ export default function Stats() {
     playCount: [],
     playTime: [],
   });
+
+  const isMobile = window.innerWidth <= window.innerHeight;
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useBackground(
+    {
+      canvasRef,
+      started: false,
+      text: "Estádisticas",
+      fontSize: isMobile ? 40 : 80,
+      columnSep: isMobile ? 40 :  80,
+      scrollSpeed: 0.6,
+      randomSpeedMagnitude: 0.1,
+    }
+  );
 
   useEffect(() => {
     if (status !== "success") return;
@@ -316,6 +331,20 @@ export default function Stats() {
 
   // Render
   return (
+  <>
+    <canvas
+      style={{
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1,
+      }}
+      ref={(r) => {
+        canvasRef.current = r;
+      }}
+    />
     <Grid columns={12} gutter="md" grow>
       <Grid.Col span={12}>
         <Title order={1}>Estadísticas</Title>
@@ -426,5 +455,6 @@ export default function Stats() {
         </ThisOrText>
       </Card>
     </Grid>
+  </>
   );
 }

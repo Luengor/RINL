@@ -146,7 +146,6 @@ export default function My() {
 
   // Check if the user is on mobile to move the navbar to the top
   const isMobile = window.innerWidth <= window.innerHeight;
-  console.log("isMobile:", isMobile);
   let navbar;
   if (isMobile) {
     navbar = (

@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface RINLBackProps {
   canvasRef: React.RefObject<HTMLCanvasElement>;
+  started?: boolean;
   text?: string;
   fontSize?: number;
   fontFamily?: string;
@@ -15,13 +16,9 @@ interface RINLBackProps {
 
 export default function useBackground(props: RINLBackProps) {
   useEffect(() => {
-    console.log("useBackground effect triggered");
     const canvas = props.canvasRef.current;
     if (!canvas)
-    {
-      console.warn("Canvas reference is null");
       return;
-    }
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -43,15 +40,16 @@ export default function useBackground(props: RINLBackProps) {
       speed: number;
     }
     let columns: Column[] = [];
-    let canvasWidth = window.innerWidth;
-    let canvasHeight = window.innerHeight;
+    let canvasWidth = document.documentElement.scrollWidth;
+    let canvasHeight = document.documentElement.scrollHeight;
 
     // Setup hay que hacerlo si se redimensiona la ventana así que lo metemos en una función
     function setup() {
-      canvasWidth = window.innerWidth;
-      canvasHeight = window.innerHeight;
+      canvasWidth = document.documentElement.scrollWidth;
+      canvasHeight = document.documentElement.scrollHeight;
       canvas.width = canvasWidth;
       canvas.height = canvasHeight;
+      canvas.style.height = `${canvasHeight}px`;
 
       ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
       const textMetrics = ctx.measureText(text);
@@ -111,5 +109,5 @@ export default function useBackground(props: RINLBackProps) {
       }
     };
 
-  }, [props.canvasRef]);
+  }, [props.canvasRef.current]);
 }
