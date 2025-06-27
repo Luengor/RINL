@@ -3,7 +3,7 @@ import {
   createClient,
   createConfig,
 } from "@hey-api/client-fetch";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { loginForTokenLoginPost } from "../client";
 
 export function useClient() {

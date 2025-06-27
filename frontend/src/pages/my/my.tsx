@@ -43,8 +43,8 @@ export default function My() {
         active = "stats";
         break;
 
-      case "/my/jugar":
-        active = "jugar";
+      case "/my/game":
+        active = "game";
         break;
 
       default:
@@ -132,15 +132,15 @@ export default function My() {
       icon: TbDeviceDesktopAnalytics,
       active: "stats" === active,
       disabled: !verified,
-      label: "Stats",
+      label: "Estadísticas",
       onClick: () => navigate("/my/stats"),
     },
     {
       icon: TbDeviceGamepad,
-      label: "Jugar",
-      active: "jugar" === active,
+      label: "Juego",
+      active: "game" === active,
       disabled: !verified || !hasShape,
-      onClick: () => navigate("/my/jugar"),
+      onClick: () => navigate("/my/game"),
     },
   ];
 
@@ -229,7 +229,7 @@ export default function My() {
             <Route index path="" element={<Data />} />
             <Route path="data" element={<Data />} />
             <Route path="stats" element={<Stats />} />
-            <Route path="jugar" element={<Media />} />
+            <Route path="game" element={<Media />} />
             <Route path="*" element={<NotFoundPage/>} />
           </Routes>
         </AppShell.Main>
