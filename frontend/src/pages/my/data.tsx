@@ -1,4 +1,13 @@
-import { Grid, Loader, Stack, Text, Title } from "@mantine/core";
+import {
+  Card,
+  Center,
+  Grid,
+  Group,
+  Loader,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 
 import { useUser } from "../../hooks/useUser";
 import DataForm from "../../components/User/DataForm";
@@ -12,16 +21,16 @@ export default function Data() {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isMobile = window.innerWidth <= window.innerHeight;
-  useBackground(
-    {
-      canvasRef,
-      text: "Tus datos",
-      fontSize: isMobile ? 40 : 80,
-      columnSep: isMobile ? 40 : 80,
-      scrollSpeed: 0.6,
-      randomSpeedMagnitude: 0.1,
-    }
-  );
+
+  const pageWidth = window.innerWidth;
+  useBackground({
+    canvasRef,
+    text: "Tus datos",
+    fontSize: Math.max((pageWidth / 1920.0) * 70, 40),
+    columnSep: Math.max((pageWidth / 1920.0) * 70, 40),
+    scrollSpeed: 0.6,
+    randomSpeedMagnitude: 0.1,
+  });
 
   if (userStatus === "pending") {
     return <Loader type="dots" size="xl" />;
@@ -29,8 +38,45 @@ export default function Data() {
     return <Text>Error al cargar los datos</Text>;
   }
 
+  const page_contents = (
+    <Stack align="stretch">
+      <Title order={1}>Mis datos</Title>
+      <Text>Aquí puedes ver y modificar tus datos.</Text>
+      <DataForm user={user} />
+      <CurrentShapeCard />
+    </Stack>
+  );
+
+  let card: JSX.Element;
+  if (isMobile) {
+    card = page_contents;
+  } else {
+    card = (
+      <Center h="100vh" w="100%">
+        <Card
+          shadow="sm"
+          p="xl"
+          radius="md"
+          withBorder
+          w={{ base: "100%", sm: "80%", xl: 1000 }}
+          style={{ position: "relative", top: -30, zIndex: 1 }}
+        >
+          {page_contents}
+        </Card>
+      </Center>
+    );
+  }
+
+  // Disable scroll on page if not on mobile
+  if (!isMobile) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
   return (
     <>
+      {card}
       <canvas
         style={{
           position: "absolute",
@@ -42,18 +88,6 @@ export default function Data() {
         }}
         ref={canvasRef}
       />
-      <Stack align="stretch">
-        <Title order={1}>Mis datos</Title>
-        <Text>Aquí puedes ver y modificar tus datos.</Text>
-        <Grid>
-          <Grid.Col span={{ base: 12, lg: 6 }}>
-            <DataForm user={user} />
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, lg: 6 }}>
-            <CurrentShapeCard />
-          </Grid.Col>
-        </Grid>
-      </Stack>
     </>
   );
 }
