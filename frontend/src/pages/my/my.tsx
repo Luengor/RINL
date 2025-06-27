@@ -209,8 +209,8 @@ export default function My() {
 
       <AppShell
         navbar={{
-          width: 100,
-          breakpoint: "100px",
+          width: 80,
+          breakpoint: "80px",
           collapsed: {
             mobile: true,
             desktop: isMobile,
