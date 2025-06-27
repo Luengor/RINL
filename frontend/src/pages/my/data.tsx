@@ -1,13 +1,4 @@
-import {
-  Card,
-  Center,
-  Grid,
-  Group,
-  Loader,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Card, Center, Loader, Stack, Text, Title } from "@mantine/core";
 
 import { useUser } from "../../hooks/useUser";
 import DataForm from "../../components/User/DataForm";

@@ -1,5 +1,4 @@
 import {
-  Center,
   Grid,
   Group,
   Loader,
@@ -99,30 +98,6 @@ function Card({
       </Paper>
     </Col>
   );
-}
-
-function ThisOrText({
-  text,
-  condition,
-  children,
-}: {
-  text: string;
-  condition: boolean;
-  children: React.ReactNode;
-}) {
-  if (condition) {
-    return <>{children}</>;
-  } else {
-    return (
-      <Paper shadow="md" p="md">
-        <Center h="100%">
-          <Title order={3} mb="xl" fw="normal">
-            {text}
-          </Title>
-        </Center>
-      </Paper>
-    );
-  }
 }
 
 export default function Stats() {
