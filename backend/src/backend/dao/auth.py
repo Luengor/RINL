@@ -37,6 +37,7 @@ class AuthDAO:
         Returns:
             UserAuth | None: An instance of UserAuth if the user exists, otherwise None.
         """
+        email = email.lower()
         user = session.query(User).filter(User.email == email).first()
         if user:
             return UserAuth(uuid=user.uuid, email=user.email, hashed_password=user.hashed_password)

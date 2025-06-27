@@ -35,7 +35,7 @@ def authenticate_user(email: str, password: str, session: Session) -> UserAuth |
     Returns:
         UserAuth | None: The authenticated user if successful, otherwise None.
     """
-    user = AuthDAO.get_user_email(email, session)
+    user = AuthDAO.get_user_email(email.lower(), session)
     if not user:
         return None
     if not verify_password(password, user.hashed_password):
@@ -85,7 +85,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], sessio
         HTTPException: If the token is invalid or the user is not found.
     """
     user_auth = await get_current_user_auth(token, session)
-    user = UserDAO.get_user(user_auth.email, session)
+    user = UserDAO.get_user(user_auth.email.lower(), session)
     if user is None:
         raise NOT_FOUND
 

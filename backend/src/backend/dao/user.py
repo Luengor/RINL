@@ -26,6 +26,8 @@ class UserDAO:
         Raises:
             HTTPException: If the user already exists or if there is an error sending the verification email.
         """
+        user.email = user.email.lower()
+
         # Check if user already exists
         if UserDAO.get_user(user.email, session):
             raise HTTPException(status_code=400, detail="User already exists")
@@ -59,6 +61,9 @@ class UserDAO:
         Raises:
             HTTPException: If the user does not exist, if the email is already taken, or if there is an error sending the verification email.
         """
+        base_user.email = base_user.email.lower()
+        modify.email = modify.email.lower() if modify.email else None
+
         # Check the user exists
         if not UserDAO.get_user(base_user.email, session):
             raise HTTPException(status_code=400, detail="User does not exist")
@@ -90,6 +95,7 @@ class UserDAO:
         Returns:
             UserSchema | None: An instance of UserSchema if the user exists, otherwise None.
         """
+        email = email.lower()
         user = session.query(UserModel).filter(
             UserModel.email == email).first()
 
@@ -110,6 +116,8 @@ class UserDAO:
             bool: True if the user is successfully verified, False otherwise.
         """
         # Verify user
+        email = email.lower()
+
         user = session.query(UserModel).filter(
             UserModel.email == email).first()
 
@@ -131,6 +139,8 @@ class UserDAO:
         Raises:
             HTTPException: If the user does not exist.
         """
+        email = email.lower()
+
         # Check the user exists
         if not UserDAO.get_user(email, session):
             return
