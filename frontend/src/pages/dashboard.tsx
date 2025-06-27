@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   // Login form or
   let login_content;
-  if (loggedIn) {
+  if (loggedIn()) {
     login_content = <UserCard logout={logout} />;
   } else {
     login_content = <LoginForm />;

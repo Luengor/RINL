@@ -33,11 +33,13 @@ export function useClient() {
     return response;
   });
 
-  // Set the token if it exists
-  const [token, setToken] = useState(localStorage.getItem("access_token"));
-  if (token) {
+  function hasToken() {
+    return !!localStorage.getItem("access_token");
+  }
+  if (hasToken()) {
+    // Set the token in the client if it exists
     clientRef.current.setConfig({
-      auth: token,
+      auth: localStorage.getItem("access_token"),
     });
   }
 
@@ -52,8 +54,6 @@ export function useClient() {
       },
     });
 
-    setToken(response.data.access_token);
-    setLoggedIn(true);
     localStorage.setItem("access_token", response.data.access_token);
     clientRef.current.setConfig({
       auth: response.data.access_token,
@@ -63,15 +63,15 @@ export function useClient() {
   // Logout function
   const logout = () => {
     localStorage.removeItem("access_token");
-    setToken(null);
-    setLoggedIn(false);
     clientRef.current.setConfig({
       auth: null,
     });
   };
 
-  // Logged in
-  const [loggedIn, setLoggedIn] = useState(!!token);
+  // Check if the user is logged in
+  function loggedIn() {
+    return hasToken();
+  }
 
   // Return everything
   return { client: clientRef.current, login, logout, loggedIn };
