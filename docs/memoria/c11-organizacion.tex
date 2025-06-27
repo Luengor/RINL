@@ -32,8 +32,45 @@ paquete \enquote{Unity} y \enquote{React}).
 \subsection{Diseño de componentes}
 
 \subsection{Proceso de desarrollo}
+Puesto que se ha utilizado una metodología ágil para el desarrollo del proyecto, el proceso de
+construcción del sistema se ha realizado de manera iterativa e incremental, en vez de por fases muy
+específicas. Cada iteración ha supuesto una serie de mejoras y adiciones a distintas partes del
+sistema en función de las prioridades y necesidades del proyecto.
+
+Sin embargo, sí que se puede distinguir un \enquote{orden} seguido durante el desarrollo del
+sistema. El \gls{backend} fue de las primeras partes del sistema en ser desarrolladas, ya que es
+necesario para que la parte del \gls{frontend} funcione correctamente. Por tanto, la construcción
+de este último no empezó hasta que el primero estuviese en un estado suficientemente avanzado de
+desarrollo. Por otro lado, puesto que el videojuego de \texttt{Unity} es un componente embebido en
+la aplicación web con una interfaz con el \gls{frontend} muy específica y limitada, su desarrollo
+se realizó prácticamente junto al del \gls{frontend}.
+
+Puesto que \texttt{Jira} permite la asignación de etiquetas a las tareas y que se han utilizado
+desde el principio del proyecto para categorizar las tareas según pertenezcan al \gls{backend},
+\gls{frontend}, \texttt{Unity} o a la documentación, se ha creado un gráfico que muestra la
+cantidad de puntos de historia completados (acumulados) en cada sprint, separados por
+categorías (figura \ref{fig:sprintstags}). Como se puede ver, la mayoría de los puntos de historia
+completados pertenecen al videojuego, seguido de la documentación, el \gls{frontend} y, por último,
+el \gls{backend}.
+
+\diagrama{
+    nombre = {Puntos de historia completados por categoría},
+    archivo = {memoria/fotos/sprintstags.pdf},
+    etiqueta = {fig:sprintstags},
+    width = 1\textwidth,
+}
+
 
 \subsection{Pruebas y verificación}
+Durante el desarrollo del proyecto era necesario evaluar el correcto funcionamiento de la aplicación,
+así como la precisión de la detección de posturas. Aunque para el segundo de estos aspectos el
+proceso de validación consistió en probar la aplicación múltiples veces durante el desarrollo de
+la misma, para el primero se definieron una serie de pruebas unitarias para garantizar el correcto
+funcionamiento de la \gls{api}. Las pruebas unitarias se comenzaron a definir en los primeros sprints
+del desarrollo, una vez se creó la estructura de la \gls{api} y se implementaron las primeras
+funciones. Estas pruebas, que se ejecutan de manera casi automática, permiten verificar que cada nueva
+versión del código no introduce errores en las funcionalidades ya implementadas.
+
 
 \section{Gestión del proyecto}
 \label{sec:gestion}
