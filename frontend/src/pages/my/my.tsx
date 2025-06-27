@@ -3,7 +3,7 @@ import {
   TbDeviceGamepad,
   TbLogout,
   TbUser,
-  TbHome
+  TbHome,
 } from "react-icons/tb";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
@@ -23,7 +23,13 @@ export default function My() {
   const { logout, client } = useClient();
 
   // Get user data
-  const { user, userStatus, verified, hasShape, refetch: user_refetch } = useUser();
+  const {
+    user,
+    userStatus,
+    verified,
+    hasShape,
+    refetch: user_refetch,
+  } = useUser();
 
   // Current page
   const location = useLocation();
@@ -82,7 +88,7 @@ export default function My() {
         await verifyEmailTokenUserMeEmailTokenPost({
           client: client,
           query: { token: token },
-        })
+        });
 
         OkNotification(
           "Correo electrónico verificado",
@@ -91,18 +97,16 @@ export default function My() {
 
         console.log("Email verified successfully");
         user_refetch();
-
       } catch (error) {
         ErrorNotification(
           "Error al verificar el correo electrónico",
           "El token de verificación no es válido o ha expirado."
-        )
+        );
         console.error("Error verifying email:", error);
       }
+    };
 
-    }
-
-    verifyEmail()
+    verifyEmail();
 
     // Remove the token from the URL
     params.delete("verify");
@@ -110,7 +114,6 @@ export default function My() {
       pathname: location.pathname,
       search: params.toString(),
     });
-
   }, [client, location.pathname, location.search, navigate]);
 
   // Logout
@@ -131,7 +134,7 @@ export default function My() {
     {
       icon: TbDeviceDesktopAnalytics,
       active: "stats" === active,
-      disabled: !verified,
+      disabled: !verified || !hasShape,
       label: "Estadísticas",
       onClick: () => navigate("/my/stats"),
     },
@@ -214,7 +217,7 @@ export default function My() {
           collapsed: {
             mobile: true,
             desktop: isMobile,
-          }
+          },
         }}
         header={{
           height: 60,
@@ -230,7 +233,7 @@ export default function My() {
             <Route path="data" element={<Data />} />
             <Route path="stats" element={<Stats />} />
             <Route path="game" element={<Media />} />
-            <Route path="*" element={<NotFoundPage/>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </AppShell.Main>
       </AppShell>

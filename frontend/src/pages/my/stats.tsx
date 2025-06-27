@@ -6,6 +6,7 @@ import {
   Paper,
   SegmentedControl,
   Stack,
+  Text,
   Title,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
@@ -113,10 +114,7 @@ function ThisOrText({
     return <>{children}</>;
   } else {
     return (
-      <Paper
-        shadow="md"
-        p="md"
-      >
+      <Paper shadow="md" p="md">
         <Center h="100%">
           <Title order={3} mb="xl" fw="normal">
             {text}
@@ -126,7 +124,6 @@ function ThisOrText({
     );
   }
 }
-
 
 export default function Stats() {
   // Get client
@@ -162,17 +159,15 @@ export default function Stats() {
 
   const isMobile = window.innerWidth <= window.innerHeight;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  useBackground(
-    {
-      canvasRef,
-      started: false,
-      text: "Estádisticas",
-      fontSize: isMobile ? 40 : 80,
-      columnSep: isMobile ? 40 :  80,
-      scrollSpeed: 0.6,
-      randomSpeedMagnitude: 0.1,
-    }
-  );
+  useBackground({
+    canvasRef,
+    started: false,
+    text: "Estádisticas",
+    fontSize: isMobile ? 40 : 80,
+    columnSep: isMobile ? 40 : 80,
+    scrollSpeed: 0.6,
+    randomSpeedMagnitude: 0.1,
+  });
 
   useEffect(() => {
     if (status !== "success") return;
@@ -192,15 +187,15 @@ export default function Stats() {
     };
 
     const inDateShapes = data.shape.filter((shape) => {
-        const date = new Date(shape.date);
-        return dataRange === "week"
-          ? date >= weekAgo
-          : dataRange === "month"
-          ? date >= monthAgo
-          : dataRange === "year"
-          ? date >= yearAgo
-          : true;
-      })
+      const date = new Date(shape.date);
+      return dataRange === "week"
+        ? date >= weekAgo
+        : dataRange === "month"
+        ? date >= monthAgo
+        : dataRange === "year"
+        ? date >= yearAgo
+        : true;
+    });
 
     // Add at least one shape to the filtered data
     if (inDateShapes.length === 0 && data.shape.length > 0) {
@@ -209,10 +204,10 @@ export default function Stats() {
     }
 
     filteredData.shapes = inDateShapes.map((shape) => {
-        const date = new Date(shape.date);
-        shape.date = date.toISOString().split("T")[0];
-        return shape;
-      });
+      const date = new Date(shape.date);
+      shape.date = date.toISOString().split("T")[0];
+      return shape;
+    });
 
     filteredData.activities = data.activity
       .filter((activity) => {
@@ -325,136 +320,143 @@ export default function Stats() {
     return <div>Error</div>;
   }
 
-  // Data
   const minWeight = Math.min(...chartData.shapes.map((shape) => shape.weight));
   const maxWeight = Math.max(...chartData.shapes.map((shape) => shape.weight));
 
-  // Render
-  return (
-  <>
-    <canvas
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: -1,
-      }}
-      ref={(r) => {
-        canvasRef.current = r;
-      }}
-    />
-    <Grid columns={12} gutter="md" grow>
-      <Grid.Col span={12}>
-        <Title order={1}>Estadísticas</Title>
-        <SegmentedControl
-          value={dataRange}
-          onChange={setDataRange}
-          fullWidth
-          my="sm"
-          disabled={!has_data}
-          data={[
-            { value: "week", label: "Semana" },
-            { value: "month", label: "Mes" },
-            { value: "year", label: "Año" },
-            { value: "all", label: "Todo" },
-          ]}
-        />
-      </Grid.Col>
-
+  // Parts of the page
+  const activities = (
+    <>
       <Grid.Col span={12}>
         <Title order={2}>Actividades</Title>
       </Grid.Col>
       <Card title="Puntos de actividad">
-        <ThisOrText
-          text="Todavía no has jugado a nada"
-          condition={chartData.groupedData.length > 0}
-        >
-          <BarChart
-            {...defaultBarChartConfig}
-            data={chartData.groupedData}
-            series={[{ name: "points", label: "Puntos de actividad" }]}
-          />
-        </ThisOrText>
+        <BarChart
+          {...defaultBarChartConfig}
+          data={chartData.groupedData}
+          series={[{ name: "points", label: "Puntos de actividad" }]}
+        />
       </Card>
       <Card title="Tiempo jugado">
-        <ThisOrText
-          text="Todavía no has jugado a nada"
-          condition={chartData.groupedData.length > 0}
-        >
-          <BarChart
-            {...defaultBarChartConfig}
-            data={chartData.groupedData}
-            series={[{ name: "duration", label: "Tiempo jugado" }]}
-          />
-        </ThisOrText>
+        <BarChart
+          {...defaultBarChartConfig}
+          data={chartData.groupedData}
+          series={[{ name: "duration", label: "Tiempo jugado" }]}
+        />
       </Card>
       <Card title="Distribución de minijuegos">
-        <ThisOrText
-          text="Todavía no has jugado a nada"
-          condition={chartData.playCount.length > 0}
-        >
-          <Group justify="space-between" grow>
-            <Stack align="center">
-              <Title order={4}>Veces jugado</Title>
-              <DonutChart
-                startAngle={180}
-                withLabels
-                labelsType="value"
-                endAngle={0}
-                data={chartData.playCount}
-              />
-            </Stack>
-            <Stack align="center">
-              <Title order={4}>Tiempo jugado</Title>
-              <DonutChart
-                startAngle={180}
-                withLabels
-                labelsType="value"
-                endAngle={0}
-                data={chartData.playTime}
-              />
-            </Stack>
-          </Group>
-        </ThisOrText>
+        <Group justify="space-between" grow>
+          <Stack align="center">
+            <Title order={4}>Veces jugado</Title>
+            <DonutChart
+              startAngle={180}
+              withLabels
+              labelsType="value"
+              endAngle={0}
+              data={chartData.playCount}
+            />
+          </Stack>
+          <Stack align="center">
+            <Title order={4}>Tiempo jugado</Title>
+            <DonutChart
+              startAngle={180}
+              withLabels
+              labelsType="value"
+              endAngle={0}
+              data={chartData.playTime}
+            />
+          </Stack>
+        </Group>
       </Card>
+    </>
+  );
 
+  const shapes = (
+    <>
       <Grid.Col span={12}>
         <Title order={2}>Forma física</Title>
       </Grid.Col>
       <Card title="Peso">
-        <ThisOrText
-          text="Todavía no has registrado tu forma física"
-          condition={chartData.shapes.length > 0}
-        >
-          <LineChart
-            {...defaultLineChartConfig}
-            data={chartData.shapes}
-            yAxisProps={{ domain: [minWeight - 5, maxWeight + 5] }}
-            series={[{ name: "weight", label: "Peso" }]}
-          />
-        </ThisOrText>
+        <LineChart
+          {...defaultLineChartConfig}
+          data={chartData.shapes}
+          yAxisProps={{ domain: [minWeight - 5, maxWeight + 5] }}
+          series={[{ name: "weight", label: "Peso" }]}
+        />
       </Card>
       <Card title="IMC">
-        <ThisOrText
-          text="Todavía no has registrado tu forma física"
-          condition={chartData.shapes.length > 0}
-        >
-          <LineChart
-            {...defaultLineChartConfig}
-            data={chartData.shapes.map((shape) => {
-              return {
-                date: shape.date,
-                bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
-              };
-            })}
-            yAxisProps={{ domain: [0, 40] }}
-            series={[{ name: "bmi", label: "BMI" }]}
-          />
-        </ThisOrText>
+        <LineChart
+          {...defaultLineChartConfig}
+          data={chartData.shapes.map((shape) => {
+            return {
+              date: shape.date,
+              bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
+            };
+          })}
+          yAxisProps={{ domain: [0, 40] }}
+          series={[{ name: "bmi", label: "BMI" }]}
+        />
       </Card>
-    </Grid>
-  </>
+    </>
+  );
+
+  const filterBar = (
+    <SegmentedControl
+      value={dataRange}
+      onChange={setDataRange}
+      fullWidth
+      my="sm"
+      disabled={!has_data}
+      data={[
+        { value: "week", label: "Semana" },
+        { value: "month", label: "Mes" },
+        { value: "year", label: "Año" },
+        { value: "all", label: "Todo" },
+      ]}
+    />
+  );
+
+  let content: JSX.Element;
+  if (!has_data) {
+    content = (
+      <Card title="Aquí estarían tus estadísticas...">
+        <Text>Si hubieses jugado a algo.</Text>
+      </Card>
+    );
+  } else if (chartData.activities.length == 0) {
+    content = <>{shapes}</>;
+  } else {
+    content = (
+      <>
+        {activities}
+        {shapes}
+      </>
+    );
+  }
+
+  // Render
+  return (
+    <>
+      <canvas
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: -1,
+        }}
+        ref={(r) => {
+          canvasRef.current = r;
+        }}
+      />
+      <Grid columns={12} gutter="md" grow>
+        <Grid.Col span={12}>
+          <Title order={1}>Estadísticas</Title>
+          {has_data && filterBar}
+        </Grid.Col>
+
+        {content}
+      </Grid>
+    </>
   );
 }
