@@ -37,3 +37,10 @@
 
 % % Configuración de la profundidad del índice
 % \settocdepth{subsection}
+
+% Numeración de las páginas
+\copypagestyle{chapter}{plain}
+
+\makeoddfoot{headings}{}{\thepage}{}
+\makeevenfoot{headings}{}{\thepage}{}
+\makeheadrule{headings}{\textwidth}{\normalrulethickness}
