@@ -30,6 +30,68 @@ paquete \enquote{Unity} y \enquote{React}).
 }
 
 \subsection{Diseño de componentes}
+El diseño de cada uno de los componentes del sistema, así como los patrones utilizados en el
+desarrollo completo de la aplicación se detallan con más profundidad en el \segundoAnexo. Aquí se
+hará un resumen con los aspectos más relevantes.
+
+\subsubsection{Modelos de datos}
+Se mencionan de manera breve los modelos de datos utilizados en el sistema, puesto que se
+encuentran en un paquete independiente en el diagrama de clases de diseño
+(figura \ref{fig:paquetes-clases-diseno}). Estos modelos son utilizados por el \gls{backend} y se
+alojan en la base de datos relacional \texttt{PostgreSQL}.
+
+\subsubsection{\Gls{backend}}
+El \gls{backend} del sistema se encarga de implementar la lógica de negocio y de proporcionar una
+\gls{api} para acceder a los datos de la aplicación. Está desarrollada en \texttt{Python} utilizando
+el \gls{framework} \texttt{FastAPI}. Se divide en tres partes fundamentales:
+\begin{itemize}
+    \item \textbf{API Routers}: Definen las rutas de la \gls{api} y realizan las operaciones necesarias
+        para cada una de ellas. Delegan las operaciones sobre los modelos de datos a los \glspl{dao}.
+
+    \item \textbf{Schemas}: Definen el formato de los datos que se pueden enviar y recibir a través
+        de la \gls{api}, así como las validaciones que se deben realizar sobre ellos. También son
+        utilizados por los \textit{routers} y los \glspl{dao} para comunicarse entre ellos.
+
+    \item \textbf{DAO}: Proporcionan una interfaz para acceder y modificar los datos persistentes
+        de la aplicación. Estos aceptan y devuelven esquemas de datos a los \textit{routers} y
+        realizan las operaciones necesarias sobre los modelos de datos. Esto permite separar
+        completamente la lógica y estructura interna de los datos de la aplicación de la lógica
+        de negocio: un cambio en la representación interna del modelo no tiene por qué afectar
+        a la \gls{api}.
+\end{itemize}
+
+\subsubsection{\Gls{frontend}}
+El \gls{frontend} está desarrollado en \texttt{React} y se encarga de proporcionar la interfaz de
+usuario de la aplicación. React es un \gls{framework} que permite crear componentes reutilizables
+y gestionar el estado de la aplicación de manera cómoda y eficiente \parencite{react}. Por tanto,
+la estructura de la aplicación web se basa en componentes que contienen a su vez otros componentes,
+que se comunican entre ellos a través de \textit{props} (los argumentos pasados a los componentes
+hijos) y \textit{state} (la representación del estado de la aplicación de React).
+
+También es importante mencionar como se relaciona el \gls{frontend} con el \gls{backend} y el
+videojuego. Ambas conexiones se realizan a través de clases dedicadas a la conexión con la
+\gls{api} y el videojuego, respectivamente. La diferencia principal entre ambas es que la primera
+de estas es utilizada por la mayoría de los componentes para obtener y enviar datos, mientras
+que la segunda es utilizada únicamente por el componente del videojuego. Otra característica que
+las diferencia es que la primera de ellas ha sido autogenerada a partir de la especiciación OpenAPI
+del \gls{backend}, mientras que la segunda ha sido desarrollada a mano para adaptarse a las
+necesidades del videojuego.
+
+Por último, el \gls{frontend} también se encarga de realizar la detección de posturas a través de
+la cámara del dispositivo del usuario. Para ello, se utiliza la biblioteca \texttt{MediaPipe}, que
+permite realizar la estimación de poses en tiempo real para posteriormente enviar los datos
+obtenidos al videojuego.
+
+\subsubsection{Videojuego}
+El videojuego desarrollado en Unity es un componente embebido en la aplicación web que se comunica
+con esta a través de eventos de JavaScript. A excepción de la situación del videojuego una vez
+se ha exportado, este no tiene ninguna característica destacable, ya que se trata de un videojuego
+simple que no interacciona mucho con el resto del sistema.
+
+En cuanto a la conexión que mantiene con el \gls{frontend}, esta se realiza a través de una clase
+singleton, que se encarga de gestionar la comunicación entre el videojuego y el \gls{frontend} y
+de mantener los datos obtenidos (como la postura detectada) accesible para todos los objetos de la
+escena.
 
 \subsection{Proceso de desarrollo}
 Puesto que se ha utilizado una metodología ágil para el desarrollo del proyecto, el proceso de
@@ -71,6 +133,10 @@ del desarrollo, una vez se creó la estructura de la \gls{api} y se implementaro
 funciones. Estas pruebas, que se ejecutan de manera casi automática, permiten verificar que cada nueva
 versión del código no introduce errores en las funcionalidades ya implementadas.
 
+También se realizaron pruebas de rendimiento, principalmente sobre el videojuego desarrollado para
+asegurar que este funcionaba de manera fluida. Estas pruebas se realizaron tanto en el propio
+editor de \texttt{Unity} como en la aplicación web una vez exportada. Estas pruebas de rendimiento
+se describen en mayor detalles en el apartado \ref{sec:metricas} del capítulo 5: \ref{cap:normas}.
 
 \section{Gestión del proyecto}
 \label{sec:gestion}
@@ -78,7 +144,6 @@ En esta sección se desarrollarán tanto los recursos utilizados durante el desa
 un resumen de la planificación temporal detallada en el \tercerAnexo.
 
 \subsection{Recursos utilizados}
-% Hardware, software y recursos personales
 Podemos agrupar los recursos utilizados en tres categorías: recursos de hardware, software y
 recursos personales.
 
@@ -96,8 +161,10 @@ Para la escritura del código se han utilizado los editores \tech{Code}{https://
 y \tech{NeoVim}{https://neovim.io/}. Para probar la aplicación creada se han usado los navegadores web
 \tech{Firefox}{https://www.mozilla.org/en-US/firefox/new/} y \tech{Chromium}
 {https://www.chromium.org/chromium-projects/}. Para el desarrollo del videojuego se ha utilizado el motor
-Unity mencionado anteriormente. Por último, como sistema de control de versiones se han utilizado tanto
-\tech{Git}{https://git-scm.com/} como \tech{GitHub}{https://github.com/}.
+Unity mencionado anteriormente. Durante el desarrollo del proyecto se ha utilizado la herrmienta de
+planificación y seguimiento de tareas \tech{Jira}{https://www.atlassian.com/software/jira}. Por último,
+como sistema de control de versiones se han utilizado tanto \tech{Git}{https://git-scm.com/} como
+\tech{GitHub}{https://github.com/}.
 
 Por último, los recursos humanos utilizados me incluirían a mí y a los tutores del proyecto. Todas las
 labores de desarrollo, diseño y pruebas han sido realizadas por mí, mientras que los tutores han
