@@ -9,6 +9,8 @@ interface RINLBackProps {
   textColor?: string;
   scrollSpeed?: number;
   columnSep?: number;
+  repetitions?: number;
+  randomSpeedMagnitude?: number;
 }
 
 export default function useBackground(props: RINLBackProps) {
@@ -35,6 +37,8 @@ export default function useBackground(props: RINLBackProps) {
     const textColor = props.textColor || "rgba(229, 231, 235, 0.5)";
     const scrollSpeed = props.scrollSpeed || 0.8;
     const columnSep = props.columnSep || 100;
+    const repetitions = props.repetitions || 2;
+    const randomSpeedMagnitude = props.randomSpeedMagnitude || 1;
 
     interface Column {
       x: number;
@@ -60,11 +64,12 @@ export default function useBackground(props: RINLBackProps) {
       const numColumns = Math.ceil(canvasWidth / columnWidth) + 1;
 
       columns = [];
+      const xOffset = Math.random() * fontSize;
       for (let i = 0; i < numColumns; i++) {
         columns.push({
-          x: i * columnWidth - 100,
+          x: i * columnWidth - xOffset,
           y: Math.random() * canvasHeight,
-          speed: Math.max(scrollSpeed + (Math.random() - 0.5) * 1, 0),
+          speed: Math.max(scrollSpeed + (Math.random() - 0.5) * randomSpeedMagnitude, 0),
         });
       }
     }
@@ -80,8 +85,14 @@ export default function useBackground(props: RINLBackProps) {
       ctx.textAlign = "left";
 
       columns.forEach((col) => {
-        ctx.fillText(text, col.x, col.y % (canvasHeight + fontSize));
-        ctx.fillText(text, col.x, (col.y + (canvasHeight + fontSize) / 2) % (canvasHeight + fontSize));
+        const ySep = (canvasHeight + fontSize) / repetitions;
+        for (let i = 0; i < repetitions; i++) {
+          ctx.fillText(
+            text,
+            col.x,
+            (col.y + i * ySep) % (canvasHeight + fontSize)
+          );
+        }
 
         col.y += col.speed;
       });

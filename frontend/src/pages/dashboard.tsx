@@ -85,7 +85,7 @@ export default function Dashboard() {
 
   // Canvas ref
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  useBackground({ canvasRef });
+  useBackground({ canvasRef, repetitions: 2 });
 
   return (
     <>
