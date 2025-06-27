@@ -1,9 +1,9 @@
-FROM node:alpine
+FROM oven/bun:latest
 
 WORKDIR /app
 ADD . /app/
 
-RUN npm install
-RUN npm run build
+RUN bun install
+RUN bun run build
 
-CMD ["npm", "run", "preview", "--", "--host"]
+CMD ["bun", "run", "preview", "--", "--host"]
