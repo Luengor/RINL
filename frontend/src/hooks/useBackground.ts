@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface RINLBackProps {
   canvasRef: React.RefObject<HTMLCanvasElement>;
@@ -14,17 +14,14 @@ interface RINLBackProps {
 }
 
 export default function useBackground(props: RINLBackProps) {
-  const [shouldAnimate, setShouldAnimate] = useState(true);
-  const { canvasRef } = props;
-
   useEffect(() => {
     console.log("useBackground effect triggered");
-    if (!shouldAnimate) {
-      console.log("Animation is disabled");
+    const canvas = props.canvasRef.current;
+    if (!canvas)
+    {
+      console.warn("Canvas reference is null");
       return;
     }
-    const canvas = canvasRef.current;
-    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -114,10 +111,5 @@ export default function useBackground(props: RINLBackProps) {
       }
     };
 
-  }, [canvasRef, shouldAnimate]);
-
-  return {
-      shouldAnimate,
-      setShouldAnimate,
-  }
+  }, [props.canvasRef]);
 }

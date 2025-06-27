@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   Center,
-  Divider,
   Group,
   Stack,
   Text,

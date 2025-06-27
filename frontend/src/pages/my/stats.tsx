@@ -186,7 +186,7 @@ export default function Stats() {
           ? date >= yearAgo
           : true;
       })
-    
+
     // Add at least one shape to the filtered data
     if (inDateShapes.length === 0 && data.shape.length > 0) {
       const lastShape = data.shape[data.shape.length - 1];
