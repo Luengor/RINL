@@ -17,8 +17,7 @@ interface RINLBackProps {
 export default function useBackground(props: RINLBackProps) {
   useEffect(() => {
     const canvas = props.canvasRef.current;
-    if (!canvas)
-      return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -64,9 +63,20 @@ export default function useBackground(props: RINLBackProps) {
         columns.push({
           x: i * columnWidth - xOffset,
           y: Math.random() * canvasHeight,
-          speed: Math.max(scrollSpeed + (Math.random() - 0.5) * randomSpeedMagnitude, 0),
+          speed: Math.max(
+            scrollSpeed + (Math.random() - 0.5) * randomSpeedMagnitude,
+            0
+          ),
         });
       }
+    }
+
+    function resizeCanvas() {
+      canvasWidth = document.documentElement.scrollWidth;
+      canvasHeight = document.documentElement.scrollHeight;
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+      canvas.style.height = `${canvasHeight}px`;
     }
 
     let animationFrameId: number | null = null;
@@ -96,18 +106,17 @@ export default function useBackground(props: RINLBackProps) {
     }
 
     // Redraw canvas if window is resized
-    window.addEventListener("resize", setup);
+    window.addEventListener("resize", resizeCanvas);
 
     // Start the animation
     setup();
     animate();
 
     return () => {
-      window.removeEventListener("resize", setup);
+      window.removeEventListener("resize", resizeCanvas);
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
     };
-
   }, [props.canvasRef.current]);
 }
