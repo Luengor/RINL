@@ -1,4 +1,5 @@
 import {
+  Center,
   Grid,
   Group,
   Loader,
@@ -90,7 +91,7 @@ function Card({
 }) {
   return (
     <Col>
-      <Paper shadow="md" p="md">
+      <Paper shadow="md" p="md" style={{ position: "relative" }}>
         <Title order={3} mb="xl" fw="inherit">
           {title}
         </Title>
@@ -310,6 +311,23 @@ export default function Stats() {
           data={chartData.groupedData}
           series={[{ name: "points", label: "Puntos de actividad" }]}
         />
+        {chartData.activities.length === 0 && (
+          <Center
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 1,
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+            }}
+          >
+            <Text size="2.5em" c="dimmed">
+              Aún no has jugado a nada
+            </Text>
+          </Center>
+        )}
       </Card>
       <Card title="Tiempo jugado">
         <BarChart
@@ -317,6 +335,23 @@ export default function Stats() {
           data={chartData.groupedData}
           series={[{ name: "duration", label: "Tiempo jugado" }]}
         />
+        {chartData.activities.length === 0 && (
+          <Center
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 1,
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+            }}
+          >
+            <Text size="2.5em" c="dimmed">
+              Aún no has jugado a nada
+            </Text>
+          </Center>
+        )}
       </Card>
       <Card title="Distribución de minijuegos">
         <Group justify="space-between" grow>
@@ -341,6 +376,23 @@ export default function Stats() {
             />
           </Stack>
         </Group>
+        {chartData.activities.length === 0 && (
+          <Center
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 1,
+              backgroundColor: "rgba(255, 255, 255, 0.5)",
+            }}
+          >
+            <Text size="2.5em" c="dimmed">
+              Aún no has jugado a nada
+            </Text>
+          </Center>
+        )}
       </Card>
     </>
   );
@@ -397,8 +449,6 @@ export default function Stats() {
         <Text>Si hubieses jugado a algo.</Text>
       </Card>
     );
-  } else if (chartData.activities.length == 0) {
-    content = <>{shapes}</>;
   } else {
     content = (
       <>

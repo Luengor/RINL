@@ -45,14 +45,14 @@ export default function Data() {
     };
   }, [isMobile]);
 
-  if (userStatus === "pending") {
-    return <Loader type="dots" size="xl" />;
-  } else if (userStatus === "error") {
-    return <Text>Error al cargar los datos</Text>;
-  }
-
   let page_contents: JSX.Element;
-  if (user.verified) {
+  if (userStatus === "pending") {
+    page_contents = (
+      <Center h="100%" w="100%">
+        <Loader type="dots" size="xl" />
+      </Center>
+    );
+  } else if (user.verified) {
     page_contents = (
       <Stack align="stretch">
         <Title order={1} style={{ marginBottom: 0, lineHeight: 1 }}>
