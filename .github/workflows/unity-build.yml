@@ -39,7 +39,7 @@ jobs:
         include:
           - os: buildalon-windows
             build-target: WebGL
-            build-args: ""
+            build-args: "-buildTarget coolweb"
     steps:
       - uses: actions/checkout@v4
         with:
