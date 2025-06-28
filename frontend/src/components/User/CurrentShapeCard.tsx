@@ -1,5 +1,6 @@
 import {
   Button,
+  Collapse,
   Modal,
   NumberInput,
   Paper,
@@ -37,7 +38,7 @@ export default function CurrentShapeCard() {
         value < 20 || value > 700 ? "Peso inválido" : null,
       height: (value: number) =>
         value < 50 || value > 300 ? "Altura inválida" : null,
-    }
+    },
   });
 
   const queryClient = useQueryClient();
@@ -71,7 +72,7 @@ export default function CurrentShapeCard() {
     const shape: ShapeBase = {
       weight: weight,
       date: new Date().toISOString(),
-      height: height
+      height: height,
     };
 
     addShapeMutation.mutate(shape);
@@ -81,50 +82,48 @@ export default function CurrentShapeCard() {
   if (!verified) {
     card_content = (
       <Text size="sm" c="dimmed">
-        Tu cuenta no está verificada. Verifícala para poder añadir tu forma física.
+        Tu cuenta no está verificada. Verifícala para poder añadir tu forma
+        física.
       </Text>
-    );
-  } else if (!hasShape) {
-    card_content = (
-      <>
-        <Title order={4}>Todavía no has introducido tu forma física</Title>
-        <Text size="sm" c="dimmed">
-          Necesitas introducir tu forma física para poder jugar.
-        </Text>
-        <Button variant="outline" mt="sm" onClick={openAddShape}>
-          Añadir forma
-        </Button>
-      </>
     );
   } else {
     card_content = (
       <>
-        <Text size="sm" c="dimmed">
-          Última forma física registrada:{" "}
-          {new Date(latestShape?.date).toLocaleDateString()}
-        </Text>
-        <Text size="sm" c="dimmed">
-          Peso: {latestShape?.weight} kg
-        </Text>
-        <Text size="sm" c="dimmed">
-          Altura: {latestShape?.height} cm
-        </Text>
-        <Button variant="outline" mt="sm" onClick={openAddShape}>
-          Añadir forma
-        </Button>
+        <Collapse in={!hasShape}>
+          <Text size="sm" c="dimmed">
+            Todavía no has añadido ninguna forma física. Necesitas añadir tu
+            forma física antes de jugar.
+          </Text>
+          <Button variant="outline" mt="sm" onClick={openAddShape}>
+            Añadir forma física
+          </Button>
+        </Collapse>
+        <Collapse in={hasShape}>
+          <Text size="sm" c="dimmed">
+            Última forma física registrada:{" "}
+            {new Date(latestShape?.date).toLocaleDateString()}
+          </Text>
+          <Text size="sm" c="dimmed">
+            Peso: {latestShape?.weight} kg
+          </Text>
+          <Text size="sm" c="dimmed">
+            Altura: {latestShape?.height} cm
+          </Text>
+          <Button variant="outline" mt="sm" onClick={openAddShape}>
+            Actualizar forma física
+          </Button>
+        </Collapse>
       </>
     );
   }
 
   return (
     <>
-      <Paper shadow="md" p="sm">
-        <Title order={3} fw="inherit">
-          Forma física actual
-        </Title>
+      <Title order={1} style={{ marginBottom: 0, lineHeight: 1 }}>
+        Forma física actual
+      </Title>
 
-        {card_content}
-      </Paper>
+      {card_content}
       <Modal
         opened={addShapeOpened}
         onClose={closeAddshape}

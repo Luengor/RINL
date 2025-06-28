@@ -1,4 +1,13 @@
-import { Card, Center, Loader, Stack, Text, Title } from "@mantine/core";
+import {
+  Card,
+  Center,
+  Collapse,
+  Divider,
+  Loader,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 
 import { useUser } from "../../hooks/useUser";
 import DataForm from "../../components/User/DataForm";
@@ -29,14 +38,30 @@ export default function Data() {
     return <Text>Error al cargar los datos</Text>;
   }
 
-  const page_contents = (
-    <Stack align="stretch">
-      <Title order={1}>Mis datos</Title>
-      <Text>Aquí puedes ver y modificar tus datos.</Text>
-      <DataForm user={user} />
-      <CurrentShapeCard />
-    </Stack>
-  );
+  let page_contents: JSX.Element;
+  if (user.verified) {
+    page_contents = (
+      <Stack align="stretch">
+        <Title order={1} style={{ marginBottom: 0, lineHeight: 1 }}>
+          Mis datos
+        </Title>
+        <Text>Aquí puedes ver y modificar tus datos.</Text>
+        <DataForm user={user} />
+        <Divider my="sm" />
+        <CurrentShapeCard />
+      </Stack>
+    );
+  } else {
+    page_contents = (
+      <Stack align="stretch">
+        <Title order={1} style={{ marginBottom: 0, lineHeight: 1 }}>
+          Mis datos
+        </Title>
+        <Text>Aquí puedes ver y modificar tus datos.</Text>
+        <DataForm user={user} />
+      </Stack>
+    );
+  }
 
   let card: JSX.Element;
   if (isMobile) {
