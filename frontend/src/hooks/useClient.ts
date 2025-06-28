@@ -25,7 +25,10 @@ export function useClient() {
 
   // Logout the user if the token is invalid
   clientRef.current.interceptors.response.use(async (response) => {
-    if (response.status === 401) {
+    if (
+      response.status === 401 ||
+      (response.status === 404 && response.url.endsWith("/user/me"))
+    ) {
       // Unauthorized, logout
       logout();
 
