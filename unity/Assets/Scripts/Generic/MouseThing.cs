@@ -34,7 +34,7 @@ public class MouseThing : MonoBehaviour
 
     void Update()
     {
-        // Get on screen position of the target object 
+        // Get on screen position of the target object
         Vector2 screenPos = mainCamera.WorldToScreenPoint(target.position);
 
         // Check if there is a button in the position
@@ -46,12 +46,19 @@ public class MouseThing : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, results);
         bool hasButton = false;
         for (int i = 0; i < results.Count; i++)
-            if (results[i].gameObject.GetComponent<Button>() != null)
+        {
+            if (results[i].gameObject.TryGetComponent(out Button button) && button.interactable)
             {
+                // Set the highlight color of the button
+                ColorBlock colorBlock = button.colors;
+                colorBlock.highlightedColor = circleColor;
+                button.colors = colorBlock;
+
+                // Do other things
                 hasButton = true;
                 break;
             }
-        
+        }
         // If there is no button, exit early
         if (!hasButton)
         {
@@ -82,7 +89,7 @@ public class MouseThing : MonoBehaviour
         {
             position = screenPos
         });
-        
+
 
         // Check if the mouse is still
         Vector2 normalizedScreenPos = screenPos / Screen.height;
