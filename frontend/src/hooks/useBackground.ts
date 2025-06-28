@@ -15,6 +15,9 @@ interface RINLBackProps {
 }
 
 export default function useBackground(props: RINLBackProps) {
+  const isReduced =
+    window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+
   useEffect(() => {
     const canvas = props.canvasRef.current;
     if (!canvas) return;
@@ -101,6 +104,11 @@ export default function useBackground(props: RINLBackProps) {
 
         col.y += col.speed;
       });
+
+      if (isReduced) {
+        // If reduced motion is enabled, stop the animation
+        return;
+      }
 
       animationFrameId = requestAnimationFrame(animate);
     }
