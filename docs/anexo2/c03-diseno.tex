@@ -205,6 +205,23 @@ una imagen que muestra únicamente los paquetes y sus relaciones
 también se encuentra disponible en el repositorio del proyecto%
 \footnote{\url{https://github.com/Luengor/RINL/blob/fullapp/docs/anexo2/diagramas}}.
 
+Hay varias cosas a destacar del diagrama de clases. En primer lugar, se puede observar que se
+han utilizado dos estereotipos no estándar en los componentes de React y los \textit{routers} de
+FastAPI. Estos estereotipos son \texttt{<<component>>} y \texttt{<<router>>} respectivamente. Estos
+se han utilizado para indicar que estos elementos son componentes de la interfaz de react o son los
+gestores de las peticiones HTTP del \gls{backend}. Se consideraba importante el uso de algún tipo
+de estereotipo, puesto que estos objetos no son clases en el sentido estricto de la palabra. Los
+componentes de React son funciones que devuelven \gls{tsx} (se ha utilizado la sección de
+atributos de la clase para representar los argumentos que pueden tomar los componentes) mientras
+que los \textit{routers} son sets de funciones agrupadas por rutas (de ahí que estas clases no
+tengan parámetros).
+
+Otro detalle importante es que se han omitido las relaciones entre los distintos componentes de
+React y los \textit{routers} específicos de FastAPI, ya que estas relaciones son muy numerosas y
+se consideró que no aportaban suficiente información al diagrama para justificar su inclusión. Para
+incluir esta información de alguna manera, se ha relacionado la aplicación de React que contiene
+todos los componentes con todos los Routers de FastAPI.
+
 \diagrama{
     nombre = {Diagrama de clases de diseño (modelos de datos)},
     archivo = {anexo2/diagramas/clasesDiseñoModelos.pdf},
