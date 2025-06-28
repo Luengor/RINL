@@ -125,7 +125,9 @@ package "React" %lighten("#PaleGreen", 15) {
 App .> Backend : uses >
 note left of App
     Los componentes del frontend utilizan la API a través del
-    APIClient, encargado de abstraer las peticiones HTTP.
+    APIClient, encargado de abstraer las peticiones HTTP. En el
+    diagrama se muestra solo una relación entre la App y las
+    rutas para hacer el diagrama más legible.
 end note
 
 ''' El juego
