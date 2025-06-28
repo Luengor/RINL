@@ -39,7 +39,7 @@ jobs:
         include:
           - os: buildalon-windows
             build-target: WebGL
-            build-args: '-activeBuildProfile "Assets/Settings/Build Profiles/coolweb.asset" -releaseCodeOptimization'
+            build-args: "-releaseCodeOptimization"
     steps:
       - uses: actions/checkout@v4
         with:
