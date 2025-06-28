@@ -3,7 +3,6 @@ import {
   Collapse,
   Modal,
   NumberInput,
-  Paper,
   Stack,
   Text,
   Title,
