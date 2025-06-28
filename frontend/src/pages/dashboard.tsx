@@ -31,7 +31,7 @@ function UserCard({ logout }: UserCardProps) {
     <Center w="100%" h="100%">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
         <Stack>
-          <Title order={2}>Hola de nuevo!</Title>
+          <Title order={2}>¡Hola de nuevo!</Title>
           <Button
             onClick={() => navigate("/my/data")}
             variant="light"
