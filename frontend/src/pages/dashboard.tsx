@@ -80,6 +80,8 @@ export default function Dashboard() {
     "¡No te olvides de calentar!",
     "Día de pierna :(",
     "Si bebes, no conduzcas",
+    "A Pablo no le gusta el títutlo :(",
+    "A Encarna le gusta el título :)",
   ];
 
   const [randomPhrase] = useState(Math.floor(Math.random() * phrases.length));
