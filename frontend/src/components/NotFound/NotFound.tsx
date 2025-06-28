@@ -1,13 +1,21 @@
 import { Button, Center, Group, Stack, Text, Title } from "@mantine/core";
 import classes from "./NotFound.module.css";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import useBackground from "../../hooks/useBackground";
 
 export function NotFoundPage() {
   // Canvas ref
   const canvasRef = useRef<HTMLCanvasElement>(null);
   useBackground({ canvasRef, repetitions: 2 });
+
+  // Disable scrolling and re-enable it on unmount
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <>
