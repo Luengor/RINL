@@ -11,7 +11,7 @@ import {
 import { useUser } from "../../hooks/useUser";
 import DataForm from "../../components/User/DataForm";
 import CurrentShapeCard from "../../components/User/CurrentShapeCard";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import useBackground from "../../hooks/useBackground";
 
 export default function Data() {
@@ -30,6 +30,20 @@ export default function Data() {
     scrollSpeed: 0.6,
     randomSpeedMagnitude: 0.1,
   });
+
+  // Disable scroll on page if not on mobile and enable it on unmount
+  useEffect(() => {
+    if (!isMobile) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      // Enable scroll on unmount
+      document.body.style.overflow = "auto";
+    };
+  }, [isMobile]);
 
   if (userStatus === "pending") {
     return <Loader type="dots" size="xl" />;
@@ -80,13 +94,6 @@ export default function Data() {
         </Card>
       </Center>
     );
-  }
-
-  // Disable scroll on page if not on mobile
-  if (!isMobile) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "auto";
   }
 
   return (
