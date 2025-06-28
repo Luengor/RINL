@@ -132,22 +132,22 @@ package "Backend" %lighten("#87CEFB", 20) {
     ShapeRouter ..> ShapeDAO : depends on >
 
     ' Los Routers utilizan los esquemas como argumentos y respuestas
-    AuthRouter     -left-> "TokenSchema" : creates, receives, returns >
-    UserRouter     --> "UserSchema" : creates, receives, returns >
-    ActivityRouter --> "ActivitySchema" : creates, receives, returns >
-    ShapeRouter    --> "ShapeSchema" : creates, receives, returns >
+    AuthRouter     .left.> "TokenSchema" : creates, receives, returns >
+    UserRouter     ..> "UserSchema" : creates, receives, returns >
+    ActivityRouter ..> "ActivitySchema" : creates, receives, returns >
+    ShapeRouter    ..> "ShapeSchema" : creates, receives, returns >
 
     ' Los DAOs utilizan los esquemas para crear y devolver datos
-    ActivityDAO -> "ActivitySchema" : creates, returns >
-    AuthDAO     -> "UserSchema" : returns >
-    ShapeDAO    -> "ShapeSchema" : creates, returns >
-    UserDAO     -> "UserSchema" : creates, returns >
+    ActivityDAO .> "ActivitySchema" : creates, returns >
+    AuthDAO     .> "UserSchema" : returns >
+    ShapeDAO    .> "ShapeSchema" : creates, returns >
+    UserDAO     .> "UserSchema" : creates, returns >
 }
 
 ' Los DAOs gestionan los modelos de datos
-ShapeDAO --> "Modelos de Datos" : creates, manages >
-ActivityDAO --> "Modelos de Datos" : creates, manages >
-AuthDAO --> "Modelos de Datos" : manages >
-UserDAO --> "Modelos de Datos" : creates, manages >
+ShapeDAO ..> "Modelos de Datos" : creates, manages >
+ActivityDAO ..> "Modelos de Datos" : creates, manages >
+AuthDAO ..> "Modelos de Datos" : manages >
+UserDAO ..> "Modelos de Datos" : creates, manages >
 
 @enduml

@@ -17,7 +17,6 @@ package "Backend" %lighten("#87CEFB", 20) { }
 package "React" %lighten("#PaleGreen", 15) {
     class "App" #LightGreen {
         - static singleton: App
-        - ApiClient: ApiClient
         + render()
     }
 
@@ -56,18 +55,18 @@ package "React" %lighten("#PaleGreen", 15) {
         }
 
         '' Relaciones entre componentes
-        Dashboard --> "LoginForm" : uses >
+        Dashboard *-- "LoginForm" : uses >
 
-        Login --> "LoginForm" : uses >
+        Login *-- "LoginForm" : uses >
 
-        My --> "Navbar" : uses >
-        My --> "UserData" : uses >
-        My --> "UserStats" : uses >
-        My --> "Media" : uses >
-        My --> "NotFound" : uses >
+        My *-- "Navbar" : uses >
+        My *-- "UserData" : uses >
+        My *-- "UserStats" : uses >
+        My *-- "Media" : uses >
+        My *-- "NotFound" : uses >
 
-        UserData -> "DataForm" : uses >
-        UserData --> "CurrentShapeCard" : uses >
+        UserData *- "DataForm" : uses >
+        UserData *-- "CurrentShapeCard" : uses >
     }
     note top of "Components"
         Los componentes son los elementos
@@ -79,11 +78,11 @@ package "React" %lighten("#PaleGreen", 15) {
         utilizan en varias páginas.
     end note
 
-    App --> "Dashboard" : uses >
-    App --> "Login" : uses >
-    App --> "Media" : uses >
-    App --> "My" : uses >
-    App --> "NotFound" : uses >
+    App *-- "Dashboard" : uses >
+    App *-- "Login" : uses >
+    App *-- "Media" : uses >
+    App *-- "My" : uses >
+    App *-- "NotFound" : uses >
 
     class "ApiClient" #LightGreen  {
         - auth_token: str
@@ -109,7 +108,7 @@ package "React" %lighten("#PaleGreen", 15) {
     Media ..> UnityClient : uses >
 
     ' La App crea y gestiona el ApiClient
-    App -> ApiClient : creates >
+    App .> ApiClient : creates >
 
     ' Los componentes dependen del ApiClient para hacer peticiones a la API
     LoginForm ..> ApiClient : uses >
