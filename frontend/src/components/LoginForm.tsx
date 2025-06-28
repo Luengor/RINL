@@ -171,7 +171,15 @@ export function LoginForm() {
             </Collapse>
           </Stack>
 
-          <Button type="submit" fullWidth mt="xl" loading={loginMutation.status === "pending" || registerMutation.status === "pending"}>
+          <Button
+            type="submit"
+            fullWidth
+            mt="xl"
+            loading={
+              loginMutation.status === "pending" ||
+              registerMutation.status === "pending"
+            }
+          >
             {register ? "Registrarse" : "Iniciar sesión"}
           </Button>
         </Paper>

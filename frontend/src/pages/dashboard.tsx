@@ -2,7 +2,10 @@ import {
   Button,
   Card,
   Center,
+  Grid,
   Group,
+  SimpleGrid,
+  Space,
   Stack,
   Text,
   Title,
@@ -75,12 +78,15 @@ export default function Dashboard() {
     "¡Prepara la toalla!",
     "¡No olvides beber agua!",
     "¡Más divertido que salir a correr! (subjetivo)",
-    "¡No olvides estirar!",
-    "¡No olvides calentar!",
+    "¡No te olvides de estirar!",
+    "¡No te olvides de calentar!",
     "Día de pierna :(",
+    "Si bebes, no conduzcas",
   ];
 
   const [randomPhrase] = useState(Math.floor(Math.random() * phrases.length));
+
+  const isMobile = window.innerWidth < window.innerHeight;
 
   // Canvas ref
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -99,13 +105,18 @@ export default function Dashboard() {
         }}
         ref={canvasRef}
       />
-      <Group h="100vh" grow preventGrowOverflow={false}>
-        <Center h="100%" w="50%">
-          <Stack align="left" justify="left" gap={0} pr={{ base: 0, lg: 200 }}>
+      <Center h="100vh" w="100%">
+        <SimpleGrid cols={isMobile ? 1 : 3} verticalSpacing="sm" spacing="md">
+          <Stack
+            align={isMobile ? "center" : "flex-start"}
+            justify="center"
+            gap={0}
+          >
             <Title
               order={1}
               size={120}
               fw={900}
+              ta={isMobile ? "center" : "left"}
               style={{ lineHeight: 1, marginBottom: 0 }}
             >
               <Text
@@ -118,6 +129,7 @@ export default function Dashboard() {
             </Title>
             <Text
               size="xl"
+              ta={isMobile ? "center" : "left"}
               style={{
                 fontFamily: "Helvetica, Arial, sans-serif",
                 fontWeight: "900",
@@ -126,9 +138,10 @@ export default function Dashboard() {
               {phrases[randomPhrase]}
             </Text>
           </Stack>
-        </Center>
-        <Center>{login_content}</Center>
-      </Group>
+          {!isMobile && <Space />}
+          {login_content}
+        </SimpleGrid>
+      </Center>
     </>
   );
 }
