@@ -37,6 +37,7 @@ export default function Media() {
     sendMessage: sendUnityMessage,
     isLoaded: isUnityLoaded,
     requestFullscreen,
+    unload: unloadUnity,
   } = useUnityContext({
     loaderUrl: "/unity/Build/unity.loader.js",
     dataUrl: "/unity/Build/unity.data",
@@ -163,13 +164,42 @@ export default function Media() {
     }
   }, [isUnityLoaded]);
 
+  // Unload unity when unmounting
+  useEffect(() => {
+    return () => {
+      if (isUnityLoaded) {
+        console.log("Unloading unity");
+        unloadUnity();
+      }
+    };
+  }, [isUnityLoaded, unloadUnity]);
+
+  // Stop video stream when unmounting
+  useEffect(() => {
+    return () => {
+      if (videoStream) {
+        videoStream.getTracks().forEach((track) => {
+          track.stop();
+        });
+      }
+    };
+  }, [videoStream]);
+
   // Render
   let content = <Loader type="dots" size="xl" />;
   if (videoStream) {
     content = (
       <>
         <Stack w="100%" h="100%" justify="center" align="center">
-          <Button fullWidth onClick={() => {requestFullscreen(true)}}>Jugar en pantalla completa</Button>
+          <Button
+            mih={30}
+            fullWidth
+            onClick={() => {
+              requestFullscreen(true);
+            }}
+          >
+            Jugar en pantalla completa
+          </Button>
           <Unity
             unityProvider={unityProvider}
             style={{ width: "100%", height: "100%" }}
@@ -181,7 +211,14 @@ export default function Media() {
               if (inputVideoRef.current)
                 inputVideoRef.current.srcObject = videoStream;
             }}
-            style={{ position: "absolute", right: 'var(--mantine-spacing-xl)', bottom: 'var(--mantine-spacing-xl)', width: "20%", objectFit: "cover", opacity: 0.8 }}
+            style={{
+              position: "absolute",
+              right: "var(--mantine-spacing-xl)",
+              bottom: "var(--mantine-spacing-xl)",
+              width: "20%",
+              objectFit: "cover",
+              opacity: 0.8,
+            }}
             autoPlay
             playsInline
           />
