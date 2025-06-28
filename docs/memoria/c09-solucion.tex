@@ -35,8 +35,10 @@ según lo que desee hacer (ver figura \ref{fig:solucion:inicio-sesion} y \ref{fi
 }
 
 Si el usuario ya ha iniciado sesión anteriormente, la aplicación web le mostrará una pantalla de
-bienvenida con dos botones: uno para acceder a la página del usuario y otro para cerrar sesión (
-ver figura \ref{fig:solucion:bienvenida}).
+bienvenida con dos botones: uno para acceder a la página del usuario y otro para cerrar sesión
+(ver figura \ref{fig:solucion:bienvenida}). Pulsar el botón de cerrar sesión muestra un mensaje
+de confirmación y, si el usuario lo confirma, se cierra la sesión y se vuelve a la pantalla de
+acceso al sistema.
 
 \diagrama{
     nombre = {Pantalla de bienvenida},
@@ -45,5 +47,90 @@ ver figura \ref{fig:solucion:bienvenida}).
     width = 1\textwidth,
 }
 
+En la página principal del usuario se muestra un menú lateral con varios botones que permiten
+acceder a las distintas secciones de la aplicación web. Inicialmente, hasta que el usuario
+verifique su correo electrónico, solo aparecen los botones para acceder a la página de
+entrada al sistema, a la página de datos en la que se encuentra y un botón para cerrar sesión
+(ver figura \ref{fig:solucion:usuario-sin-verificar}).
+
+\diagrama{
+    nombre = {Pantalla de usuario sin verificar},
+    archivo = {memoria/fotos/capturas/datosnoverif.png},
+    etiqueta = {fig:solucion:usuario-sin-verificar},
+    width = 1\textwidth,
+}
+
+El usuario puede verificar su correo electrónico haciendo clic en el enlace enviado a dicho
+correo durante el registro. Si por alguna razón el usuario no recibe el correo, puede solicitar
+el envío de otro haciendo clic en el texto marcado en la imagen. Una vez que el usuario verifica
+su cuenta, se muestra una notificación para informarle de que su cuenta ha sido verificada y se
+muestra una sección adicional para añadir su forma física (ver figura
+\ref{fig:solucion:usuario-verificado}). Haciendo clic en el botón de añadir forma física, se
+muestra un formulario que el usuario debe completar con su peso y altura (ver figura
+\ref{fig:solucion:anadir-forma}). Una vez que el usuario ha añadido su forma física, se
+muestra una notificación para informarle de que se ha añadido correctamente y se muestra la
+forma física añadida.
+
+\diagrama{
+    nombre = {Pantalla de usuario verificado},
+    archivo = {memoria/fotos/capturas/datosverif.png},
+    etiqueta = {fig:solucion:usuario-verificado},
+    width = 1\textwidth,
+}
+
+\diagrama{
+    nombre = {Pantalla de añadir forma física},
+    archivo = {memoria/fotos/capturas/anadirForma.png},
+    etiqueta = {fig:solucion:anadir-forma},
+    width = 1\textwidth,
+}
+
+Tras verificar su cuenta, el usuario puede modificar algunos de sus datos personales como pueden
+ser su nombre, apellidos, edad y correo electrónico. Para ello, el usuario simplemente debe editar
+los campos del formulario y hacer clic en el botón de guardar cambios. Este botón solo se muestra
+si el usuario ha modificado alguno de los campos del formulario, manteniéndose oculto la mayoría
+del tiempo.
+
+Cualquier cambio que no incluya modificar el correo electrónico se guardará de forma inmediata y se
+actualizará la información mostrada en pantalla. Si el usuario desea cambiar su correo electrónico,
+se mostrará una notificación para informarle de que se le ha enviado un correo electrónico a la
+nueva dirección para que confirme el cambio (ver figura \ref{fig:solucion:usuario-modificar-correo}).
+
+\diagrama{
+    nombre = {Pantalla de usuario al modificar el correo},
+    archivo = {memoria/fotos/capturas/cambiarcorreo.png},
+    etiqueta = {fig:solucion:usuario-modificar-correo},
+    width = 1\textwidth,
+}
+
+Una vez que el usuario ha añadido su forma física, se le muestra una sección adicional en el menú
+lateral para acceder a la sección de estadísticas. En esta sección, el usuario puede ver un historial
+de su forma física y las actividades que ha realizado. Si el usuario no ha realizado ninguna actividad
+física (o si no se ha añadido ninguna forma física, aunque esta página es normalmente inaccesible en
+ese caso) se muestran gráficos vacíos y un mensaje que indica que no hay datos disponibles (ver figura
+\ref{fig:solucion:estadisticas-vacia}).
+
+\diagrama{
+    nombre = {Pantalla de estadísticas vacía},
+    archivo = {memoria/fotos/capturas/stats.png},
+    etiqueta = {fig:solucion:estadisticas-vacia},
+    width = 1\textwidth,
+}
+
+% TODO: Añadir una imagen de estadísticas con datos
+
+Junto a la sección de estadísticas, el usuario también puede acceder a la sección de minijuegos una
+vez que ha añadido su forma física. Nada más acceder a esta sección, el navegador solicitará
+permiso para acceder a la cámara web del usuario si no se ha concedido previamente. Una vez se
+concede el acceso, se muestra el canvas sobre el que se mostrará el videojuego desarrollado en
+Unity, un botón para activar la pantalla completa y lo capturado por su cámara web en una
+esquina.
+
+\diagrama{
+    nombre = {Pantalla de juego},
+    archivo = {memoria/fotos/capturas/juego.png},
+    etiqueta = {fig:solucion:juego},
+    width = 1\textwidth,
+}
 
 
