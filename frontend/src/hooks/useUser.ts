@@ -14,7 +14,9 @@ export function useUser() {
   } = useQuery({
     queryKey: ["user-data"],
     queryFn: async () => {
+      console.log("Fetching user data");
       const req = await getMeUserMeGet({ client: client });
+      console.log("User data fetched", req);
       return req.data;
     },
 
@@ -50,14 +52,22 @@ export function useUser() {
 
   const hasShape = latestShapeStatus === "success" && latestShape !== null;
   const refetch = () => {
-    refetchUser();
-    refetchShape();
+    const actuallyRefetch = () => {
+      refetchUser();
+      refetchShape();
+    };
+
+    if (userStatus !== "success") {
+      setTimeout(actuallyRefetch, 500);
+    } else {
+      actuallyRefetch();
+    }
   };
 
   const logout = () => {
     client_logout();
     refetch();
-  }
+  };
 
   return {
     verified,
