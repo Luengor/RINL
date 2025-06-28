@@ -115,7 +115,12 @@ export default function Dashboard() {
               size={120}
               fw={900}
               ta={isMobile ? "center" : "left"}
-              style={{ lineHeight: 1, marginBottom: 0 }}
+              style={{
+                lineHeight: 1,
+                marginBottom: 0,
+                marginLeft: 0,
+                paddingLeft: 0,
+              }}
             >
               <Text
                 inherit
