@@ -50,8 +50,10 @@ casos de uso, así como las relaciones entre los propios casos de uso.
 
 \subsection{Definición de actores}
 \label{anexo1:sec:requisitos-funcionales-actores}
-En este subapartado se definen los distintos actores del sistema en forma de tabla, así como la
-relacióñ entre ellos a través de un diagrama.
+En este sub-apartado se definen los distintos actores del sistema en forma de tabla, así como la
+relación entre ellos a través de un diagrama. Los actores representan a usuarios que han realizado
+alguna acción específica en el sistema que les otorga un rol concreto. En este caso, dichas acciones
+son el inicio de sesión, el registro y la verificación del correo electrónico.
 
 \diagrama{
     nombre = {Actores del sistema},
@@ -103,9 +105,12 @@ relacióñ entre ellos a través de un diagrama.
     }
 }
 
-
 \subsection{Casos de uso del sistema}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso-definicion}
+En este sub-apartado se definen los distintos casos de uso del sistema en forma de tabla. Cada uno
+de ellos contiene una descripción detallada de su funcionamiento normal paso a paso, así como las
+excepciones que pueden ocurrir durante su ejecución.
+
 \casouso{
     nombre = {Registrarse},
     descripcion = {%
@@ -184,7 +189,7 @@ relacióñ entre ellos a través de un diagrama.
         & 2 & Si el usuario no existe o la contraseña es incorrecta, el sistema muestra un mensaje de
               error indicando que las credenciales son incorrectas y se vuelve al paso 1 \\
     },
-    frecuencia = {Varias veces al día}
+    frecuencia = {Varias veces al día},
 }
 
 \casouso{
@@ -840,6 +845,7 @@ relacióñ entre ellos a través de un diagrama.
         La puntuación obtenida en el minijuego es guardada en el historial del usuario
     },
     frecuencia = {Muchas veces al día},
+    tamanoLetra = {\footnotesize}
 }
 
 \casouso{
@@ -896,4 +902,5 @@ relacióñ entre ellos a través de un diagrama.
         & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego} \\
     },
     frecuencia = {Muchas veces al día},
+    tamanoLetra = {\footnotesize}
 }
