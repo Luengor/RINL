@@ -3,7 +3,7 @@
 En este capítulo se describen los requisitos del sistema. Los requisitos se han documentado siguiendo
 la \textit{Metodología para la elicitación de requisitos de sistemas software} de
 \textcite[p.~12]{DuranBernardez}, la estructura del capítulo se asemejará a la detallada ahí. Cabe destacar
-que este capítulo es un versión resumida de los requisitos ya documentados en el \primerAnexo, en
+que este capítulo es una versión resumida de los requisitos ya documentados en el \primerAnexo, en
 particular en el capítulo 4, \textit{Catálogo de requisitos del sistema.}
 
 Estos requisitos se han obtenido a partir de los objetivos del sistema, que se explican de manera resumida
@@ -38,6 +38,21 @@ Los requisitos funcionales son aquellos que definen las funciones que el sistema
 alcanzar los objetivos del negocio \parencite[p.~37]{DuranBernardez}. Los requisitos funcionales se
 describen a través de casos de uso, una técnica para la especificación de requisitos funcionales.
 
+Los casos de uso son descripciones de cómo el sistema debería responder a las acciones de los
+usuarios \parencite{TIWARI2015128}. Los actores son aquellos que interactúan con el sistema,
+ya sean usuarios o sistemas externos. Estos usuarios se clasifican según su rol o las acciones
+que hayan realizado en el sistema. En este proyecto, se diferencian tres tipos de usuarios:
+los usuarios anónimos, los usuarios registrados y los usuarios verificados. También se considera
+un usuario que representa al sistema en sí mismo. Se puede ver esta clasificación en la figura
+\ref{fig:requisitos:actores}.
+
+\diagrama{
+    nombre = {Diagrama de actores del sistema},
+    archivo = {anexo1/diagramas/actores.pdf},
+    etiqueta = {fig:requisitos:actores},
+    width = 0.8\textwidth,
+}
+
 Para este proyecto, se han organizado los casos de uso en tres paquetes. El primero de ellos,
 \textit{Gestión de usuarios}, incluye los casos de uso relacionados con la gestión de la información
 de los usuarios, así como la gestión del acceso al sistema. El segundo paquete, \textit{Estadísticas
@@ -45,22 +60,36 @@ y seguimiento}, incluye los casos de uso relacionados con la gestión del histor
 y actividades jugadas por los usuarios. Por último, el tercer paquete, \textit{Juego}, incluye los
 casos de uso relacionados con el videojuego en sí.
 
+Como se puede ver en el diagrama de casos de uso del sistema (figura \ref{fig:requisitos:casosuso}),
+la mayoría de la funcionalidad del sistema está relacionada con el videojuego, ya que este es el
+objetivo principal del proyecto.
+
+\diagrama{
+    nombre = {Diagrama de casos de uso del sistema},
+    archivo = {anexo1/diagramas/casosuso.pdf},
+    etiqueta = {fig:requisitos:casosuso},
+    width = 1\textwidth,
+}
+
+
 \section{Requisitos no funcionales}
 \label{c06:sec:requisitos-no-funcionales}
 Los requisitos no funcionales son aquellos que definen las características del sistema ajenas a
 la funcionalidad del mismo, como la usabilidad, la fiabilidad, el rendimiento, la seguridad,
 la mantenibilidad. En este proyecto, se han definido los siguientes requisitos no funcionales:
 \begin{itemize}
-    \item Usabilidad: El sistema debe ser fácil de usar y accesible para todos los usuarios.
+    \item Usabilidad: El sistema debe ser fácil de usar y accesible para todos los usuarios. Además,
+        el sistema debe funcionar de correctamente en condiciones de pobre iluminación o con mucha
+        carga visual.
     \item Multiplataforma: El sistema debe ser accesible desde diferentes dispositivos, como ordenadores,
-          tabletas y teléfonos móviles.
+        tabletas y teléfonos móviles.
     \item Rendimiento: El sistema debe ser capaz de gestionar un gran número de usuarios y actividades
-          sin afectar al rendimiento del sistema. Además, el sistema deberá funcionar correctamente
-          en conexiones de red lentas o inestables, así como en disposivos con menos capacidades de
-          cómputo.
+        sin afectar al rendimiento del sistema. Además, el sistema deberá funcionar correctamente
+        en conexiones de red lentas o inestables, así como en dispositivos con menos capacidades de
+        cómputo.
     \item Seguridad: El sistema debe garantizar la seguridad de los datos personales de los usuarios y
-          la información sobre su historial de formas físicas. Esto incluye la protección contra
-          accesos no autorizados, la encriptación de datos sensibles y la gestión adecuada de las
-          contraseñas.
+        la información sobre su historial de formas físicas. Esto incluye la protección contra
+        accesos no autorizados, la encriptación de datos sensibles y la gestión adecuada de las
+        contraseñas.
 \end{itemize}
 
