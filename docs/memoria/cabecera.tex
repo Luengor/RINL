@@ -1,93 +1,99 @@
-\chapter{Consentimiento}
-\label{cap:consentimiento}
+\addcontentsline{toc}{chapter}{Cabecera}
+
+\newpage
+\pagestyle{plain}
+\section{Consentimiento}
+\label{sec:consentimiento}
 
 
-\chapter{Resumen}
-\label{cap:resumen}
-\noindent\begin{minipage}{\textwidth}
-    \small
-    \setlength{\parindent}{1.5em}
-    La interacción en videojuegos ha evolucionado más allá de los dispositivos convencionales como el
-    teclado y el ratón, especialmente en el ámbito de la rehabilitación y el ejercicio físico
-    (\textit{exergames}), que utilizan dispositivos de entrada especializados como sensores de
-    movimiento, cámaras de profundidad o mandos específicos para ofrecer una experiencia más natural
-    e intuitiva. Sin embargo, estos dispositivos especializados suelen ser costosos y específicos para
-    un tipo de juego o actividad, lo que limita su accesibilidad y uso general.
+\newpage
+\section{Resumen}
+\label{sec:resumen}
+La interacción en videojuegos ha evolucionado más allá de los dispositivos convencionales como el
+teclado y el ratón, especialmente en el ámbito de la rehabilitación y el ejercicio físico
+(\textit{exergames}), que utilizan dispositivos de entrada especializados como sensores de
+movimiento, cámaras de profundidad o mandos específicos para ofrecer una experiencia más natural
+e intuitiva. Sin embargo, estos dispositivos especializados suelen ser costosos y específicos para
+un tipo de juego o actividad, lo que limita su accesibilidad y uso general.
 
-    Este trabajo de fin de grado aborda dicha limitación mediante el diseño y desarrollo de un sistema de
-    entretenimiento y ejercicio que utiliza la detección de posturas del cuerpo humano a través de una cámara
-    como método de entrada principal.
-    Para ello, se utilizará un sistema de detección de posturas basado en el modelo de inteligencia artificial
-    MediaPipe BlazePose, que extrae la posición de puntos clave del cuerpo humano en tiempo real a partir de
-    imágenes capturadas por una cámara convencional. Este modelo es capaz de detectar hasta 33 puntos
-    articulares, así como generar una representación tridimensional de la postura del cuerpo humano.
-    Esta información será usada para controlar varios minijuegos desarrollados en el motor de videojuegos
-    Unity, que se ejecutarán en un navegador web a través de WebGL.
+Este trabajo de fin de grado aborda dicha limitación mediante el diseño y desarrollo de un sistema de
+entretenimiento y ejercicio que utiliza la detección de posturas del cuerpo humano a través de una cámara
+como método de entrada principal.
+Para ello, se utilizará un sistema de detección de posturas basado en el modelo de inteligencia artificial
+MediaPipe BlazePose, que extrae la posición de puntos clave del cuerpo humano en tiempo real a partir de
+imágenes capturadas por una cámara convencional. Este modelo es capaz de detectar hasta 33 puntos
+articulares, así como generar una representación tridimensional de la postura del cuerpo humano.
+Esta información será usada para controlar varios minijuegos desarrollados en el motor de videojuegos
+Unity, que se ejecutarán en un navegador web a través de WebGL.
 
-    El resultado final es una plataforma web que permite al usuario mantener un registro de su forma y
-    actividad física, así como jugar a dos minijuegos distintos que utilizan la detección de posturas
-    para interactuar con el usuario. Esta aplicación web es multiplataforma, teniendo como único requisito
-    la utilización de un navegador web moderno y una cámara convencional. El sistema tiene la capacidad
-    de adaptar la calidad de la detección corporal a las capacidades de cómputo del dispositivo ejecutando
-    la aplicación. Gracias a esto, se consigue que el producto pueda ser utilizado en una amplia variedad
-    de dispositivos, desde ordenadores fijos hasta teléfonos móviles.
+El resultado final es una plataforma web que permite al usuario mantener un registro de su forma y
+actividad física, así como jugar a dos minijuegos distintos que utilizan la detección de posturas
+para interactuar con el usuario. Esta aplicación web es multiplataforma, teniendo como único requisito
+la utilización de un navegador web moderno y una cámara convencional. El sistema tiene la capacidad
+de adaptar la calidad de la detección corporal a las capacidades de cómputo del dispositivo ejecutando
+la aplicación. Gracias a esto, se consigue que el producto pueda ser utilizado en una amplia variedad
+de dispositivos, desde ordenadores fijos hasta teléfonos móviles.
 
-    Los minijuegos desarrollados requieren que el usuario realice diferentes movimientos corporales,
-    como saltar, agacharse o intentar alcanzar un objeto con las manos, lo que proporciona una
-    experiencia de usuario lúdica y activa. En cada una de las sesiones de juego se registran tanto
-    la puntuación obtenida como la intensidad de actividad física realizada en forma de \enquote{\textit{puntos
-    de actividad}}. Esto permite al usuario llevar un control de la cantidad y calidad del ejercicio
-    realizado, todo desde la misma aplicación.
+Los minijuegos desarrollados requieren que el usuario realice diferentes movimientos corporales,
+como saltar, agacharse o intentar alcanzar un objeto con las manos, lo que proporciona una
+experiencia de usuario lúdica y activa. En cada una de las sesiones de juego se registran tanto
+la puntuación obtenida como la intensidad de actividad física realizada en forma de \enquote{\textit{puntos
+de actividad}}. Esto permite al usuario llevar un control de la cantidad y calidad del ejercicio
+realizado, todo desde la misma aplicación.
 
-    Este proyecto demuestra la viabilidad de crear un sistema de entretenimiento y ejercicio capaz de
-    detectar y analizar la postura del cuerpo humano en tiempo real utilizando únicamente una cámara
-    convencional, sin necesidad de dispositivos de entrada especializados ni de equipos de alto rendimiento.
+Este proyecto demuestra la viabilidad de crear un sistema de entretenimiento y ejercicio capaz de
+detectar y analizar la postura del cuerpo humano en tiempo real utilizando únicamente una cámara
+convencional, sin necesidad de dispositivos de entrada especializados ni de equipos de alto rendimiento.
 
-    \vspace{5mm}
-    \textbf{Palabras clave}: Exergame, detección de posturas, MediaPipe, BlazePose, actividad física
-\end{minipage}
+\vspace{5mm}
+\textbf{Palabras clave}: Exergame, detección de posturas, MediaPipe, BlazePose, actividad física
 
-\chapter{Abstract}
-\label{cap:abstract}
-\noindent\begin{minipage}{\textwidth}
-    \small
-    \setlength{\parindent}{1.5em}
+\newpage
+\section{Abstract}
+\label{sec:abstract}
+Interaction in video games has evolved beyond conventional devices such as keyboard and mice,
+especially in the field of rehabilitation and physical exercise (exergames), which uses specialized
+input devices such as motion sensors, depth cameras or specific controllers to offer a more natural
+and intuitive experience. However, these specialized devices are often expensive or specific to a
+type of game, which limits their accessibility and general use.
 
-    Interaction in video games has evolved beyond conventional devices such as keyboard and mice,
-    especially in the field of rehabilitation and physical exercise (exergames), which uses specialized
-    input devices such as motion sensors, depth cameras or specific controllers to offer a more natural
-    and intuitive experience. However, these specialized devices are often expensive or specific to a
-    type of game, which limits their accessibility and general use.
+This thesis addresses this limitation by designing and developing an entertainment and exercise
+system that uses human body posture detection via a camera as its primary input method. To do this,
+a posture detection system based on the 3D Pose estimation model MediaPipe BlazePose will be used,
+which extracts the position of key points on the human body in real time from images captured by a
+conventional camera. This model is capable of detecting up to 33 joint points, as well as generating
+a three-dimensional representation of the body's posture. This information will be used to control
+several mini-games developed in the Unity game engine, which will be run in a web browser via WebGL.
 
-    This thesis addresses this limitation by designing and developing an entertainment and exercise
-    system that uses human body posture detection via a camera as its primary input method. To do this,
-    a posture detection system based on the 3D Pose estimation model MediaPipe BlazePose will be used,
-    which extracts the position of key points on the human body in real time from images captured by a
-    conventional camera. This model is capable of detecting up to 33 joint points, as well as generating
-    a three-dimensional representation of the body's posture. This information will be used to control
-    several mini-games developed in the Unity game engine, which will be run in a web browser via WebGL.
+The end result is a web platform that allows users to keep track of their fitness and physical activity,
+as well as play two different mini-games that use posture detection to interact with the user. This is a
+multiplatform web app, with the only requirement being the use of a modern web browser and a conventional
+camera. The system has the ability to adapt the quality of the body detection to the computing capabilities
+of the device running the application. Thanks to this, the product can be used on a wide variety of devices,
+from desktop computers to mobile phones.
 
-    The end result is a web platform that allows users to keep track of their fitness and physical activity,
-    as well as play two different mini-games that use posture detection to interact with the user. This is a
-    multiplatform web app, with the only requirement being the use of a modern web browser and a conventional
-    camera. The system has the ability to adapt the quality of the body detection to the computing capabilities
-    of the device running the application. Thanks to this, the product can be used on a wide variety of devices,
-    from desktop computers to mobile phones.
+The mini-games developed require the user to perform different body movements, such as jumping, crouching,
+or reaching for an object with their hands, providing a playful and active user experience. In each game
+session, both the score obtained and the intensity of physical activity performed are recorded in the form
+of \enquote{activity points}. This allows the user to keep track of the quantity and quality of the exercise
+performed, all from the same application.
 
-    The mini-games developed require the user to perform different body movements, such as jumping, crouching,
-    or reaching for an object with their hands, providing a playful and active user experience. In each game
-    session, both the score obtained and the intensity of physical activity performed are recorded in the form
-    of \enquote{activity points}. This allows the user to keep track of the quantity and quality of the exercise
-    performed, all from the same application.
+This project demonstrates the feasibility of creating an entertainment and exercise system capable of
+detecting and analyzing the human body's posture in real time using only a conventional camera,
+without the need for specialized input devices or high-performance equipment.
 
-    This project demonstrates the feasibility of creating an entertainment and exercise system capable of
-    detecting and analyzing the human body's posture in real time using only a conventional camera,
-    without the need for specialized input devices or high-performance equipment.
+\vspace{5mm}
+\textbf{Keywords}: Exergame, pose detection, MediaPipe, BlazePose, physical activity
 
-    \vspace{5mm}
-    \textbf{Keywords}: Exergame, pose detection, MediaPipe, BlazePose, physical activity
-\end{minipage}
+\newpage
+\section{Glosario}
+\begingroup
+    \renewcommand{\clearpage}{}
+    \renewcommand{\glossarysection}[2][]{}
+    \printglossary
+\endgroup
 
+\newpage
+\section{Agradecimientos}
+\label{sec:agradecimientos}
 
-\chapter{Agradecimientos}
-\label{cap:agradecimientos}
