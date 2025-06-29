@@ -21,8 +21,25 @@ En nuestro caso la hipótesis es la siguiente:
 \label{sec:restricciones}
 Esta sección describe las condiciones y limitaciones que han afectado al desarrollo de la aplicación.
 Estas restricciones se han derivado a partir de los requisitos no funcionales del proyecto, que se
-detallan en el \primerAnexo. De manera resumida, estas restricciones son: usabilidad, multiplataforma,
-rendimiento y seguridad.
+detallan en el \primerAnexo. De manera resumida, estas restricciones son:
+\begin{itemize}
+    \item \textbf{Usabilidad}: La aplicación debe ser fácil de usar. Esto incluye que la interfaz
+        sea intuitiva y que el sistema sea capaz de adaptarse a las características del entorno
+        para realizar la detección de posturas de manera óptima.
+
+    \item \textbf{Multiplataforma}: La aplicación debe ser accesible desde cualquier dispositivo
+        con un navegador web moderno. Implica que el sistema debe funcionar en una amplia gama
+        de dispositivos, desde los más potentes hasta los más limitados.
+
+    \item \textbf{Rendimiento}: La aplicación debe ser capaz de detectar posturas en tiempo real
+        y ofrecer una experiencia de usuario fluida. Está muy relacionado con el requisito anterior,
+        puesto que el cómputo en tiempo real es una tarea que los dispositivos más limitados podrían
+        no ser capaces de realizar.
+
+    \item \textbf{Seguridad}: La aplicación debe garantizar la privacidad y seguridad de los datos
+        del usuario, con especial atención a los datos relacionados con la cámara y la salud de los
+        usuarios.
+\end{itemize}
 
 \subsection{Restricciones debido al hardware/software del usuario}
 El hardware y software que los usuarios utilizan para ejecutar la aplicación deberían afectar lo
