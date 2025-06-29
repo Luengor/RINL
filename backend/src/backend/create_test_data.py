@@ -11,13 +11,20 @@ from backend.models.user import User
 from backend.models.shape import Shape
 from backend.models.activity import Activity
 
+POSTGRES_USER = environ.get("POSTGRES_USER", "postgres")
+POSTGRES_PASSWORD = environ.get("POSTGRES_PASSWORD", "postgres")
+POSTGRES_HOST = environ.get("POSTGRES_HOST", "localhost")
 
-ENGINE_PATH = f"postgresql://{environ.get('POSTGRES_USER')}:{environ.get('POSTGRES_PASSWORD')}@{environ.get('POSTGRES_HOST')}:5432"
+puser = input(f"Postgres user ({POSTGRES_USER}): ") or POSTGRES_USER
+ppass = input(
+    f"Postgres password ({POSTGRES_PASSWORD}): ") or POSTGRES_PASSWORD
+phost = input(f"Postgres host ({POSTGRES_HOST}): ") or POSTGRES_HOST
+ENGINE_PATH = f"postgresql://{puser}:{ppass}@{phost}:5432"
 engine = create_engine(ENGINE_PATH)
 
 ACTIVITY_COUNT = 2000
 ACTIVITIES_FROM = 100
-MINIGAMES = ["test1", "test2"]
+MINIGAMES = ["balloons", "dodge"]
 
 
 def main():
@@ -27,16 +34,21 @@ def main():
     now = datetime.now(timezone.utc)
 
     with Session(engine) as session:
-        # Create test user
-        user = User(
-            email="test@test.com",
-            hashed_password=get_password_hash("123456"),
-            verified=True,
-            verification_code="123456",
-            name="Test Testo Test",
-            year_of_birth=1995
-        )
-        session.add(user)
+        # Get first user
+        user = session.query(User).first()
+        if not user:
+            # Create a user
+            user = User(
+                email="test@test.com",
+                hashed_password=get_password_hash("123456"),
+                verified=True,
+                verification_code="123456",
+                name="Test Testo Test",
+                year_of_birth=1995
+            )
+            session.add(user)
+
+        print(f"Using user: {user.email}")
 
         # Add some shapes to the user
         session.add(Shape(
@@ -72,7 +84,7 @@ def main():
 
             session.add(Activity(
                 date=date,
-                user_email="test@test.com",
+                user_email=user.email,
                 duration=random.randint(60, 120),
                 score=random.randint(1, 20),
                 activity_points=random.randint(100, 200),
