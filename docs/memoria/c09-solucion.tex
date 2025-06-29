@@ -171,9 +171,10 @@ con el videojuego es el siguiente:
 \begin{enumerate}
     \item Una vez se abre el juego, se comienza la calibración de la cámara. Durante la calibración
         el sistema solicita al usuario que se coloque frente a la cámara y que mantenga una postura
-        de T. Una vez hecho esto, se pedirá al usuario que se desplace todo lo posible hacia la
-        izquierda con su brazo extendido. Una vez que se haya completado la calibración, no será
-        necesaria repetirla a menos que se reinicie el videojuego.
+        de T (ver figura \ref{fig:solucion:calibrar-camara}). Una vez hecho esto, se pedirá al
+        usuario que se desplace todo lo posible hacia la izquierda con su brazo extendido. Una vez
+        que se haya completado la calibración, no será necesaria repetirla a menos que se reinicie
+        el videojuego.
 
     \item Una vez calibrado y después de algo de texto informativo, se muestra al usuario un menú
         principal con dos botones, uno para acceder a cada minijuego. Todos los botones de la
@@ -185,7 +186,7 @@ con el videojuego es el siguiente:
     \item Tras escoger uno de los minijuegos, se muestra una explicación sobre el mismo. Una vez
         terminada la explicación, se muestran las opciones de dificultad del minijuego. Al pasar
         las manos sobre las opciones de dificultad, se muestra una breve descripción de cada una
-        de ellas.
+        de ellas (ver figura \ref{fig:solucion:dificultad-globos}).
 
     \item Una vez se ha seleccionado la dificultad, comienza el minijuego escogido (se detallarán
         individualmente en las siguientes secciones).
@@ -195,6 +196,20 @@ con el videojuego es el siguiente:
         pulsa el botón de volver a jugar, se vuelve al paso 3. Si se pulsa el botón de volver al
         menú principal, se vuelve al paso 2.
 \end{enumerate}
+
+\diagrama{
+    nombre = {Jugador calibrando la cámara haciendo una \enquote{T} con sus brazos},
+    archivo = {memoria/fotos/capturas/calibrarT.png},
+    etiqueta = {fig:solucion:calibrar-camara},
+    width = 1\textwidth,
+}
+
+\diagrama{
+    nombre = {Jugador escogiendo la dificultad más alta del minijuego de globos},
+    archivo = {memoria/fotos/capturas/diffglobos.png},
+    etiqueta = {fig:solucion:dificultad-globos},
+    width = 1\textwidth,
+}
 
 En cualquier momento, el usuario puede salir de la sección de minijuegos de la aplicación web
 haciendo clic en cualquiera de los botones del menú lateral (si el usuario se encuentra en
@@ -220,6 +235,14 @@ que deben ser explotados con la mano izquierda y derecha respectivamente. Por ú
 la dificultad más alta, también aparecerán globos verdes, que deben ser explotados con
 ambas manos al mismo tiempo.
 
+\diagrama{
+    nombre = {Jugador explotando globos},
+    archivo = {memoria/fotos/capturas/globos.png},
+    etiqueta = {fig:solucion:minijuego-globos},
+    width = 1\textwidth,
+    forzarPosicion = {si},
+}
+
 \subsection{Minijuego de esquivar obstáculos}
 \label{sec:minijuego-esquivar}
 El segundo minijuego implementado es un minijuego de esquivar obstáculos. En este, el usuario
@@ -234,5 +257,13 @@ avisan de su aparición y a la complejidad de los obstáculos. En las dificultad
 obstáculos bloquean una parte más pequeña de la pantalla y aparecen más lentamente, mientras que en
 las altas, los obstáculos bloquean una parte mayor de la pantalla y pueden requerir que el usuario
 se desplace más para esquivarlos.
+
+\diagrama{
+    nombre = {Jugador saltando para esquivar un obstáculo},
+    archivo = {memoria/fotos/capturas/esquivarsalto.png},
+    etiqueta = {fig:solucion:minijuego-esquivar},
+    width = 1\textwidth,
+    forzarPosicion = {si},
+}
 
 
