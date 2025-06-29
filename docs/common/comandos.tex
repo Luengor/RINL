@@ -15,7 +15,7 @@
 \define@key{diagrama}{archivo}{\def\diagrama@archivo{#1}}
 \define@key{diagrama}{etiqueta}{\def\diagrama@etiqueta{#1}}
 \define@key{diagrama}{width}{\def\diagrama@width{#1}}
-\define@key{diagrama}{forzarPosicion}{\def\diagrama@forzarPosicion{#1}}
+\define@key{diagrama}{posicion}{\def\diagrama@posicion{#1}}
 \define@key{diagrama}{fuente}{\def\diagrama@fuente{#1}}
 
 \presetkeys{diagrama}{
@@ -23,19 +23,15 @@
     archivo = {},
     etiqueta = {fig:diagrama},
     width = 0.8\textwidth,
-    forzarPosicion = {},
+    posicion = {h},
     fuente = {},
 }{}
 
-\newcommand{\diagrama}[1]{
-    \setkeys{diagrama}{#1}
+\newcommand{\diagrama}[2][h]{
+    \setkeys{diagrama}{#2}
 
     \begingroup
-    \ifx\diagrama@forzarPosicion\empty
-        \begin{figure}[!ht]
-    \else
-        \begin{figure}[H]
-    \fi
+    \begin{figure}[#1]
         \centering
         \includegraphics[width=\diagrama@width]{\diagrama@archivo}
         \ifx\diagrama@fuente\empty
