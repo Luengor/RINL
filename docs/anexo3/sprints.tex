@@ -56,8 +56,9 @@ estática. También se buscó mejorar el rendimiento del sistema escogiendo entr
 red neuronal con diferentes capacidades de detección, dependiendo del dispositivo en el que se ejecutara
 la aplicación.
 
-Como se puede ver en el \textit{burndown report}(figura \ref{anexo3:fig:burndown2}), la planificación de
-este sprint, aunque mejor que la del anterior, también se quedó corta en cuanto a los puntos de historia.
+Como se puede ver en el \textit{burndown chart}(figura \ref{anexo3:fig:burndown2}), en la planificación de
+este sprint, aunque se hizo mejor que en el anterior, también se subestimó la cantidad de puntos de
+historia que se podrían completar.
 
 \sprinttable{
     nombre={Mejoras en la detección},
@@ -84,7 +85,7 @@ este sprint, aunque mejor que la del anterior, también se quedó corta en cuant
 }
 
 
-\section{Sprint 3: Dearrollo del primer minijuego y valoración de alternativas}
+\section{Sprint 3: Desarrollo del primer minijuego y valoración de alternativas}
 \label{anexo3:sec:sprint3}
 
 Durante este sprint se buscó crear un minijuego sobre explotar globos, que sirviera como actividad
@@ -101,12 +102,12 @@ con el minijuego, pero se descartó esta opción, puesto que al jugar en pantall
 ocultado.
 
 El sprint se completó con éxito, siendo el primero en el que se completaron todas las tareas planificadas
-no mucho antes de la fecha prevista. Se puede ver en el \textit{burndown report} (figura \ref{anexo3:fig:burndown3})
+no mucho antes de la fecha prevista. Se puede ver en el \textit{burndown chart} (figura \ref{anexo3:fig:burndown3})
 que, aunque el comienzo del sprint fue algo lento, se logró completar todo lo planificado poco antes de
 la fecha estimada.
 
 \sprinttable{
-    nombre={Dearrollo del primer minijuego y valoración de alternativas},
+    nombre={Desarrollo del primer minijuego y valoración de alternativas},
     id={3},
     tabla={
         Obtener los objetivos del sistema                         & 2 \\
@@ -177,8 +178,8 @@ de los mismos.
 
 Puesto que la tarea de crear la base de datos de usuarios ya se había comenzado en el sprint anterior,
 terminó mucho antes de lo que se esperaría por sus puntos de historia. Esto provocó que las tareas del
-sprint se completaran algo antes de lo previsto. Durante este tiempo se buscó algo más de información
-sobre diferentes alternativas para el frontend, puesto que se había decidido utilizar NextJS, pero
+sprint se completaran algo antes de lo previsto. Durante este tiempo se investigaron alternativas
+para el frontend, puesto que se había decidido utilizar NextJS, pero
 esto requeriría un backend que funcionara con NodeJS. Esto supondría una de dos cosas: o bien cambiar
 el backend a NodeJS o tener dos backends, uno que sirviera el frontend y otro que sirviera la API.
 
@@ -217,7 +218,7 @@ También se completó la base de datos, así como la API del backend, que permit
 actividades y formas físicas. Esta API se incluyó en un contenedor de Docker para facilitar su despliegue y
 se realizaron pruebas unitarias con pytest para asegurar su correcto funcionamiento.
 
-Se puede ver en el \textit{burndown report} (figura \ref{anexo3:fig:burndown6}) que se añadieron
+Se puede ver en el \textit{burndown chart} (figura \ref{anexo3:fig:burndown6}) que se añadieron
 tareas al sprint, lo que provocó que se completaran más tareas de las planificadas inicialmente.
 Desde hace unos días, habían comenzado las clases de la universidad y las prácticas de empresa, lo
 que hacía que la cantidad de tiempo disponible para trabajar en el proyecto fuera cambiando. Al
@@ -298,7 +299,7 @@ El objetivo de este sprint fue mejorar el sistema creado en Unity. Esto se hizo 
 nuevas funcionalidades, como la detección de la distancia a la cámara, la creación de una escena
 de calibración y la posibilidad de crear actividades desde Unity. También se creó una actividad
 específicamente para limpiar código. El código que gestiona y muestra el cuerpo del usuario era
-(y hasta cierto punto sigue siendo) algo complicado, puesto que requiere la interacción entre
+(y hasta cierto punto sigue siendo) considerablemente complejo, puesto que requiere la interacción entre
 varios sistemas y cálculos distribuidos entre varios puntos. Por ello se decidió crear una
 actividad que sirviera para limpiar el código y mejorar su legibilidad.
 
@@ -328,7 +329,7 @@ actividad que sirviera para limpiar el código y mejorar su legibilidad.
 }
 
 
-\section{Sprint 9: Refactorización y corrección de errores en Unity}
+\section{Sprint 9: Corrección de errores en Unity}
 \label{anexo3:sec:sprint9}
 
 Durante este sprint se continuó con el desarrollo en Unity, buscando mejorar la detección y
@@ -342,7 +343,7 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
 (\enquote{Arreglar los bounds del cuerpo}).
 
 \sprinttable{
-    nombre={Refactorización y corrección de errores en Unity},
+    nombre={Corrección de errores en Unity},
     id={9},
     tabla={
         Menú principal en Unity                                                                          & 3 \\
@@ -362,14 +363,14 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
 }
 
 \diagrama[H]{
-    nombre={Sprint: Refactorización y corrección de errores en Unity},
+    nombre={Sprint: Corrección de errores en Unity},
     archivo={anexo3/sprints/sprint9.pdf},
     etiqueta={anexo3:fig:burndown9},
     width=\textwidth,
 }
 
 
-\section{Sprint 10: Un poco de todo}
+\section{Sprint 10: Correciones y mejoras generales}
 \label{anexo3:sec:sprint10}
 
 Durante este sprint se buscó mejorar el sistema en general, añadiendo nuevas funcionalidades y
@@ -379,13 +380,13 @@ ocultar la barra de navegación al jugar, entre otras. También se modificó la 
 ejecutaban los tests, haciendo que se ejecutaran en un entorno más controlado.
 
 Al final de este sprint se completaron 22 de los 28 puntos de historia planificados, dejando seis
-para las siguientes semanas. Viendo el \textit{burndown report} (figura \ref{anexo3:fig:burndown10}),
+para las siguientes semanas. Viendo el \textit{burndown chart} (figura \ref{anexo3:fig:burndown10}),
 se puede ver que se dedicó bastante tiempo a tareas que se estimaron con pocos puntos de historia,
 lo que supuso un retraso en el avance del sprint, dando como resultado que se completaran menos tareas
 de las planificadas inicialmente.
 
 \sprinttable{
-    nombre={Un poco de todo},
+    nombre={Correciones y mejoras generales},
     id={10},
     tabla={
         Añadir scope a los fixtures de los tests                                               & 1 \\
@@ -413,7 +414,7 @@ de las planificadas inicialmente.
 }
 
 \diagrama[H]{
-    nombre={Sprint: Un poco de todo},
+    nombre={Sprint: Correciones y mejoras generales},
     archivo={anexo3/sprints/sprint10.pdf},
     etiqueta={anexo3:fig:burndown10},
     width=\textwidth,
@@ -564,7 +565,7 @@ fueran apareciendo en la pantalla, utilizando el cuerpo del usuario para esquiva
 se buscó crear un sistema de alertas para Unity, que permitiera mostrar mensajes al usuario
 cuando este se alejara demasiado de la posición de calibración.
 
-Como se puede ver en el \textit{burndown report} (figura \ref{anexo3:fig:burndown14}), el sprint
+Como se puede ver en el \textit{burndown chart} (figura \ref{anexo3:fig:burndown14}), el sprint
 comenzó más tarde de lo esperado debido a que el sprint anterior se alargó más de lo esperado.
 Probablemente por esto, se dejaron tres puntos de historia sin completar.
 
@@ -593,7 +594,7 @@ Probablemente por esto, se dejaron tres puntos de historia sin completar.
 }
 
 
-\section{Sprint 15: Versión inicial del nuevo minijuego y corrección de errores}
+\section{Sprint 15: Versión inicial del nuevo minijuego}
 \label{anexo3:sec:sprint15}
 
 Durante este sprint se buscó arreglar problemas en los diferentes sistemas del proyecto y
@@ -602,7 +603,7 @@ añadir funcionalidades menos relevantes. Se completó la tarea pendiente del sp
 completar por falta de tiempo.
 
 \sprinttable{
-    nombre={Versión inicial del nuevo minijuego y corrección de errores},
+    nombre={Versión inicial del nuevo minijuego},
     id={15},
     tabla={
         Fin para el minijuego de esquivar                                         & 3 \\
@@ -621,7 +622,7 @@ completar por falta de tiempo.
 }
 
 \diagrama[H]{
-    nombre={Sprint: Versión inicial del nuevo minijuego y corrección de errores},
+    nombre={Sprint: Versión inicial del nuevo minijuego},
     archivo={anexo3/sprints/sprint15.pdf},
     etiqueta={anexo3:fig:burndown15},
     width=\textwidth,
@@ -668,8 +669,8 @@ mitad de los puntos de historia planificados.
 \section{Sprint 17: Mejoras en el frontend, backend y minijuegos}
 \label{anexo3:sec:sprint17}
 
-Este sprint tuvo el mismo objetivo y problemas que el anterior. Se buscó hacer cosas de menos
-tamaño, pero el progreso fue poco notable. Se completaron 8 de los 17 puntos de historia
+Este sprint tuvo el mismo objetivo y problemas que el anterior. Se intentó abordar tareas de menor
+envergadura; sin embargo, el progreso fue limitado. Se completaron 8 de los 17 puntos de historia
 planificados, lo que supuso un avance menor del esperado.
 
 Puesto que se preveía que la siguiente semana el progreso fuera aún menor, se decidió no realizar
@@ -702,7 +703,7 @@ para trabajar en el proyecto.
 }
 
 
-\section{Sprint 18: Latex y arreglos simples}
+\section{Sprint 18: \LaTeX\ y arreglos simples}
 \label{anexo3:sec:sprint18}
 
 El objetivo de este sprint era hacer cosas más simples y pequeñas. Excepción de esto fue aprender
@@ -712,7 +713,7 @@ El sprint comenzó más tarde de lo que debería de manera normal, ya que se hab
 trabajar en esto hasta terminar los exámenes finales.
 
 \sprinttable{
-    nombre={Latex y arreglos simples},
+    nombre={\LaTeX\ y arreglos simples},
     id={18},
     tabla={
         Página principal del dashboard                                   & 5 \\
@@ -728,7 +729,7 @@ trabajar en esto hasta terminar los exámenes finales.
 }
 
 \diagrama[H]{
-    nombre={Sprint: Latex y arreglos simples},
+    nombre={Sprint: \LaTeX\ y arreglos simples},
     archivo={anexo3/sprints/sprint18.pdf},
     etiqueta={anexo3:fig:burndown18},
     width=\textwidth,
