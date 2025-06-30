@@ -15,7 +15,6 @@
 \define@key{diagrama}{archivo}{\def\diagrama@archivo{#1}}
 \define@key{diagrama}{etiqueta}{\def\diagrama@etiqueta{#1}}
 \define@key{diagrama}{width}{\def\diagrama@width{#1}}
-\define@key{diagrama}{posicion}{\def\diagrama@posicion{#1}}
 \define@key{diagrama}{fuente}{\def\diagrama@fuente{#1}}
 
 \presetkeys{diagrama}{
@@ -23,11 +22,10 @@
     archivo = {},
     etiqueta = {fig:diagrama},
     width = 0.8\textwidth,
-    posicion = {ht},
     fuente = {},
 }{}
 
-\newcommand{\diagrama}[2][h]{
+\newcommand{\diagrama}[2][ht]{
     \setkeys{diagrama}{#2}
 
     \begingroup
