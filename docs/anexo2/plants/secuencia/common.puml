@@ -48,7 +48,7 @@ participant "UserSchema" as UserSchema #LightSteelBlue
 participant "TokenSchema" as AuthSchema #LightSteelBlue
 
 ' ' Clases de modelos
-' create entity "User" as UserEntity %lighten("#IndianRed", 20)
-' create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
-' create entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+' create "User" as UserEntity %lighten("#IndianRed", 20)
+' create "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+' create "Shape" as ShapeEntity %lighten("#IndianRed", 20)
 

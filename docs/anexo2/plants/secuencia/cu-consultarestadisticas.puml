@@ -1,8 +1,8 @@
 @startuml ConsultarEstadisticas
 
 !include common.puml
-entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
-entity "Shape" as ShapeEntity %lighten("#IndianRed", 20)
+participant "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+participant "Shape" as ShapeEntity %lighten("#IndianRed", 20)
 
 Verified -> US : El usuario abre la página de estadísticas\no cambia los filtros seleccionados
 

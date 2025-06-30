@@ -13,7 +13,7 @@ ApiClient -> UserR : POST /user
 UserR -> UserDAO : create_user(userData: UserSchema)
 
 alt El usuario no existe
-    create entity "User" as UserEntity %lighten("#IndianRed", 20)
+    create "User" as UserEntity %lighten("#IndianRed", 20)
 
     autoactivate off
     UserDAO -> UserEntity : create(userData)

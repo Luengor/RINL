@@ -15,7 +15,7 @@ alt El usuario completa el formulario
         ApiClient -> ShapeR ++: POST /shape
         ShapeR -> ShapeDAO ++: create_shape(ShapeSchema, UserSchema)
 
-        create entity "Shape" as Shape %lighten("#IndianRed", 20)
+        create "Shape" as Shape %lighten("#IndianRed", 20)
         ShapeDAO -> Shape : create(shapeData)
 
         ShapeDAO --> ShapeR -- : ShapeSchema

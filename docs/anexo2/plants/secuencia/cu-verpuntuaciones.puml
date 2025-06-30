@@ -30,7 +30,7 @@ UC -> ApiClient ++ : createActivityActivityPost\n(ActivityData)
 ApiClient -> ActivityR ++ : POST /activity
 ActivityR -> ActivityDAO ++ : createActivity\n(ActivitySchema, UserSchema)
 
-create entity "Activity" as ActivityEntity %lighten("#IndianRed", 20)
+create "Activity" as ActivityEntity %lighten("#IndianRed", 20)
 ActivityDAO -> ActivityEntity : create(activity)
 return ok
 return 200 OK
