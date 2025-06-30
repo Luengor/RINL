@@ -15,9 +15,9 @@ una \gls{api}.
 
 La arquitectura del sistema sigue el patrón cliente-servidor, en específico, es una arquitectura
 en tres capas. Cada una de las capas tiene una funcionalidad limitada, lo que facilita el
-mantenimiento de la aplicación. En este caso concreto nos encontramos con un servidor que
-proporciona la funcionalidad de la lógica de negocio, otro que nos provee con el acceso persistente
-a datos de la aplicación y un último que sirve y presenta la interfaz gráfica a los usuarios.
+mantenimiento de la aplicación. En el caso de esta aplicación concreta nos encontramos con un
+servicio que proporciona la lógica de negocio, otro que nos provee con el acceso persistente
+a los datos de la aplicación y un último que sirve y presenta la interfaz gráfica a los usuarios.
 
 Esta diferenciación entre capas se puede ver en la figura \ref{fig:paquetes-clases-diseno}. Cada
 capa estaría compuesta por un paquete (a excepción de la interfaz, que se compone tanto del
@@ -37,8 +37,8 @@ hará un resumen con los aspectos más relevantes.
 \subsubsection{Modelos de datos}
 Se mencionan de manera breve los modelos de datos utilizados en el sistema, puesto que se
 encuentran en un paquete independiente en el diagrama de clases de diseño
-(figura \ref{fig:paquetes-clases-diseno}). Estos modelos son utilizados por el \gls{backend} y se
-alojan en la base de datos relacional \texttt{PostgreSQL}.
+(figura \ref{fig:paquetes-clases-diseno}). Estos modelos son utilizados por el \gls{backend} a
+través del \gls{ORM} SQLAlchemy y se alojan en la base de datos relacional \texttt{PostgreSQL}.
 
 \subsubsection{\Gls{backend}}
 El \gls{backend} del sistema se encarga de implementar la lógica de negocio y de proporcionar una
@@ -59,6 +59,13 @@ el \gls{framework} \texttt{FastAPI}. Se divide en tres partes fundamentales:
         de negocio: un cambio en la representación interna del modelo no tiene por qué afectar
         a la \gls{api}.
 \end{itemize}
+
+Existen varias clases pertenecientes a cada uno de estos paquetes, dependiendo de si su función
+es la gestión de usuarios, actividades, formas físicas o autenticación. Cada una de estas clases
+se encarga de una parte específica de la lógica de negocio y de la gestión de un tipo de datos
+específico. Por ejemplo, la clase \texttt{UserRouter} se encarga de gestionar las rutas relacionadas
+con los usuarios, mientras que \texttt{ShapeDAO} se encarga de proveer acceso a los datos relacionados
+con las formas físicas.
 
 \subsubsection{\Gls{frontend}}
 El \gls{frontend} está desarrollado en \texttt{React} y se encarga de proporcionar la interfaz de
