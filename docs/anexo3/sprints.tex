@@ -1,5 +1,5 @@
 % Este archivo ha sido generado automáticamente por generatabla.py
-\section{Sprint 1: Unity, Javascript y MediaPipe}
+\section{Sprint 1: Comunicación entre Unity y JavaScript}
 \label{anexo3:sec:sprint1}
 
 El primero de los sprints se centra en establecer la base del proyecto, buscando hacer funcionar la
@@ -18,17 +18,18 @@ que era necesario hacer un export de Unity a WebGL y cargarlo en un servidor web
 probar algo en Unity. Para facilitar el desarrollo, se optó por comunicar JavaScript y Unity a través de
 un WebSocket, de manera que se pudiera enviar información en tiempo real entre ambos durante el desarrollo.
 
-En cuanto a la planificación, este sprint careció de puntos de historia, ya que se trataba de un sprint
-exploratorio, y no se sabía si se podría conseguir hacer funcionar la detección de poses en Unity. Además,
-este sprint se comenzó nada más terminar la primera convocatoria de exámenes de la carrera, por lo que
-los ánimos estaban bajos y no se esperaba que se pudiera avanzar mucho en él. Se puede asumir que el resto
-de sprint tendrán más puntos de historia, ya que se espera que se pueda avanzar más en ellos.
+En cuanto a la planificación, este sprint tuvo pocos puntos de historia si se compara con los siguientes.
+Esto se debe a que se trataba de un sprint principalmente exploratorio, donde se buscaba hacer funcionar
+el sistema de detección de poses en Unity. Además, este sprint se realizó justo tras terminar la primera
+convocatoria de exámenes de la carrera, por lo que los ánimos estaban bajos y no se esperaba que se
+pudiese avanzar mucho. Es por esto que los próximos sprints tendrán una mayor carga de trabajo, ya con
+una base sobre la que trabajar.
 
 \sprinttable{
-    nombre={Unity, Javascript y MediaPipe},
+    nombre={Comunicación entre Unity y JavaScript},
     id={1},
     tabla={
-        Detector de pose con MediaPipe en Javascript       & 4 \\
+        Detector de pose con MediaPipe en JavaScript       & 4 \\
         Comunicar el editor de Unity y JavaScript          & 3 \\
         Comunicar el export de WebGL de Unity y JavaScript & 3 \\
     },
@@ -39,14 +40,14 @@ de sprint tendrán más puntos de historia, ya que se espera que se pueda avanza
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Unity, Javascript y MediaPipe},
+    nombre={Sprint: Comunicación entre Unity y JavaScript},
     archivo={anexo3/sprints/sprint1.pdf},
     etiqueta={anexo3:fig:burndown1},
     width=\textwidth,
 }
 
 
-\section{Sprint 2: Segundo Sprint}
+\section{Sprint 2: Mejoras en la detección}
 \label{anexo3:sec:sprint2}
 
 El objetivo de este sprint es mejorar la capacidad de detección del sistema, así como investigar
@@ -59,13 +60,13 @@ Como se puede ver en el \textit{burndown report}(figura \ref{anexo3:fig:burndown
 este sprint, aunque mejor que la del anterior, también se quedó corta en cuanto a los puntos de historia.
 
 \sprinttable{
-    nombre={Segundo Sprint},
+    nombre={Mejoras en la detección},
     id={2},
     tabla={
         Utilizar los landmarks 2D para estimar la posición               & 2 \\
         Suavizar la posición de los puntos                               & 3 \\
         Cambiar el modelo de NN dependiendo del dispositivo              & 1 \\
-        Limpiar el código de Mediapipe                                   & 2 \\
+        Reestructurar el código de Mediapipe                                   & 2 \\
         Permitir moverse en un cubo 3D                                   & 3 \\
         Investigar el sistema de exportación a página estática de NextJS & 1 \\
     },
@@ -76,14 +77,14 @@ este sprint, aunque mejor que la del anterior, también se quedó corta en cuant
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Segundo Sprint},
+    nombre={Sprint: Mejoras en la detección},
     archivo={anexo3/sprints/sprint2.pdf},
     etiqueta={anexo3:fig:burndown2},
     width=\textwidth,
 }
 
 
-\section{Sprint 3: Globos, objetivos y alternativas}
+\section{Sprint 3: Dearrollo del primer minijuego y valoración de alternativas}
 \label{anexo3:sec:sprint3}
 
 Durante este sprint se buscó crear un minijuego sobre explotar globos, que sirviera como actividad
@@ -95,7 +96,7 @@ se descartó esta última opción, ya que se consideró que la detección de pos
 de cara a la creación de actividades en el futuro.
 
 También se buscó la manera de enviar datos desde Unity a JavaScript para poder registrar las actividades
-una vez se completaran. Por último, se intentó situar la cámara en un overlay para que no interfiriera
+una vez sean completadas. Por último, se intentó situar la cámara en un \textit{overlay} para que no interfiriera
 con el minijuego, pero se descartó esta opción, puesto que al jugar en pantalla completa, el elemento sería
 ocultado.
 
@@ -105,13 +106,13 @@ que, aunque el comienzo del sprint fue algo lento, se logró completar todo lo p
 la fecha estimada.
 
 \sprinttable{
-    nombre={Globos, objetivos y alternativas},
+    nombre={Dearrollo del primer minijuego y valoración de alternativas},
     id={3},
     tabla={
         Obtener los objetivos del sistema                         & 2 \\
-        Minijuego de globos                                       & 6 \\
+        Comenzar desarrollo del minijuego de globos               & 6 \\
         Enviar datos desde Unity a Javascript                     & 3 \\
-        Situar la cámara en un overlay                            & 3 \\
+        Situar la cámara en un \textit{overlay}                   & 3 \\
         Probar OpenPose                                           & 3 \\
         Probar a utilizar solo los landmarks 2D para la detección & 3 \\
     },
@@ -122,21 +123,20 @@ la fecha estimada.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Globos, objetivos y alternativas},
+    nombre={Sprint: Desarrollo del primer minijuego y valoración de alternativas},
     archivo={anexo3/sprints/sprint3.pdf},
     etiqueta={anexo3:fig:burndown3},
     width=\textwidth,
 }
 
 
-\section{Sprint 4: Errores, limpieza y comienzo del backend}
+\section{Sprint 4: Refactorización y desarrollo del backend}
 \label{anexo3:sec:sprint4}
 
-Durante este sprint se buscó limpiar el código del proyecto, arreglar algunos errores y comenzar
-con el desarrollo del backend. Puesto que el proyecto se tendría que presentar a los tutores durante
-esta semana, se buscó arreglar los errores más evidentes y limpiar el código para que fuera más
-legible. Sin embargo, el desarrollo del backend parecia que iba a ser más complicado de lo estimado,
-lo que llevó a que el sprint terminase con esta tarea sin completar.
+Durante este sprint se buscó aumentar la legibilidad del código del proyecto, solucionar algunos
+errores y comenzar con el desarrollo del backend. Sin embargo, las labores de refactorización
+ocuparon bastante tiempo y el desarrollo del backend resultó ser más complicado que lo inicialmente
+estimado, lo que provocó que no se completase dicha tarea.
 
 Como se puede ver en la tabla resumen del sprint, se completaron tareas con una complejidad total
 de 15 puntos de historia de los 19 planificados, dejando 4 puntos de historia sin completar. Este
@@ -144,14 +144,14 @@ es el formato que tendrán las tablas de los siguientes sprints. Además, en el 
 añadan tareas al sprint, se indicará en otro campo adicional.
 
 \sprinttable{
-    nombre={Errores, limpieza y comienzo del backend},
+    nombre={Refactorización y desarrollo del backend},
     id={4},
     tabla={
         Crear base de datos de usuarios                & 4 \\
         El sistema no detecta las posturas al exportar & 1 \\
         Permitir saltar                                & 3 \\
         Combinar los dos cuerpos y limpiar el código   & 6 \\
-        Arreglar el minijuego para presentar           & 5 \\
+        Retocar el minijuego para presentar           & 5 \\
     },
     total={19},
     anadidos={},
@@ -160,14 +160,14 @@ añadan tareas al sprint, se indicará en otro campo adicional.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Errores, limpieza y comienzo del backend},
+    nombre={Sprint: Refactorización y desarrollo del backend},
     archivo={anexo3/sprints/sprint4.pdf},
     etiqueta={anexo3:fig:burndown4},
     width=\textwidth,
 }
 
 
-\section{Sprint 5: Backend simple}
+\section{Sprint 5: Desarrollo del backend}
 \label{anexo3:sec:sprint5}
 
 El objetivo de sprint es terminar la base de datos de usuarios que se comenzó en el sprint anterior,
@@ -183,7 +183,7 @@ esto requeriría un backend que funcionara con NodeJS. Esto supondría una de do
 el backend a NodeJS o tener dos backends, uno que sirviera el frontend y otro que sirviera la API.
 
 \sprinttable{
-    nombre={Backend simple},
+    nombre={Desarrollo del backend},
     id={5},
     tabla={
         Crear base de datos de usuarios & 4 \\
@@ -197,14 +197,14 @@ el backend a NodeJS o tener dos backends, uno que sirviera el frontend y otro qu
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Backend simple},
+    nombre={Sprint: Desarrollo del backend},
     archivo={anexo3/sprints/sprint5.pdf},
     etiqueta={anexo3:fig:burndown5},
     width=\textwidth,
 }
 
 
-\section{Sprint 6: Vite, Mantine y backend completo}
+\section{Sprint 6: Desarrollo del frontend y backend}
 \label{anexo3:sec:sprint6}
 
 Después de investigar un poco más sobre las diferentes alternativas para el frontend, se decidió
@@ -226,15 +226,15 @@ la mayoría de las tareas del sprint cuando aún quedaba tiempo, se decidió añ
 no desaprovechar el tiempo disponible.
 
 \sprinttable{
-    nombre={Vite, Mantine y backend completo},
+    nombre={Desarrollo del frontend y backend},
     id={6},
     tabla={
         Crear base de datos completa                         & 3 \\
-        Mejores excepciones en la API                        & 2 \\
-        Todos los endpoints del backend                      & 5 \\
+        Devolver mejores excepciones en la API               & 2 \\
+        Programar todos los endpoints del backend            & 5 \\
         Verificación de correo electrónico                   & 3 \\
-        A Vite y Mantine                                     & 5 \\
-        Montar pytest                                        & 2 \\
+        Preparar entorno de Vite y Mantine                   & 5 \\
+        Instalar y preparar Pytest                           & 2 \\
         Crear tests para las actividades                     & 3 \\
         Mover la API a un contenedor de Docker               & 1 \\
         Hacer que el DAO devuelva excepciones en vez de None & 1 \\
@@ -246,14 +246,14 @@ no desaprovechar el tiempo disponible.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Vite, Mantine y backend completo},
+    nombre={Sprint: Desarrollo del frontend y backend},
     archivo={anexo3/sprints/sprint6.pdf},
     etiqueta={anexo3:fig:burndown6},
     width=\textwidth,
 }
 
 
-\section{Sprint 7: Frontend!}
+\section{Sprint 7: Desarrollo del frontend y comunicación con la API}
 \label{anexo3:sec:sprint7}
 
 Durante este sprint se buscó avanzar con el desarrollo del frontend, utilizando la API ya creada
@@ -266,7 +266,7 @@ También se creó un contenedor de Docker para el frontend y se implementó un s
 la base de datos con valores de prueba, lo que facilita el desarrollo y las pruebas del sistema.
 
 \sprinttable{
-    nombre={Frontend!},
+    nombre={Desarrollo del frontend y comunicación con la API},
     id={7},
     tabla={
         Utilizar openapi-ts para generar el cliente de la API           & 2 \\
@@ -284,14 +284,14 @@ la base de datos con valores de prueba, lo que facilita el desarrollo y las prue
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Frontend!},
+    nombre={Sprint: Desarrollo del frontend y comunicación con la API},
     archivo={anexo3/sprints/sprint7.pdf},
     etiqueta={anexo3:fig:burndown7},
     width=\textwidth,
 }
 
 
-\section{Sprint 8: Un poco de Unity}
+\section{Sprint 8: Corregir errores y añadir funcionalidad en el videojuego}
 \label{anexo3:sec:sprint8}
 
 El objetivo de este sprint fue mejorar el sistema creado en Unity. Esto se hizo añadiendo
@@ -303,10 +303,10 @@ varios sistemas y cálculos distribuidos entre varios puntos. Por ello se decidi
 actividad que sirviera para limpiar el código y mejorar su legibilidad.
 
 \sprinttable{
-    nombre={Un poco de Unity},
+    nombre={Corregir errores y añadir funcionalidad en el videojuego},
     id={8},
     tabla={
-        Limpiar el código del cuerpo                                      & 3 \\
+        Refactorizar código del cuerpo                                    & 3 \\
         Enviar tamaño del video al juego de Unity además de los landmarks & 1 \\
         Calcular los bounds del cuerpo                                    & 2 \\
         Detectar distancia a la cámara                                    & 4 \\
@@ -321,18 +321,18 @@ actividad que sirviera para limpiar el código y mejorar su legibilidad.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Un poco de Unity},
+    nombre={Sprint: Corregir errores y añadir funcionalidad en el videojuego},
     archivo={anexo3/sprints/sprint8.pdf},
     etiqueta={anexo3:fig:burndown8},
     width=\textwidth,
 }
 
 
-\section{Sprint 9: Más Unity}
+\section{Sprint 9: Refactorización y corrección de errores en Unity}
 \label{anexo3:sec:sprint9}
 
 Durante este sprint se continuó con el desarrollo en Unity, buscando mejorar la detección y
-arreglar algunos errores que se habían encontrado en sprints anteriores. También se intentó
+corregir algunos errores que se habían encontrado en sprints anteriores. También se intentó
 utilizar Movenet en vez de Mediapipe, sin éxito.
 
 Durante la realización de la primera tarea del sprint (\enquote{Acabar versión básica del juego
@@ -342,7 +342,7 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
 (\enquote{Arreglar los bounds del cuerpo}).
 
 \sprinttable{
-    nombre={Más Unity},
+    nombre={Refactorización y corrección de errores en Unity},
     id={9},
     tabla={
         Menú principal en Unity                                                                          & 3 \\
@@ -350,8 +350,8 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
         Utilizar solo los landmarks en dos dimensiones                                                   & 5 \\
         Cambiar iconos del frontend para que no tarde tanto en cargar                                    & 1 \\
         Acabar versión básica del juego de globos                                                        & 5 \\
-        Arreglar los bounds del cuerpo                                                                   & 2 \\
-        Arreglar texto del juego de globos (transparencia atascada?)                                     & 2 \\
+        Solucionar problema en el que los bounds del cuerpo no tienen el tamaño correcto    & 2 \\
+        El texto del juego de globos no se vuelve trasparente                                      & 2 \\
         Combinar JSConnector y GameController en uno solo                                                & 2 \\
         Hacer que RINLBody obtenga los datos del JSConnector cuando los necesite para mejorar la fluidez & 1 \\
     },
@@ -362,7 +362,7 @@ se decidió añadir una nueva tarea al sprint para reflejar el tiempo dedicado a
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Más Unity},
+    nombre={Sprint: Refactorización y corrección de errores en Unity},
     archivo={anexo3/sprints/sprint9.pdf},
     etiqueta={anexo3:fig:burndown9},
     width=\textwidth,
@@ -413,14 +413,14 @@ de las planificadas inicialmente.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Un poco de todo},
+    nombre={Sprint: Un poco de todo},
     archivo={anexo3/sprints/sprint10.pdf},
     etiqueta={anexo3:fig:burndown10},
     width=\textwidth,
 }
 
 
-\section{Sprint 11: Más Unity}
+\section{Sprint 11: Refactorización y corrección de errores en Unity}
 \label{anexo3:sec:sprint11}
 
 Durante este sprint se buscó mejorar el sistema en Unity, añadiendo más funcionalidades y corrigiendo
@@ -438,7 +438,7 @@ los posibles por tener tareas a medio hacer, se decidió aumentar el número de 
 para este sprint.
 
 \sprinttable{
-    nombre={Más Unity},
+    nombre={Refactorización y corrección de errores en Unity},
     id={11},
     tabla={
         Probar animaciones 2D                                       & 4 \\
@@ -447,7 +447,7 @@ para este sprint.
         El timer de los globos se ve raro                           & 1 \\
         Herramientas para enviar mensajes entre Unity y JS          & 2 \\
         El cuerpo está torcido solo en producción                   & 3 \\
-        Arreglar que la puntuación siempre sea 0                    & 2 \\
+        La puntuación en el minijuego de los globos es siempre 0    & 2 \\
         Hacer que los globos no aparezcan sobre las manos           & 2 \\
         Permitir cambiar la dificultad de los globos                & 3 \\
         Rotar el cuerpo hace que se rompa                           & 2 \\
@@ -460,14 +460,14 @@ para este sprint.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Más Unity},
+    nombre={Sprint: Refactorización y corrección de errores en Unity},
     archivo={anexo3/sprints/sprint11.pdf},
     etiqueta={anexo3:fig:burndown11},
     width=\textwidth,
 }
 
 
-\section{Sprint 12: Aún más Unity}
+\section{Sprint 12: Mejorar la calidad de la detección de posturas}
 \label{anexo3:sec:sprint12}
 
 El objetivo de este sprint fue muy similar al anterior: mejorar el sistema en Unity añadiendo más
@@ -475,11 +475,11 @@ funcionalidades y corrigiendo errores. En este caso, se buscó mejorar la calida
 jugador puesto que daba la sensación de que la representación del cuerpo iba algo retrasada respecto
 a la posición real del usuario.
 
-La planificación realizada para este sprint fue acertada, sin ningun contratiempo. No hubo retrasos
+La planificación realizada para este sprint fue acertada, sin ningún contratiempo. No hubo retrasos
 ni tiempo muerto sin tareas que hacer.
 
 \sprinttable{
-    nombre={Aún más Unity},
+    nombre={Mejorar la calidad de la detección de posturas},
     id={12},
     tabla={
         Enviar datos de actividad al finalizar las actividades          & 2 \\
@@ -498,17 +498,17 @@ ni tiempo muerto sin tareas que hacer.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Aún más Unity},
+    nombre={Sprint: Mejorar la calidad de la detección de posturas},
     archivo={anexo3/sprints/sprint12.pdf},
     etiqueta={anexo3:fig:burndown12},
     width=\textwidth,
 }
 
 
-\section{Sprint 13: Cosas varias y pensar en el nuevo minijuego}
+\section{Sprint 13: Pequeñas adiciones en todo el proyecto}
 \label{anexo3:sec:sprint13}
 
-Para este sprint se buscó arreglar problemas de los diferentes sistemas del proyecto, así
+Para este sprint se buscó reparar problemas de los diferentes sistemas del proyecto, así
 como pensar en un nuevo minijuego que se podría implementar en el futuro. Se pensaron varias
 cosas y se probaron algunas de ellas para ver cómo podrían funcionar. Entre ellas se
 encontraban un juego de hacer de portero, pero se parecía mucho al de explotar globos o un
@@ -527,11 +527,11 @@ Este sprint se completó con éxito, aunque la planificación no fue del todo ac
 de finalización se retrasó un poco para poder completar todas las tareas planificadas.
 
 \sprinttable{
-    nombre={Cosas varias y pensar en el nuevo minijuego},
+    nombre={Pequeñas adiciones en todo el proyecto},
     id={13},
     tabla={
         Cachear las búsquedas de actividades                                        & 1 \\
-        Enpoint para reenviar verificación de email                                 & 1 \\
+        Endpoint para reenviar verificación de email                                & 1 \\
         Enviar correo de verificación al modificar el email                         & 2 \\
         Form de los datos del usuario                                               & 2 \\
         Cambiar el tiempo de caché de las queries de react-query                    & 1 \\
@@ -548,14 +548,14 @@ de finalización se retrasó un poco para poder completar todas las tareas plani
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Cosas varias y pensar en el nuevo minijuego},
+    nombre={Sprint: Pequeñas adiciones en todo el proyecto},
     archivo={anexo3/sprints/sprint13.pdf},
     etiqueta={anexo3:fig:burndown13},
     width=\textwidth,
 }
 
 
-\section{Sprint 14: Nuevo minijuego}
+\section{Sprint 14: Desarrollo de un nuevo minijuego}
 \label{anexo3:sec:sprint14}
 
 El objetivo de este sprint era crear el minijuego de esquivar obstáculos con el cuerpo, que se
@@ -569,12 +569,12 @@ comenzó más tarde de lo esperado debido a que el sprint anterior se alargó m�
 Probablemente por esto, se dejaron tres puntos de historia sin completar.
 
 \sprinttable{
-    nombre={Nuevo minijuego},
+    nombre={Desarrollo de un nuevo minijuego},
     id={14},
     tabla={
         Sistema de alertas para Unity                              & 4 \\
         Test para minijuego de esquivar                            & 8 \\
-        Intro para minijuego de esquivar                           & 4 \\
+        Introducción para el minijuego de esquivar                 & 4 \\
         Escoger dificultad para esquivar                           & 4 \\
         Fin de minijuego de esquivar (terminar actividad y puntos) & 3 \\
         Los pies del jugador se hunden?                            & 4 \\
@@ -586,14 +586,14 @@ Probablemente por esto, se dejaron tres puntos de historia sin completar.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Nuevo minijuego},
+    nombre={Sprint: Desarrollo de un nuevo minijuego},
     archivo={anexo3/sprints/sprint14.pdf},
     etiqueta={anexo3:fig:burndown14},
     width=\textwidth,
 }
 
 
-\section{Sprint 15: Cosas varias}
+\section{Sprint 15: Versión inicial del nuevo minijuego y corrección de errores}
 \label{anexo3:sec:sprint15}
 
 Durante este sprint se buscó arreglar problemas en los diferentes sistemas del proyecto y
@@ -602,11 +602,11 @@ añadir funcionalidades menos relevantes. Se completó la tarea pendiente del sp
 completar por falta de tiempo.
 
 \sprinttable{
-    nombre={Cosas varias},
+    nombre={Versión inicial del nuevo minijuego y corrección de errores},
     id={15},
     tabla={
         Fin para el minijuego de esquivar                                         & 3 \\
-        Arreglar problema de CORS al enviar correos                               & 3 \\
+        Error de CORS al llamar a endopoints que envían correos                   & 3 \\
         Penalizar por tocar globos con la mano equivocada                         & 3 \\
         Forzar un logout al cambiar el correo está mal                            & 3 \\
         El sexo del usuario no se usa para nada, se puede eliminar                & 2 \\
@@ -621,30 +621,30 @@ completar por falta de tiempo.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Cosas varias},
+    nombre={Sprint: Versión inicial del nuevo minijuego y corrección de errores},
     archivo={anexo3/sprints/sprint15.pdf},
     etiqueta={anexo3:fig:burndown15},
     width=\textwidth,
 }
 
 
-\section{Sprint 16: Cosas varias 2}
+\section{Sprint 16: Creación de tests}
 \label{anexo3:sec:sprint16}
 
-Al igual que el sprint anterior, este sprint se centró en arreglar problemas de diferentes partes
+Al igual que el sprint anterior, este sprint se centró en solucionar problemas de diferentes partes
 del proyecto y añadir funcionalidades menos relevantes. Sin embargo, a partir de este sprint y
 hasta el final del mes de mayo, el desarrollo del proyecto se ralentizó bastante. Esto se debió
 a que comenzaba la primera convocatoria de exámenes de la carrera y llegaban las fechas de entrega
 de varios trabajos.
 
-Por esto, y aunque se estableción una carga de trabajo menor para este sprint, se completó solo la
+Por esto, y aunque se estableció una carga de trabajo menor para este sprint, se completó solo la
 mitad de los puntos de historia planificados.
 
 \sprinttable{
-    nombre={Cosas varias 2},
+    nombre={Creación de tests},
     id={16},
     tabla={
-        La información es algo sensible, estaría bien encriptarla         & 2 \\
+        Encriptar la información más sensible en la base de datos         & 2 \\
         Tests para las formas físicas                                     & 1 \\
         Tests para los usuarios                                           & 2 \\
         Mejora menú principal de Unity                                    & 3 \\
@@ -658,18 +658,18 @@ mitad de los puntos de historia planificados.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Cosas varias 2},
+    nombre={Sprint: Creación de tests},
     archivo={anexo3/sprints/sprint16.pdf},
     etiqueta={anexo3:fig:burndown16},
     width=\textwidth,
 }
 
 
-\section{Sprint 17: Progreso?}
+\section{Sprint 17: Mejoras en el frontend, backend y minijuegos}
 \label{anexo3:sec:sprint17}
 
 Este sprint tuvo el mismo objetivo y problemas que el anterior. Se buscó hacer cosas de menos
-tamaño pero el progreso fue poco notable. Se completaron 8 de los 17 puntos de historia
+tamaño, pero el progreso fue poco notable. Se completaron 8 de los 17 puntos de historia
 planificados, lo que supuso un avance menor del esperado.
 
 Puesto que se preveía que la siguiente semana el progreso fuera aún menor, se decidió no realizar
@@ -677,7 +677,7 @@ un sprint. Por tanto, el siguiente sprint se haría con los exámenes ya termina
 para trabajar en el proyecto.
 
 \sprinttable{
-    nombre={Progreso?},
+    nombre={Mejoras en el frontend, backend y minijuegos},
     id={17},
     tabla={
         Página principal del dashboard                                    & 5 \\
@@ -695,31 +695,31 @@ para trabajar en el proyecto.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Progreso?},
+    nombre={Sprint: Mejoras en el frontend, backend y minijuegos},
     archivo={anexo3/sprints/sprint17.pdf},
     etiqueta={anexo3:fig:burndown17},
     width=\textwidth,
 }
 
 
-\section{Sprint 18: Toca TFG}
+\section{Sprint 18: Latex y arreglos simples}
 \label{anexo3:sec:sprint18}
 
 El objetivo de este sprint era hacer cosas más simples y pequeñas. Excepción de esto fue aprender
-algo de Latex, puesto que se quería utilizar para la documentación del proyecto.
+algo de \LaTeX, puesto que se quería utilizar para la documentación del proyecto.
 
 El sprint comenzó más tarde de lo que debería de manera normal, ya que se había decidido no
 trabajar en esto hasta terminar los exámenes finales.
 
 \sprinttable{
-    nombre={Toca TFG},
+    nombre={Latex y arreglos simples},
     id={18},
     tabla={
         Página principal del dashboard                                   & 5 \\
         Mejorar menú principal de Unity                                  & 3 \\
         Tirar excepciones HTTP en vez de devolver respuestas con códigos & 1 \\
-        Aprender algo de Latex                                           & 5 \\
-        Arreglar errores del backend                                     & 4 \\
+        Aprender algo de \LaTeX                                          & 5 \\
+        Corregir errores del backend                                     & 4 \\
     },
     total={18},
     anadidos={},
@@ -728,48 +728,48 @@ trabajar en esto hasta terminar los exámenes finales.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Toca TFG},
+    nombre={Sprint: Latex y arreglos simples},
     archivo={anexo3/sprints/sprint18.pdf},
     etiqueta={anexo3:fig:burndown18},
     width=\textwidth,
 }
 
 
-\section{Sprint 19: Documentación y arreglar cosas}
+\section{Sprint 19: Comienzo de la documentación del proyecto}
 \label{anexo3:sec:sprint19}
 
 Esta fue la primera semana de trabajo en la que se dedicó la totalidad del tiempo al proyecto, por
 lo que se pudo avanzar mucho más de lo que se había hecho en los sprints anteriores. El objetivo
-principal del sprint fue documentar el proyecto y arreglar algunas cosas que se habían quedado
-pendientes en sprints anteriores.
+principal del sprint fue documentar el proyecto y mejorar algunos aspectos que no se habían
+completado correctamente en sprints anteriores.
 
 El sprint comenzó con 32 puntos de historia planificados, muchos más de los que se habían
 completado en ningún sprint anterior. Aun así, se completarían estos puntos de historia a mitad
-de sprint y sería necesario añadir más tareas. Esta adición de tareas provó no ser suficiente
+de sprint y sería necesario añadir más tareas. Esta adición de tareas probó no ser suficiente
 dos días después, por lo que se volvieron a añadir más tareas, hasta un total de 50 puntos de
 historia.
 
 \sprinttable{
-    nombre={Documentación y arreglar cosas},
+    nombre={Comienzo de la documentación del proyecto},
     id={19},
     tabla={
         Documentar backend para sphinx                                   & 6 \\
         Requisitos no funcionales                                        & 3 \\
         Página de 404                                                    & 2 \\
-        Arreglar el docker compose del backend                           & 3 \\
+        Hacer el docker compose del backend                              & 3 \\
         Sphinx                                                           & 4 \\
         Permitir pulsar botones con las dos manos                        & 5 \\
         Tablas de objetivos                                              & 4 \\
-        Cambiar todo a naranja (como strava)                             & 1 \\
-        Arreglar el despliegue                                           & 1 \\
-        Bibliografía y glosario en latex                                 & 2 \\
+        Cambiar todo a naranja (como Strava)                             & 1 \\
+        El despliegue no funciona                                        & 1 \\
+        Bibliografía y glosario en \LaTeX                                & 2 \\
         Tablas de requisitos de información                              & 3 \\
         Cambiar las tablas de IRQ a las nuevas y cambiar la bibliografía & 2 \\
         Tablas de actores                                                & 3 \\
         Tablas de participantes                                          & 2 \\
-        Arreglar las portadas de los documentos                          & 2 \\
+        Hacer las portadas de los documentos                             & 2 \\
         Hacer comando para las tablas de caso de uso                     & 2 \\
-        Arreglar referencias para tablas                                 & 2 \\
+        Las referencias cias para tablas                                 & 2 \\
         Acabar la introducción                                           & 3 \\
     },
     total={50},
@@ -779,31 +779,32 @@ historia.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Documentación y arreglar cosas},
+    nombre={Sprint: Comienzo de la documentación del proyecto},
     archivo={anexo3/sprints/sprint19.pdf},
     etiqueta={anexo3:fig:burndown19},
     width=\textwidth,
 }
 
 
-\section{Sprint 20: Mucha documentación}
+\section{Sprint 20: Escritura de los Anexos 1, 2 y la memoria}
 \label{anexo3:sec:sprint20}
 
 Este sprint, como el anterior, se centró en la documentación del proyecto. También se corrigieron
 algunos errores y se añadieron algunas funcionalidades menores. Algunas de las tareas no
 relacionadas con la documentación consistieron en desplegar la aplicación en un servidor,
-utilizar tokens JWT en lugar de códigos de verificación y arreglar algunos tests.
+utilizar tokens JWT en lugar de códigos de verificación y modificar algunos de los tests para
+que funcionaran correctamente con los cambios realizados en el sistema.
 
 La planificación para este sprint fue muy acertada, ya que se completaron todas las tareas
 planificadas poco antes de la fecha límite. Solo fue necesario añadir dos puntos de historia
 para completar el sprint.
 
 \sprinttable{
-    nombre={Mucha documentación},
+    nombre={Escritura de los Anexos 1, 2 y la memoria},
     id={20},
     tabla={
         Listar requisitos funcionales (cu)                                            & 5 \\
-        Arreglar el texto informativo unity                                           & 1 \\
+        Cambiar el texto informativo Unity                                           & 1 \\
         Escribir objeto memoria                                                       & 3 \\
         Escribir requisitos iniciales memoria                                         & 3 \\
         Escribir estudio de alternativas y viabilidad memoria                         & 5 \\
@@ -814,7 +815,7 @@ para completar el sprint.
         Esquema anexo 2                                                               & 3 \\
         Investigar diagramas de clase/secuencia de TFGs que tengan página web / juego & 2 \\
         Matriz de rastreabilidad                                                      & 4 \\
-        Subojetivos, objetivos asociados y requisitos asociados                       & 2 \\
+        Sub-ojetivos, objetivos asociados y requisitos asociados                      & 2 \\
         El paquete de gestión de usuario igual se puede partir                        & 3 \\
         Usar tokens JWT en todos lados                                                & 4 \\
         Extraer Sprints de Jira con Python                                            & 4 \\
@@ -830,14 +831,14 @@ para completar el sprint.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Mucha documentación},
+    nombre={Sprint: Escritura de los Anexos 1, 2 y la memoria},
     archivo={anexo3/sprints/sprint20.pdf},
     etiqueta={anexo3:fig:burndown20},
     width=\textwidth,
 }
 
 
-\section{Sprint 21: Anexo 2 y 3}
+\section{Sprint 21: Terminar Anexo 2 y redactar el 3}
 \label{anexo3:sec:sprint21}
 
 El objetivo inicial de este sprint era completar el Anexo 2 y comenzar con el Anexo 3. Sin embargo,
@@ -847,16 +848,16 @@ terminar el anexo 3.
 El sprint se basó en realizar diagramas y redactar sprints. También se realizaron algunas tareas de
 programación menores como utilizar más tokens JWT en el sistema, crear una serie de scripts para crear
 los \textit{burdown reports} de los sprints y las tablas que se ven aquí a partir de los datos de Jira.
-Además, se creó un overlay para el juego que permite ver la cámara cuando no se está jugando en pantalla
+Además, se creó un \textit{overlay} para el juego que permite ver la cámara cuando no se está jugando en pantalla
 completa. Esta tarea se abandonó en uno de los primeros sprints, pero se consideró que era una buena
 idea retomarla para poder ver si la cámara se encontraba bien orientada antes de empezar a jugar.
 
 \sprinttable{
-    nombre={Anexo 2 y 3},
+    nombre={Terminar Anexo 2 y redactar el 3},
     id={21},
     tabla={
-        Escribir "Antecedentes" memoria                       & 3 \\
-        Escribir "Descripción de la situación actual" memoria & 3 \\
+        Escribir \enquote{Antecedentes} memoria                       & 3 \\
+        Escribir \enquote{Descripción de la situación actual} memoria & 3 \\
         Limpiar anexo 1                                       & 4 \\
         Modelo del dominio                                    & 3 \\
         Diagrama de clases de diseño                          & 6 \\
@@ -864,7 +865,7 @@ idea retomarla para poder ver si la cámara se encontraba bien orientada antes d
         Diagrama de despliegue                                & 3 \\
         Diagrama de paquetes (clases)                         & 1 \\
         Realización CU paquete gestión usuarios               & 5 \\
-        Realización CU paquete estadísiticas                  & 4 \\
+        Realización CU paquete estadísticas                   & 4 \\
         Realización CU paquete juego                          & 5 \\
         Explicar DAO y Three Tier                             & 3 \\
         Crear modelo de tablas para los sprints               & 1 \\
@@ -874,7 +875,7 @@ idea retomarla para poder ver si la cámara se encontraba bien orientada antes d
         Redactar los 10 primeros sprints                      & 6 \\
         Diagrama clases análisis                              & 5 \\
         Más tokens                                            & 3 \\
-        Overlay para el juego con la cámara                   & 2 \\
+        \textit{Overlay} para el juego con la cámara          & 2 \\
         Redactar el resto de sprints                          & 6 \\
     },
     total={75},
@@ -884,13 +885,13 @@ idea retomarla para poder ver si la cámara se encontraba bien orientada antes d
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: Anexo 2 y 3},
+    nombre={Sprint: Terminar Anexo 2 y redactar el 3},
     archivo={anexo3/sprints/sprint21.pdf},
     etiqueta={anexo3:fig:burndown21},
     width=\textwidth,
 }
 
-\section{Sprint 22: El fin de la historia}
+\section{Sprint 22: Documentar plan de seguridad y finalizar la memoria}
 \label{anexo3:sec:sprint22}
 Este fue el último del proyecto, en el que se buscó realizar el Anexo 4 y completar los apartados
 restantes de la memoria. La cantidad de tareas planificadas fue menor que en los sprints anteriores,
@@ -902,19 +903,19 @@ Una vez finalizado el sprint, se considera que el proyecto está completo y que 
 los objetivos planteados al inicio del mismo.
 
 \sprinttable{
-    nombre={El fin de la historia},
+    nombre={Documentar plan de seguridad y finalizar la memoria},
     id={22},
     tabla={
-        Escribir "Normas y referencias" memoria                 & 6 \\
-        Escribir "Hipótesis, restricciones y alcance" memoria   & 4 \\
-        Escribir "Descripción de la solución propuesta" memoria & 6 \\
-        Escribir "Análisis de riesgos" memoria                  & 4 \\
-        Escribir "Organización y gestión del proyecto" memoria  & 6 \\
-        Escribir "Conclusiones y trabajo futuro" memoria        & 4 \\
-        Escribir "Resumen/Abstract" memoria                     & 4 \\
-        Introducción y estructura Anexo 4                       & 4 \\
-        Anexo 4 :)                                              & 10 \\
-        Singleton y RR                                          & 3 \\
+        Escribir \enquote{Normas y referencias} memoria                 & 6 \\
+        Escribir \enquote{Hipótesis, restricciones y alcance} memoria   & 4 \\
+        Escribir \enquote{Descripción de la solución propuesta} memoria & 6 \\
+        Escribir \enquote{Análisis de riesgos} memoria                  & 4 \\
+        Escribir \enquote{Organización y gestión del proyecto} memoria  & 6 \\
+        Escribir \enquote{Conclusiones y trabajo futuro} memoria        & 4 \\
+        Escribir \enquote{Resumen/Abstract} memoria                     & 4 \\
+        Introducción y estructura Anexo 4                               & 4 \\
+        Plan de seguridad                                               & 10 \\
+        Desarrollar sobre Singleton y RR                                & 3 \\
     },
     total={51},
     anadidos={},
@@ -923,7 +924,7 @@ los objetivos planteados al inicio del mismo.
 }
 
 \diagrama[H]{
-    nombre={Burndown del sprint: El fin de la historia},
+    nombre={Sprint: Documentar plan de seguridad y finalizar la memoria},
     archivo={anexo3/sprints/sprint22.pdf},
     etiqueta={anexo3:fig:burndown22},
     width=\textwidth,
