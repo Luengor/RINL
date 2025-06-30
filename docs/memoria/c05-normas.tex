@@ -238,3 +238,47 @@ medir el rendimiento del videojuego una vez exportado (ver \ref{fig:chrome-perfo
     etiqueta = {fig:chrome-performance},
     width = 1\textwidth,
 }
+
+Otro tipo de métricas utilizadas han sido tests de usuarios. Aunque de manera bastante informal, a
+lo largo del desarrollo del proyecto se han realizado pruebas con usuarios reales\footnotemark para
+evaluar la usabilidad de la aplicación y detectar posibles problemas o mejoras. Cuando se
+realizaban cambios significativos en la interfaz, se solicitaba a varios usuarios que probaran
+la aplicación y se les pedía su opinión sobre la usabilidad, la facilidad de uso y la estética del
+sistema en general. A partir de estas interacciones se han ido realizando los cambios que se
+consideraban oportunos para mejorar la experiencia de usuario.
+
+\footnotetext{Muchas gracias a mis compañeros de piso y amigos, especialmente a \textit{Encarna} y
+\textit{Pablo} por criticar el diseño de mi interfaz innumerables veces.}
+
+Puesto que para cada una de estas pruebas se ha tomado nota de las opiniones de los usuarios y
+se está utilizando Git como sistema de control de versiones, se puede consultar una de estas
+iteraciones como ejemplo. En la figura \ref{fig:interfaz-vieja} se puede ver el aspecto de la
+página de datos del usuario antes de realizar los cambios.
+
+\diagrama{
+    nombre = {Página de datos de usuario en la commit ebc3259},
+    archivo = {memoria/fotos/capturas/datosviejo.png},
+    etiqueta = {fig:interfaz-vieja},
+    width = 1\textwidth,
+}
+
+De esta página en concreto se recibieron varias críticas, la principal queja siendo que había
+mucho espacio vacío y que la información no estaba bien organizada (en las capturas de pantalla
+se está usando una magnificación del 200\%). También se criticó que la sección que informa sobre
+la forma física actual era difícil de leer y que la barra lateral de navegación era demasiado
+gruesa.
+
+Tras recibir estas críticas se realizaron varios cambios en la interfaz, como centrar el contenido
+de la página, reducir el tamaño de la barra lateral de navegación y reorganizar la información
+para que fuera más fácil de leer. También se añadió un efecto en el fondo de la página que indica
+la sección actual para reducir el espacio vacío y hacer la interfaz más atractiva. El resultado
+de estos cambios se puede ver en la figura \ref{fig:interfaz-actual}.
+
+\diagrama{
+    nombre = {Página de datos de usuario actualmente},
+    archivo = {memoria/fotos/capturas/datosconforma.png},
+    etiqueta = {fig:interfaz-actual},
+    width = 1\textwidth,
+}
+
+
