@@ -32,15 +32,20 @@ const queryClient = new QueryClient({
         console.log("Error in mutation: ", error, variables, context);
 
         // if (mutation.meta.errorMessage)
-          // ErrorNotification(mutation.meta.errorMessage as string);
+        // ErrorNotification(mutation.meta.errorMessage as string);
       },
-    }
-  }
+    },
+  },
 });
 
 const theme = createTheme({
   primaryColor: "orange",
-})
+  fontFamily: "Roboto, sans-serif",
+  fontFamilyMonospace: "Courier, Courier New, monospace",
+  headings: {
+    fontFamily: "Roboto, sans-serif",
+  },
+});
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
