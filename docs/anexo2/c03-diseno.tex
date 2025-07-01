@@ -25,48 +25,54 @@ proporciona acceso a estos datos y a la lógica de negocio, el \gls{frontend} qu
 página web para interactuar con el sistema y un videojuego desarrollado en Unity exportado a WebGL
 y que se incluye en el \gls{frontend}.
 
-El patrón de diseño arquitectónico escogido para el sistema es el patrón cliente-servidor. Este patrón
-divide las tareas del sistema entre los proveedores de servicios (servidores) y aquellos que consumen
-dichos servicios (clientes) \parencite{SunDistributedSystems}. En el caso de este sistema en concreto,
-nos encontramos con un servidor que proporciona la funcionalidad de la lógica de negocio, otro servidor
-encargado de realizar el acceso persistente a datos y un último que proporciona la interfaz de usuario
-, que es consumida por los clientes a través de un navegador web. Esta separación en tres capas,
-presentación, lógica de negocio y acceso a datos, se conoce como arquitectura en tres capas
-\parencites{Ibm2025Apr}. Esta, permite desacoplar la estructura de los datos de la presentación de los
-mismos, lo que facilita la evolución del sistema y la reutilización de los componentes
-\parencite[p.~3]{nyabuto2024architectural}.
+El patrón de diseño arquitectónico escogido para el sistema es el patrón
+cliente-servidor. Este patrón divide las tareas del sistema entre los
+proveedores de servicios (servidores) y aquellos que consumen dichos servicios
+(clientes) \parencite{SunDistributedSystems}. En este sistema en concreto, nos
+encontramos con un servicio que proporciona la funcionalidad de la lógica de
+negocio, otro encargado de realizar el acceso persistente a datos y un último
+que proporciona la interfaz de usuario, que es consumida por los clientes a
+través de un navegador web. Esta separación en tres capas, presentación, lógica
+de negocio y acceso a datos, se conoce como arquitectura en tres capas
+\parencites{Ibm2025Apr}. Esta, permite desacoplar la estructura de los datos de
+la presentación de los mismos, lo que facilita la evolución del sistema y la
+reutilización de los componentes \parencite[p.~3]{nyabuto2024architectural}.
 
 \subsection{Modelo Vista Controlador}
 \label{anexo2:sec:mvc}
 El patrón de diseño MVC se utiliza en la capa de presentación del sistema, en
 específico en las vistas de React. Este patrón separa la lógica en tres
-componentes principales: el modelo, la vista y el controlador.
-El primero de ellos representa los datos y la lógica de negocio del sistema, es
-la sección del sistema que realiza las operaciones de acceso a datos y transformación
-de los mismos. El segundo componente es la vista, que representa la interfaz de usuario,
-encargada de mostrar los datos del modelo y gestionar la interacción con la aplicación.
-Por último, el controlador es el componente de la aplicación que se encarga de transmitir
-las acciones del usuario desde la vista al modelo \parencite{NorfolkDevelopers2015Dec}.
+componentes principales: el modelo, la vista y el controlador.  El primero de
+ellos representa los datos y la lógica de negocio del sistema, es la sección del
+sistema que realiza las operaciones de acceso a datos y transformación de los
+mismos. El segundo componente es la vista, que representa la interfaz de
+usuario, encargada de mostrar los datos del modelo y gestionar la interacción
+con la aplicación.  Por último, el controlador es el componente de la aplicación
+que se encarga de transmitir las acciones del usuario desde la vista al modelo
+\parencite{NorfolkDevelopers2015Dec}.
 
 Esta separación de responsabilidades permite una mayor modularidad y mejora la
 mantenibilidad del código, ya que cada componente puede ser modificado o
 reemplazado completamente sin afectar a los demás, siempre que se mantenga la
 interfaz entre ellos.
 
-En el caso de este sistema, la vista está representada por los componentes de React, que son responsables
-de mostrar los datos del modelo y de gestionar la interacción con el usuario. El controlador sería
-el cliente encargado de realizar las peticiones al servidor, en este caso la clase APIClient
-junto a los \textit{hooks} de React que se encargan de gestionar las peticiones y de actualizar
-el estado de la aplicación\footnotemark. Por último, el modelo está representado por la API del
-\gls{backend}, que proporciona los datos y la lógica de negocio del sistema. También se podría considerar
-como parte del modelo al caché de datos que se almacena en el navegador del cliente, aunque se consideraría
-como una fuente de verdad alternativa.
+En el caso de este sistema, la vista está representada por los componentes de
+React, que son responsables de mostrar los datos del modelo y de gestionar la
+interacción con el usuario. El controlador sería el cliente encargado de
+realizar las peticiones al servidor, en este caso la clase \enquote{APIClient}
+junto a los \textit{hooks} de React que se encargan de gestionar las peticiones
+y de actualizar el estado de la aplicación\footnotemark. Por último, el modelo
+está representado por la \gls{api} del \gls{backend}, que proporciona los datos
+y la lógica de negocio del sistema. También se podría considerar como parte del
+modelo al caché de datos que se almacena en el navegador del cliente, aunque se
+consideraría como una fuente de verdad alternativa.
 
-Así, cuando el usuario interactúa con la vista, esta envía las acciones al controlador, que a su vez
-realiza las peticiones al servidor para alterar el modelo. Una vez el modelo ha sido actualizado, este
-cambio se reflejará en la vista gracias a la reactividad de los componentes de React, completando la
-comunicación triangular propia de MVC como se puede ver en la figura \ref{anexo2:fig:mvc}
-\parencite{PatternOrientedSoftwareArchitecture}.
+Así, cuando el usuario interactúa con la vista, esta envía las acciones al
+controlador, que a su vez realiza las peticiones al servidor para alterar el
+modelo. Una vez el modelo ha sido actualizado, este cambio se reflejará en la
+vista gracias a la reactividad de los componentes de React, completando la
+comunicación triangular propia de MVC como se puede ver en la figura
+\ref{anexo2:fig:mvc} \parencite{PatternOrientedSoftwareArchitecture}.
 
 \diagrama{
     nombre = {Modelo Vista Controlador},
@@ -76,52 +82,58 @@ comunicación triangular propia de MVC como se puede ver en la figura \ref{anexo
     etiqueta = {anexo2:fig:mvc},
 }
 
-\footnotetext{%
-En la aplicación se utiliza la biblioteca React Query (\url{https://react-query.tanstack.com/})
-para gestionar las peticiones al servidor y almacenar los datos en caché. Estas peticiones las realiza
-la clase APIClient, que es la encargada de comunicarse con el servidor y de asegurar que los datos
-tienen el formato correcto.}
+\footnotetext{En la aplicación se utiliza la biblioteca React Query para
+gestionar las peticiones al servidor y almacenar los datos en caché. Estas
+peticiones las realiza la clase \enquote{APIClient}, que es la encargada de
+comunicarse con el servidor y de asegurar que los datos tienen el formato
+correcto.}
 
 \subsection{\glsfirst{dao}}
 \label{anexo2:sec:dao}
-El servidor encargado de proporcionar las funcionalidades del sistema utiliza el patrón de diseño
-\gls{dao} para acceder a los datos almacenados en la base de datos. Este patrón permite separar la lógica
-de negocio del acceso a datos, lo que reduce el acoplamiento entre las diferentes capas del sistema y
-facilita la modificación y mantenimiento de distintas secciones del sistema de manera independiente
-\parencite{Zato2020Dao}.
+El servidor encargado de proporcionar las funcionalidades del sistema utiliza el
+patrón de diseño \gls{dao} para acceder a los datos almacenados en la base de
+datos. Este patrón permite separar la lógica de negocio del acceso a datos, lo
+que reduce el acoplamiento entre las diferentes capas del sistema y facilita la
+modificación y mantenimiento de distintas secciones del sistema de manera
+independiente \parencite{Zato2020Dao}.
 
-% https://commons.wikimedia.org/wiki/File:IdeaDAOpng.png
 \diagrama{
     nombre = {DAO},
-    fuente = {flanciskinho, Creative Commons},
+    fuente = {flanciskinho, Wikimedia Creative Commons},
     archivo = {anexo2/imgs/dao.png},
     etiqueta = {anexo2:fig:dao},
 }
 
 \subsection{Inyección de dependencias}
 \label{anexo2:sec:inyeccion-dependencias}
-La inyección de dependencias es una técnica de programación en la que las dependencias de una clase
-se proporcionan desde el exterior, en lugar de ser creadas por la propia clase
-\parencite{DepInyectionStackOVerflow}. Esto no es patrón de diseño como tal, sino una técnica que
-engloba a varios patrones de diseño como pueden ser la inyección de constructor, la inyección de
-método o la inyección de propiedad por mencionar algunos. La inyección de dependencias permite
-desacoplar las clases entre sí, permitiendo que una clase dependa de una interfaz en lugar de una
-implementación concreta, lo que facilita la reutilización, el mantenimiento y la prueba de los
-componentes individuales del sistema \parencite{Seemann2025Jun}.
+La inyección de dependencias es una técnica de programación en la que las
+dependencias de una clase se proporcionan desde el exterior, en lugar de ser
+creadas por la propia clase \parencite{DepInyectionStackOVerflow}. Esto no es
+patrón de diseño como tal, sino una técnica que engloba a varios patrones de
+diseño como pueden ser la inyección de constructor, la inyección de método o la
+inyección de propiedad por mencionar algunos. La inyección de dependencias
+permite desacoplar las clases entre sí, permitiendo que una clase dependa de una
+interfaz en lugar de una implementación concreta, lo que facilita la
+reutilización, el mantenimiento y la prueba de los componentes individuales del
+sistema \parencite{Seemann2025Jun}.
 
-En la aplicación, la inyección de dependencias se utiliza en el módulo del \gls{backend}, donde
-las clases que implementan los \gls{dao} y los \textit{routers} de FastAPI reciben como
-parámetro las dependencias que necesitan para funcionar, como por ejemplo la conexión a la base de
-datos, funciones específicas de la aplicación como puede ser el envío de correos electrónicos u
-otros datos como el actor actual del sistema. Esto facilita enormemente la prueba de las clases,
-puesto que se pueden proporcionar implementaciones alternativas de las dependencias para realizar
-las pruebas unitarias. En el caso propio de la aplicación, la dependencia a la base de datos se
-reemplaza por una conexión a una base de datos SQLite local y la función de envío de correos
-electrónicos se reemplaza por una función que simplemente imprime el correo electrónico en la
-consola, evitando así el envío de correos electrónicos reales durante las pruebas.
+En la aplicación, la inyección de dependencias se utiliza en el módulo del
+\gls{backend}, donde las clases que implementan los \gls{dao} y los
+\textit{routers} de FastAPI reciben como parámetro las dependencias que
+necesitan para funcionar, como por ejemplo la conexión a la base de datos,
+funciones específicas de la aplicación como puede ser el envío de correos
+electrónicos u otros datos como el actor actual del sistema. Esto facilita
+enormemente la prueba de las clases, puesto que se pueden proporcionar
+implementaciones alternativas de las dependencias para realizar las pruebas
+unitarias. En el caso propio de la aplicación, la dependencia a la base de datos
+se reemplaza por una conexión a una base de datos SQLite local y la función de
+envío de correos electrónicos se reemplaza por una función que simplemente
+imprime el correo electrónico en la consola, evitando así el envío de correos
+electrónicos reales durante las pruebas.
 
-La figura \ref{anexo2:fig:inyeccion-dependencias} muestra un ejemplo de inyección de dependencias
-aplicado al envío de correos electrónicos en la aplicación.
+La figura \ref{anexo2:fig:inyeccion-dependencias} muestra un ejemplo de
+inyección de dependencias aplicado al envío de correos electrónicos en la
+aplicación.
 
 \diagrama{
     nombre = {Inyección de dependencias},
