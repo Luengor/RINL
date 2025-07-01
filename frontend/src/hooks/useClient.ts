@@ -6,6 +6,7 @@ import {
 import { useRef } from "react";
 import { loginForTokenLoginPost } from "../client";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function useClient() {
   // API url
@@ -72,11 +73,18 @@ export function useClient() {
   };
 
   // Logout function
+  const queryClient = useQueryClient();
   const logout = () => {
+    // Remove the token from local storage
     localStorage.removeItem("access_token");
     clientRef.current.setConfig({
       auth: null,
     });
+
+    // Invalidate all queries that depend on the user being logged in
+    queryClient.invalidateQueries({});
+    queryClient.removeQueries({});
+    queryClient.resetQueries({});
   };
 
   // Check if the user is logged in
