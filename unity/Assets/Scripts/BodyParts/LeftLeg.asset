@@ -20,6 +20,11 @@ MonoBehaviour:
     width: 0.25
     jointSize: 0.25
   - start: 25
-    end: 27
+    end: 29
     width: 0.2
     jointSize: 0.2
+  - start: 29
+    end: 31
+    width: 0.15
+    jointSize: 0.1
+  moveEndObject: 
