@@ -39,3 +39,10 @@
 }
 
 \makeatother
+
+% https://tex.stackexchange.com/a/36881
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
