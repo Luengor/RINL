@@ -5,17 +5,20 @@ sobre él \parencite{TIWARI2015128}. Para organizar los casos de uso, se han def
     \item \textbf{Gestión de usuario}: Se agrupan aquí los casos de uso relacionados con la
            gestión de usuarios como la visualización y modificación de datos personales, así como
            aquellos relacionados con el registro y la sesión del usuario.
+
     \item \textbf{Estadísticas y seguimiento}: Se encuentran aquí los casos de uso referentes a la
-           visualización de estadísiticas de juego y la historial de formas físicas.
+           visualización de estadísticas de juego y el historial de formas físicas.
+
     \item \textbf{Juego}: Se agrupan aquí los casos de uso relacionados con el juego en sí, como la
-           selección de minijuegos, la calibración de la cámara y la interacción con los minijuegos.
+           selección de minijuegos, la calibración de la cámara, la visualización de puntuaciones y
+           la interacción con los minijuegos en sí.
 \end{itemize}
 
 \subsection{Diagramas de casos de uso}
 \label{anexo1:sec:requisitos-funcionales-casos-de-uso}
 En este sub-apartado se muestra el diagrama de todos los casos de uso del sistema (figura
 \ref{anexo1:fig:casos-uso}), así como distintos diagramas de casos de uso agrupados por paquetes
-(figuras \ref{anexo1:fig:casos-uso-gestion-usuario}, \ref{anexo1:fig:casos-uso-estadisticas} y
+(figuras \ref{anexo1:fig:casos-uso-estadisticas}, \ref{anexo1:fig:casos-uso-gestion-usuario} y
 \ref{anexo1:fig:casos-uso-juego}). Estos diagramas muestran las relaciones entre los actores y los
 casos de uso, así como las relaciones entre los propios casos de uso.
 
@@ -34,7 +37,7 @@ casos de uso, así como las relaciones entre los propios casos de uso.
 }
 
 \diagrama[H]{
-    nombre = {Paquete de casos de uso Gestion de usuario},
+    nombre = {Paquete de casos de uso Gestión de usuario},
     archivo = {anexo1/diagramas/gestionusuario.pdf},
     etiqueta = {anexo1:fig:casos-uso-gestion-usuario},
     width = \textwidth,
@@ -69,7 +72,7 @@ son el inicio de sesión, el registro y la verificación del correo electrónico
         Este actor representa a un usuario que no ha iniciado sesión en el sistema
     },
     comentarios = {
-        Este actor interactúa con el sistema unicamente para registrarse o iniciar sesión
+        Este actor interactúa con el sistema únicamente para registrarse o iniciar sesión
     }
 }
 
@@ -275,7 +278,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {4},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de elminar cuenta en el menú
+        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de eliminar cuenta en el menú
               principal \\
         & 2 & El sistema muestra una advertencia, indicando que esta operación no es reversible \\
         & 3 & El actor confirma la eliminación \\
@@ -333,7 +336,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Verificar correo electrónico},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0002} pulse el enlace de verificación en el correo electronico
+        actor \nameref{anexo1:tab:act0002} pulse el enlace de verificación en el correo electrónico
         enviado durante el registro o la modificación del correo electrónico
     },
 }{
@@ -354,9 +357,9 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {3},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} Pulsa el enlace para verificar su correo electrónico
+        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el enlace para verificar su correo electrónico
               o copia y pega el enlace en su navegador\\
-        & 2 & El sistema valida el código incluído en el enlace. Si es correcto el usuario es verificado\\
+        & 2 & El sistema valida el código incluído en el enlace. Si es correcto, el usuario es verificado\\
         & 3 & Si el código incluía un correo electrónico nuevo, el sistema actualiza el correo electrónico
               del usuario \\
     },
@@ -437,7 +440,7 @@ excepciones que pueden ocurrir durante su ejecución.
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de añadir forma física \\
         & 2 & El sistema muestra un formulario \\
-        & 3 & El actor rellena el formalario con la información de la forma física y pulsa el botón de
+        & 3 & El actor rellena el formulario con la información de la forma física y pulsa el botón de
               añadir \\
         & 4 & El sistema valida la información introducida y, si es válida, añade la forma física al
               historial del usuario \\
