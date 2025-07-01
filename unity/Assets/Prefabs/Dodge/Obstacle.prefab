@@ -50,6 +50,8 @@ MonoBehaviour:
   type: {fileID: 0}
   visible: {fileID: 7209557560200318672}
   audioSource: {fileID: 2485886334505854902}
+  warningTime: 0
+  duration: 0
 --- !u!95 &9010948994025032252
 Animator:
   serializedVersion: 7
@@ -218,9 +220,9 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3871960072368834904}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -233,7 +235,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: aa4355ea54374b4128005b821f745b13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

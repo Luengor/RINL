@@ -25,7 +25,7 @@ public class Obstacle : MonoBehaviour
     {
         if (!obstacleActive)
             return;
-        
+
         if (CheckHit())
         {
             Hit();
@@ -84,7 +84,7 @@ public class Obstacle : MonoBehaviour
     {
         obstacleActive = true;
         GetComponent<Animator>().speed = 1.0f / Mathf.Min(type.duration, duration);
-        body = GameController.Instance.Body; 
+        body = GameController.Instance.Body;
     }
 
     public void Hit()
