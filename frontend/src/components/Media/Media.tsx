@@ -1,7 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { createPoseLandmarker, predict } from "../../utils/mediapipe";
-import { Button, Center, Loader, Stack } from "@mantine/core";
+import {
+  Button,
+  Card,
+  Center,
+  Loader,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { ActivityBase, createActivityActivityPost } from "../../client";
 import { useUser } from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
@@ -20,16 +28,41 @@ export default function Media() {
   }
 
   // Prepare video
+  const [videoError, setVideoError] = useState<string>(null);
   const [videoStream, setVideoStream] = useState<MediaStream>(null);
   const inputVideoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoStream) return;
+    if (videoStream || videoError) return;
 
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-      setVideoStream(stream);
-    });
-  }, [videoStream]);
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        // Check if the stream is not 0x0
+        if (
+          stream.getVideoTracks().length === 0 ||
+          stream.getVideoTracks()[0].getSettings().width === 0
+        ) {
+          setVideoError(
+            "La cámara no está disponible o no tiene resolución válida."
+          );
+
+          // Stop the stream
+          stream.getTracks().forEach((track) => {
+            track.stop();
+          });
+
+          return;
+        }
+
+        setVideoStream(stream);
+      })
+      .catch((err) => {
+        setVideoError(
+          "No se pudo acceder a la cámara. Por favor, asegúrate de que tienes una cámara conectada y que has concedido los permisos necesarios."
+        );
+      });
+  }, [videoStream, videoError]);
 
   const projectName = "com.luengor.rinl";
 
@@ -188,8 +221,43 @@ export default function Media() {
   }, [videoStream]);
 
   // Render
-  let content = <Loader type="dots" size="xl" />;
-  if (videoStream) {
+  let content: JSX.Element;
+  if (videoError) {
+    content = (
+      <Stack align="center">
+        <Card
+          shadow="sm"
+          p="xl"
+          radius="md"
+          withBorder
+          w={{ base: "100%", sm: 500 }}
+        >
+          <Text size="xl" ta="justify">
+            {videoError}
+          </Text>
+        </Card>
+      </Stack>
+    );
+  } else if (videoStream === null) {
+    content = (
+      <Card
+        shadow="sm"
+        p="xl"
+        radius="md"
+        withBorder
+        w={{ base: "100%", sm: 500 }}
+      >
+        <Stack align="center">
+          <Title order={2}>Esperando a la cámara...</Title>
+          <Loader type="dots" size="xl" />
+          <Text size="md" ta="justify">
+            Por favor, asegúrate de que tienes una cámara conectada y que has
+            concedido los permisos necesarios.
+          </Text>
+        </Stack>
+      </Card>
+    );
+  } else if (videoStream !== null) {
     content = (
       <>
         <Stack w="100%" h="100%" justify="center" align="center">
