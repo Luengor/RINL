@@ -31,6 +31,8 @@ export default function Media() {
     });
   }, [videoStream]);
 
+  const projectName = "com.luengor.rinl";
+
   // Prepare unity
   const {
     unityProvider,
@@ -39,10 +41,10 @@ export default function Media() {
     requestFullscreen,
     unload: unloadUnity,
   } = useUnityContext({
-    loaderUrl: "/unity/Build/unity.loader.js",
-    dataUrl: "/unity/Build/unity.data",
-    frameworkUrl: "/unity/Build/unity.framework.js",
-    codeUrl: "/unity/Build/unity.wasm",
+    loaderUrl: `/${projectName}/Build/${projectName}.loader.js`,
+    dataUrl: `/${projectName}/Build/${projectName}.data`,
+    frameworkUrl: `/${projectName}/Build/${projectName}.framework.js`,
+    codeUrl: `/${projectName}/Build/${projectName}.wasm`,
     webglContextAttributes: {
       powerPreference: isOnMobile ? 1 : 2,
     },
