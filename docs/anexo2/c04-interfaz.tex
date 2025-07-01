@@ -1,0 +1,299 @@
+\chapter{Diseño de la interfaz de usuario}
+\label{anexo2:cap:diseno-interfaz-usuario}
+En este capítulo se presenta el diseño de la interfaz de usuario de la
+aplicación, que se ha realizado de manera iterativa y centrada en el usuario.
+
+\section{Introducción}
+\label{anexo2:sec:diseno-introduccion}
+Tanto la interfaz como la experiencia de usuario son aspectos fundamentales en
+el desarrollo de aplicaciones y videojuegos. Un diseño adecuado no solo mejora
+la usabilidad, sino que también potencia la satisfacción del usuario, lo que es
+crucial para el éxito de cualquier producto digital.
+
+Para esta aplicación, el diseño busca ofrecer una experiencia de usuario clara,
+motivadora y sencilla, donde la página web sirva como punto de acceso y centro
+de gestión y estadísticas, mientras que el videojuego es el medio principal de
+interacción, primando la jugabilidad y la claridad en la interfaz.
+
+El público objetivo de la aplicación son personas que buscan una forma divertida
+de hacer ejercicio físico desde casa, sin necesidad de equipamiento
+especializado y con un enfoque en la mejora de la salud y el bienestar. Para
+esto, un desafío importante es eliminar la fricción que pueda existir entre el
+usuario y la interacción con la aplicación, facilitando el acceso y la
+comprensión de las funcionalidades.
+
+\section{Metodología y principios}
+\label{anexo2:sec:diseno-metodologia}
+En esta sección se describen las metodologías y principios de diseño empleados
+en el desarrollo de la interfaz de usuario, así como las decisiones que han
+justificado el enfoque adoptado.
+
+\subsection{Diseño Centrado en el Usuario (DCU)}
+El Diseño Centrado en el Usuario (DCU) es una metodología que pone al usuario en
+el centro del proceso de diseño. Se basa en un proceso de diseño iterativo que
+trata de maximizar la usabilidad y la experiencia del usuario a través de
+pruebas y retroalimentación continua \parencites{UCDIDF2025Mar}{UCDW3C2008Apr}%
+{UCDUsal}.
+
+Para conseguirlo, se ha desarrollado el sistema intentando siempre asegurar la
+usabilidad y la accesibilidad del mismo, teniendo en cuenta las características
+y necesidades del usuario final. Esto incluye el seguimiento de buenas prácticas
+de diseño, el uso de patrones ampliamente aceptados y la realización de pruebas
+de usuario para validar las decisiones de diseño. Este último aspecto se verá
+con detalle en la sección \ref{anexo2:sec:diseno-pruebas-usuario}, mientras que
+los dos primeros se desarrollan en las siguientes secciones.
+
+\subsection{Principios de Gestalt de la percepción}
+Gestalt es una teoría psicológica y de la percepción que se centra en el estudio
+de como los humanos perciben patrones y formas en el entorno más que los
+elementos individuales que los componen \parencite{Mather2006Foundations}. Estos
+principios ayudan a entender cómo los usuarios perciben y procesan la
+información visual, lo que es fundamental para el diseño de interfaces
+efectivas. A continuación se presentan algunos de los principios utilizados más
+relevantes en el diseño de la interfaz.
+
+\subsubsection{Proximidad}
+La proximidad se refiere a la tendencia de los usuarios a agrupar elementos que
+están cerca unos de otros (ver figura \ref{anexo2:fig:proximidad}). En el diseño de la
+interfaz, esto se puede utilizar para comunicar relaciones entre elementos y
+organizar la información de manera clara y coherente
+\parencite{Soegaard2015Gestalt}.
+
+\diagrama{
+    nombre = {Principio de proximidad de Gestalt},
+    fuente = {Dominio público, Wikimedia Commons},
+    archivo = {anexo2/imgs/diseno/gestalt_proximidad.png},
+    etiqueta = {anexo2:fig:proximidad},
+}
+
+Por ejemplo, en la página de estadísticas de la aplicación, los datos relacionados
+se agrupan en secciones cercanas: los gráficos relacionados con las actividades
+realizadas están agrupados en una sección (ver figura
+\ref{anexo2:fig:estadisticas-proximidad}). También se puede ver en el menú principal,
+donde los elementos relacionados con la información personal del usuario están
+separados de los relacionados con la forma física de este por un separador (ver
+figura \ref{anexo2:fig:principal-proximidad}).
+
+\diagrama{
+    nombre = {Principio de proximidad en la página de estadísticas},
+    archivo = {anexo2/imgs/diseno/estadisticas-proximidad.png},
+    etiqueta = {anexo2:fig:estadisticas-proximidad},
+}
+
+\diagrama{
+    nombre = {Principio de proximidad en el menú principal},
+    archivo = {anexo2/imgs/diseno/principal-proximidad.png},
+    etiqueta = {anexo2:fig:principal-proximidad},
+}
+
+\subsubsection{Semejanza}
+El principio de semejanza establece que los elementos que comparten
+características visuales, como pueden ser el color, la forma o el tamaño,
+tienden a ser percibidos como un grupo o una unidad (ver figura
+\ref{anexo2:fig:semejanza}). Este principio se utiliza para crear jerarquías
+visuales y comunicar la intención de los elementos de la interfaz
+\parencite{Soegaard2015Gestalt}.
+
+\diagrama{
+    nombre = {Principio de semejanza de Gestalt},
+    fuente = {Dominio público, Wikimedia Commons},
+    archivo = {anexo2/imgs/diseno/gestalt_semejanza.png},
+    etiqueta = {anexo2:fig:semejanza},
+    width = 0.5\textwidth,
+}
+
+En el caso de la aplicación, se utilizan en los botones de la interfaz. Aquellos
+cuya función es similar comparten el color naranja propio de la aplicación (como
+pueden ser los botones de iniciar sesión, registrarse o añadir una forma
+física), mientras que acciones destructivas como eliminar la cuenta o cerrar
+sesión se destacan con un color rojo para diferenciarlos claramente.
+
+También se utiliza durante el videojuego. En este, se utilizan dos colores, el
+naranja y el azul, para destacar la izquierda y la derecha del usuario,
+respectivamente. Esto luego es utilizado en el minijuego de explotar globos,
+donde los globos de cada color deben ser explotados con la parte del cuerpo
+correspondiente: los globos naranjas con la mano izquierda y los azules con la
+mano derecha (ver figura \ref{anexo2:fig:globos-semejanza}).
+
+\diagrama{
+    nombre = {Principio de semejanza en el minijuego de explotar globos},
+    archivo = {anexo2/imgs/diseno/globos.png},
+    etiqueta = {anexo2:fig:globos-semejanza},
+}
+
+% \subsection{Diez heurísticas de Nielsen}
+
+\subsection{Psicología y teoría del color}
+La psicología del color es el estudio de como los colores afectan a las
+emociones y comportamientos humanos \parencite{ROOHI2019100298}. Por otro lado,
+la teoría del color es el estudio de como los colores interactúan entre sí y
+cómo pueden combinarse para crear armonías visuales
+\parencite{ColorTheoryHandprint}. Ambas disciplinas son fundamentales en el
+diseño de interfaces, una elección adecuada de los colores puede mejorar la
+usabilidad, la accesibilidad y la experiencia del usuario, así como evocar
+emociones y sensaciones específicas.
+
+Las aplicaciones específicas de la psicología del color y la teoría del color en
+el diseño de la interfaz de usuario se verán de manera independiente en las
+secciones de la aplicación web y del videojuego.
+
+
+\section{Diseño de la aplicación web}
+\label{anexo2:sec:diseno-aplicacion-web}
+La aplicación web es el punto de acceso y centro de gestión de la información
+para la aplicación. Su diseño se ha realizado siguiendo los principios
+anteriores, con un enfoque en la usabilidad, la accesibilidad y la claridad
+visual. A continuación se presentan los aspectos más relevantes del diseño de la
+aplicación web.
+
+\subsection{Paleta de colores y tipografía}
+La paleta de colores utilizada en la aplicación web es una muy sencilla. El
+color principal es el naranja\footnotemark, que se utiliza para los botones, gráficos y
+elementos destacados de la interfaz.  Este color se ha elegido por su asociación
+con la energía, la creatividad y la motivación \parencites{colorpsychology2015}%
+{orangeColorPsychology}, lo que es adecuado para una aplicación centrada en el
+ejercicio físico y el bienestar.
+
+\footnotetext{La idea de escoger el color naranja para la aplicación surgió al
+darme cuenta de que que aún tenía instalada en el móvil la aplicación Strava
+(\url{https://www.strava.com/}).}
+
+Además de este color, el blanco y el negro se utilizan abundantemente para
+elementos del fondo y textos generales. El color rojo también hace apariencias
+ocasionales para botones con acciones destructivas como se mencionó
+anteriormente.
+
+En cuanto a la tipografía, se ha utilizado de fuente principal \tech{Roboto}%
+{https://fonts.google.com/specimen/Roboto}, creada por Google, ha probado ser
+una fuente muy legible en muchas condiciones \parencite{Shu2024Nov}. Es además
+una fuente disponible en la mayoría de dispositivos, evitando crear experiencias
+dispares entre usuarios.
+
+\subsection{Composición de la página}
+La composición de la página juega un papel crucial en la experiencia que los
+usuarios tienen en ella. Se presenta un sistema bastante sencillo: tras iniciar
+sesión se accede al área personal, desde la que se puede navegar a las páginas
+de estadísticas o a la designada para jugar (ver figura
+\ref{anexo2:fig:flujo-interfaz}). La navegación entre estas tres páginas se hace
+a través de una barra de navegación lateral con varios iconos, cada uno
+representando una de las secciones.
+
+\diagrama{
+    nombre = {Flujo de navegación de la aplicación web},
+    archivo = {anexo2/imgs/diseno/interfaz.pdf},
+    etiqueta = {anexo2:fig:flujo-interfaz},
+    width = 1\textwidth,
+}
+
+Esta estructura es bastante común en aplicaciones web, lo que es ventajoso,
+puesto que los usuarios ya están familiarizados con ella. Como indica
+\textcite{Nielsen2018Jan}, los usuarios pasan la mayor parte de su tiempo en
+otras aplicaciones, por lo que es importante que la interfaz de nuestra
+aplicación siga las convenciones y patrones establecidos para que los usuarios
+no tengan que aprender a usarla desde cero.
+
+Otra cosa a mencionar es el abundante uso de espacios \enquote{vacíos} en la
+interfaz\footnotemark. Estos espacios no contienen información ni elementos
+interactivos, pero son importantes para mantener una carga cognitiva baja y
+facilitar la navegación y el uso de los componentes útiles de la aplicación.
+
+\footnotetext{Realmente no hay espacios completamente vacíos en la aplicación.
+Todos los fondos de la aplicación contienen una \enquote{cascada de texto} que
+informa al usuario en qué página se encuentra. Este texto es de un color gris
+para que no distraiga al usuario, pero está presente para que no de la sensación
+de que la aplicación está incompleta o \enquote{vacía}.}
+
+
+\section{Diseño del videojuego}
+\label{anexo2:sec:diseno-videojuego}
+El videojuego es el medio principal de interacción con la aplicación, por lo que
+su diseño es fundamental para la experiencia del usuario. A continuación se
+presentan los aspectos más relevantes del diseño del videojuego, siguiendo los
+principios y metodologías mencionados anteriormente.
+
+\subsection{Minimalismo}
+El minimalismo es un principio de diseño que busca simplificar la interfaz al
+eliminar elementos innecesarios y centrarse en lo esencial
+\parencite{Fessenden2022Feb}.  En el caso de este videojuego es especialmente
+importante, ya que el jugador se situará a varios metros de la pantalla, por lo
+que es crucial que la interfaz sea lo más clara y sencilla posible.
+
+Este minimalismo y búsqueda de la claridad se refleja en el diseño del sistema
+al completo. En todas las pantallas del videojuego se utiliza un fondo negro con
+texto blanco y tamaños de letra grandes, lo que facilita la legibilidad desde la
+distancia. La réplica del cuerpo del usuario se muestra con esferas brillantes
+de color naranja y azul conectadas por líneas blancas, que son fácilmente
+distinguibles y reconocibles desde lejos.
+
+De la misma manera, los elementos interactivos del videojuego son
+intencionalmente sencillos y claros. Los globos que deben ser explotados en su
+minijuego son de colores vivos y diferentes según el tipo de acción que se debe
+realizar. Por otro lado, los obstáculos que se deben evitar son de color rojo y
+parpadean y hacen sonidos al aparecer para llamar la atención del usuario.
+
+% Foto de obstáculo por ejemplo
+
+\subsection{Retroalimentación}
+Se entiendo por retroalimentación (conocido también como \textit{feedback}) a la
+información que se da al usuario cuando realiza alguna acción para confirmarle
+que esta ha sucedido. Es un aspecto importante de los videojuegos (tanto que se
+conoce como \enquote{jugo} o \textit{game juice} en inglés), puesto que provocan
+una respuesta emocional muy satisfactoria en el usuario, lo que mejora la
+experiencia de juego y la inmersión \parencites{Irajdoost2023Nov}{GameJuiceReddit}.
+
+En el caso de este videojuego, se ha implementado retroalimentación visual y
+auditiva.  Por ejemplo, cuando el usuario explota un globo, este se desintegra
+en partículas brillantes y se reproduce un sonido satisfactorio. Otro aspecto en
+el que se puede ver es en el movimiento del avatar del usuario, que reacciona de
+manera fluida, pero inmediata a los movimientos del usuario, lo que proporciona
+una sensación de control satisfactoria e intuitiva: es igual de complejo que
+mirarse en un espejo.
+
+\section{Pruebas de usuario}
+\label{anexo2:sec:diseno-pruebas-usuario}
+Para validar las decisiones de diseño y asegurar que la interfaz cumple con las
+necesidades y expectativas de los usuarios, se han realizado pruebas de usuario
+a lo largo del proceso de desarrollo. Estas pruebas, aunque bastante informales,
+se han centrado en observar cómo usuarios reales\footnotemark interactúan con la
+interfaz por sí mismos y recoger su retroalimentación sobre la usabilidad y su
+experiencia utilizando el sistema.
+
+\footnotetext{Muchas gracias a mis compañeros de piso y amigos, especialmente a
+\textit{Encarna} y \textit{Pablo} por criticar el diseño de mi interfaz
+innumerables veces.}
+
+Puesto que para cada una de estas pruebas se ha tomado nota de las opiniones de
+los usuarios y se está utilizando Git como sistema de control de versiones, se
+puede consultar una de estas iteraciones como ejemplo. En la figura
+\ref{anexo2:fig:interfaz-vieja} se puede ver el aspecto de la página de datos del
+usuario antes de realizar los cambios.
+
+\diagrama{
+    nombre = {Página de datos de usuario en la commit ebc3259},
+    archivo = {anexo2/imgs/diseno/datosviejo.png},
+    etiqueta = {anexo2:fig:interfaz-vieja},
+    width = 1\textwidth,
+}
+
+De esta página en concreto se recibieron varias críticas, la principal queja
+siendo que había mucho espacio vacío y que la información no estaba bien
+organizada (en las capturas de pantalla se está usando una magnificación del
+200\%). También se criticó que la sección que informa sobre la forma física
+actual era difícil de leer y que la barra lateral de navegación era demasiado
+gruesa.
+
+Tras recibir estas críticas se realizaron varios cambios en la interfaz, como
+centrar el contenido de la página, reducir el tamaño de la barra lateral de
+navegación y reorganizar la información para que fuera más fácil de leer.
+También se añadió un efecto en el fondo de la página que indica la sección
+actual para reducir el espacio vacío y hacer la interfaz más atractiva. El
+resultado de estos cambios se puede ver en la figura \ref{anexo2:fig:interfaz-actual}.
+
+\diagrama{
+    nombre = {Página de datos de usuario actualmente},
+    archivo = {anexo2/imgs/diseno/datosconforma.png},
+    etiqueta = {anexo2:fig:interfaz-actual},
+    width = 1\textwidth,
+}
+
+
