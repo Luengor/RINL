@@ -29,27 +29,27 @@ en el capítulo \textit{\nameref{c08:sec:alternativas-tecnologicas}}.
 \label{sec:desarrollo-api}
 Para el desarrollo del \gls{backend} de la aplicación se ha utilizado el \gls{framework} \tech{FastAPI}
 {https://fastapi.tiangolo.com/}, un \gls{framework} moderno y rápido para construir \glspl{api} con Python 3.7+
-basado en estándares como \texttt{OpenAPI} y \texttt{JSON Schema} \parencite{fastapi}.
+basado en estándares como OpenAPI y JSON Schema \parencite{fastapi}.
 
 Junto a este \gls{framework}, se han utilizado varias bibliotecas y herramientas para facilitar el desarrollo
 y la gestión del proyecto. Entre ellas, destacan:
 \begin{itemize}
-    \item \texttt{Pydantic}: una biblioteca para la validación de datos. Utilizada para definir los modelos de
+    \item Pydantic: una biblioteca para la validación de datos. Utilizada para definir los modelos de
         datos de entrada y salida de la \gls{api}, garantizando que los datos cumplen con los tipos y formatos
         esperados.
 
-    \item \texttt{PyJWT}: una biblioteca para la creación y verificación de tokens JWT (JSON Web Tokens).
+    \item PyJWT: una biblioteca para la creación y verificación de tokens JWT (JSON Web Tokens).
         Utilizada para la autenticación y autorización de usuarios en la \gls{api}.
 
-    \item \texttt{Pytest}: una biblioteca para la realización de pruebas unitarias y de integración.
+    \item Pytest: una biblioteca para la realización de pruebas unitarias y de integración.
         Se integra de manera muy sencilla con el código existente, permitiendo definir pruebas para
         las diferentes funcionalidades de la \gls{api} y ejecutarlas de forma automática.
 
-    \item \texttt{SQLAlchemy}: el \gls{orm} utilizado para interactuar con la base de datos de forma
+    \item SQLAlchemy: el \gls{orm} utilizado para interactuar con la base de datos de forma
         sencilla y segura. Permite interactuar con varios tipos de bases de datos relacionales,
-        para interactuar con PostgreSQL se ha utilizado el paquete \texttt{psycopg2}.
+        para interactuar con PostgreSQL se ha utilizado el paquete psycopg2.
 
-    \item \texttt{Uvicorn}: un servidor \gls{asgi} ligero y rápido para ejecutar aplicaciones como FastAPI.
+    \item Uvicorn: un servidor \gls{asgi} ligero y rápido para ejecutar aplicaciones como FastAPI.
         Es utilizado para servir la \gls{api} tanto en producción como en desarrollo, donde además permite
         la recarga automática del código al detectar cambios, facilitando el desarrollo.
 \end{itemize}
@@ -96,7 +96,7 @@ Para facilitar el desarrollo, se han utilizado varias bibliotecas y herramientas
 Todas estas herramientas, así como las dependencias del proyecto, se gestionan a través de \tech{Bun}
 {https://bun.sh/}, un gestor de dependencias y entorno de ejecución para JavaScript y TypeScript que
 ofrece una gran velocidad de instalación y ejecución. Esto agiliza mucho el proceso de despliegue,
-ya que no es necesario esperar varios minutos a que alternativas como \texttt{npm} descarguen e
+ya que no es necesario esperar varios minutos a que alternativas como npm descarguen e
 instalen todos los requisitos del proyecto.
 
 Por último, todo el código del \gls{frontend} se ha escrito en \tech{TypeScript}
@@ -165,7 +165,7 @@ de contenido de manera automática, y la inclusión de bibliografía y glosario 
 \label{sec:control-versiones}
 Puesto que soy dado a cometer errores, se ha utilizado un sistema de control de versiones para
 gestionar el código fuente del proyecto. En concreto, se han utilizado \tech{Git}{https://git-scm.com/}
-y \tech{GitHub}{https://github.com/}. \texttt{Git} es una herramienta de control de versiones
+y \tech{GitHub}{https://github.com/}. Git es una herramienta de control de versiones
 distribuído que permite llevar un registro de los cambios realizados en el código fuente y colaborar
 con otros desarrolladores. GitHub por su parte es una plataforma de alojamiento de código fuente que,
 además de utilizar Git, ofrece funcionalidades adicionales como la ejecución de acciones automáticas

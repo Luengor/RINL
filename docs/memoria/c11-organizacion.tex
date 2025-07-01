@@ -8,8 +8,8 @@ realizadas.
 
 \subsection{Arquitectura del sistema}
 El proyecto desarrollado se trata de una aplicación web que permite el registro de usuarios
-y ofrece una serie de minijuegos. Estos juegos han sido desarrollados en \texttt{Unity} e
-incluidos en una aplicación web de \texttt{React}. La información sobre los usuarios y las
+y ofrece una serie de minijuegos. Estos juegos han sido desarrollados en Unity e
+incluidos en una aplicación web de React. La información sobre los usuarios y las
 actividades realizadas se almacena en un servidor independiente, al que se accede a través de
 una \gls{api}.
 
@@ -38,12 +38,12 @@ hará un resumen con los aspectos más relevantes.
 Se mencionan de manera breve los modelos de datos utilizados en el sistema, puesto que se
 encuentran en un paquete independiente en el diagrama de clases de diseño
 (figura \ref{fig:paquetes-clases-diseno}). Estos modelos son utilizados por el \gls{backend} a
-través del \gls{orm} SQLAlchemy y se alojan en la base de datos relacional \texttt{PostgreSQL}.
+través del \gls{orm} SQLAlchemy y se alojan en la base de datos relacional PostgreSQL.
 
 \subsubsection{\Gls{backend}}
 El \gls{backend} del sistema se encarga de implementar la lógica de negocio y de proporcionar una
-\gls{api} para acceder a los datos de la aplicación. Está desarrollada en \texttt{Python} utilizando
-el \gls{framework} \texttt{FastAPI}. Se divide en tres partes fundamentales:
+\gls{api} para acceder a los datos de la aplicación. Está desarrollada en Python utilizando
+el \gls{framework} FastAPI. Se divide en tres partes fundamentales:
 \begin{itemize}
     \item \textbf{API Routers}: Definen las rutas de la \gls{api} y realizan las operaciones necesarias
         para cada una de ellas. Delegan las operaciones sobre los modelos de datos a los \glspl{dao}.
@@ -63,12 +63,12 @@ el \gls{framework} \texttt{FastAPI}. Se divide en tres partes fundamentales:
 Existen varias clases pertenecientes a cada uno de estos paquetes, dependiendo de si su función
 es la gestión de usuarios, actividades, formas físicas o autenticación. Cada una de estas clases
 se encarga de una parte específica de la lógica de negocio y de la gestión de un tipo de datos
-específico. Por ejemplo, la clase \texttt{UserRouter} se encarga de gestionar las rutas relacionadas
-con los usuarios, mientras que \texttt{ShapeDAO} se encarga de proveer acceso a los datos relacionados
+específico. Por ejemplo, la clase \enquote{UserRouter} se encarga de gestionar las rutas relacionadas
+con los usuarios, mientras que \enquote{ShapeDAO} se encarga de proveer acceso a los datos relacionados
 con las formas físicas.
 
 \subsubsection{\Gls{frontend}}
-El \gls{frontend} está desarrollado en \texttt{React} y se encarga de proporcionar la interfaz de
+El \gls{frontend} está desarrollado en React y se encarga de proporcionar la interfaz de
 usuario de la aplicación. React es un \gls{framework} que permite crear componentes reutilizables
 y gestionar el estado de la aplicación de manera cómoda y eficiente \parencite{react}. Por tanto,
 la estructura de la aplicación web se basa en componentes que contienen a su vez otros componentes,
@@ -80,25 +80,22 @@ videojuego. Ambas conexiones se realizan a través de clases dedicadas a la cone
 \gls{api} y el videojuego, respectivamente. La diferencia principal entre ambas es que la primera
 de estas es utilizada por la mayoría de los componentes para obtener y enviar datos, mientras
 que la segunda es utilizada únicamente por el componente del videojuego. Otra característica que
-las diferencia es que la primera de ellas ha sido autogenerada a partir de la especiciación OpenAPI
-del \gls{backend}, mientras que la segunda ha sido desarrollada a mano para adaptarse a las
+las diferencia es que la primera de ellas ha sido autogenerada a partir de la especificación OpenAPI
+del \gls{backend}, mientras que la segunda ha sido desarrollada de forma manual para adaptarse a las
 necesidades del videojuego.
 
 Por último, el \gls{frontend} también se encarga de realizar la detección de posturas a través de
-la cámara del dispositivo del usuario. Para ello, se utiliza la biblioteca \texttt{MediaPipe}, que
+la cámara del dispositivo del usuario. Para ello, se utiliza la biblioteca MediaPipe, que
 permite realizar la estimación de poses en tiempo real para posteriormente enviar los datos
 obtenidos al videojuego.
 
 \subsubsection{Videojuego}
-El videojuego desarrollado en Unity es un componente embebido en la aplicación web que se comunica
-con esta a través de eventos de JavaScript. A excepción de la situación del videojuego una vez
-se ha exportado, este no tiene ninguna característica destacable, ya que se trata de un videojuego
-simple que no interacciona mucho con el resto del sistema.
-
-En cuanto a la conexión que mantiene con el \gls{frontend}, esta se realiza a través de una clase
-singleton, que se encarga de gestionar la comunicación entre el videojuego y el \gls{frontend} y
-de mantener los datos obtenidos (como la postura detectada) accesible para todos los objetos de la
-escena.
+El videojuego desarrollado en Unity es un componente embebido en la aplicación
+web que se comunica con esta a través de eventos de JavaScript. Esta interacción
+se lleva a cabo a través de una clase \textit{singleton}, que se encarga de
+gestionar la comunicación entre el videojuego y el \gls{frontend} y de mantener
+los datos obtenidos (como la postura detectada) accesible para todos los objetos
+de la escena.
 
 \subsection{Proceso de desarrollo}
 Puesto que se ha utilizado una metodología ágil para el desarrollo del proyecto, el proceso de
@@ -106,21 +103,24 @@ construcción del sistema se ha realizado de manera iterativa e incremental, en 
 específicas. Cada iteración ha supuesto una serie de mejoras y adiciones a distintas partes del
 sistema en función de las prioridades y necesidades del proyecto.
 
-Sin embargo, sí que se puede distinguir un \enquote{orden} seguido durante el desarrollo del
-sistema. El \gls{backend} fue de las primeras partes del sistema en ser desarrolladas, ya que es
-necesario para que la parte del \gls{frontend} funcione correctamente. Por tanto, la construcción
-de este último no empezó hasta que el primero estuviese en un estado suficientemente avanzado de
-desarrollo. Por otro lado, puesto que el videojuego de \texttt{Unity} es un componente embebido en
-la aplicación web con una interfaz con el \gls{frontend} muy específica y limitada, su desarrollo
-se realizó prácticamente junto al del \gls{frontend}.
+Sin embargo, sí que se puede distinguir un \enquote{orden} seguido durante el
+desarrollo del sistema. El \gls{backend} fue de las primeras partes del sistema
+en ser desarrolladas, ya que es necesario para que la parte del \gls{frontend}
+funcione correctamente. Es a causa de esto que la construcción de este último no
+empezó hasta que el primero estuviese en un estado suficientemente avanzado de
+desarrollo. Por otro lado, puesto que el videojuego de Unity es un
+componente embebido en la aplicación web con una interfaz con el \gls{frontend}
+muy específica y limitada, su desarrollo se realizó prácticamente junto al del
+\gls{frontend}.
 
-Puesto que \texttt{Jira} permite la asignación de etiquetas a las tareas y que se han utilizado
-desde el principio del proyecto para categorizar las tareas según pertenezcan al \gls{backend},
-\gls{frontend}, \texttt{Unity} o a la documentación, se ha creado un gráfico que muestra la
-cantidad de puntos de historia completados (acumulados) en cada sprint, separados por
-categorías (figura \ref{fig:sprintstags}). Como se puede ver, la mayoría de los puntos de historia
-completados pertenecen al videojuego, seguido de la documentación, el \gls{frontend} y, por último,
-el \gls{backend}.
+Jira permite la asignación de etiquetas a las tareas y que se han utilizado desde un
+comienzo para categorizar las tareas según la parte del sistema a la que pertenecen.
+Las categorías utilizadas en el proyecto han sido \enquote{\gls{backend}},
+\enquote{\gls{frontend}}, \enquote{Unity} y \enquote{Documentación}. Con esta información
+se ha creado un gráfico que muestra la cantidad de puntos de historia completados
+(acumulados) en cada sprint, separados por categorías (figura \ref{fig:sprintstags}).
+Como se muestra en el gráfico, la sección del proyecto con más trabajo realizado ha sido el
+videojuego de Unity, seguido de cerca por la documentación.
 
 \diagrama{
     nombre = {Puntos de historia completados por categoría},
@@ -142,7 +142,7 @@ versión del código no introduce errores en las funcionalidades ya implementada
 
 También se realizaron pruebas de rendimiento, principalmente sobre el videojuego desarrollado para
 asegurar que este funcionaba de manera fluida. Estas pruebas se realizaron tanto en el propio
-editor de \texttt{Unity} como en la aplicación web una vez exportada. Estas pruebas de rendimiento
+editor de Unity como en la aplicación web una vez exportada. Estas pruebas de rendimiento
 se describen en mayor detalles en el apartado \ref{sec:metricas} del capítulo 5: \ref{cap:normas}.
 
 \section{Gestión del proyecto}
@@ -154,11 +154,13 @@ un resumen de la planificación temporal detallada en el \tercerAnexo.
 Podemos agrupar los recursos utilizados en tres categorías: recursos de hardware, software y
 recursos personales.
 
-Los recursos de hardware se refieren a los equipos físicos utilzados para construir el sistema. En
-este caso se trata de mi ordenador portátil (HP Victus 16-e0xxx\footnote{https://support.hp.com/ar-es/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-e0000/model/2100371558?sku=6X738U8})
-y mi teléfono móvil (Samsung Galaxy A35 5G\footnote{https://www.samsung.com/levant/smartphones/galaxy-a/galaxy-a35-5g-awesome-lemon-256gb-sm-a356ezyvmea/}).
-Ambos dispositivos tienen cámaras integradas, lo que hace posible utilizarlos para probar el
-producto.
+Los recursos de hardware se refieren a los equipos físicos utilizados para
+construir el sistema. En este caso se trata del ordenador portátil (HP Victus
+16-e0xxx\footnote{https://support.hp.com/ar-es/drivers/victus-by-hp-16.1-inch-gaming-laptop-pc-16-e0000/model/2100371558?sku=6X738U8})
+y teléfono móvil (Samsung Galaxy A35
+5G\footnote{https://www.samsung.com/levant/smartphones/galaxy-a/galaxy-a35-5g-awesome-lemon-256gb-sm-a356ezyvmea/})
+del autor. Ambos dispositivos tienen cámaras integradas, lo que hace posible
+utilizarlos para probar el producto.
 
 Entre los recursos de software se encuentran aquellos programas y herramientas utilizados durante el
 desarrollo del proyecto. No se mencionarán aquí bibliotecas o \glspl{framework} utilizados, sino herramientas
@@ -168,14 +170,15 @@ Para la escritura del código se han utilizado los editores \tech{Code}{https://
 y \tech{NeoVim}{https://neovim.io/}. Para probar la aplicación creada se han usado los navegadores web
 \tech{Firefox}{https://www.mozilla.org/en-US/firefox/new/} y \tech{Chromium}
 {https://www.chromium.org/chromium-projects/}. Para el desarrollo del videojuego se ha utilizado el motor
-Unity mencionado anteriormente. Durante el desarrollo del proyecto se ha utilizado la herrmienta de
+Unity mencionado anteriormente. Durante el desarrollo del proyecto se ha utilizado la herramienta de
 planificación y seguimiento de tareas \tech{Jira}{https://www.atlassian.com/software/jira}. Por último,
 como sistema de control de versiones se han utilizado tanto \tech{Git}{https://git-scm.com/} como
 \tech{GitHub}{https://github.com/}.
 
-Por último, los recursos personales utilizados me incluirían a mí y a los tutores del proyecto. Todas las
-labores de desarrollo, diseño y pruebas han sido realizadas por mí, mientras que los tutores han
-supervisado el proyecto y han proporcionado orientación y apoyo en la toma de decisiones.
+Por último, los recursos personales utilizados incluirían tanto al autor como a
+los tutores del proyecto. Todas las labores de desarrollo, diseño y pruebas han
+sido realizadas por mí, mientras que los tutores han supervisado el trabajo
+realizado y han proporcionado orientación y apoyo en la toma de decisiones.
 
 \subsection{Planificación temporal}
 La planificación del proyecto se ha hecho siguiendo la metodología de desarrollo ágil Scrum. De manera

@@ -55,7 +55,7 @@ interfaz entre ellos.
 
 En el caso de este sistema, la vista está representada por los componentes de React, que son responsables
 de mostrar los datos del modelo y de gestionar la interacción con el usuario. El controlador sería
-el cliente encargado de realizar las peticiones al servidor, en este caso la clase \texttt{APIClient}
+el cliente encargado de realizar las peticiones al servidor, en este caso la clase APIClient
 junto a los \textit{hooks} de React que se encargan de gestionar las peticiones y de actualizar
 el estado de la aplicación\footnotemark. Por último, el modelo está representado por la API del
 \gls{backend}, que proporciona los datos y la lógica de negocio del sistema. También se podría considerar
@@ -77,9 +77,9 @@ comunicación triangular propia de MVC como se puede ver en la figura \ref{anexo
 }
 
 \footnotetext{%
-En la aplicación se utiliza la biblioteca \texttt{React Query} (\url{https://react-query.tanstack.com/})
+En la aplicación se utiliza la biblioteca React Query (\url{https://react-query.tanstack.com/})
 para gestionar las peticiones al servidor y almacenar los datos en caché. Estas peticiones las realiza
-la clase \texttt{APIClient}, que es la encargada de comunicarse con el servidor y de asegurar que los datos
+la clase APIClient, que es la encargada de comunicarse con el servidor y de asegurar que los datos
 tienen el formato correcto.}
 
 \subsection{\glsfirst{dao}}
@@ -110,7 +110,7 @@ implementación concreta, lo que facilita la reutilización, el mantenimiento y 
 componentes individuales del sistema \parencite{Seemann2025Jun}.
 
 En la aplicación, la inyección de dependencias se utiliza en el módulo del \gls{backend}, donde
-las clases que implementan los \gls{dao} y los \textit{routers} de \texttt{FastAPI} reciben como
+las clases que implementan los \gls{dao} y los \textit{routers} de FastAPI reciben como
 parámetro las dependencias que necesitan para funcionar, como por ejemplo la conexión a la base de
 datos, funciones específicas de la aplicación como puede ser el envío de correos electrónicos u
 otros datos como el actor actual del sistema. Esto facilita enormemente la prueba de las clases,
@@ -133,18 +133,18 @@ aplicado al envío de correos electrónicos en la aplicación.
 
 \subsection{Singleton}
 \label{anexo2:sec:singleton}
-El patrón de diseño singleton se utiliza en Unity para garantizar que solo exista una instancia de
-la clase \texttt{GameController} al mismo tiempo y exista un acceso global a ella. Esto permite
+El patrón de diseño \textit{singleton} se utiliza en Unity para garantizar que solo exista una instancia de
+la clase \enquote{GameController} al mismo tiempo y exista un acceso global a ella. Esto permite
 centralizar algunas de las funcionalidades comunes del videojuego evitando la creación de múltiples
 instancias de la misma clase que podrían interferir entre sí y provocar comportamientos inesperados.
 Este patrón es especialmente útil en el contexto de un videojuego, donde muchas veces es necesario
 mantener un estado global que debe ser accesible desde diferentes partes del código como la configuración
 actual del juego o el estado de las actividades \parencite{GameProgrammingPatterns}.
 
-En esta aplicación, la clase \texttt{GameController} es la encargada de gestionar la configuración del
+En esta aplicación, la clase \enquote{GameController} es la encargada de gestionar la configuración del
 juego y de mantener referencias a objetos importantes de la escena, como pueden ser el visualizador de
-posturas (\texttt{RINLBody}), el sistema de guiones para la escena (\texttt{SceneScript}) o el
-comunicador con el \gls{backend} (\texttt{JSConnector}). Se puede ver un diagrama de este patrón para
+posturas (\enquote{RINLBody}), el sistema de guiones para la escena (\enquote{SceneScript}) o el
+comunicador con el \gls{backend} (\enquote{JSConnector}). Se puede ver un diagrama de este patrón para
 el caso de la aplicación en la figura \ref{anexo2:fig:singleton}.
 
 \diagrama{
@@ -167,30 +167,30 @@ Se han distribuido las clases en cuatro paquetes, que representan distintas part
     \item \textbf{Modelos de datos:} contiene las clases que representan los datos persistentes del
         sistema, en particular los usuarios, las actividades y las formas físicas. En la implementación
         real, estas clases se corresponden con las tablas de la base de datos y con las clases creadas
-        por el \gls{orm}. En el caso de esta aplicación, se utiliza la biblioteca \texttt{SQLAlchemy}%
+        por el \gls{orm}. En el caso de esta aplicación, se utiliza la biblioteca SQLAlchemy%
         \footnote{\url{https://docs.sqlalchemy.org/en/20/}} para gestionar la base de datos, por lo que
-        estas clases heredan de la clase \texttt{Base} de \texttt{SQLAlchemy}.
+        estas clases heredan de la clase \enquote{Base} de SQLAlchemy.
     \item \textbf{\Gls{backend}} contiene las clases que implementan la lógica de negocio del sistema, incluyendo
         los controladores que gestionan las peticiones de los clientes y los sistemas que interactúan con
         la base de datos. Contiene tres subpaquetes:
         \begin{itemize}
             \item \textbf{\textit{Schemas}:} contiene las clases que definen los esquemas de validación
-                de los datos recibidos por el servidor, utilizando la librería \texttt{Pydantic}
+                de los datos recibidos por el servidor, utilizando la librería Pydantic
                 \footnote{\url{https://docs.pydantic.dev/latest/}}. Debido a esto, estas clases
-                heredan de la clase \texttt{BaseModel} de \texttt{Pydantic}.
+                heredan de la clase \enquote{BaseModel} de Pydantic.
                 Estas clases también son utilizadas por los \textit{routers} y los \textit{DAO}
                 para realizar las operaciones de acceso a datos, desacoplando así la
                 representación de los datos en la base de datos con la usada en el \gls{backend}.
             \item \textbf{DAO:} contiene las clases que implementan el patrón \gls{dao}, que
                 se encargan de acceder a los datos almacenados en la base de datos.
             \item \textbf{\textit{Routers}:} contiene las clases que implementan los \textit{routers} de
-                \texttt{FastAPI}\footnote{\url{https://fastapi.tiangolo.com/}}, que son los encargados
+                FastAPI\footnote{\url{https://fastapi.tiangolo.com/}}, que son los encargados
                 de gestionar las peticiones HTTP recibidas por el servidor y de invocar los métodos
                 de los \textit{DAO} para acceder a los datos.
         \end{itemize}
     \item \textbf{React:} contiene las clases que implementan la interfaz de usuario del sistema,
-        utilizando la biblioteca \texttt{React}\footnote{\url{https://react.dev/}}. Las clases
-        contenidas en el subpaquete \texttt{components} son los componentes de \texttt{React}
+        utilizando la biblioteca React\footnote{\url{https://react.dev/}}. Las clases
+        contenidas en el sub-paquete \textit{components} son los componentes de React
         creados para la interfaz de usuario.
     \item \textbf{Unity:} contiene las clases principales del videojuego de Unity. Para la descripción
         en el diagrama, se han omitido los detalles de las clases existentes para jugar ambos minijuegos,
@@ -213,7 +213,7 @@ también se encuentra disponible en el repositorio del proyecto%
 
 Hay varias cosas a destacar del diagrama de clases. En primer lugar, se puede observar que se
 han utilizado dos estereotipos no estándar en los componentes de React y los \textit{routers} de
-FastAPI. Estos estereotipos son \texttt{<<component>>} y \texttt{<<router>>} respectivamente. Estos
+FastAPI. Estos estereotipos son \enquote{<<component>>} y \enquote{<<router>>} respectivamente. Estos
 se han utilizado para indicar que estos elementos son componentes de la interfaz de react o son los
 gestores de las peticiones HTTP del \gls{backend}. Se consideraba importante el uso de algún tipo
 de estereotipo, puesto que estos objetos no son clases en el sentido estricto de la palabra. Los

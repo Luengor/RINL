@@ -40,7 +40,7 @@ en ningún lugar.
 
 \subsection{Contraseñas}
 \label{anexo4:sec:contrasenas}
-Para el almacenamiento de contraseñas, se utiliza el algoritmo de \gls{hash} \texttt{argon2}. Argon2 fue el
+Para el almacenamiento de contraseñas, se utiliza el algoritmo de \gls{hash} argon2. Argon2 fue el
 algoritmo ganador del concurso \textit{Password Hashing Competition} en 2015 y es ampliamente recomendado
 por su seguridad y resistencia a ataques de fuerza bruta \parencite{OWASPPasswordStorage}. El algoritmo
 permite ajustar tres parámetros: el tiempo de ejecución, la memoria utilizada y el nivel de paralelismo,
@@ -50,7 +50,7 @@ utilizada en el listado \ref{anexo4:lst:argon2-config}.
 \begin{lstlisting}[
     language=Python,
     style=estilo,
-    caption={Configuración de \texttt{argon2} en la aplicación},
+    caption={Configuración de argon2 en la aplicación},
     label={anexo4:lst:argon2-config}]
 from passlib.context import CryptContext
 
@@ -92,14 +92,14 @@ automáticamente, evitando así la inyección de código JavaScript.
 El otro tipo de ataque común es la inyección SQL, que consiste en inyectar código SQL malicioso en
 una consulta SQL para manipular la base de datos de forma no autorizada. Para evitar este tipo de
 ataques, la aplicación debería ser capaz de validar y limpiar las entradas que recibe antes de
-procesarlas. En la solución desarrollada se utiliza el \gls{orm} \texttt{SQLAlchemy}
+procesarlas. En la solución desarrollada se utiliza el \gls{orm} SQLAlchemy
 \footnote{\url{https://www.sqlalchemy.org/}} para interactuar con la base de datos, lo que ayuda a
-prevenir este tipo de ataques, ya que \texttt{SQLAlchemy} utiliza consultas parametrizadas para
+prevenir este tipo de ataques, ya que SQLAlchemy utiliza consultas parametrizadas para
 evitar la inyección de código SQL malicioso.
 
 Por último, otro aspecto importante a destacar es que, en la aplicación, se ha implementado
 un sistema de validación de entradas que asegura que los datos introducidos por el usuario cumplen
-con ciertos criterios antes de ser procesados. Esto se realiza con la ayuda de \texttt{Pydantic}%
+con ciertos criterios antes de ser procesados. Esto se realiza con la ayuda de Pydantic%
 \footnote{\url{https://docs.pydantic.dev/latest/}}, una biblioteca de validación de datos que
 permite definir modelos de datos y validar las entradas de forma sencilla y eficiente. Gracias a
 esta validación, se evita que se introduzcan datos cuyos tipos o formatos no sean los esperados,
@@ -232,7 +232,7 @@ app.add_middleware(
 \label{anexo4:sec:pruebas}
 Se conoce como prueba unitaria a un test que se realiza sobre una unidad de código, sobre la
 cantidad más pequeña de código que se puede probar de forma aislada. Para la aplicación
-desarrollada, se ha utilizado el framework de pruebas \texttt{pytest}
+desarrollada, se ha utilizado el framework de pruebas pytest
 \footnote{\url{https://docs.pytest.org/en/stable/}} para implementar las pruebas unitarias.
 
 Aunque las pruebas unitarias no son una medida de seguridad en sí mismas, son una herramienta
