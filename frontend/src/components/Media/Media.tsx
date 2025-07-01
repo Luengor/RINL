@@ -57,7 +57,7 @@ export default function Media() {
 
         setVideoStream(stream);
       })
-      .catch((err) => {
+      .catch(() => {
         setVideoError(
           "No se pudo acceder a la cámara. Por favor, asegúrate de que tienes una cámara conectada y que has concedido los permisos necesarios."
         );
