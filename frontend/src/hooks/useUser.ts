@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useClient } from "./useClient";
 import { getCurrentShapeShapeCurrentGet, getMeUserMeGet } from "../client";
 
@@ -51,16 +51,25 @@ export function useUser() {
   });
 
   const hasShape = latestShapeStatus === "success" && latestShape !== null;
+  const queryClient = useQueryClient();
   const refetch = () => {
     const actuallyRefetch = () => {
       refetchUser();
       refetchShape();
     };
 
-    if (userStatus !== "success") {
-      setTimeout(actuallyRefetch, 500);
-    } else {
+    if (userStatus !== "pending") {
+      console.log("Refetching user data. Status:", userStatus);
       actuallyRefetch();
+    } else {
+      console.warn("Cancelling user data query because it is pending");
+      queryClient
+        .cancelQueries({
+          queryKey: ["user-data"],
+        })
+        .then(() => {
+          actuallyRefetch();
+        });
     }
   };
 
