@@ -30,12 +30,64 @@ paquete \enquote{Unity} y \enquote{React}).
 }
 
 \subsection{Patrones de diseño relevantes}
-\textbf{TODO}
+En esta sección se describirán aquellos patrones de diseño que se han utilzado en el
+desarrollo del proyecto. Estos patrones son soluciones a problemas comunes en el desarrollo de
+software y permiten mejorar la calidad del código, la mantenibilidad y la escalabilidad del
+sistema. Para una descripción más detallada de cada uno de los patrones se puede consultar
+el \segundoAnexo.
 
 \subsubsection{Modelo Vista Controlador (MVC)}
+El patrón MVC es un patrón de diseño y arquitectónico\footnotemark que divide un
+sistema en tres componentes bien diferenciados: el modelo, la vista y el
+controlador. El modelo es el encargado de gestionar los datos y la lógica de negocio
+de la aplicación, la vista es la encargada de presentar estos datos al usuario y el
+controlador es el encargado de comunicar las interacciones del usuario y la vista
+con el modelo \parencite{NorfolkDevelopers2015Dec}.
+
+\footnotetext{La pregunta de si el patrón MVC es un patrón de diseño o arquitectónico
+es un tema de debate \parencite{MVCArchitectureOrDesign}.}
+
+En la aplicación desarrollada, el patrón MVC se ha utilizado en el \gls{frontend} de la
+aplicación, donde los componentes de React actúan como vistas, la API desplegada en el
+backend actúa como modelo y los controladores son los \textit{hooks} de React que
+gestionan la comunicación entre la vista y el modelo.
+
 \subsubsection{Data Access Object (DAO)}
+El patrón DAO trata de separar la lógica de acceso a los datos de la lógica de
+negocio de la aplicación, permitiendo que la estructura interna o la forma de
+acceso a los datos cambie sin afectar al resto del sistema
+\parencites{DAOJ2EE}{Zato2020Dao}. Esto se consigue creando una interfaz
+dedicada a la gestión de los datos, que es implementada por clases concretas
+para cada tipo de dato. Este tipo de objeto es común encontrarlo en la capa de
+acceso a datos de una aplicación con una arquitectura en tres capas (tal y como
+se da en este caso).
+
 \subsubsection{Inyección de dependencias}
+La inyección de dependencias es un conjunto de técnicas de programación que se
+basan en la separación de las dependencias de un objeto con su implementación y
+construcción \parencite{Seemann2025Jun}. Este conjunto de técnicas permite que
+un objeto pueda recibir sus dependencias de manera externa a través de su
+constructor o métodos específicos, permitiendo así que estas dependencias puedan
+ser cambiadas o sustituidas sin necesidad de modificar el objeto en sí.
+
+Esto, entre otras cosas, permite que las dependencias de un objeto puedan ser
+sustituidas por objetos simulados o \textit{dummies} durante las pruebas, lo que
+facilita la creación de pruebas unitarias y la validación del correcto
+funcionamiento del sistema. En el caso de este proyecto, se ha utilizado la
+inyección de dependencias para sustituir el acceso a la base de datos de
+PostgreSQL por otra de SQLite, lo que agiliza el proceso de pruebas y evita la
+necesidad de configurar una base de datos real durante el desarrollo.
+
 \subsubsection{Singleton}
+El patrón Singleton es un patrón de diseño que garantiza que una clase tenga una
+única instancia y proporciona un punto de acceso global a esta. Este patrón es
+útil cuando se necesita un único objeto para coordinar acciones a través del
+sistema, como por ejemplo un objeto que gestione la configuración de la
+aplicación o un objeto que gestione la conexión a una base de datos.  Es un
+patrón especialmente útil en el ámbito del desarrollo de videojuegos, donde es
+común tener un objeto que gestione el estado del juego y la comunicación entre
+los diferentes componentes del mismo \parencite{GameProgrammingPatterns}.
+
 
 \subsection{Diseño de componentes}
 Al igual que la sección anterior, esta se encuentra en el \segundoAnexo

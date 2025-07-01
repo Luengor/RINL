@@ -95,7 +95,12 @@ patrón de diseño \gls{dao} para acceder a los datos almacenados en la base de
 datos. Este patrón permite separar la lógica de negocio del acceso a datos, lo
 que reduce el acoplamiento entre las diferentes capas del sistema y facilita la
 modificación y mantenimiento de distintas secciones del sistema de manera
-independiente \parencite{Zato2020Dao}.
+independiente \parencites{DAOJ2EE}{Zato2020Dao}. Esta separación se lleva a
+cabo a través de una o varias clases intermediarias encargadas de realizar
+operaciones de acceso a datos, como pueden ser la creación, lectura, actualización
+y eliminación de datos (CRUD), y que se comunican con la base de datos a través
+de una interfaz común. Es común que este tipo de clases se encuentre en la
+capa de acceso a datos del sistema en una arquitectura en tres capas.
 
 \diagrama{
     nombre = {DAO},
@@ -103,6 +108,10 @@ independiente \parencite{Zato2020Dao}.
     archivo = {anexo2/imgs/dao.png},
     etiqueta = {anexo2:fig:dao},
 }
+
+Ejemplos de bibliotecas que implementan este patrón son Microsoft Entity Framework%
+\footnote{\url{https://learn.microsoft.com/en-us/ef/}} o Java Persistence API%
+\footnote{\url{https://docs.oracle.com/javaee/7/tutorial/persistence-intro.htm}}.
 
 \subsection{Inyección de dependencias}
 \label{anexo2:sec:inyeccion-dependencias}
