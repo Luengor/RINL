@@ -22,7 +22,7 @@ de JavaScript y HTML/CSS (tecnologías que también se usan en este proyecto)
 cantidad de herramienta, documentación y comunidad que pueden ayudar a resolver problemas y
 mejorar la productividad del desarrollo. Se escoge Python frente a otros lenguajes como JavaScript o
 Java porque es un lenguaje ya conocido por el autor y tiene una gran cantidad de bibliotecas
-destinadas a la creación de APIs REST.
+destinadas a la creación de \glspl{api} REST.
 
 \diagrama{
     nombre = {Lenguajes de programación más populares},
@@ -51,7 +51,7 @@ otros como \tech{poetry}{https://python-poetry.org/} o el propio \tech{pip}{http
 \subsubsection{FastAPI}
 \label{c08:subsubsec:fastapi}
 \tech{FastAPI}{https://fastapi.tiangolo.com/} es un \gls{framework} web para Python que permite crear
-APIs REST de forma muy rápida y sencilla. Se basa en el estándar OpenAPI y permite generar documentación de
+\glspl{api} REST de forma muy rápida y sencilla. Se basa en el estándar OpenAPI y permite generar documentación de
 manera automática. Además, favorece la escritura de código limpio y mantenible, fomentando el uso de
 la composición y la reutilización de código a través de su sistema de inyección de dependencias.
 
@@ -59,12 +59,12 @@ Se escoge FastAPI frente a otros \glspl{framework} como \tech{Flask}
 {https://flask.palletsprojects.com/en/stable/} o \tech{Django}{https://www.djangoproject.com/} por
 su simplicidad, rapidez de desarrollo y libertad para estructurar el proyecto. Flask es una herramienta
 muy ligera y flexible que permite crear cualquier tipo de aplicación web, pero no está diseñada
-específicamente para crear APIs REST, por lo que requiere más trabajo para implementar funcionalidades
+específicamente para crear \glspl{api} REST, por lo que requiere más trabajo para implementar funcionalidades
 como la validación de datos o la generación de documentación. Por otro lado, Django es un \gls{framework}
 muy completo y robusto que permite crear una gran variedad de aplicaciones web sin necesidad de
 bibliotecas adicionales, pero su complejidad y tamaño lo hacen menos adecuado para un proyecto
 pequeño como este. FastAPI se encuentra en un punto intermedio entre ambos: está específicamente
-diseñado para el desarrollo de APIs REST, pero es lo suficientemente ligero y flexible
+diseñado para el desarrollo de \glspl{api} REST, pero es lo suficientemente ligero y flexible
 como para adaptarse a las necesidades del proyecto.
 
 \subsubsection{PostgreSQL}
@@ -76,19 +76,19 @@ estudiado en la asignatura de Bases de Datos, por lo que el autor ya tiene exper
 
 \subsubsection{SQLAlchemy}
 \label{c08:subsubsec:sqlalchemy}
-\tech{SQLAlchemy}{https://www.sqlalchemy.org/} es una biblioteca de Python que proporciona un \gls{ORM}
+\tech{SQLAlchemy}{https://www.sqlalchemy.org/} es una biblioteca de Python que proporciona un \gls{orm}
 para interactuar con bases de datos relacionales de forma sencilla. Permite definir modelos de datos
 como clases de Python y realizar consultas a la base de datos utilizando una sintaxis muy similar a SQL, pero
 con la ventaja de realizarse todo desde Python, utilizando sus tipos de datos y estructuras.
 
-La alternativa a utilizar un \gls{ORM} sería realizar las consultas directamente a la base de datos
+La alternativa a utilizar un \gls{orm} sería realizar las consultas directamente a la base de datos
 utilizando SQL, lo que puede ser más eficiente en algunos casos, pero también más propenso a errores
 y menos mantenible. También supondría un problema de seguridad, puesto que las consultas directas a las
 bases de datos son más propensas a sufrir ataques de inyección SQL, por lo que se debería prestar
 especial atención a la validación de los datos introducidos por el usuario. Por último, realizar las
 consultas directamente a la base de datos daría lugar a un código más acoplado y menos reutilizable:
 cambiar la base de datos por otra distinta supondría tener que cambiar todas las consultas realizadas
-en el código, mientras que utilizando un \gls{ORM} se puede cambiar la base de datos sin necesidad de
+en el código, mientras que utilizando un \gls{orm} se puede cambiar la base de datos sin necesidad de
 modificar el código, siempre que sea compatible con la herramienta escogida.
 
 \subsection{Herramientas utilizadas en el frontend}
