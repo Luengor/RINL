@@ -80,7 +80,7 @@ Para facilitar el desarrollo, se han utilizado varias bibliotecas y herramientas
     \item \tech{Mantine}{https://mantine.dev/}: una biblioteca de componentes de interfaz de usuario
         para React que proporciona una gran cantidad de plantillas y componentes ya diseñados, así
         como varias opciones de personalización. Esto permite centrarse en el desarrollo de la interfaz
-        y la lógica sin tener que preocuparse demasiado por el diseño de los componenetes más básicos.
+        y la lógica sin tener que preocuparse demasiado por el diseño de los componentes más básicos.
 
     \item \tech{Hey OpenAPI}{https://heyopenapi.com/}: una herramienta que permite generar código
         fuente de cliente para hacer uso de una \gls{api} a partir de su especificación OpenAPI.
@@ -89,7 +89,7 @@ Para facilitar el desarrollo, se han utilizado varias bibliotecas y herramientas
 
     \item \tech{TanStack Query}{https://tanstack.com/query/latest}: una biblioteca para la gestión de
         consultas en aplicaciones React que permite simplificar la obtención y el almacenamiento en caché
-        de datos asíncronos. Se utiliza junto a Hey OpenAPI para gestionar las consultas a la \gls{api}
+        de datos asíncronos. Se utiliza junto a \textit{Hey OpenAPI} para gestionar las consultas a la \gls{api}
         de forma sencilla y eficiente.
 \end{itemize}
 
@@ -152,7 +152,7 @@ del software, como diagramas de clases, de secuencia o de flujo, se ha utilizado
 su creación y edición. Para los diagramas de flujo de la interfaz de usuario se ha utilizado
 \tech{Wireflow}{https://app.wireflow.co/}, una herramienta sencilla y rápida que permite visualizar
 el flujo de la interfaz de usuario y las interacciones entre las diferentes pantallas. Por último,
-para los diagramas de burndown de los sprints se ha utilizado la biblioteca de Python
+para los diagramas de \textit{burndown} de los sprints se ha utilizado la biblioteca de Python
 \tech{Matplotlib}{https://matplotlib.org/}, una biblioteca de visualización de datos que ha permitido
 crear gráficos a partir de los datos exportados desde Jira.
 
@@ -163,13 +163,36 @@ de contenido de manera automática, y la inclusión de bibliografía y glosario 
 
 \subsection{Control de versiones}
 \label{sec:control-versiones}
-Puesto que soy dado a cometer errores, se ha utilizado un sistema de control de versiones para
-gestionar el código fuente del proyecto. En concreto, se han utilizado \tech{Git}{https://git-scm.com/}
-y \tech{GitHub}{https://github.com/}. Git es una herramienta de control de versiones
-distribuído que permite llevar un registro de los cambios realizados en el código fuente y colaborar
-con otros desarrolladores. GitHub por su parte es una plataforma de alojamiento de código fuente que,
-además de utilizar Git, ofrece funcionalidades adicionales como la ejecución de acciones automáticas
-al realizar cambios en el código o la gestión de incidencias, todo desde una cómoda interfaz web.
+El control de versiones es una parte fundamental del desarrollo de software, ya que permite llevar
+un registro de los cambios realizados en el código fuente, revertir modificaciones en caso de errores
+y colaborar con otros desarrolladores de forma eficiente. Es por las primeras dos razones por las que
+se ha utilizado un sistema de control de versiones para gestionar el código fuente del proyecto desde
+el comienzo.
+
+En concreto, se ha utilizado \tech{Git}{https://git-scm.com/} como sistema de control de versiones
+distribuido, que permite llevar un registro de los cambios realizados en el código fuente y
+colaborar con otros desarrolladores. También se ha utilizado \tech{GitHub}{https://github.com} para
+alojar el repositorio de código fuente del proyecto (ver figura \ref{fig:github}).
+
+\diagrama{
+    nombre = {Algunas commits del repositorio},
+    fuente = {Propia, Captura del repositorio de GitHub},
+    archivo = {memoria/fotos/github.png},
+    etiqueta = {fig:github},
+    width = 0.9\textwidth,
+}
+
+Además, GitHub ofrece dos funcionalidades adicionales que han sido muy útiles durante el desarrollo.
+La primera es la posibilidad de crear claves SSH que solo se pueden utilizar para descargar el código
+fuente del repositorio, lo que permite obtener la última versión del código en servidores remotos sin
+necesidad de introducir las credenciales de acceso. La segunda es la posibilidad de crear acciones
+automáticas que se ejecutan al realizar cambios en el código fuente. En el caso de la aplicación,
+se ha utilizado esta funcionalidad para exportar el videojuego de Unity cuando se realiza un cambio
+en el código fuente del proyecto. Se ha utilizado esta tecnología, ya que, durante el proceso de
+exportar, no es posible realizar otras tareas en el editor y es un proceso que puede llevar
+cerca de una hora. Por lo tanto, al utilizar acciones automáticas, se puede
+seguir trabajando en el proyecto mientras se exporta el videojuego, lo que ahorra mucho tiempo
+y permite realizar otras tareas en paralelo.
 
 \section{Modelos}
 \label{sec:modelos}
