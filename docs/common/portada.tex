@@ -1,0 +1,45 @@
+\NewDocumentCommand{\portada}{ O{} }{
+    \ifthenelse{\equal{#1}{}}{
+        \def\titulo{\tituloProyecto}
+        \def\subtitulo{\tituloProyectoEn}
+    }{
+        \def\titulo{#1}
+        \def\subtitulo{\tituloProyecto}
+    }
+
+    \begin{titlingpage}
+        \begin{center}
+            \LARGE
+            \textbf{\titulo}
+
+            \vspace{0.5cm}
+            \LARGE
+            \subtitulo
+
+            \vspace{1cm}
+            \large
+            Trabajo de Fin de Grado en Ingeniería Informática\\
+            Universidad de Salamanca\\
+
+
+            \vspace{1.5cm}
+            \includegraphics[height=6cm]{common/res/escudoUSAL.pdf}\vspace{0.2cm}
+
+            \vspace{0.5cm}
+            \Large
+            Julio 2025
+
+            \vfill
+            \large
+
+            \textbf{Autor:} \\ Luengo Román, Alberto
+            \vspace{1cm}
+
+            \textbf{Tutores:} \\
+            Dr. D. Gabriel Villarubia González \\ D. Sergio García González
+        \end{center}
+    \end{titlingpage}
+
+    \stepcounter{page}
+    \clearpage
+}
