@@ -16,7 +16,7 @@ elegido estas sobre las demás.
 
 \subsection{Herramientas utilizadas en el backend}
 \label{c08:subsec:herramientas-backend}
-El \gls{backend} consiste en una API REST encargada de gestionar la lógica de negocio, el acceso a
+El \gls{backend} consiste en una \gls{api} REST encargada de gestionar la lógica de negocio, el acceso a
 datos y la comunicación con el \gls{frontend}.
 
 \subsubsection{Python}
@@ -26,9 +26,9 @@ la última encuesta a desarrolladores de Stack Overflow, es el tercer lenguaje m
 de JavaScript y HTML/CSS (tecnologías que también se usan en este proyecto)
 \parencite{encuestaTecnologias2024}. La ventaja de utilizar un lenguaje popular es que hay una gran
 cantidad de herramienta, documentación y comunidad que pueden ayudar a resolver problemas y
-mejorar la productividad del desarrollo. Se escoge Python frente a otros lenguajes como JavaScript o
-Java porque es un lenguaje ya conocido por el autor y tiene una gran cantidad de bibliotecas
-destinadas a la creación de \glspl{api} REST.
+mejorar la productividad del desarrollo. Se escoge Python frente a alternativas como JavaScript o
+Java debido a la experiencia previa con el lenguaje, lo que permite reducir la curva de
+aprendizaje y agilizar el tiempo de desarrollo del \gls{backend}.
 
 \diagrama{
     nombre = {Lenguajes de programación más populares},
@@ -75,10 +75,39 @@ como para adaptarse a las necesidades del proyecto.
 
 \subsubsection{PostgreSQL}
 \label{c08:subsubsec:postgresql}
-Para el almacenamiento de datos se ha optado por \tech{PostgreSQL}{https://www.postgresql.org/}, un
-sistema de gestión de bases de datos relacionales de código abierto. Se escoge PostgreSQL frente a otros sistemas
-de bases de datos por su robustez y escalabilidad. Además, es compatible con el estándar SQL,
-estudiado en la asignatura de Bases de Datos, por lo que el autor ya tiene experiencia con él.
+Para el almacenamiento de datos se ha optado por \tech{PostgreSQL}
+{https://www.postgresql.org/}, un sistema de gestión de bases de datos
+relacionales de código abierto. Se optó por un sistema de bases de datos
+relacional frente a otros tipos de bases de datos como las no relacionales (por
+ejemplo, \tech{MongoDB}{https://www.mongodb.com/}) por su capacidad para
+gestionar datos estructurados y realizar consultas complejas de forma eficiente.
+Para este proyecto, se almacenan datos de usuarios, las formas físicas de los
+usuarios y los datos de las partidas jugadas. Para esto es muy útil un sistema
+relacional, ya que permite definir relaciones entre los usuarios y sus datos de
+forma sencilla.
+
+Se escoge PostgreSQL frente a otros sistemas de bases de datos como
+\tech{MariaDB}{https://mariadb.org/} por su robustez, escalabilidad y facilidad
+de servir a través de Docker. Además, es compatible con el estándar SQL,
+estudiado en la asignatura de Bases de Datos, por lo que ya se tiene un
+conocimiento previo de su uso.
+
+\begin{lstlisting}[
+    caption = {Configuración de Docker Compose para PostgreSQL},
+    label = {lst:docker-compose-postgres},
+    style = estilo]
+services:
+  postgres:
+    image: postgres:bookworm
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+\end{lstlisting}
 
 \subsubsection{SQLAlchemy}
 \label{c08:subsubsec:sqlalchemy}
@@ -126,13 +155,27 @@ del desarrollo, todas ellas muy populares y con una gran comunidad detrás.
 
 \subsubsection{Vite}
 \label{c08:subsubsec:vite}
-\tech{Vite}{https://vitejs.dev/} es una herramienta de construcción y desarrollo de aplicaciones web gratuita
-y de código abierto que permite crear productos de manera rápida y sencilla. Inicialmente se
-escogió NextJS como \gls{framework} para el \gls{frontend}, pero poco después de comenzar el
-desarrollo se descartó debido a que, para utilizar la mayoría de sus funcionalidades, era
-necesario desplegarlo junto a un \gls{backend} dedicado que sirviera la aplicación. Además, NextJS
-introduce una gran cantidad de complejidad al proyecto, ya que es un \gls{framework} muy completo
-y robusto, con una gran cantidad de funcionalidades que no serían utilizadas en este proyecto.
+\tech{Vite}{https://vitejs.dev/} es una herramienta de construcción y desarrollo
+de aplicaciones web gratuita y de código abierto que permite crear productos de
+manera rápida y sencilla.
+Inicialmente se escogió \tech{NextJS}{https://nextjs.org/} como \gls{framework}
+para el \gls{frontend}, pero poco después de comenzar el desarrollo se descartó.
+Esto se debió a una serie de motivos: para utilizar la mayoría de sus funcionalidades,
+era necesario desplegarlo junto a un \gls{backend} dedicado que sirviera
+la aplicación. De haber continuado con NextJS, habría sido necesario descargar el
+código fuente del \gls{backend} y desplegarlo junto al \gls{frontend}, o utilizar
+dos \glspl{backend} distintos, uno para servir la aplicación y otro para
+gestionar la lógica de negocio. Se consideró que ninguna de estas opciones
+era viable, puesto que se añadiría una complejidad innecesaria al proyecto
+o sería necesario aprender una nueva herramienta para el despliegue del
+\gls{backend}.
+
+Además, NextJS es un \gls{framework} muy completo, que incluye funcionalidades
+como el renderizado del lado del servidor (SSR), la hidratación de la aplicación,
+gestión de bases de datos y autenticación, entre otras. Estas funcionalidades o
+no se iban a utilizar en el proyecto, o se iban a implementar de forma independiente,
+por lo que se consideró que no era necesario utilizar un \gls{framework} tan
+completo y pesado.
 
 Se optó entonces por Vite, que es una herramienta más ligera y sencilla, que se centra en la
 construcción y desarrollo de la aplicación web, en vez de ser un \gls{framework} completo para el
@@ -145,7 +188,7 @@ poses humanas en tiempo real a partir de imágenes o vídeos \parencite{bazarevs
 \parencite{xu2020ghum}. La decisión de utilizar BlazePose y no algún otro modelo de estimación de
 posturas como OpenPose o PoseNet son varias. OpenPose es un modelo que destaca por su precisión y
 capacidad para detectar múltiples personas en una imagen, pero es muy pesado y requiere una gran
-cantidad de recursos, lo que lo hace inviable para este proyecto, puesto que se busca una solución
+cantidad de recursos, lo que lo hace inviable para este proyecto, ya que se busca una solución
 ligera y rápida que funcione en dispositivos móviles y navegadores web. Tanto PoseNet como BlazePose
 son modelos diseñados para funcionar en dispositivos móviles y navegadores web, ambos son modelos
 compatibles con TensorFlow.js. Aunque BlazePose resulta algo más preciso que PoseNet en la mayoría de
@@ -170,8 +213,9 @@ realizando la instalación y despliegue de forma automática.
 
 Se escoge utilizar una herramienta de contenedorización para facilitar el despliegue en máquinas
 distintas y evitar problemas de compatibilidad entre entornos. Se ha optado por Docker frente a
-otras herramientas como \tech{Podman}{https://podman.io/} simplemente por su popularidad y porque
-ya tenía experiencia previa con él.
+otras herramientas como \tech{Podman}{https://podman.io/} por su gran comunidad y ecosistema de
+herramientas asociadas (como Docker Compose o Docker Swarm), lo que facilita el uso y el desarrollo
+de la aplicación.
 
 \subsubsection{Caddy}
 \label{c08:subsubsec:caddy}
@@ -203,8 +247,8 @@ facilitan el desarrollo de videojuegos. Se consideró Godot como alternativa, pe
 que el motor aún se encuentra en desarrollo muy activo y suele sufrir cambios frecuentes que pueden
 romper la compatibilidad con versiones anteriores. Por otro lado, Unreal Engine no soporta exportar
 a WebGL \parencite{noWebExportUnrealReddit} \parencite{noWebExportUnreal}, lo que hace su uso
-inviable para este proyecto. Por esto, y por la familiaridad del autor con Unity, se optó por este
-motor para el desarrollo del videojuego.
+inviable para este proyecto. Por esto, y por la familiaridad previa con él, se optó por Unity para el
+desarrollo del videojuego.
 
 \section{Viabilidad económica}
 Para evaluar la viabilidad económica del proyecto, se tendrán en cuenta los costes de desarrollo,
@@ -250,8 +294,8 @@ el proyecto a largo plazo.
 Según lo detallado en el \tercerAnexo, se estima que se ha trabajado un total de 22 semanas en
 el proyecto, 19 a media jornada y 4 a jornada completa por un total de $520$ horas. Si se
 considerase el salario mínimo interprofesional en España de $9.26$ euros la hora
-\parencite{salarioMinimo}, el coste del desarrollo del proyecto sería de aproximadamente
-$4.820$\texteuro\ . Este coste sería una estimación a la baja, ya que el salario medio de un
+\parencite{salarioMinimo}, el valor del esfuerzo estimado sería de aproximadamente
+$4.820$\texteuro\ . Este coste es una estimación a la baja, ya que el salario medio de un
 desarrollador en España se acerca más a los $15$ euros la hora \parencite{IndeedSueldoInformatico}.
 
 \subsubsection{Licencias}
