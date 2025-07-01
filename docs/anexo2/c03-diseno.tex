@@ -38,14 +38,20 @@ mismos, lo que facilita la evolución del sistema y la reutilización de los com
 
 \subsection{Modelo Vista Controlador}
 \label{anexo2:sec:mvc}
-El patrón de diseño MVC se utiliza en la capa de presentación del sistema, en específico en las vistas
-de React. Este patrón separa la lógica en tres componentes principales: el modelo, que representa los
-datos del sistema y la lógica de negocio; la vista, que es la interfaz de usuario que muestra los datos
-del modelo; y el controlador, que es el encargado de gestionar la interacción del usuario con la
-vista y de actualizar el modelo en función de las acciones del usuario \parencite{NorfolkDevelopers2015Dec}.
-Esta separación permite una mayor flexibilidad y reutilización del código, ya que cada componente
-puede ser modificado o reemplazado sin afectar a lo demás, siempre que se mantenga la interfaz entre
-ellos.
+El patrón de diseño MVC se utiliza en la capa de presentación del sistema, en
+específico en las vistas de React. Este patrón separa la lógica en tres
+componentes principales: el modelo, la vista y el controlador.
+El primero de ellos representa los datos y la lógica de negocio del sistema, es
+la sección del sistema que realiza las operaciones de acceso a datos y transformación
+de los mismos. El segundo componente es la vista, que representa la interfaz de usuario,
+encargada de mostrar los datos del modelo y gestionar la interacción con la aplicación.
+Por último, el controlador es el componente de la aplicación que se encarga de transmitir
+las acciones del usuario desde la vista al modelo \parencite{NorfolkDevelopers2015Dec}.
+
+Esta separación de responsabilidades permite una mayor modularidad y mejora la
+mantenibilidad del código, ya que cada componente puede ser modificado o
+reemplazado completamente sin afectar a los demás, siempre que se mantenga la
+interfaz entre ellos.
 
 En el caso de este sistema, la vista está representada por los componentes de React, que son responsables
 de mostrar los datos del modelo y de gestionar la interacción con el usuario. El controlador sería
@@ -106,7 +112,7 @@ componentes individuales del sistema \parencite{Seemann2025Jun}.
 En la aplicación, la inyección de dependencias se utiliza en el módulo del \gls{backend}, donde
 las clases que implementan los \gls{dao} y los \textit{routers} de \texttt{FastAPI} reciben como
 parámetro las dependencias que necesitan para funcionar, como por ejemplo la conexión a la base de
-datos, funciones específicas de la aplicación como puede ser el envío de correos electrónicos o
+datos, funciones específicas de la aplicación como puede ser el envío de correos electrónicos u
 otros datos como el actor actual del sistema. Esto facilita enormemente la prueba de las clases,
 puesto que se pueden proporcionar implementaciones alternativas de las dependencias para realizar
 las pruebas unitarias. En el caso propio de la aplicación, la dependencia a la base de datos se
@@ -114,8 +120,8 @@ reemplaza por una conexión a una base de datos SQLite local y la función de en
 electrónicos se reemplaza por una función que simplemente imprime el correo electrónico en la
 consola, evitando así el envío de correos electrónicos reales durante las pruebas.
 
-Se puede ver un diagrama representando la inyección de dependencias para el envío de correos
-electrónicos en la figura \ref{anexo2:fig:inyeccion-dependencias}.
+La figura \ref{anexo2:fig:inyeccion-dependencias} muestra un ejemplo de inyección de dependencias
+aplicado al envío de correos electrónicos en la aplicación.
 
 \diagrama{
     nombre = {Inyección de dependencias},
@@ -156,7 +162,7 @@ El diagrama de clases de diseño, a diferencia del de análisis (\ref{anexo2:fig
 mucho más detallado, mostrando las clases tal y como se implementarán en el sistema, incluyendo
 los atributos y métodos de cada clase, así como las relaciones entre ellas.
 
-Se han distribuído las clases en cuatro paquetes, que representan distintas partes del sistema:
+Se han distribuido las clases en cuatro paquetes, que representan distintas partes del sistema:
 \begin{itemize}
     \item \textbf{Modelos de datos:} contiene las clases que representan los datos persistentes del
         sistema, en particular los usuarios, las actividades y las formas físicas. En la implementación
@@ -164,11 +170,11 @@ Se han distribuído las clases en cuatro paquetes, que representan distintas par
         por el \gls{orm}. En el caso de esta aplicación, se utiliza la biblioteca \texttt{SQLAlchemy}%
         \footnote{\url{https://docs.sqlalchemy.org/en/20/}} para gestionar la base de datos, por lo que
         estas clases heredan de la clase \texttt{Base} de \texttt{SQLAlchemy}.
-    \item \textbf{Backend:} contiene las clases que implementan la lógica de negocio del sistema, incluyendo
+    \item \textbf{\Gls{backend}} contiene las clases que implementan la lógica de negocio del sistema, incluyendo
         los controladores que gestionan las peticiones de los clientes y los sistemas que interactúan con
         la base de datos. Contiene tres subpaquetes:
         \begin{itemize}
-            \item \textbf{Schemas:} contiene las clases que definen los esquemas de validación
+            \item \textbf{\textit{Schemas}:} contiene las clases que definen los esquemas de validación
                 de los datos recibidos por el servidor, utilizando la librería \texttt{Pydantic}
                 \footnote{\url{https://docs.pydantic.dev/latest/}}. Debido a esto, estas clases
                 heredan de la clase \texttt{BaseModel} de \texttt{Pydantic}.
@@ -177,7 +183,7 @@ Se han distribuído las clases en cuatro paquetes, que representan distintas par
                 representación de los datos en la base de datos con la usada en el \gls{backend}.
             \item \textbf{DAO:} contiene las clases que implementan el patrón \gls{dao}, que
                 se encargan de acceder a los datos almacenados en la base de datos.
-            \item \textbf{Routers:} contiene las clases que implementan los \textit{routers} de
+            \item \textbf{\textit{Routers}:} contiene las clases que implementan los \textit{routers} de
                 \texttt{FastAPI}\footnote{\url{https://fastapi.tiangolo.com/}}, que son los encargados
                 de gestionar las peticiones HTTP recibidas por el servidor y de invocar los métodos
                 de los \textit{DAO} para acceder a los datos.
@@ -297,7 +303,7 @@ en la figura \ref{anexo2:fig:diagrama-er-vscode}.
 
 Un dato a destacar es que, aunque los identificadores de las tablas se denominen \texttt{uuid},
 son en realidad números enteros autoincrementales. Esto se debe a que SQLite%
-\footnote{\url{https://www.sqlite.org/}}, que es utilzado para los tests unitarios, no soporta el
+\footnote{\url{https://www.sqlite.org/}}, que es utilizado para los tests unitarios, no soporta el
 tipo de dato \texttt{uuid}.
 
 \diagrama{
