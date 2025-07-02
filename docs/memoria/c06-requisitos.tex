@@ -1,35 +1,40 @@
 \chapter{Requisitos iniciales}
 \label{cap:requisitos}
-En este capítulo se describen los requisitos del sistema. Los requisitos se han documentado siguiendo
-la \textit{Metodología para la elicitación de requisitos de sistemas software} de
-\textcite[p.~12]{DuranBernardez}, la estructura del capítulo se asemejará a la detallada ahí. Cabe destacar
-que este capítulo es una versión resumida de los requisitos ya documentados en el \primerAnexo, en
-particular en el capítulo 4, \textit{Catálogo de requisitos del sistema.}
+En este capítulo se describen los requisitos del sistema. Los requisitos se han
+documentado siguiendo la \textit{Metodología para la elicitación de requisitos
+de sistemas software} de \textcite{DuranBernardez}, la estructura del capítulo
+se asemejará a la detallada ahí. Cabe destacar que este capítulo es una versión
+resumida de los requisitos ya documentados en el \primerAnexo, en particular en
+el capítulo 4, \textit{Catálogo de requisitos del sistema.}
 
-Estos requisitos se han obtenido a partir de los objetivos del sistema, que se explican de manera resumida
-en el capítulo \ref{cap:objeto} de esta memoria y de manera más detallada en el \primerAnexo, en el
-capítulo 3, \textit{Objetivos del sistema}.
+Estos requisitos se han obtenido a partir de los objetivos del sistema, que se
+explican de manera resumida en el capítulo \ref{cap:objeto} de esta memoria y de
+manera más detallada en el \primerAnexo, en el capítulo 3, \textit{Objetivos del
+sistema}.
 
 \section{Requisitos de información}
 \label{c06:sec:requisitos-informacion}
-Los requisitos de información son aquellos que definen la información relevante para los objetivos del
-negocio que el sistema debe almacenar y gestionar \parencite[p.~34]{DuranBernardez}. En el caso de
-este proyecto, el sistema debe permitir a los usuarios jugar a actividades físicas y registrar sus
-resultados, así como gestionar su historial de formas físicas. Estas actividades y resultados se
-consultan en una aplicación web, por lo que el sistema debe almacenar y gestionar la información
-necesaria para que los usuarios puedan acceder a ella. Por esto, definimos los siguientes
-requisitos de información:
+Los requisitos de información son aquellos que definen los datos que el sistema
+debe almacenar y gestionar para alcanzar los objetivos del negocio \parencite%
+[p.~34]{DuranBernardez}. En el caso de este proyecto, el sistema debe permitir a
+los usuarios jugar a actividades y registrar sus resultados, así como gestionar
+su historial de formas físicas. Estas actividades y resultados se consultan en
+una aplicación web, por lo que el sistema debe almacenar y gestionar la
+información necesaria para que los usuarios puedan acceder a ella.  Por esto,
+definimos los siguientes requisitos de información:
 
 \begin{itemize}
-    \item Información sobre los usuarios del sistema. Esto incluye sus datos personales, como nombre,
-          completo, correo electrónico, etc.
+    \item Información sobre los usuarios del sistema. Esto incluye sus datos
+    personales, como nombre, completo, correo electrónico, etc.
 
-    \item Información sobre las actividades jugadas por los usuarios. Aquí se incluye el identificador
-          de la actividad, el tiempo que se ha jugado, la fecha y hora de inicio y fin de la actividad,
-          el identificador del usuario que ha jugado la actividad, etc.
+    \item Información sobre las actividades realizadas por los usuarios. Aquí se
+    incluye el identificador de la actividad, el tiempo que se ha jugado, la
+    fecha y hora de inicio y fin de la actividad, el identificador del usuario
+    que ha jugado la actividad, etc.
 
-    \item Información sobre el historial de formas físicas de los usuarios. Esto incluye el identificador
-          del usuario, la fecha y hora de la medición, el peso y la altura del usuario.
+    \item Información sobre el historial de formas físicas de los usuarios. Esto
+    incluye el identificador del usuario, la fecha y hora de la medición, el
+    peso y la altura del usuario.
 \end{itemize}
 
 \section{Requisitos funcionales}
@@ -53,16 +58,19 @@ un usuario que representa al sistema en sí mismo. Se puede ver esta clasificaci
     width = 0.8\textwidth,
 }
 
-Para este proyecto, se han organizado los casos de uso en tres paquetes. El primero de ellos,
-\textit{Gestión de usuarios}, incluye los casos de uso relacionados con la gestión de la información
-de los usuarios, así como la gestión del acceso al sistema. El segundo paquete, \textit{Estadísticas
-y seguimiento}, incluye los casos de uso relacionados con la gestión del historial de formas físicas
-y actividades jugadas por los usuarios. Por último, el tercer paquete, \textit{Juego}, incluye los
-casos de uso relacionados con el videojuego en sí.
+Para este proyecto, se han organizado los casos de uso en tres paquetes. El
+primero de ellos, \enquote{Gestión de usuarios}, incluye los casos de uso
+relacionados con la gestión de la información de los usuarios, así como la
+gestión del acceso al sistema. El segundo paquete, \enquote{Estadísticas y
+seguimiento}, incluye los casos de uso relacionados con la gestión del historial
+de formas físicas y actividades jugadas por los usuarios. Por último, el tercer
+paquete, \enquote{Juego}, incluye los casos de uso relacionados con el videojuego
+en sí.
 
-Como se puede ver en el diagrama de casos de uso del sistema (figura \ref{fig:requisitos:casosuso}),
-la mayoría de la funcionalidad del sistema está relacionada con el videojuego, ya que este es el
-objetivo principal del proyecto.
+Como se puede ver en el diagrama de casos de uso del sistema (figura
+\ref{fig:requisitos:casosuso}), la mayoría de la funcionalidad del sistema está
+relacionada con el videojuego. Esto tiene bastante sentido, puesto que el
+objetivo principal de este proyecto es el desarrollo de dicho juego.
 
 \diagrama{
     nombre = {Diagrama de casos de uso del sistema},
