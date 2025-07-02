@@ -101,9 +101,10 @@ encuentran en un paquete independiente en el diagrama de clases de diseño
 través del \gls{orm} SQLAlchemy y se alojan en la base de datos relacional PostgreSQL.
 
 \subsubsection{\Gls{backend}}
-El \gls{backend} del sistema se encarga de implementar la lógica de negocio y de proporcionar una
-\gls{API} para acceder a los datos de la aplicación. Está desarrollada en Python utilizando
-el \gls{framework} FastAPI. Se divide en tres partes fundamentales:
+El \gls{backend} del sistema se encarga de implementar la lógica de negocio y de
+proporcionar una \gls{api} para acceder a los datos de la aplicación. Está
+desarrollada en Python utilizando el \gls{framework} FastAPI. Se divide en tres
+partes fundamentales:
 \begin{itemize}
     \item \textbf{API Routers}: Definen las rutas de la \gls{api} y realizan las operaciones necesarias
         para cada una de ellas. Delegan las operaciones sobre los modelos de datos a los \glspl{dao}.
