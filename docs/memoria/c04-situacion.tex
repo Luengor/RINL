@@ -1,19 +1,23 @@
 \chapter{Descripción de la situación actual}
 \label{cap:situacion}
-En este capítulo se realiza un estudio de mercado para conocer las características de los productos
-ya existentes y las diferencias con el producto que se ha desarrollado.
+En este capítulo se realiza un estudio de mercado para conocer las
+características de los productos ya existentes y las diferencias con el producto
+que se pretende desarrollar.
 
 \section{Productos existentes}
 \label{sec:productos-existentes}
-Con el avance de la informática y la tecnología durante las dos últimas décadas, han surgido varios
-productos que cumplen una función similar a la de la aplicación que se ha desarrollado.
+Con el avance de la informática y la tecnología durante las dos últimas décadas,
+han surgido varios productos que cumplen una función similar a la de la
+aplicación que se ha desarrollado.
 
 \subsection{EyeToy}
 \label{subsec:eyetoy}
-El primero de estos productos fue el \textit{EyeToy}\footnote{\url{https://en.wikipedia.org/wiki/EyeToy}},
-una cámara desarrollada por Sony para la consola PlayStation 2 que permitía a los usuarios interactuar
-con los juegos a través de gestos, movimientos corporales y voz. Fue un producto innovador en su momento,
-llegando a vender más de 10 millones de unidades en todo el mundo \parencite{Kim2025Jun}.
+El primero de estos productos fue el \textit{EyeToy}\footnote{\url{%
+https://en.wikipedia.org/wiki/EyeToy}}, una cámara desarrollada por Sony para la
+consola PlayStation 2 que permitía a los usuarios interactuar con los juegos a
+través de gestos, movimientos corporales y voz. Fue un producto innovador en su
+momento, llegando a vender más de 10 millones de unidades en todo el mundo
+\parencite{Kim2025Jun}.
 
 \diagrama{
     nombre = {EyeToy de Sony},
@@ -24,19 +28,22 @@ llegando a vender más de 10 millones de unidades en todo el mundo \parencite{Ki
 
 \subsection{Nintendo Wii y Nintendo Switch}
 Un producto más exitoso que el EyeToy de Sony fue la Nintendo Wii%
-\footnote{\url{https://en.wikipedia.org/wiki/Wii}}, una consola de videojuegos desarrollada por
-Nintendo que incorporaba un mando con sensores de movimiento, permitiendo a los usuarios jugar a
-juegos de forma más activa y física. La Wii fue un gran éxito comercial, siendo actualmente la
-séptima consola más vendida de la historia \parencite{WikipediaBestSellingConsoles} con más de 100
-millones de unidades vendidas en todo el mundo \parencite{NintendoSalesData}.
+\footnote{\url{https://en.wikipedia.org/wiki/Wii}}, una consola de videojuegos
+desarrollada por Nintendo que incorporaba un mando con sensores de movimiento,
+permitiendo a los usuarios jugar a juegos de forma más activa y física. La Wii
+fue un gran éxito comercial, siendo actualmente la séptima consola más vendida
+de la historia \parencite{WikipediaBestSellingConsoles} con más de 100 millones
+de unidades vendidas en todo el mundo \parencite{NintendoSalesData}.
 
-El éxito de la Wii se debe en parte a su enfoque a la accesibilidad y a la inclusión de un público
-más amplio, incluyendo a personas mayores y a aquellos que no eran jugadores habituales. Esto fue
-posible gracias a la incorporación de dos mandos con sensores de movimiento integrados (ver figura
-\ref{fig:wii}), lo que permitía a los usuarios interactuar con los juegos de una manera más natural
-y física. Algunos de los juegos más populares de la Wii, como \textit{Wii Sports} y
-\textit{Just Dance}, se centraban en la actividad física y el ejercicio (ya sea a través de un
-simulador de jugar al tenis o bailando), lo que ayudó a atraer a un público más amplio.
+El éxito de la Wii se debe en gran medida a su enfoque a la accesibilidad y a la
+inclusión de un público más amplio, incluyendo a personas mayores y a aquellos
+que no eran jugadores habituales. Esto fue posible gracias a la incorporación de
+dos mandos con sensores de movimiento integrados (ver figura \ref{fig:wii}), lo
+que permitía a los usuarios interactuar con los juegos de una manera más natural
+e intuitiva. Algunos de los juegos más populares de la Wii, como \textit{Wii
+Sports} y \textit{Just Dance}, se centraban en la actividad física y el
+ejercicio (ya sea a través de un simulador de jugar al tenis o bailando), lo que
+ayudó a atraer a un público más amplio.
 
 \diagrama{
     nombre = {Nintendo Wii},
@@ -46,17 +53,18 @@ simulador de jugar al tenis o bailando), lo que ayudó a atraer a un público m�
 }
 
 Una metodología similar seguirían algunos juegos de la consola Nintendo Switch%
-\footnote{\url{https://en.wikipedia.org/wiki/Nintendo_Switch}}, cuyos mandos también incorporan
-sensores de movimiento. Sin embargo, esta consola no se centraría tanto en la actividad física
-como la Wii.
+\footnote{\url{https://en.wikipedia.org/wiki/Nintendo_Switch}}, cuyos mandos
+también incorporan sensores de movimiento. Sin embargo, esta consola no se
+centraría tanto en la actividad física como la Wii.
 
 \subsection{Kinect}
 \label{subsec:kinect}
-Otro disposivo que es de gran importancia mencionar es el \textit{Kinect}%
-\footnote{\url{https://en.wikipedia.org/wiki/Kinect}}. Desarrollado por Microsoft para la consola
-Xbox 360, el Kinect es un dispositivo de captura de movimiento que permite a los usuarios interactuar
-con los juegos de la misma manera que lo hacía el EyeToy, pero con menor latencia y mayor precisión.
-Una imagen del Kinect se puede ver en la figura \ref{fig:kinect}.
+Otro dispositivo que es de gran importancia mencionar es el \textit{Kinect}%
+\footnote{\url{https://en.wikipedia.org/wiki/Kinect}}. Desarrollado por
+Microsoft para la consola Xbox 360, el Kinect es un dispositivo de captura de
+movimiento que permite a los usuarios interactuar con los juegos de la misma
+manera que lo hacía el EyeToy, pero con menor latencia y mayor precisión.  Una
+imagen del Kinect se puede ver en la figura \ref{fig:kinect}.
 
 \diagrama{
     nombre = {Kinect de Microsoft},
@@ -65,36 +73,42 @@ Una imagen del Kinect se puede ver en la figura \ref{fig:kinect}.
     etiqueta = {fig:kinect},
 }
 
-Esta tecnología más precisa que la del EyeToy o la Wii sin necesidad de utilizar mandos fue posible
-gracias a la incorporación de una cámara de infrarrojos. Esta permitía detectar la profundidad de
-los puntos de la escena a través de luz estructurada o tiempo de vuelo, dependiendo del modelo
-\parencite{sarbolandi2015kinect}. A través de esta representación de la profundidad, se realizaba
-un cálculo de los bordes de los objetos para diferenciar aquellos que eran más cercanos a la cámara
-y se encontraban en movimiento (puesto que se asumía que el usuario sería el único objeto en
+Esta tecnología, más precisa que la del EyeToy o la Wii sin necesidad de
+utilizar mandos, fue posible gracias a la incorporación de una cámara de
+infrarrojos. Esta permitía detectar la profundidad de los puntos de la escena a
+través de luz estructurada o tiempo de vuelo, dependiendo del modelo
+\parencite{sarbolandi2015kinect}. A través de esta representación de la
+profundidad, se realizaba un cálculo de los bordes de los objetos para
+diferenciar aquellos que estabán situado más cerca de la cámara y se encontraban
+en movimiento (puesto que se asumía que el usuario sería el único objeto en
 movimiento en la escena) \parencite{HowYouBecometheController}.
 
-Además, Microsoft publicaría el SDK del Kinect, permitiendo a los desarrolladores crear aplicaciones
-que utilizaran esta tecnología de captura de movimiento. Esto llevó a la creación de una gran cantidad
-de juegos y aplicaciones que utilizaban el Kinect, incluyendo juegos de baile, fitness y aplicaciones
-de realidad aumentada.
+Además, Microsoft publicaría el SDK del Kinect, permitiendo a los
+desarrolladores crear aplicaciones que utilizaran esta tecnología de captura de
+movimiento. Esto llevó a la creación de una gran cantidad de juegos y
+aplicaciones que utilizaban el Kinect, incluyendo juegos de baile, fitness y
+aplicaciones de realidad aumentada.
 
 \subsection{Just Dance Now}
 \label{subsec:just-dance-now}
-Just Dance Now es un juego de baile desarrollado por Ubisoft que permite a los usuarios bailar
-al ritmo de diferentes canciones utilizando sus teléfonos móviles como mando. Está disponible
-para cualquier dispositivo con conexión a Internet capaz de ejecutar un navegador web, lo que
-lo hace accesible a una amplia audiencia.
+Just Dance Now es un juego de baile desarrollado por Ubisoft que permite a los
+usuarios bailar al ritmo de diferentes canciones utilizando sus teléfonos
+móviles como mando. Está disponible para cualquier dispositivo con conexión a
+Internet capaz de ejecutar un navegador web, lo que lo hace accesible a una
+amplia audiencia.
 
 \section{Diferencias con el producto desarrollado}
 \label{sec:diferencias-producto}
-A pesar de que existen varios productos que cumplen una función similar a la de la aplicación
-desarrollada, existe una diferencia clave que la distingue de los demás: este sistema no requiere
-de ningún tipo de hardware específico, como lo hacen el EyeToy, la Wii o el Kinect. En su lugar,
-la aplicación utiliza la cámara del dispositivo en el que se ejecuta para detectar el movimiento
-del usuario, lo que la hace accesible a una amplia audiencia sin necesidad de comprar hardware
-adicional.
+A pesar de que existen varios productos que cumplen una función similar a la de
+la aplicación a desarrollar, existe una diferencia clave que la distingue de los
+demás: este sistema no requiere de ningún tipo de hardware especializado, como
+lo hacen el EyeToy, la Wii o el Kinect. En su lugar, la aplicación utiliza la
+cámara del dispositivo en el que se ejecuta para detectar el movimiento del
+usuario, lo que la hace accesible a una amplia audiencia sin necesidad de
+comprar hardware adicional.
 
-Además, a diferencia de Just Dance Now que únicamente es capaz de detectar el movimiento de una
-de las manos del usuario (puesto que la detección se realiza a través del acelerómetro del teléfono)
-y no de todo el cuerpo, la aplicación desarrollada es capaz de detectar todas las partes del cuerpo
-del usuario, lo que permite una experiencia de juego más completa y realista.
+Además, a diferencia de Just Dance Now que únicamente es capaz de detectar el
+movimiento de una de las manos del usuario (puesto que la detección se realiza a
+través del acelerómetro del teléfono) y no de todo el cuerpo, la aplicación
+desarrollada es capaz de detectar todas las partes del cuerpo del usuario, lo
+que permite una experiencia de juego más completa y realista.
