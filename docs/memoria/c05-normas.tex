@@ -1,178 +1,214 @@
 \chapter{Normas y referencias}
 \label{cap:normas}
-En este capítulo se pretende recoger las normas y referencias seguidas, así como las herramientas
-utilizadas en el desarrollo del proyecto. Se divide en cinco secciones: en la primera se explica
-la metodología utilizada, en la segunda las herramientas, en la tercera los modelos de detección
-de posturas y en la cuarta los prototipos de la interfaz de usuario.
+En este capítulo se pretende recoger las normas y referencias seguidas, así como
+las herramientas utilizadas en el desarrollo del proyecto. Se divide en cinco
+secciones: en la primera se explica la metodología utilizada durante el
+desarrollo, en la segunda se detallan las herramientas utilizadas, en la tercera
+se mencionan los modelos utilizados, en la cuarta se detallan los prototipos de
+interfaz de usuario creados y en la quinta se recogen las métricas utilizadas
+para evaluar el rendimiento y la usabilidad de la aplicación.
 
 \section{Métodos}
 \label{sec:metodos}
-Para el desarrollo del proyecto se ha seguido una metodología ágil, en concreto Scrum. Se escogió
-una metodología ágil debido a que es de gran utilidad para proyectos de desarrollo en los que
-pueden surgir cambios en los requisitos o problemas técnicos no previstos que afectarían mucho
-a una planificación predictiva \parencite{robert2003agile}. Scrum por su parte es un marco de trabajo
-ligero que agrupa el trabajo en ciclos cortos llamados sprints, con duración entre una y cuatro semanas,
-donde se planifica el trabajo a realizar y se revisa al final del ciclo \parencite{schwaber2020scrum}.
+Para el desarrollo del proyecto se ha seguido una metodología ágil, en concreto
+Scrum. Se escogió una metodología ágil debido a que es de gran utilidad para
+proyectos de desarrollo en los que pueden surgir cambios en los requisitos o
+problemas técnicos no previstos que afectarían mucho a una planificación
+predictiva \parencite{robert2003agile}. Scrum por su parte es un marco de
+trabajo ligero que agrupa el trabajo en ciclos cortos llamados sprints, con
+duración entre una y cuatro semanas, donde se planifica el trabajo a realizar y
+se revisa al final del ciclo \parencite{schwaber2020scrum}.
 
-Este nivel reducido de planificación es más sencillo de realizar y permite un mayor grado de
-adaptabilidad a los cambios. Para más información sobre la planificación del proyecto, ver el \tercerAnexo.
+Este nivel reducido de planificación es más sencillo de realizar y permite un
+mayor grado de adaptabilidad a los cambios. Una descripción más detallada de la
+planificación utilizada durante el desarrollo, así como los resultados obtenidos y
+las conclusiones obtenidas se encuentra en el \tercerAnexo.
 
 \section{Herramientas}
 \label{sec:herramientas}
-En esta sección se detallarán las herramientas software utilizadas durante el desarrollo del
-proyecto de forma resumida. Para reducir la extensión de este capítulo, se agruparán las
-herramientas en categorías y se explicará brevemente su uso. Una descripción más detallada
-de algunas de las herramientas utilizadas y la razón de su elección sobre otras se puede encontrar
-en el capítulo \textit{\nameref{c08:sec:alternativas-tecnologicas}}.
+En esta sección se detallarán las herramientas software utilizadas durante el
+desarrollo del proyecto de forma resumida. Para reducir la extensión de este
+apartado, se agruparán las herramientas en categorías y se explicará brevemente
+su uso. Una descripción más detallada de algunas de las herramientas utilizadas
+y la razón de su elección sobre otras se puede encontrar en el capítulo
+\textit{\nameref{c08:sec:alternativas-tecnologicas}}.
 
 \subsection{Desarrollo del \Gls{backend}}
 \label{sec:desarrollo-api}
-Para el desarrollo del \gls{backend} de la aplicación se ha utilizado el \gls{framework} \tech{FastAPI}
-{https://fastapi.tiangolo.com/}, un \gls{framework} moderno y rápido para construir \glspl{api} con Python 3.7+
-basado en estándares como OpenAPI y JSON Schema \parencite{fastapi}.
+Para el desarrollo del \gls{backend} de la aplicación se ha utilizado
+\tech{FastAPI}{https://fastapi.tiangolo.com/}, un \gls{framework} moderno y
+rápido para construir \glspl{api} con Python 3.7+ basado en estándares como
+OpenAPI y JSON Schema \parencite{fastapi}.
 
-Junto a este \gls{framework}, se han utilizado varias bibliotecas y herramientas para facilitar el desarrollo
-y la gestión del proyecto. Entre ellas, destacan:
+Junto a este \gls{framework}, se han utilizado varias bibliotecas y herramientas
+para facilitar el desarrollo y la gestión del proyecto. Entre ellas, destacan:
 \begin{itemize}
-    \item Pydantic: una biblioteca para la validación de datos. Utilizada para definir los modelos de
-        datos de entrada y salida de la \gls{api}, garantizando que los datos cumplen con los tipos y formatos
-        esperados.
+    \item Pydantic: una biblioteca para la validación de datos. Utilizada para
+    definir los modelos de datos de entrada y salida de la \gls{api},
+    garantizando que los datos cumplen con los tipos y formatos esperados.
 
-    \item PyJWT: una biblioteca para la creación y verificación de tokens JWT (JSON Web Tokens).
-        Utilizada para la autenticación y autorización de usuarios en la \gls{api}.
+    \item PyJWT: una biblioteca para la creación y verificación de tokens JWT
+    (JSON Web Tokens).  Utilizada para la autenticación y autorización de
+    usuarios en la \gls{api}.
 
-    \item Pytest: una biblioteca para la realización de pruebas unitarias y de integración.
-        Se integra de manera muy sencilla con el código existente, permitiendo definir pruebas para
-        las diferentes funcionalidades de la \gls{api} y ejecutarlas de forma automática.
+    \item Pytest: una biblioteca para la realización de pruebas unitarias y de
+    integración.  Se incorpora de manera muy sencilla con el código existente,
+    permitiendo definir pruebas para las diferentes funcionalidades de la
+    \gls{api} y ejecutarlas de forma automática.
 
-    \item SQLAlchemy: el \gls{orm} utilizado para interactuar con la base de datos de forma
-        sencilla y segura. Permite interactuar con varios tipos de bases de datos relacionales,
-        para interactuar con PostgreSQL se ha utilizado el paquete psycopg2.
+    \item SQLAlchemy: el \gls{orm} utilizado para interactuar con la base de
+    datos de forma sencilla y segura. Permite interactuar con varios tipos de
+    bases de datos relacionales. Para interactuar con PostgreSQL se ha utilizado
+    el paquete psycopg2.
 
-    \item Uvicorn: un servidor \gls{asgi} ligero y rápido para ejecutar aplicaciones como FastAPI.
-        Es utilizado para servir la \gls{api} tanto en producción como en desarrollo, donde además permite
-        la recarga automática del código al detectar cambios, facilitando el desarrollo.
+    \item Uvicorn: un servidor \gls{asgi} ligero y rápido para ejecutar
+    aplicaciones como FastAPI.  Es utilizado para servir la \gls{api} tanto en
+    producción como en desarrollo, donde además permite la recarga automática
+    del código al detectar cambios, facilitando el desarrollo.
 \end{itemize}
 
-Como se ha mencionado entre la lista de herramientas, se ha utilizado \tech{PostgreSQL}
-{https://www.postgresql.org/} como sistema de gestión de bases de datos relacional para almacenar
-la información de la aplicación.
+Como se ha mencionado entre la lista de herramientas, se ha utilizado
+\tech{PostgreSQL} {https://www.postgresql.org/} como sistema de gestión de bases
+de datos relacional para almacenar la información persistente de la aplicación.
 
-Para la gestión de las dependencias del proyecto, así como para la creación de un entorno virtual se
-ha utilizado \tech{UV}{https://docs.astral.sh/uv/}. Esta herramienta permite gestionar las dependencias
-de forma sencilla y rápida, además de crear un entorno virtual aislado para el proyecto. Esto es
-especialmente útil para evitar conflictos entre las dependencias de diferentes proyectos y garantizar
-que el proyecto se ejecuta en un entorno controlado y reproducible. Además, es mucho más rápido que el
-resto de gestores de dependencias \parencite{Katabattuni2024Nov}.
+Para la gestión de las dependencias del proyecto, así como para la creación de
+un entorno virtual se ha utilizado \tech{UV}{https://docs.astral.sh/uv/}. Esta
+herramienta permite gestionar las dependencias de forma sencilla y rápida,
+además de crear un entorno virtual aislado para el proyecto. Esto es
+especialmente útil para evitar conflictos entre las dependencias de diferentes
+proyectos y garantizar que el proyecto se ejecuta en un entorno controlado y
+reproducible. Además, es mucho más rápido que el resto de gestores de
+dependencias \parencite{Katabattuni2024Nov}.
 
 \subsection{Desarrollo Web}
 \label{sec:desarrollo-web}
-% Vite, React, Mantine, Tanstack-Query, hey openapi, Typescript, bun
-En el \gls{frontend} de la aplicación se ha utilizado el \gls{framework} \tech{React}
-{https://react.dev/}, una biblioteca de JavaScript para construir interfaces de usuario que permite
-crear componentes reutilizables y gestionar el estado de la aplicación. Junto a React, se ha
-utilizado \tech{Vite}{https://vitejs.dev/} como servidor de desarrollo y herramienta de
-construcción. Vite, al igual que FastAPI, permite la recarga automática del código al detectar
+En el \gls{frontend} de la aplicación se ha utilizado el \gls{framework}
+\tech{React} {https://react.dev/}, una biblioteca de JavaScript para construir
+interfaces de usuario que permite crear componentes reutilizables y gestionar el
+estado de la aplicación. Junto a React, se ha utilizado \tech{Vite}
+{https://vitejs.dev/} como servidor de desarrollo y herramienta de construcción.
+Vite, al igual que FastAPI, permite la recarga automática del código al detectar
 cambios.
 
 Para facilitar el desarrollo, se han utilizado varias bibliotecas y herramientas:
 \begin{itemize}
-    \item \tech{Mantine}{https://mantine.dev/}: una biblioteca de componentes de interfaz de usuario
-        para React que proporciona una gran cantidad de plantillas y componentes ya diseñados, así
-        como varias opciones de personalización. Esto permite centrarse en el desarrollo de la interfaz
-        y la lógica sin tener que preocuparse demasiado por el diseño de los componentes más básicos.
+    \item \tech{Mantine}{https://mantine.dev/}: una biblioteca de componentes de
+    interfaz de usuario para React que proporciona una gran cantidad de
+    plantillas y componentes ya diseñados, así como varias opciones de
+    personalización. Esto permite centrarse en el desarrollo de la interfaz y la
+    lógica sin tener que preocuparse demasiado por el diseño de los elmentos más
+    básicos.
 
-    \item \tech{Hey OpenAPI}{https://heyopenapi.com/}: una herramienta que permite generar código
-        fuente de cliente para hacer uso de una \gls{api} a partir de su especificación OpenAPI.
-        En este caso, se ha utilizado para generar el código fuente del cliente utilizado para
-        interactuar con el \gls{backend} de la aplicación.
+    \item \tech{Hey OpenAPI}{https://heyopenapi.com/}: una herramienta que
+    genera de manera automática el código fuente necesario para interactuar con
+    una \gls{api} a partir de su especificación OpenAPI. En este caso, se ha
+    utilizado para generar el código fuente del cliente utilizado para
+    interactuar con el \gls{backend} de la aplicación.
 
-    \item \tech{TanStack Query}{https://tanstack.com/query/latest}: una biblioteca para la gestión de
-        consultas en aplicaciones React que permite simplificar la obtención y el almacenamiento en caché
-        de datos asíncronos. Se utiliza junto a \textit{Hey OpenAPI} para gestionar las consultas a la \gls{api}
-        de forma sencilla y eficiente.
+    \item \tech{TanStack Query}{https://tanstack.com/query/latest}: una
+    biblioteca para la gestión de consultas en aplicaciones React que permite
+    simplificar la obtención y el almacenamiento en caché de datos asíncronos.
+    Se utiliza junto a \textit{Hey OpenAPI} para gestionar las consultas a la
+    \gls{api} de forma sencilla y eficiente.
 \end{itemize}
 
-Todas estas herramientas, así como las dependencias del proyecto, se gestionan a través de \tech{Bun}
-{https://bun.sh/}, un gestor de dependencias y entorno de ejecución para JavaScript y TypeScript que
-ofrece una gran velocidad de instalación y ejecución. Esto agiliza mucho el proceso de despliegue,
-ya que no es necesario esperar varios minutos a que alternativas como npm descarguen e
+Todas estas herramientas, así como las dependencias del proyecto, se gestionan a
+través de \tech{Bun} {https://bun.sh/}, un gestor de dependencias y entorno de
+ejecución para JavaScript y TypeScript que ofrece una gran velocidad de
+instalación y ejecución. Esto agiliza mucho el proceso de despliegue, ya que no
+es necesario esperar varios minutos a que alternativas como npm descarguen e
 instalen todos los requisitos del proyecto.
 
 Por último, todo el código del \gls{frontend} se ha escrito en \tech{TypeScript}
-{https://www.typescriptlang.org/}, un superconjunto de JavaScript que añade tipado estático y otras
-funcionalidades que facilitan el desarrollo y la limpieza del código. Junto a TypeScript, se ha
-utilizado \tech{TSX}{https://tsx.is/}, un lenguaje de programación que permite escribir código
-TypeScript embebido en archivos HTML, lo que facilita la creación de componentes de interfaz
-de usuario en React.
+{https://www.typescriptlang.org/}, un superconjunto de JavaScript que añade
+tipado estático y otras funcionalidades que facilitan el desarrollo y la
+limpieza del código. Junto a TypeScript, se ha utilizado \tech{TSX}
+{https://tsx.is/}, una extensión para JSX que permite tratar y devolver
+elementos de HTML directamente desde el código TypeScript. Esto facilita
+enormemente la creación de componentes de interfaz de usuario, ya que permite
+escribir código HTML dentro de los archivos TypeScript, lo que reduce el número
+de archivos necesarios y mejora la legibilidad del código.
 
 \subsection{Videojuego}
 \label{sec:videojuego}
-Para el desarrollo del videojuego se ha utilizado el motor de videojuegos \tech{Unity}
-{https://unity.com/}, un motor de videojuegos multiplataforma que permite crear juegos en 2D y 3D.
-Unity es ampliamente utilizado en la industria de los videojuegos y ofrece una gran cantidad de
-herramientas y recursos para hacer videojuegos de forma sencilla y rápida.
+Para el desarrollo del videojuego se ha utilizado \tech{Unity}
+{https://unity.com/}, un motor de videojuegos multiplataforma que permite crear
+juegos en 2D y 3D.  Unity es ampliamente utilizado en la industria de los
+videojuegos y ofrece una gran cantidad de herramientas y recursos para hacer
+videojuegos de forma sencilla y rápida.
 
-Junto a Unity, se ha utilizado el lenguaje de programación \texttt{C\#} para el desarrollo del
-videojuego, ya que es el lenguaje de programación principal de Unity y permite acceder a todas
-las funcionalidades del motor.
+Junto a Unity, se ha utilizado el lenguaje de programación \texttt{C\#} para el
+desarrollo del videojuego, ya que es el lenguaje de programación principal de
+Unity y permite acceder a todas las funcionalidades del motor.
 
 \subsection{Despliegue}
 \label{sec:despliegue}
-Para el despliegue de la aplicación se ha utilizado \tech{Docker}{https://www.docker.com/}, una
-plataforma de contenedores que permite empaquetar aplicaciones y sus dependencias en contenedores
-aislados que se pueden ejecutar en cualquier entorno. Esto facilita el despliegue y la gestión de
-la aplicación, ya que con la configuración adecuada y las fuentes del proyecto se puede reproducir
-el entorno del despliegue en cualquier máquina.
+Para el despliegue de la aplicación se ha utilizado \tech{Docker}
+{https://www.docker.com/}, una plataforma de contenedores que permite empaquetar
+aplicaciones y sus dependencias en contenedores aislados que se pueden ejecutar
+en cualquier entorno. Esto facilita el despliegue y la gestión de la aplicación,
+ya que con la configuración adecuada y las fuentes del proyecto se puede
+reproducir el entorno del despliegue en cualquier máquina.
 
-Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha utilizado \tech{Caddy}
-{https://caddyserver.com/}, un servidor web y proxy inverso que permite servir aplicaciones web con
-muy poca configuración. En la aplicación, se utiliza Caddy como proxy inverso para servir públicamente
-el \gls{frontend} en la ruta \url{https://rinl.soymilk.lueng.org/} y el \gls{backend} en la subruta
-\url{https://rinl.soymilk.lueng.org/api/}. Además, Caddy se encarga de gestionar los certificados
-SSL/TLS de forma automática, lo que simplifica la configuración del servidor.
+Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha
+utilizado \tech{Caddy} {https://caddyserver.com/}, un servidor web y proxy
+inverso que permite servir aplicaciones web con muy poca configuración. En la
+aplicación, se utiliza Caddy como proxy inverso para servir públicamente el
+\gls{frontend} en la ruta \url{https://rinl.soymilk.lueng.org/} y el
+\gls{backend} en la sub-ruta \url{https://rinl.soymilk.lueng.org/api/}. Además,
+Caddy se encarga de gestionar los certificados SSL/TLS de forma automática, lo
+que simplifica la configuración del servidor.
 
-Por último, el despliegue de la aplicación se ha realizado en un servidor virtual privado (VPS) proporcionado
-por Oracle Cloud en su nivel gratuito. Este servidor se ha configurado para ejecutar los contenedores de Docker
-que contienen el sistema completo.
+Por último, el despliegue de la aplicación se ha realizado en un servidor
+virtual privado (VPS) proporcionado por \tech{Oracle Cloud}
+{https://www.oracle.com/cloud/} en su nivel gratuito. Este servidor se ha
+configurado para ejecutar los contenedores de Docker que contienen el sistema
+completo.
 
 \subsection{Gestión del proyecto y documentación}
 \label{sec:gestion-proyecto}
 % Sphinx si lo uso
-Para la planificación y gestión de los sprints del proyecto se ha utilizado la aplicación web
-\tech{Jira}{https://www.atlassian.com/software/jira}, una herramienta de gestión de proyectos que
-permite crear y gestionar tareas y sprints de forma sencilla. Jira es ampliamente utilizado en la
-industria del software y ofrece una gran cantidad de funcionalidades para la gestión de proyectos
-de varias metodologías, incluyendo Scrum.
+Para la planificación y gestión de los sprints del proyecto se ha utilizado la
+aplicación web \tech{Jira}{https://www.atlassian.com/software/jira}, una
+herramienta de gestión de proyectos que permite crear y gestionar tareas y
+sprints de forma sencilla. Jira es ampliamente utilizado en la industria del
+software y ofrece una gran cantidad de funcionalidades para la gestión de
+proyectos de varias metodologías, incluyendo Scrum.
 
-Para la creación de los diagramas presentes en este documento y los anexos se han utilizado varias
-herramientas, dependiendo del tipo de diagrama. Para los diagramas relacionados con la ingeniería
-del software, como diagramas de clases, de secuencia o de flujo, se ha utilizado \tech{PlantUML}
-{https://plantuml.com/}, una herramienta que permite crear diagramas a partir de texto, lo que facilita
-su creación y edición. Para los diagramas de flujo de la interfaz de usuario se ha utilizado
-\tech{Wireflow}{https://app.wireflow.co/}, una herramienta sencilla y rápida que permite visualizar
-el flujo de la interfaz de usuario y las interacciones entre las diferentes pantallas. Por último,
-para los diagramas de \textit{burndown} de los sprints se ha utilizado la biblioteca de Python
-\tech{Matplotlib}{https://matplotlib.org/}, una biblioteca de visualización de datos que ha permitido
-crear gráficos a partir de los datos exportados desde Jira.
+Para la creación de los diagramas presentes en este documento y los anexos se
+han utilizado varias herramientas, dependiendo del tipo de diagrama. Para los
+diagramas relacionados con la ingeniería del software, como diagramas de clases,
+de secuencia o de flujo, se ha utilizado \tech{PlantUML}{https://plantuml.com/},
+una herramienta que permite crear diagramas a partir de texto, lo que facilita
+su creación y edición. Para los diagramas de flujo de la interfaz de usuario se
+ha utilizado \tech{Wireflow}{https://app.wireflow.co/}, una herramienta sencilla
+y rápida que permite visualizar el flujo de la interfaz de usuario y las
+interacciones entre las diferentes pantallas. Por último, para los diagramas de
+\textit{burndown} de los sprints se ha utilizado la biblioteca de Python
+\tech{Matplotlib}{https://matplotlib.org/}, una biblioteca de visualización de
+datos que ha permitido crear gráficos a partir de los datos exportados desde
+Jira.
 
-El documento como tal se ha redactado utilizando \LaTeX, un sistema de composición de textos que
-permite crear documentos de alta calidad tipográfica. Permite, entre otras cosas, la creación de
-comandos personalizados, la inclusión de referencias cruzadas, la creación de índices y tablas
-de contenido de manera automática, y la inclusión de bibliografía y glosario de forma sencilla.
+El documento como tal se ha redactado utilizando \LaTeX, un sistema de
+composición de textos que permite crear documentos de alta calidad tipográfica.
+Permite, entre otras cosas, la creación de comandos personalizados, la inclusión
+de referencias cruzadas, la creación de índices y tablas de contenido de manera
+automática, y la inclusión de bibliografía y glosario de forma sencilla.
 
 \subsection{Control de versiones}
 \label{sec:control-versiones}
-El control de versiones es una parte fundamental del desarrollo de software, ya que permite llevar
-un registro de los cambios realizados en el código fuente, revertir modificaciones en caso de errores
-y colaborar con otros desarrolladores de forma eficiente. Es por las primeras dos razones por las que
-se ha utilizado un sistema de control de versiones para gestionar el código fuente del proyecto desde
-el comienzo.
+El control de versiones es una parte fundamental del desarrollo de software, ya
+que permite llevar un registro de los cambios realizados en el código fuente,
+revertir modificaciones en caso de errores y colaborar con otros desarrolladores
+de forma eficiente. Es por las primeras dos razones por las que se ha utilizado
+un sistema de control de versiones para gestionar el código fuente del proyecto
+desde el comienzo.
 
-En concreto, se ha utilizado \tech{Git}{https://git-scm.com/} como sistema de control de versiones
-distribuido, que permite llevar un registro de los cambios realizados en el código fuente y
-colaborar con otros desarrolladores. También se ha utilizado \tech{GitHub}{https://github.com} para
-alojar el repositorio de código fuente del proyecto (ver figura \ref{fig:github}).
+En concreto, se ha utilizado \tech{Git}{https://git-scm.com/} como sistema de
+control de versiones distribuido, que permite llevar un registro de los cambios
+realizados en el código fuente y colaborar con otros desarrolladores. También se
+ha utilizado \tech{GitHub}{https://github.com} para alojar el repositorio de
+código fuente del proyecto (ver figura \ref{fig:github}).
 
 \diagrama{
     nombre = {Algunas commits del repositorio},
@@ -182,33 +218,38 @@ alojar el repositorio de código fuente del proyecto (ver figura \ref{fig:github
     width = 0.9\textwidth,
 }
 
-Además, GitHub ofrece dos funcionalidades adicionales que han sido muy útiles durante el desarrollo.
-La primera es la posibilidad de crear claves SSH que solo se pueden utilizar para descargar el código
-fuente del repositorio, lo que permite obtener la última versión del código en servidores remotos sin
-necesidad de introducir las credenciales de acceso. La segunda es la posibilidad de crear acciones
-automáticas que se ejecutan al realizar cambios en el código fuente. En el caso de la aplicación,
-se ha utilizado esta funcionalidad para exportar el videojuego de Unity cuando se realiza un cambio
-en el código fuente del proyecto. Se ha utilizado esta tecnología, ya que, durante el proceso de
-exportar, no es posible realizar otras tareas en el editor y es un proceso que puede llevar
-cerca de una hora. Por lo tanto, al utilizar acciones automáticas, se puede
-seguir trabajando en el proyecto mientras se exporta el videojuego, lo que ahorra mucho tiempo
-y permite realizar otras tareas en paralelo.
+Además, GitHub ofrece dos funcionalidades adicionales que han sido muy útiles
+durante el desarrollo.  La primera es la posibilidad de crear claves SSH que
+solo se pueden utilizar para descargar el código fuente del repositorio, lo que
+permite obtener la última versión del código en servidores remotos sin necesidad
+de introducir las credenciales de acceso. La segunda es la posibilidad de crear
+acciones automáticas que se ejecutan al realizar cambios en el código fuente. En
+el caso de la aplicación, se ha utilizado esta funcionalidad para exportar el
+videojuego de Unity cuando se realiza un cambio en el código fuente del
+proyecto. Se ha utilizado esta tecnología, ya que, durante el proceso de
+exportar, no es posible realizar otras tareas en el editor y es un proceso que
+puede llevar cerca de una hora. Por lo tanto, al utilizar acciones automáticas,
+se puede seguir trabajando en el proyecto mientras se exporta el videojuego, lo
+que ahorra mucho tiempo y permite realizar otras tareas en paralelo.
 
 \section{Modelos}
 \label{sec:modelos}
-Para la detección de posturas en tiempo real se ha utilizado una red neuronal convolucional,
-BlazePose, un modelo de aprendizaje profundo diseñado para la detección de posturas humanas en
-imágenes y vídeos \parencites{bazarevsky2020blazepose}{xu2020ghum}. Este modelo es capaz de
-detectar y rastrear 33 puntos clave (ver figura \ref{fig:blazepose}) del cuerpo humano en tiempo
-real, lo que lo hace ideal para aplicaciones de seguimiento de posturas y análisis de movimiento.
-Además, incluye junto a las posiciones de los puntos clave en la imagen, la confianza de la
-detección y la visibilidad de cada punto, así como una representación de los puntos en 3D.
+Para la detección de posturas en tiempo real se ha utilizado la red neuronal
+convolucional BlazePose, un modelo de aprendizaje profundo diseñado para la
+detección de posturas humanas en imágenes y vídeos \parencites%
+{bazarevsky2020blazepose}{xu2020ghum}. Este modelo es capaz de
+detectar y rastrear 33 puntos clave (ver figura \ref{fig:blazepose}) del cuerpo
+humano en tiempo real, lo que lo hace ideal para aplicaciones de seguimiento de
+posturas y análisis de movimiento.  Además, incluye junto a las posiciones de
+los puntos clave en la imagen, la confianza de la detección y la visibilidad de
+cada punto, así como una representación de los puntos en 3D.
 
-Las razones para escoger BlazePose sobre otros modelos de detección de posturas se detallan
-en el capítulo \textit{\nameref{c08:sec:alternativas-tecnologicas}}, en el apartado dedicado al modelo de
-detección de posturas (\ref{c08:subsubsec:mediapipe}). De forma resumida, BlazePose ofrecía un
-buen equilibrio entre precisión y velocidad de procesamiento, lo que lo hacía adecuado para esta
-aplicación.
+Las razones para escoger BlazePose sobre otros modelos de detección de posturas
+se detallan en el capítulo \textit{\nameref{c08:sec:alternativas-tecnologicas}},
+en el apartado dedicado al modelo de detección de posturas
+(\ref{c08:subsubsec:mediapipe}). De forma resumida, BlazePose ofrece un buen
+equilibrio entre precisión y velocidad de procesamiento, lo que lo hacía
+el más adecuado para esta aplicación.
 
 \diagrama{
     nombre = {Detección de posturas con BlazePose},
@@ -219,12 +260,14 @@ aplicación.
 
 \section{Prototipos}
 \label{sec:prototipos}
-Durante el desarrollo del proyecto no se crearon muchos prototipos de la interfaz de usuarios, ya
-que se utilizó un enfoque de desarrollo ágil y se fue modificando y adaptando la interfaz a medida
-que avanzaba el proyecto. Sin embargo, sí se creó un prototipo inicial de la navegación de la
-aplicación que muestra las diferentes pantallas y como se relacionan entre sí. Este prototipo
-se creó utilizando la herramienta \tech{Wireflow}{https://app.wireflow.co/}, una herramienta
-sencilla y rápida para crear diagramas de flujo de la interfaz de usuario. El resultado de este
+Durante el desarrollo del proyecto no se crearon muchos prototipos de la
+interfaz de usuarios, ya que se utilizó un enfoque de desarrollo ágil y se fue
+modificando y adaptando la interfaz a medida que avanzaba el proyecto. Sin
+embargo, sí se creó un esquema de la estructura que tendría la página antes de
+comenzar a desarrollarla (esto se hizo para saber qué páginas era necesario
+crear). A partir de este esquema, se ha creado un diagrama de flujo utilizando
+\tech{Wireflow}{https://app.wireflow.co/}, una herramienta muy sencilla para
+crear diagramas de flujo de la interfaz de usuario. El resultado de este
 prototipo se puede ver en la figura \ref{fig:wireflow}.
 
 \diagrama{
@@ -235,16 +278,24 @@ prototipo se puede ver en la figura \ref{fig:wireflow}.
     etiqueta = {fig:wireflow},
 }
 
+La estructura final de la interfaz es prácticamente idéntica a la planeada en el
+prototipo, con la excepción de la eliminación de la pantalla de inicio de
+sesión, ya que se decidió añadir el sistema de autenticación de usuarios
+directamente en la página de inicio de la aplicación.
+
 \section{Métricas}
 \label{sec:metricas}
-Durante el desarrollo del proyecto se han utilizado métricas de rendimiento para determinar si la
-aplicación cumple con los requisitos de velocidad y precisión necesarios para su correcto funcionamiento.
-Esto ha consistido principalmente en realizar análisis del rendimiento del videojuego desarrollado, puesto
-este es el componente más exigente de la aplicación. Para ello, se ha utilizado el propio motor de Unity, que
-ofrece herramientas para medir el rendimiento del videojuego, como el uso de la CPU y la GPU y muestra de
-manera desglosada el tiempo de ejecución de cada uno de los componentes del videojuego (ver
-\ref{fig:unity-performance}). Con el mismo objetivo, se ha utilizado el propio profiler de Chrome para
-medir el rendimiento del videojuego una vez exportado (ver \ref{fig:chrome-performance}).
+Durante el desarrollo del proyecto se han utilizado métricas de rendimiento para
+determinar si la aplicación cumple con los requisitos de velocidad y precisión
+necesarios para su correcto funcionamiento.  Esto ha consistido principalmente
+en realizar análisis del rendimiento del videojuego desarrollado, puesto este es
+el componente más exigente de la aplicación. Para ello, se ha utilizado el
+propio motor de Unity, que ofrece herramientas para medir el rendimiento del
+videojuego, como el uso de la CPU y la GPU y muestra de manera desglosada el
+tiempo de ejecución de cada uno de los componentes del videojuego (ver figura
+\ref{fig:unity-performance}). Con el mismo objetivo, se ha utilizado el propio
+profiler de Chrome para medir el rendimiento del videojuego una vez exportado
+(ver figura \ref{fig:chrome-performance}).
 
 \diagrama{
     nombre = {Análisis de rendimiento del videojuego},
@@ -262,11 +313,13 @@ medir el rendimiento del videojuego una vez exportado (ver \ref{fig:chrome-perfo
     width = 1\textwidth,
 }
 
-Otro tipo de métricas utilizadas han sido tests de usuarios. Aunque de manera bastante informal, a
-lo largo del desarrollo del proyecto se han realizado pruebas con usuarios reales\footnotemark para
-evaluar la usabilidad de la aplicación y detectar posibles problemas o mejoras. Cuando se
-realizaban cambios significativos en la interfaz, se solicitaba a varios usuarios que probaran
-la aplicación y se les pedía su opinión sobre la usabilidad, la facilidad de uso y la estética del
-sistema en general. Una explicación mas detallada de estas pruebas se puede encontrar en
-el capítulo de diseño de la interfaz del \segundoAnexo.
+Otro tipo de métricas utilizadas han sido tests de usuarios. Aunque de manera
+bastante informal, a lo largo del desarrollo del proyecto se han realizado
+pruebas con usuarios reales para evaluar la usabilidad de la aplicación y
+detectar posibles problemas o mejoras. Cuando se realizaban cambios
+significativos en la interfaz, se solicitaba a varios usuarios que probaran la
+aplicación y se les pedía su opinión sobre la usabilidad, la facilidad de uso y
+la estética del sistema en general. Una explicación más detallada de estas
+pruebas se puede encontrar en el capítulo de diseño de la interfaz del
+\segundoAnexo.
 
