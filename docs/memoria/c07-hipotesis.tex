@@ -46,34 +46,48 @@ menor fluidez o peor precisión en la detección para poder ejecutarse en tiempo
 \parencites{bazarevsky2020blazepose}{MediaPipeMirror}.
 
 \subsection{Restricciones debido a las condiciones del entorno}
-El entorno en el que lleva a cabo la actividad también puede influir en la calidad de la detección.
-Para que la detección de posturas funcione de manera óptima es necesario cumplir una serie requisitos:
+El entorno en el que lleva a cabo la actividad también puede influir en la
+calidad de la detección.  Para que la detección de posturas funcione de manera
+óptima es necesario cumplir una serie requisitos:
 \begin{itemize}
-    \item Encontrarse en un ambiente con suficiente luz ambiental. En situaciones con poca luz
-        o con luces y sombras muy fuertes la calidad de detección de posturas puede disminuir
-        drásticamente.
+    \item Encontrarse en un ambiente con suficiente luz ambiental. En
+    situaciones con poca luz o con luces y sombras muy fuertes la calidad de
+    detección de posturas puede disminuir drásticamente.
 
-    \item Tener un fondo sencillo y estático. El seguimiento de posturas funciona mejor cuando
-        no existen otros elementos que se muevan además del usuario.
+    \item Tener un fondo sencillo y estático. El seguimiento de posturas
+    funciona mejor cuando no existen otros elementos que se muevan además del
+    usuario.
 
-    \item Relacionado con el anterior, es importante vestir con ropa que permita distinguir al
-        usuario del fondo. La ropa más holgada y menos ajustada también empeora la calidad de
-        detección.
+    \item Relacionado con el anterior, es importante vestir con ropa que permita
+    distinguir al usuario del fondo. La ropa más holgada y menos ajustada
+    también empeora la calidad de detección.
 
-    \item La distancia a la cámara es el último de los factores clave para el funcionamiento de
-        la identificación de posturas. El usuario debería situarse a una distancia adecuada para
-        que el cuerpo completo fuera visible en la cámara, pero no mucho más de 4 metros, donde
-        la precisión de la detección comienza a caer.
+    \item La distancia a la cámara es el último de los factores clave para el
+    correcto funcionamiento de la identificación de posturas. El usuario debería
+    situarse a una distancia adecuada para que el cuerpo completo sea visible en
+    la cámara, pero no mucho más de 4 metros, donde la calidad de la detección
+    comienza a degradarse.
 \end{itemize}
 
 \subsection{Restricciones debido a la tecnología utilizada}
-El uso de ciertas tecnologías también impone una serie de restricciones sobre el producto final.
-La primera de estas es la precisión del modelo de inteligencia artificial utilizado. Aunque
-MediaPipe BlazePose es bastante avanzado, tiene varios límites en su precisión y no es infalible.
-Como se menciona en la tarjeta de descripción del modelo, \enquote{la finalidad del modelo no
-es para ser usado en decisiones de vida o muerte} y \enquote{para casos en los que puntos del
-cuerpo están presentes, pero son difíciles de definir estos se anotan como estimaciones
-y una postura por defecto} \parencite{bazarevsky2020blazepose}.
+El uso de ciertas tecnologías también impone una serie de restricciones sobre el
+producto final.  La primera de estas es la precisión del modelo de inteligencia
+artificial utilizado. Aunque MediaPipe BlazePose es bastante avanzado, tiene
+varios límites en su precisión y no es infalible (ver figura
+\ref{fig:blazepose-card}).  Como se menciona en la tarjeta de descripción del
+modelo, en la tarjeta descriptiva del modelo\footnotemark, la finalidad de este
+modelo es el uso en aplicaciones de realidad aumentada y realidad virtual y no
+para aplicaciones en las que la precisión sea crítica.
+
+\footnotetext{https://storage.googleapis.com/mediapipe-assets/Model\%20Card\%20BlazePose\%20GHUM\%203D.pdf}
+
+\diagrama{
+    nombre = {Algunas limitaciones del modelo BlazePose},
+    fuente = {MediaPipe},
+    archivo = {memoria/fotos/blazepose_card.png},
+    etiqueta = {fig:blazepose-card},
+    width = 0.8\textwidth,
+}
 
 Otra tecnología que limita los dispositivos en los que puede ejecutarse esta aplicación son
 los navegadores web. El navegador utilizado debe soportar \tech{WebGL}%
@@ -92,10 +106,10 @@ desarrollo de dos actividades distintas. El objetivo del proyecto no es crear un
 \glspl{exergame} con un catálogo extenso, sino validar que la tecnología existente es suficiente
 para crear este tipo de videojuegos.
 
-Por otro lado, otra limitación del proyecto es el sistema de medición utilizado para registrar
-las actividades físicas. La unidad de medida utilizada se basa en \enquote{puntos de actividad},
-una medida propia de la aplicación que indica cuanto movimiento se ha realizado con el cuerpo,
-teniendo en cuenta la distribución de peso en las distintas partes de este.
+Por otro lado, otra limitación del proyecto es la unidad de medida utilizada para registrar
+el esfuerzo realizado durante una actividad. En este caso, se ha creado una medida propia para
+la aplicación, denominada \enquote{puntos de actividad}, que indica cuánto movimiento se ha
+realizado, teniendo en cuenta la distribución de peso en las distintas partes del cuerpo.
 
 Se ha escogido utilizar esta medida en vez de otras más comunes como calorías por lo complejo
 y poco preciso que sería un sistema para calcularlas. Para que estas estimaciones sean cercanas
@@ -116,29 +130,32 @@ o algo similar: este proyecto se sitúa en el extremo más genérico, desarrolla
 lo más ligera posible, pero procedimientos muy similares podrían resultar en sistemas más precisos y
 mejor capacitados una vez se especializaran en alguna plataforma o dispositivo más específico.
 
-A modo de ejemplo, se podría crear un \gls{exergame} más inmersivo y con mayor capacidad de detección
-para la consola Nintendo Switch 2\footnote{https://store.nintendo.es/es/nintendo-switch-2-P00153}. Hasta
-ahora los videojuegos sobre actividades físicas de esta compañía se habían limitado a utilizar los mandos
-con sensores de movimiento de la consola, limitando el número de jugadores simultáneos\footnotemark. Gracias
-a la cámara que incluye la consola, después de realizar este estudio se puede confirmar que un
-\gls{exergame} que no utilice dichos mandos es posible y viable. Además, puesto que se trata de un
-sistema especializado para videojuegos, el resultado final, rendimiento y calidad serán mayores que
-el proyecto general desarrollado.
+A modo de ejemplo, se podría crear un \gls{exergame} más inmersivo y con mayor
+capacidad de detección para la consola Nintendo Switch 2\footnote%
+{https://store.nintendo.es/es/nintendo-switch-2-P00153}. Hasta ahora los
+videojuegos sobre actividades físicas de esta compañía se habían limitado a
+utilizar los mandos con sensores de movimiento de la consola, limitando el
+número de jugadores simultáneos\footnotemark. Gracias a la cámara que incluye la
+consola, después de realizar este estudio se puede confirmar que un
+\gls{exergame} que no utilice dichos mandos es posible y viable. Además, puesto
+dicha consola es un sistema especializado para videojuegos, el resultado final,
+rendimiento y calidad serán mayores que el proyecto general desarrollado.
 
 \footnotetext{Ejemplos de estos juegos pueden ser: Ring Fit Adventure, Nintendo Switch Sports o
 Just Dance}
 
-En cuanto a los usuarios, la ventaja principal sería eliminar la barrera económica y de
-disponibilidad de los dispositivos especializados necesarios para los \glspl{exergame}, permitiendo
-que cualquier persona con un ordenador o portátil pueda acceder a este tipo de ejercicio
-interactivo.
+En cuanto a los usuarios, la ventaja principal sería eliminar la barrera
+económica y de disponibilidad de los dispositivos especializados necesarios para
+los \glspl{exergame}, permitiendo que cualquier persona con un ordenador o
+portátil pueda acceder a este tipo de ejercicio interactivo.
 
-Esto también implica un cambio en el ámbito de la sociedad. La existencia de otra herramienta de
-entrenamiento que además puede ser entretenida para los usuarios puede llegar a ser una buena
-manera de promover un estilo de vida más activo, con potencial de ser usado en programas de
-bienestar general.
+Esto también implica un cambio en el ámbito de la sociedad. La existencia de
+otra herramienta de entrenamiento que además puede ser entretenida para los
+usuarios puede llegar a ser una buena manera de promover un estilo de vida más
+activo, con potencial de ser usado en programas de bienestar general.
 
-Por último, se puede mencionar el campo de la rehabilitación. Este proyecto con su ligero, pero
-eficaz sistema de detección de posturas podría servir como base para futuras aplicaciones en el
-campo de la rehabilitación física a distancia, haciendo el seguimiento de terapias más accesible.
+Por último, se puede mencionar el campo de la rehabilitación. Este proyecto con
+su ligero, pero eficaz sistema de detección de posturas podría servir como base
+para futuras aplicaciones en el campo de la rehabilitación física a distancia,
+haciendo el seguimiento de terapias más accesible.
 
