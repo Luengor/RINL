@@ -21,13 +21,13 @@ la información almacenada.
 
 \subsection{Datos sensibles}
 \label{anexo4:sec:datos-sensibles}
-Tratándose de una aplicación que realiza un seguimiento de la forma física de los usuarios y recopila
+Tratándose de una aplicación que realiza un seguimiento de la condición física de los usuarios y recopila
 datos como peso, altura, edad, etc., es crucial proteger la información sensible de los usuarios. Por
 esto, ciertos campos de datos sensibles se almacenan en la base de datos de forma cifrada. Esto permite
 que, incluso si un atacante logra acceder a la base de datos, no podrá obtener información sensible
 sin las claves de cifrado adecuadas.
 
-En la aplicación se utiliza el paquete \texttt{sqlalchemy\_utils} para el cifrado de datos sensible. Este
+En la aplicación se utiliza el paquete \enquote{sqlalchemy\_utils} para el cifrado de datos sensible. Este
 utiliza internamente el algoritmo de cifrado simétrico \texttt{AES-256} para cifrar los datos antes de
 introducirlos en la base de datos y justo antes de devolverlos al usuario. El cifrado se realiza
 utilizando una clave de cifrado que se almacena en el entorno de ejecución de la aplicación, lo que
@@ -65,16 +65,17 @@ pwd_context = CryptContext(
 
 \subsection{Derecho al olvido}
 \label{anexo4:sec:derecho-al-olvido}
-El derecho al olvido (o derecho a la supresión) es un derecho que permite a los usuarios solicitar
-la eliminación de sus datos personales de una aplicación o servicio \parencite{EuropeanParliament2016a}.
-En la aplicación, se ha implementado una funcionalidad que permite a los usuarios eliminar su cuenta
-y todos sus datos asociados (sus formas físicas y actividades realizadas) de forma permanente del
-sistema.
+El derecho al olvido (o derecho a la supresión) es un derecho que permite a los
+usuarios solicitar la eliminación de sus datos personales de una aplicación o
+servicio \parencite{EuropeanParliament2016a}.  En la aplicación, se ha
+implementado una funcionalidad que permite a los usuarios eliminar su cuenta y
+todos sus datos asociados (sus registros de estado físico y actividades
+realizadas) de forma permanente del sistema.
 
 \section{Saneamiento de entradas}
 \label{anexo4:sec:saneamiento-entradas}
 El saneamiento de entradas es una práctica de seguridad que consiste en validar y limpiar los datos
-que recibe una aplicación para evitar diversos problemas. Si un actor malintencionado quisiera
+que recibe una aplicación para prevenir vulnerabilidades. Si un actor malintencionado quisiera
 atacar el sistema, uno de los primeros sitios por los que podría intentar hacerlo es a través
 de las entradas que recibe la aplicación. Dos de los ataques más comunes que se pueden realizar
 contra una aplicación web como la de este proyecto son el \gls{xss} y las inyecciones SQL.
@@ -86,7 +87,7 @@ script que se ejecuta al cargar la página.
 
 Sin embargo, en la aplicación desarrollada, no es posible consultar ningún dato introducido por otro usuario,
 por lo que este tipo de ataques no son posibles. Además, si se muestra algún dato introducido por el usuario,
-como su nombre, se hace de forma segura, puesto que los valores embebidos en archivos \gls{tsx} se escapan
+como su nombre, se hace de forma segura, puesto que los valores incrustados en archivos \gls{tsx} se escapan
 automáticamente, evitando así la inyección de código JavaScript.
 
 El otro tipo de ataque común es la inyección SQL, que consiste en inyectar código SQL malicioso en
@@ -109,7 +110,7 @@ lo que ayuda a prevenir errores y vulnerabilidades en la aplicación.
 \label{anexo4:sec:autenticacion}
 La autenticación y autorización son dos aspectos fundamentales para garantizar la seguridad de los
 sistemas informáticos. La primera se encarga de verificar la identidad de un usuario, de confirmar
-que es quien dice ser, mientras que la segunda se encarga de determinar que acciones puede realizar
+que es quien dice ser, mientras que la segunda se encarga de determinar qué acciones puede realizar
 ese usuario una vez se ha autenticado.
 
 En esta aplicación, se utiliza un sistema de autenticación basado en tokens JWT para gestionar las
@@ -141,16 +142,18 @@ para el caso de la autenticación de usuarios es el siguiente:
           con un error de autenticación.
 \end{enumerate}
 
-El mayor riesgo de seguridad asociado al uso de tokens JWT es el robo del token por parte de un
-atacante. Para que un ataque de este tipo tenga éxito, el atacante debe conseguir acceder al token
-del usuario antes de que este expire (en la aplicación, el tiempo de expiración de \textit{todos}
-los tokens es solo de 15 minutos). Es un riesgo que se mitiga utilizando HTTPS para cifrar las
-comunicaciones entre el cliente y la \gls{api} y teniendo en cuenta que, el almacenamiento de los tokens
-en el cliente, es privado para cada sitio web.
+El mayor riesgo de seguridad asociado al uso de tokens JWT es el robo del token
+por parte de un atacante. Para que un ataque de este tipo tenga éxito, el
+atacante debe conseguir acceder al token del usuario antes de que este expire
+(en la aplicación, el tiempo de expiración de \textit{todos} los tokens es solo
+de 15 minutos). Es un riesgo que se mitiga utilizando HTTPS para cifrar las
+comunicaciones entre el cliente y la \gls{api} y teniendo en cuenta que el
+almacenamiento de los tokens en el cliente es privado para cada sitio web.
 
-Las maneras en las que un atacante podría robar un token se limitarían entonces a impersonar la
-página web de la aplicación para robar el usuario y contraseña y obtener ellos mismos el token, o
-ganar acceso al dispositivo del usuario para robar el token directamente.
+Las maneras en las que un atacante podría robar un token se limitarían entonces
+a suplantar la página web de la aplicación para robar el usuario y contraseña y
+obtener ellos mismos el token, o conseguir acceso al dispositivo del usuario
+para robar el token directamente.
 
 \subsection{Verificación}
 \label{anexo4:sec:verificacion}
