@@ -148,12 +148,22 @@ export default function Stats() {
   useEffect(() => {
     if (status !== "success") return;
 
+    // Fechas
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     const weekAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 7);
     const monthAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 30);
     const yearAgo = new Date(now.getTime() - 1000 * 60 * 60 * 24 * 365);
+    const dateEnd =
+      dataRange === "week"
+        ? weekAgo
+        : dataRange === "month"
+        ? monthAgo
+        : dataRange === "year"
+        ? yearAgo
+        : new Date(0);
 
+    // Conjunto final de datos procesados
     const filteredData: PreprocessedData = {
       activities: [],
       shapes: [],
@@ -164,13 +174,7 @@ export default function Stats() {
 
     const inDateShapes = data.shape.filter((shape) => {
       const date = new Date(shape.date);
-      return dataRange === "week"
-        ? date >= weekAgo
-        : dataRange === "month"
-        ? date >= monthAgo
-        : dataRange === "year"
-        ? date >= yearAgo
-        : true;
+      return date >= dateEnd;
     });
 
     // Add at least one shape to the filtered data
@@ -179,22 +183,72 @@ export default function Stats() {
       inDateShapes.push(lastShape);
     }
 
-    filteredData.shapes = inDateShapes.map((shape) => {
+    const almostFiltered = inDateShapes.map((shape) => {
       const date = new Date(shape.date);
       shape.date = date.toISOString().split("T")[0];
       return shape;
     });
 
+    // Hacer media de las formas físicas por día
+    const groupedShapes: { [key: string]: ShapeFull } = {};
+    almostFiltered.forEach((shape) => {
+      // Si la fecha ya existe, sumar los valores
+      if (shape.date in groupedShapes) {
+        groupedShapes[shape.date].weight += shape.weight;
+        groupedShapes[shape.date].height += shape.height;
+      }
+      // Si no, crear una nueva entrada
+      else {
+        groupedShapes[shape.date] = { ...shape };
+      }
+    });
+
+    // Dividir los valores por el número de entradas para obtener la media
+    Object.keys(groupedShapes).forEach((date) => {
+      groupedShapes[date].weight /= almostFiltered.filter(
+        (shape) => shape.date === date
+      ).length;
+      groupedShapes[date].height /= almostFiltered.filter(
+        (shape) => shape.date === date
+      ).length;
+      groupedShapes[date].date = date;
+    });
+
+    // Añadir los días del rango sin formas físicas
+    const startDate =
+      dataRange == "week" || dataRange == "month"
+        ? new Date(dateEnd)
+        : new Date(almostFiltered[0].date);
+    // Día a día hasta hoy
+    while (startDate <= now) {
+      const dateString = startDate.toISOString().split("T")[0];
+      // Si no hay forma física para ese día, añadir un objeto vacío
+      if (!(dateString in groupedShapes)) {
+        groupedShapes[dateString] = {
+          uuid: null,
+          user: null,
+          date: dateString,
+          weight: null,
+          height: null,
+        };
+      }
+      startDate.setDate(startDate.getDate() + 1);
+    }
+
+    // Convertir el objeto a un array y ordenar por fecha
+    filteredData.shapes = Object.values(groupedShapes);
+    filteredData.shapes.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+
+    console.log("Filtered shapes:", filteredData.shapes);
+
+    // Activdades
+    // Filtrar actividades por fecha
     filteredData.activities = data.activity
       .filter((activity) => {
         const date = new Date(activity.date);
-        return dataRange === "week"
-          ? date >= weekAgo
-          : dataRange === "month"
-          ? date >= monthAgo
-          : dataRange === "year"
-          ? date >= yearAgo
-          : true;
+        return date >= dateEnd;
       })
       .map((activity) => {
         const date = new Date(activity.date);
@@ -406,6 +460,7 @@ export default function Stats() {
         <LineChart
           {...defaultLineChartConfig}
           data={chartData.shapes}
+          connectNulls={true}
           yAxisProps={{ domain: [minWeight - 5, maxWeight + 5] }}
           series={[{ name: "weight", label: "Peso" }]}
         />
@@ -413,11 +468,14 @@ export default function Stats() {
       <Card title="IMC">
         <LineChart
           {...defaultLineChartConfig}
+          connectNulls={true}
           data={chartData.shapes.map((shape) => {
-            return {
-              date: shape.date,
-              bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
-            };
+            return shape === null
+              ? null
+              : {
+                  date: shape.date,
+                  bmi: (shape.weight / (shape.height / 100) ** 2).toFixed(2),
+                };
           })}
           yAxisProps={{ domain: [0, 40] }}
           series={[{ name: "bmi", label: "BMI" }]}
