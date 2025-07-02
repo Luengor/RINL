@@ -118,7 +118,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Registrarse},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0001} pulse el texto 'Regístrate' en la página principal o la página
+        actor \nameref{anexo1:tab:act0001} haga click en el texto \enquote{Regístrate} en la página principal o la página
         de inicio de sesión
     },
 }{
@@ -141,7 +141,7 @@ excepciones que pueden ocurrir durante su ejecución.
     longsecuencia = {5},
     secuencia = {%
         & 1 & El sistema cambia el formulario de Iniciar Sesión por el de Registro \\
-        & 2 & El actor \nameref{anexo1:tab:act0001} rellena el formulario y pulsa el botón de registrarse \\
+        & 2 & El actor \nameref{anexo1:tab:act0001} rellena el formulario y hace click en el botón \enquote{registrarse} \\
         & 3 & El sistema valida la información introducida y, si es correcta, el usuario es creado \\
         & 4 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:mandar-correo-verificacion} \\
         & 5 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:iniciar-sesion} \\
@@ -179,8 +179,8 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {3},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0001} rellena el formulario de inicio de sesión y pulsa
-              el botón de iniciar sesión \\
+        & 1 & El actor \nameref{anexo1:tab:act0001} rellena el formulario de inicio de sesión y hace click en
+              el botón \enquote{Iniciar sesión} \\
         & 2 & El sistema valida la información introducida y, si es correcta, el usuario es autenticado \\
         & 3 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:ver-datos-personales} \\
     },
@@ -260,7 +260,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Eliminar cuenta},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0002} pulse el botón de eliminar cuenta en el menú principal
+        actor \nameref{anexo1:tab:act0002} haga click en el botón \enquote{Eliminar cuenta} en el menú principal
     },
 }{
     key = {eliminar-cuenta},
@@ -278,7 +278,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {4},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de eliminar cuenta en el menú
+        & 1 & El actor \nameref{anexo1:tab:act0002} hace click en el botón \enquote{Eliminar cuenta} en el menú
               principal \\
         & 2 & El sistema muestra una advertencia, indicando que esta operación no es reversible \\
         & 3 & El actor confirma la eliminación \\
@@ -300,7 +300,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Cerrar sesión},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0002} pulse el botón de cerrar sesión en el menú principal o
+        actor \nameref{anexo1:tab:act0002} haga click en el botón de cerrar sesión en el menú principal o
         en la página principal
     },
 }{
@@ -316,7 +316,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {4},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el botón de cerrar sesión \\
+        & 1 & El actor \nameref{anexo1:tab:act0002} hace click en el botón de cerrar sesión \\
         & 2 & El sistema muestra un mensaje de confirmación\\
         & 3 & El actor confirma el cierre de sesión \\
         & 4 & El sistema elimina la sesión del actor y se le envía a la página principal \\
@@ -336,7 +336,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Verificar correo electrónico},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0002} pulse el enlace de verificación en el correo electrónico
+        actor \nameref{anexo1:tab:act0002} haga click en el enlace de verificación en el correo electrónico
         enviado durante el registro o la modificación del correo electrónico
     },
 }{
@@ -357,8 +357,8 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {3},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0002} pulsa el enlace para verificar su correo electrónico
-              o copia y pega el enlace en su navegador\\
+        & 1 & El actor \nameref{anexo1:tab:act0002} hace click en el enlace para verificar su correo electrónico
+              o introduce manuealmente el enlace en su navegador\\
         & 2 & El sistema valida el código incluído en el enlace. Si es correcto, el usuario es verificado\\
         & 3 & Si el código incluía un correo electrónico nuevo, el sistema actualiza el correo electrónico
               del usuario \\
@@ -378,7 +378,7 @@ excepciones que pueden ocurrir durante su ejecución.
 \casouso{
     nombre = {Modificar datos personales},
     descripcion = {%
-        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
         \nameref{anexo1:tab:act0003} modifique alguno de sus datos personales en el menú principal
     },
 }{
@@ -398,7 +398,7 @@ excepciones que pueden ocurrir durante su ejecución.
     longsecuencia = {3},
     secuencia = {%
         & 1 & El actor \nameref{anexo1:tab:act0003} modifica alguno de sus datos personales y
-              pulsa el botón de guardar cambios \\
+              hace click en el botón ``Modifcar datos'' \\
         & 2 & El sistema valida la información introducida y, si es correcta, actualiza los datos del
               usuario \\
         & 3 & Si el usuario intenta modificar su correo electrónico, se realiza el caso de uso
@@ -414,14 +414,14 @@ excepciones que pueden ocurrir durante su ejecución.
         & 2 & Si la información introducida es inválida, el sistema muestra un mensaje de error
               indicando que los datos son inválidos y se vuelve al paso 1 \\
     },
-    frecuencia = {Pocas veces al día}
+    frecuencia = {Pocas veces al día},
 }
 
 \casouso{
     nombre = {Añadir forma física},
     descripcion = {%
-        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        \nameref{anexo1:tab:act0003} pulse el botón de añadir forma física en el menú principal
+        El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
+        \nameref{anexo1:tab:act0003} haga click en el botón \enquote{Añadir forma física} en el menú principal
     },
 }{
     key = {anadir-forma-fisica},
@@ -438,10 +438,10 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {4},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de añadir forma física \\
+        & 1 & El actor \nameref{anexo1:tab:act0003} hace click en el botón \enquote{Añadir forma física} \\
         & 2 & El sistema muestra un formulario \\
-        & 3 & El actor rellena el formulario con la información de la forma física y pulsa el botón de
-              añadir \\
+        & 3 & El actor rellena el formulario con la información de la forma física y hace click en el botón
+              \enquote{Añadir forma}\\
         & 4 & El sistema valida la información introducida y, si es válida, añade la forma física al
               historial del usuario \\
     },
@@ -462,7 +462,8 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Consultar estadísticas},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0003} pulse el botón de consultar estadísticas en el menú principal
+        actor \nameref{anexo1:tab:act0003} haga click en el botón para acceder a la sección de estadísticas
+        en la barra lateral
     },
 }{
     key = {consultar-estadisticas},
@@ -483,7 +484,8 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {2},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa en el botón de consultar estadísticas \\
+        & 1 & El actor \nameref{anexo1:tab:act0003} hace click en en el botón de la barra lateral para
+              acceder a la sección de estadísticas \\
         & 2 & El sistema muestra las estadísticas del usuario, incluyendo el historial de formas
               físicas y las puntuaciones de los minijuegos \\
     },
@@ -494,7 +496,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Filtrar estadísticas},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0003} pulse alguno de los filtros temporales disponibles en el menú de
+        actor \nameref{anexo1:tab:act0003} haga click en alguno de los filtros temporales disponibles en el menú de
         estadísticas
     },
 }{
@@ -515,7 +517,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {2},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa en el filtro temporal deseado \\
+        & 1 & El actor \nameref{anexo1:tab:act0003} hace click en en el filtro temporal deseado \\
         & 2 & El sistema filtra las estadísticas del usuario según el filtro seleccionado \\
     },
     postcondicion = {%
@@ -528,7 +530,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Abrir el juego},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0003} pulse el botón de jugar en el menú principal
+        actor \nameref{anexo1:tab:act0003} haga click en el botón de la sección de juego en la barra lateral
     },
 }{
     key = {abrir-juego},
@@ -553,7 +555,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {2},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de jugar \\
+        & 1 & El actor \nameref{anexo1:tab:act0003} hace click en el botón de la sección de juego en la barra lateral \\
         & 2 & El sistema muestra el menú del juego \\
     },
     frecuencia = {Muchas veces al día},
@@ -563,7 +565,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Activar pantalla completa},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el
-        actor \nameref{anexo1:tab:act0003} pulse el botón de activar pantalla completa en el menú de juego
+        actor \nameref{anexo1:tab:act0003} haga click en el botón \enquote{Activar pantalla completa} en el menú de juego
     },
 }{
     key = {activar-pantalla-completa},
@@ -580,7 +582,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {2},
     secuencia = {%
-        & 1 & El usuario \nameref{anexo1:tab:act0003} pulsa el botón de activar pantalla completa \\
+        & 1 & El usuario \nameref{anexo1:tab:act0003} hace click en el botón \enquote{Activar pantalla completa} \\
         & 2 & El sistema cambia el modo de visualización a pantalla completa \\
     },
     frecuencia = {Muchas veces al día},
@@ -839,9 +841,9 @@ excepciones que pueden ocurrir durante su ejecución.
         & 1 & El sistema almacena la actividad realizada. \\
         & 2 & El sistema muestra la puntuación obtenida en el minijuego, así como botones para
               volver a jugar o volver al menú de selección de minijuegos \\
-        & 3 & Si el actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a jugar, se ejecuta
+        & 3 & Si el actor \nameref{anexo1:tab:act0003} hace click en el botón \enquote{Volver a jugar}, se ejecuta
               el caso de uso \nameref{anexo1:tab:cu:volver-a-jugar} \\
-        & 4 & Si el actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a la selección de
+        & 4 & Si el actor \nameref{anexo1:tab:act0003} hace click en el botón de volver a la selección de
               minijuego, se ejecuta el caso de uso \nameref{anexo1:tab:cu:volver-seleccion-minijuego} \\
     },
     postcondicion = {%
@@ -855,7 +857,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Volver a jugar},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
-        \nameref{anexo1:tab:act0003} pulse el botón de volver a jugar en el menú de puntuaciones del minijuego
+        \nameref{anexo1:tab:act0003} haga click en el botón \enquote{Volver a jugar} en el menú de puntuaciones del minijuego
     },
 }{
     key = {volver-a-jugar},
@@ -873,7 +875,7 @@ excepciones que pueden ocurrir durante su ejecución.
     },
     longsecuencia = {2},
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver a jugar \\
+        & 1 & El actor \nameref{anexo1:tab:act0003} hace click en el botón \enquote{Volver a jugar} \\
         & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-dificultad} \\
     },
     frecuencia = {Muchas veces al día},
@@ -883,7 +885,7 @@ excepciones que pueden ocurrir durante su ejecución.
     nombre = {Volver a la selección de minijuego},
     descripcion = {%
         El sistema deberá comportarse tal como se describe en el siguiente caso de uso cuando el actor
-        \nameref{anexo1:tab:act0003} pulse el botón de volver al menú principal en el menú de puntuaciones del
+        \nameref{anexo1:tab:act0003} haga click en el botón de volver al menú principal en el menú de puntuaciones del
         minijuego
     },
 }{
@@ -901,7 +903,7 @@ excepciones que pueden ocurrir durante su ejecución.
         \item \nameref{anexo1:tab:cu:ver-puntuaciones}
     },
     secuencia = {%
-        & 1 & El actor \nameref{anexo1:tab:act0003} pulsa el botón de volver al menú principal \\
+        & 1 & El actor \nameref{anexo1:tab:act0003} hace click en el botón de volver al menú principal \\
         & 2 & Se ejecuta el caso de uso \nameref{anexo1:tab:cu:escoger-minijuego} \\
     },
     frecuencia = {Muchas veces al día},
