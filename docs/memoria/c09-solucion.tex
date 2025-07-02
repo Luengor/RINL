@@ -147,10 +147,12 @@ estadísticas con muchos datos registrados.
 
 Junto a la sección de estadísticas, el usuario también puede acceder a la sección de minijuegos una
 vez que ha añadido su forma física. Nada más acceder a esta sección, el navegador solicitará
-permiso para acceder a la cámara web del usuario si no se ha concedido previamente. Una vez se
-concede el acceso, se muestra el canvas sobre el que se mostrará el videojuego desarrollado en
-Unity, un botón para activar la pantalla completa y lo capturado por su cámara web en una
-esquina.
+permiso para acceder a la cámara web del usuario si no se ha concedido previamente. Una vez que
+el usuario concede el acceso, la página carga el videojuego y lo muestra en pantalla. Junto a él
+también aparecen un botón para activar la pantalla completa y lo capturado por su cámara web en
+una esquina (ver figura \ref{fig:solucion:juego}). Si por alguna razón el usuario no concede el
+acceso a la cámara o no dispone de una, se muestra un mensaje de error informando de que no se
+puede acceder a la cámara y que no se puede jugar.
 
 \diagrama{
     nombre = {Pantalla de juego},

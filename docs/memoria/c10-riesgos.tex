@@ -48,7 +48,7 @@ riesgos identificados (ver cuadro \ref{tab:riesgos}).
     exposicion = {Riesgo medio (12)},
     mitigacion = {%
         Se podría mejorar la calidad de la detección de posturas mediante un modelo entrenado
-        espcíficamente para este caso de uso, o bien mediante algún sistema de limpieza de la entrada
+        específicamente para este caso de uso, o bien mediante algún sistema de limpieza de la entrada
         de la cámara. Sin embargo, estas soluciones son muy limitadas, ya que realizar limpiezas o
         utilizar mejores modelos de detección requiere un mayor consumo de recursos, lo que vuelve
         a limitar el rendimiento en dispositivos de gamas más bajas.
@@ -144,6 +144,8 @@ riesgos identificados (ver cuadro \ref{tab:riesgos}).
 
 \begin{table}[p]
 \begingroup
+\newcommand{\bbf}[2]{\Block[m]{1-1}{\textbf{#1 \\ #2}}}
+
 \centering
 \NiceMatrixOptions{
     cell-space-limits = 2pt,
@@ -157,7 +159,7 @@ riesgos identificados (ver cuadro \ref{tab:riesgos}).
     \cellcolor[HTML]{EEEBE9}{1-,-1} % Gris para bordes
 \Body
      & \Block{1-6}{Magnitud del impacto} \\
-    \Block{10-1}{\rotate Probabilidad de ocurrencia} & \rule{0pt}{5ex} & \textbf{Insignificante} & \textbf{Bajo} & \textbf{Moderado} & \textbf{Alto} & \textbf{Catastrófico} \\
+    \Block{10-1}{\rotate Probabilidad de ocurrencia} & \rule{0pt}{7ex} & \bbf{1}{Insignificante} & \bbf{2}{Bajo} & \bbf{3}{Moderado} & \bbf{4}{Alto} & \bbf{5}{Catastrófico} \\
      & \Block{2-1}{5 \\ Muy \\ probable}   & \textbf{5}  &\textbf{10}  &\textbf{15}  &\textbf{20}  &\textbf{25}  \\
      & \rule{0pt}{5ex}                     &&&R4: Dependencia del entorno&&\\
      & \Block{2-1}{4 \\ Probable}          & \textbf{4}  & \textbf{8}  &\textbf{12}  &\textbf{16}  &\textbf{20}  \\
