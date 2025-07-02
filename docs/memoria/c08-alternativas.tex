@@ -171,58 +171,67 @@ o sería necesario aprender una nueva herramienta para el despliegue del
 \gls{backend}.
 
 Además, NextJS es un \gls{framework} muy completo, que incluye funcionalidades
-como el renderizado del lado del servidor (SSR), la hidratación de la aplicación,
-gestión de bases de datos y autenticación, entre otras. Estas funcionalidades o
-no se iban a utilizar en el proyecto, o se iban a implementar de forma independiente,
-por lo que se consideró que no era necesario utilizar un \gls{framework} tan
-completo y pesado.
+como \gls{ssr}, la hidratación de la aplicación, gestión de bases de datos y
+autenticación, entre otras. Estas funcionalidades o no se iban a utilizar en el
+proyecto, o se iban a implementar de forma independiente, por lo que se
+consideró que no era necesario utilizar un \gls{framework} tan completo y
+pesado.
 
-Se optó entonces por Vite, que es una herramienta más ligera y sencilla, que se centra en la
-construcción y desarrollo de la aplicación web, en vez de ser un \gls{framework} completo para el
-desarrollo de grandes aplicaciones \parencites{Moronfolu2024Aug}{nextOrVite}.
+Se optó entonces por Vite, que es una herramienta más ligera y sencilla, que se
+centra en la construcción y desarrollo de la aplicación web, en vez de ser un
+\gls{framework} completo para el desarrollo de grandes aplicaciones
+\parencites{Moronfolu2024Aug}{nextOrVite}.
 
 \subsubsection{MediaPipe BlazePose}
 \label{c08:subsubsec:mediapipe}
-BlazePose es un modelo de aprendizaje automático desarrollado por Google que permite detectar
-poses humanas en tiempo real a partir de imágenes o vídeos \parencite{bazarevsky2020blazepose}
-\parencite{xu2020ghum}. La decisión de utilizar BlazePose y no algún otro modelo de estimación de
-posturas como OpenPose o PoseNet son varias. OpenPose es un modelo que destaca por su precisión y
-capacidad para detectar múltiples personas en una imagen, pero es muy pesado y requiere una gran
-cantidad de recursos, lo que lo hace inviable para este proyecto, ya que se busca una solución
-ligera y rápida que funcione en dispositivos móviles y navegadores web. Tanto PoseNet como BlazePose
-son modelos diseñados para funcionar en dispositivos móviles y navegadores web, ambos son modelos
-compatibles con TensorFlow.js. Aunque BlazePose resulta algo más preciso que PoseNet en la mayoría de
-los casos \parencite{MediaPipeMirror}, se opta por BlazePose por su mejor combinación de velocidad,
-precisión y tamaño del modelo. Además, BlazePose además de las coordenadas en 2D de las
-articulaciones, también proporciona una estimación de la profundidad de las mismas, lo que puede
-ser muy útil para mejorar la precisión de la detección de posturas en el videojuego.
+BlazePose es un modelo de aprendizaje automático desarrollado por Google que
+permite detectar poses humanas en tiempo real a partir de imágenes o vídeos
+\parencite{bazarevsky2020blazepose} \parencite{xu2020ghum}. La decisión de
+utilizar BlazePose y no algún otro modelo de estimación de posturas como
+OpenPose o PoseNet son varias. OpenPose es un modelo que destaca por su
+precisión y capacidad para detectar múltiples personas en una imagen, pero es
+muy pesado y requiere una gran cantidad de recursos, lo que lo hace inviable
+para este proyecto, ya que se busca una solución ligera y rápida que funcione en
+dispositivos móviles y navegadores web. Tanto PoseNet como BlazePose son modelos
+diseñados para funcionar en dispositivos móviles y navegadores web, ambos son
+modelos compatibles con TensorFlow.js. Aunque BlazePose resulta algo más preciso
+que PoseNet en la mayoría de los casos \parencite{MediaPipeMirror}, se opta por
+BlazePose por su mejor combinación de velocidad, precisión y tamaño del modelo.
+Además, BlazePose además de las coordenadas en 2D de las articulaciones, también
+proporciona una estimación de la profundidad de las mismas, lo que puede ser muy
+útil para mejorar la precisión de la detección de posturas en el videojuego.
 
 \subsection{Herramientas utilizadas en el despliegue}
 \label{c08:subsec:herramientas-despliegue}
-El despliegue del proyecto se realiza en un uno de los servidores de Oracle Cloud que se
-ofrecen de forma gratuita. En dicho servidor se despliega el \gls{backend} y el \gls{frontend}
-utilizando contenedores de Docker y un servidor web para servir la aplicación.
+El despliegue del proyecto se realiza en un uno de los servidores de Oracle
+Cloud que se ofrecen de forma gratuita. En dicho servidor se despliega el
+\gls{backend} y el \gls{frontend} utilizando contenedores de Docker y un
+servidor web para servir la aplicación.
 
 \subsubsection{Docker}
 \label{c08:subsubsec:docker}
-Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado por \tech{Docker}
-{https://www.docker.com/}, una herramienta de contenedorización que permite empaquetar aplicaciones
-y sus dependencias en contenedores ligeros y portables. Esto permite distribuir la aplicación completa
-en distintos equipos simplemente compartiendo el archivo de configuración y las fuentes del proyecto,
-realizando la instalación y despliegue de forma automática.
+Para el despliegue tanto del \gls{backend} como del \gls{frontend} se ha optado
+por \tech{Docker} {https://www.docker.com/}, una herramienta de
+contenedorización que permite empaquetar aplicaciones y sus dependencias en
+contenedores ligeros y portables. Esto permite distribuir la aplicación completa
+en distintos equipos simplemente compartiendo el archivo de configuración y las
+fuentes del proyecto, realizando la instalación y despliegue de forma
+automática.
 
-Se escoge utilizar una herramienta de contenedorización para facilitar el despliegue en máquinas
-distintas y evitar problemas de compatibilidad entre entornos. Se ha optado por Docker frente a
-otras herramientas como \tech{Podman}{https://podman.io/} por su gran comunidad y ecosistema de
-herramientas asociadas (como Docker Compose o Docker Swarm), lo que facilita el uso y el desarrollo
-de la aplicación.
+Se escoge utilizar una herramienta de contenedorización para facilitar el
+despliegue en máquinas distintas y evitar problemas de compatibilidad entre
+entornos. Se ha optado por Docker frente a otras herramientas como
+\tech{Podman}{https://podman.io/} por su gran comunidad y ecosistema de
+herramientas asociadas (como Docker Compose o Docker Swarm), lo que facilita el
+uso y el desarrollo de la aplicación.
 
 \subsubsection{Caddy}
 \label{c08:subsubsec:caddy}
-\tech{Caddy}{https://caddyserver.com/} es un servidor web y proxy inverso que permite servir aplicaciones
-web de forma sencilla y rápida con un simple archivo de configuración. Se escoge Caddy frente a otros
-servidores web como Nginx o Apache por ser muy sencillo de configurar y por crear certificados
-SSL de forma automática y gratuita, lo que permite servir la aplicación de forma segura sin
+\tech{Caddy}{https://caddyserver.com/} es un servidor web y proxy inverso que
+permite servir aplicaciones web de forma sencilla y rápida con un simple archivo
+de configuración. Se escoge Caddy frente a otros servidores web como Nginx o
+Apache por ser muy sencillo de configurar y por crear certificados SSL de forma
+automática y gratuita, lo que permite servir la aplicación de forma segura sin
 necesidad de comprar o generar un certificado.
 
 \begin{lstlisting}[
@@ -240,50 +249,66 @@ rinl.soymilk.lueng.org {
 
 \subsection{Herramientas utilizadas en el videojuego}
 \label{c08:subsec:herramientas-videojuego}
-Para el desarrollo del videojuego se ha optado por \tech{Unity}{https://unity.com/}, un motor de videojuegos
-muy popular y versátil que permite crear juegos en 2D y 3D de forma sencilla. Unity utiliza el
-lenguaje de programación C\# y cuenta con una gran cantidad de herramientas y recursos en línea que
-facilitan el desarrollo de videojuegos. Se consideró Godot como alternativa, pero se descartó, puesto
-que el motor aún se encuentra en desarrollo muy activo y suele sufrir cambios frecuentes que pueden
-romper la compatibilidad con versiones anteriores. Por otro lado, Unreal Engine no soporta exportar
-a WebGL \parencite{noWebExportUnrealReddit} \parencite{noWebExportUnreal}, lo que hace su uso
-inviable para este proyecto. Por esto, y por la familiaridad previa con él, se optó por Unity para el
+Para el desarrollo del videojuego se ha optado por
+\tech{Unity}{https://unity.com/}, un motor de videojuegos muy popular y versátil
+que permite crear juegos en 2D y 3D de forma sencilla. Unity utiliza el lenguaje
+de programación C\# y cuenta con una gran cantidad de herramientas y recursos en
+línea que facilitan el desarrollo de videojuegos. Se consideró Godot como
+alternativa, pero se descartó, puesto que el motor aún se encuentra en
+desarrollo muy activo y suele sufrir cambios frecuentes que pueden romper la
+compatibilidad con versiones anteriores. Por otro lado, Unreal Engine no soporta
+exportar a WebGL \parencite{noWebExportUnrealReddit}
+\parencite{noWebExportUnreal}, lo que hace su uso inviable para este proyecto.
+Por esto, y por la familiaridad previa con él, se optó por Unity para el
 desarrollo del videojuego.
 
 \section{Viabilidad económica}
-Para evaluar la viabilidad económica del proyecto, se tendrán en cuenta los costes de desarrollo,
-alojamiento y mantenimiento, así como las posibles formas de monetización del mismo.
+Para evaluar la viabilidad económica del proyecto, se tendrán en cuenta los
+costes de desarrollo, alojamiento y mantenimiento, así como las posibles formas
+de monetización del mismo.
 
 \label{c08:sec:viabilidad-economica}
 \subsection{Costes}
-El proyecto se ha desarrollado como parte de un trabajo académico, por lo que no se ha considerado
-un presupuesto económico para su desarrollo. Por esto, se ha optado por utilizar herramientas y
-tecnologías gratuitas y, en la medida de los posibles, de código abierto. El uso de herramientas
-gratuitas y de código abierto permite reducir el coste del proyecto respecto a utilizar herramientas
-de pago, pero también puede limitar las funcionalidades y el soporte disponible. Esto se puede
-remediar utilizando herramientas más populares y con una comunidad activa que, aunque no ofrezcan
-el servicio técnico que una herramienta de pago, sí que ofrecen una gran cantidad de documentación
-y recursos en línea que pueden ayudar a resolver problemas y mejorar la productividad del
-desarrollo.
+El proyecto se ha desarrollado como parte de un trabajo académico, por lo que no
+se ha considerado un presupuesto económico para su desarrollo. Por esto, se ha
+optado por utilizar herramientas y tecnologías gratuitas y, en la medida de los
+posibles, de código abierto. El uso de herramientas gratuitas y de código
+abierto permite reducir el coste del proyecto respecto a utilizar herramientas
+de pago, pero también puede limitar las funcionalidades y el soporte disponible.
+Esto se puede remediar utilizando herramientas más populares y con una comunidad
+activa que, aunque no ofrezcan el servicio técnico que una herramienta de pago,
+sí que ofrecen una gran cantidad de documentación y recursos en línea que pueden
+ayudar a resolver problemas y mejorar la productividad del desarrollo.
 
 \subsubsection{Alojamiento y dominio}
-Uno de los costes a tener en cuenta es el alojamiento del \gls{backend} y el \gls{frontend}, así
-como del dominio. Actualmente, se está utilizando un servidor de Oracle Cloud gratuito para
-albergar el proyecto, pero la máquina virtual no tiene las mejores prestaciones y puede
-verse limitada en cuanto a recursos. Además, en el caso de que el proyecto se comercializase,
-sería necesario adquirir más servidores para distribuir la carga de mejor manera, así como un
-servidor dedicado para el almacenamiento de los datos del sistema.
+Uno de los costes a tener en cuenta es el alojamiento del \gls{backend} y el
+\gls{frontend}, así como del dominio. Actualmente, se está utilizando un
+servidor de Oracle Cloud gratuito para albergar el proyecto, pero la máquina
+virtual no tiene las mejores prestaciones y puede verse limitada en cuanto a
+recursos. Además, en el caso de que el proyecto se comercializase, sería
+necesario adquirir más servidores para distribuir la carga de mejor manera, así
+como un servidor dedicado para el almacenamiento de los datos del sistema.
 
-Por ejemplo, si quisiéramos alojar el proyecto en un servidor de Google Cloud, el coste sería
-de aproximadamente de 40\texteuro\ al mes por un servidor con 4 vCPUs, 16 GB de RAM y 10GB de disco
-(con una permanencia de 3 años). A esto habría que sumarle el coste del almacenamiento de datos,
-que serían unos 10\texteuro\ mensuales por 500 GB de almacenamiento en Google Cloud
+Por ejemplo, si quisiéramos alojar el proyecto en un servidor de Google Cloud,
+el coste sería de aproximadamente de 40\texteuro\ al mes por un servidor con 2
+vCPUs, 8 GB de RAM y 10GB de disco (con una permanencia de 3 años). A esto
+habría que sumarle el coste del almacenamiento de datos, que serían unos
+10\texteuro\ mensuales por 500 GB de almacenamiento en Google Cloud
 \parencite{googleCloudPricing}.
 
-Por otro lado, el dominio utilizado (\texttt{lueng.org}) es el dominio personal del autor,
-por lo que no se ha considerado un coste para el proyecto. En el caso de que se quisiese utilizar
-ese o uno similar, habría que tener en cuenta el coste de adquisición y renovación anual, que es
-de aproximadamente $8.71$\texteuro\ .
+\diagrama{
+    nombre = {Coste de un servidor en Google Cloud},
+    fuente = {Google Cloud},
+    archivo = {memoria/fotos/google_cloud.png},
+    etiqueta = {fig:google-cloud-cost},
+    width = 0.5\textwidth,
+}
+
+Por otro lado, el dominio utilizado (\texttt{lueng.org}) es el dominio personal
+del autor, por lo que no se ha considerado un coste para el proyecto. En el caso
+de que se quisiese utilizar ese o uno similar, habría que tener en cuenta el
+coste de adquisición y renovación anual, que es de aproximadamente
+$8.71$\texteuro\ .
 
 \subsubsection{Desarrollo}
 Probablemente el coste más significativo del proyecto sea el propio desarrollo de la aplicación.
