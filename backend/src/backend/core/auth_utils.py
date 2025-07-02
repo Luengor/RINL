@@ -94,4 +94,8 @@ def decode_token(token: str) -> dict[str, Any]:
     Returns:
         dict[str, Any]: The decoded token data.
     """
-    return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    token_dict = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+    if 'sub' not in token_dict:
+        raise jwt.InvalidTokenError("Token does not contain 'sub' field")
+
+    return token_dict

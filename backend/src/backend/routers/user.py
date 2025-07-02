@@ -66,6 +66,8 @@ async def create_user(
     Returns:
         UserBase: The created user with basic details.
     """
+    user.email = user.email.strip().lower()
+
     # Check if user already exists
     if UserDAO.get_user(user.email, session):
         raise HTTPException(status_code=400, detail="User already exists")
@@ -119,6 +121,8 @@ async def verify_email_token(
 
     # Check that the token is for the correct user
     email = dict_token.get("sub")
+    assert email, "Token does not contain 'sub' field"
+    email = email.strip().lower()
     if not email or email != user.email:
         raise HTTPException(
             status_code=400, detail="Verification token does not match user"
@@ -147,6 +151,7 @@ async def verify_email_token(
             raise HTTPException(
                 status_code=400, detail="New email not provided"
             )
+        new_email = new_email.strip().lower()
 
         # Update the user's email
         UserDAO.update_user(
@@ -185,7 +190,7 @@ async def send_verification_email(
         )
 
     token = create_access_token(
-        data={"sub": user.email, "type": "verify"},
+        data={"sub": user.email.lower(), "type": "verify"},
     )
 
     email = send_email(
