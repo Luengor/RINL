@@ -1,0 +1,45 @@
+\documentclass[xcolor=dvipsnames]{beamer}
+
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage{csquotes}
+\usepackage[
+    style=apa,
+    backend=biber,
+    backref=true
+]{biblatex}
+
+\usetheme{Berlin}
+\setbeamertemplate{page number in head/foot}[framenumber]
+% \useoutertheme{miniframes}
+% \usecolortheme{beaver}
+% \useinnertheme{rectangles}
+% \setbeamercolor{item projected}{bg=red,fg=white}
+
+% \title[RINL]{Rinl: Plataforma de entretenimiento basada en la detección de posturas}
+\title{Rinl: Plataforma de entretenimiento basada en la detección de posturas}
+\subtitle{Rinl: Posture estimation-based entertainment platform}
+\author{Alberto Luengo Román}
+\date{Julio 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Índice}
+  \tableofcontents
+\end{frame}
+
+\input{pre/antecedentes.tex}
+\input{pre/objetivo.tex}
+\input{pre/metodologia.tex}
+\input{pre/herramientas.tex}
+\input{pre/solucion.tex}
+\input{pre/validacion.tex}
+\input{pre/conclusiones.tex}
+
+%% Extras
+% Por qué "rinl"
+
+\end{document}
