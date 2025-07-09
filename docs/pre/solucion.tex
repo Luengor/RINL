@@ -1,5 +1,115 @@
 \section{Solución}
 % Descripción de la solución, Restricciones
+% Algo de seguridad
+
+% Arquitectura utilizada
 \begin{frame}
-  \frametitle{Solución}
+    \frametitle{Arquitectura}
+    \begin{block}{Arquitectura de la solución}
+        La solución sigue una arquitectura \alert{cliente-servidor} en la que se
+        identifican tres capas: la capa de presentación, negocio y datos.
+    \end{block}
+    \vspace{0.4cm}
+    \centering
+    \includegraphics[height=0.4\textheight]{pre/imgs/solu/threetier.png}
+\end{frame}
+
+
+
+% Otros patrones
+\begin{frame}
+    \frametitle{Otros patrones}
+
+    \centering
+    \includegraphics[width=0.35\textwidth]{pre/imgs/solu/mvc.png}
+    \includegraphics[width=0.55\textwidth]{pre/imgs/solu/singleton.pdf}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Otros patrones}
+
+    \centering
+    \begin{columns}
+        \column{0.5\textwidth}
+        \footnotesize
+        \begin{enumerate}
+            \item \textbf{MVC}: Utilizado en la capa de presentación para
+            separar la lógica de acceso a datos del resto de la app.
+
+            \item \textbf{Singleton}: Utilizado en el videojuego para mantener
+            una única instancia de la clase principal.
+
+            \item \textbf{DAO}: Utilizado en el backend para abstraer la
+            representación interna de los datos.
+
+            \item \textbf{Inyección de dependencias}: Utilizado para inyectar
+            dependencias en el backend.
+        \end{enumerate}
+        \normalsize
+
+        \column{0.5\textwidth}
+        \Grid[1][\textwidth][2]
+        {
+            \includegraphics[width=\textwidth]{pre/imgs/solu/dao.png} \\
+            \includegraphics[width=\textwidth]{pre/imgs/solu/DepIny.pdf}
+        }
+
+    \end{columns}
+\end{frame}
+
+% Base de datos
+\begin{frame}
+    \frametitle{Base de datos}
+
+    \centering
+    \begin{columns}
+        \column{0.6\textwidth}
+        Para la aplicación se utiliza una base de datos relacional
+        \textbf{PostgreSQL} para almacenar los \alert{datos de los usuarios, las
+        actividades realizadas y sus formas físicas}. Puesto que muchos de estos
+        datos son de carácter sensible, se utiliza encriptado \textit{at rest}
+        para proteger la información almacenada.
+
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{pre/imgs/solu/ER.pdf}
+    \end{columns}
+\end{frame}
+
+% Despliegue
+\begin{frame}
+    \frametitle{Despliegue}
+
+    \centering
+    \includegraphics[width=\textwidth]{pre/imgs/solu/Despliegue.pdf}
+\end{frame}
+
+% Demo
+\begin{frame}
+    \frametitle{Demo}
+
+    \begin{block}{Demo}
+        La aplicación se ha desplegado en un servidor gratuito proporcionado por
+        Oracle Cloud y se puede acceder a través de la siguiente URL:
+        \url{https://rinl.soymilk.lueng.org/}
+    \end{block}
+\end{frame}
+
+% Limitaciones
+\begin{frame}
+    \frametitle{Limitaciones}
+    \begin{itemize}
+        \item La calidad de la detección de posturas depende en gran medida de
+        la \alert{cámara utilizada y la iluminación del entorno}.
+        \pause
+
+        \item Para hacer posible el uso de la aplicación en dispositivos
+        móviles, \alert{la calidad de la detección de posturas se reduce} en
+        estos dispositivos.
+        \pause
+
+        \item \alert{No se utilizan calorías} para medir el esfuerzo físico,
+        sino una \alert{unidad de medida propia y simplificada} que se basa en
+        la cantidad de movimiento realizada por el usuario.
+
+    \end{itemize}
 \end{frame}
