@@ -1,8 +1,10 @@
 \documentclass[xcolor=dvipsnames]{beamer}
 
 \usepackage{hyperref}
+\usepackage{graphicx}
 \usepackage[spanish]{babel}
 \usepackage{csquotes}
+\usepackage{tabularx}
 \usepackage[
     style=apa,
     backend=biber,
@@ -21,6 +23,18 @@
 \subtitle{Rinl: Posture estimation-based entertainment platform}
 \author{Alberto Luengo Román}
 \date{Julio 2025}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\NewDocumentCommand{\Grid}{O{1} O{0.8\textwidth} O{4} m}{%
+    \def\arraystretch{#3}
+    \noindent
+    \centering
+    % \fbox{
+    \begin{tabularx}{#2}{ *{#1}{Y} }
+        #4
+    \end{tabularx}
+    % }
+}
 
 \begin{document}
 
