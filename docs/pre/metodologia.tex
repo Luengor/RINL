@@ -1,8 +1,8 @@
-\section{Metodología}
+\section{Metodologías}
 % Métodos, Gestión del proyecto
 % Metodología escogida
 \begin{frame}
-    \frametitle{Metodología}
+    \frametitle{Planificación}
     \begin{block}{Scrum}
         Para la gestión y planificación del proyecto se ha optado por la metodología
         ágil Scrum.
@@ -13,7 +13,7 @@
 
 % Como se ha hecho la planificación
 \begin{frame}
-    \frametitle{Planificación del proyecto}
+    \frametitle{Planificación}
 
     \centering
     \begin{columns}
@@ -40,13 +40,49 @@
 
 % Resultados y gráficos
 \begin{frame}
-    \frametitle{Resultados}
-    En total, se han completado \alert{619 puntos de historia} a lo
-    largo de \alert{22 sprints}.
-
-    \vspace{0.4cm}
+    \frametitle{Planificación}
+    \footnotesize
+    \begin{block}{Resultados}
+        En total, se han completado \alert{619 puntos de historia} distribuidos en
+        \alert{202 tareas} a lo largo de \alert{22 sprints}. Se estima que se le han
+        dedicado unas \alert{520} horas al proyecto. Esto implicaría que cada punto
+        de historia ha requerido \alert{50 minutos} de trabajo.
+    \end{block}
+    \normalsize
 
     \centering
-    \includegraphics[height=0.55\textheight]{pre/imgs/meto/sprints.pdf}
+    \includegraphics[height=0.5\textheight]{pre/imgs/meto/sprints.pdf}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Planificación}
+
+    \centering
+    \includegraphics[width=\textwidth]{pre/imgs/meto/sprintstags.pdf}
+
+\end{frame}
+
+% Diseño centrado en el usuario
+\begin{frame}
+    \frametitle{Diseño Centrado en el Usuario}
+
+    \begin{block}{DCU}
+        El Diseño Centrado en el Usuario (DCU) es una metodología que pone al
+        usuario en el centro del proceso de diseño.
+    \end{block}
+
+    \vspace{0.5cm}
+    \centering
+    \begin{tikzpicture}
+        \node (pag0) at (-2.9,0) {
+            \includegraphics[width=0.44\textwidth]{pre/imgs/meto/pag0.png}
+        };
+        \node (pag1) at (2.9,0) {
+            \includegraphics[width=0.44\textwidth]{pre/imgs/meto/pag2.png}
+        };
+
+        \draw[->,thick] (pag0.east) -- (pag1.west);
+    \end{tikzpicture}
+
 \end{frame}
 
