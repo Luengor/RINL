@@ -11,12 +11,6 @@
     backref=true
 ]{biblatex}
 \usepackage{tikz}
-\usepackage[hypcap=true]{caption} % Para no saltar al título de la figura al hacer clic en la leyenda
-\usepackage[x11names]{xcolor}  % Para colores en tablas
-\usepackage{nicematrix}     % Para matrices más fáciles de hacer
-\usepackage{xkeyval}        % Commandos con argumentos chulos
-
-\input{common/comandos.tex}
 
 \usetheme{Berlin}
 \setbeamertemplate{page number in head/foot}[framenumber]
@@ -61,6 +55,9 @@
 \input{pre/conclusiones.tex}
 
 %% Extras
+\appendix
+% \section{Preguntas}
+\input{pre/mas.tex}
 % Por qué "rinl"
 
 \end{document}
