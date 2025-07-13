@@ -17,46 +17,53 @@
 
 
 % Otros patrones
-\begin{frame}
-    \frametitle{Otros patrones}
-
-    \centering
-    \includegraphics[width=0.35\textwidth]{pre/imgs/solu/mvc.png}
-    \includegraphics[width=0.55\textwidth]{pre/imgs/solu/singleton.pdf}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Otros patrones}
-
-    \centering
+\begin{frame}{Otros patrones}
+    \footnotesize
     \begin{columns}
-        \column{0.5\textwidth}
-        \footnotesize
-        \begin{enumerate}
-            \item \textbf{MVC}: Utilizado en la capa de presentación para
-            separar la lógica de acceso a datos del resto de la app.
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{MVC}: Utilizado en la capa de presentación para separar la
+            lógica de acceso a datos de la interfaz.
+            \vspace{0.2cm}
 
-            \item \textbf{Singleton}: Utilizado en el videojuego para mantener
-            una única instancia de la clase principal.
+            \includegraphics[height=0.5\textheight]{pre/imgs/solu/mvc.png}
+        \end{column}
 
-            \item \textbf{DAO}: Utilizado en el backend para abstraer la
-            representación interna de los datos.
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Singleton}: Utilizado en el videojuego para mantener una
+            única instancia de la clase principal.
+            \vspace{0.2cm}
 
-            \item \textbf{Inyección de dependencias}: Utilizado en el backend
-            para gestionar las dependencias entre clases y facilitar la
-            prueba de la aplicación.
-        \end{enumerate}
-        \normalsize
-
-        \column{0.5\textwidth}
-        \Grid[1][\textwidth][2]
-        {
-            \includegraphics[width=\textwidth]{pre/imgs/solu/dao.png} \\
-            \includegraphics[width=\textwidth]{pre/imgs/solu/DepIny.pdf}
-        }
-
+            \includegraphics[width=\textwidth]{pre/imgs/solu/singleton.pdf}
+        \end{column}
     \end{columns}
 \end{frame}
+
+\begin{frame}{Otros patrones}
+    \footnotesize
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{DAO}: Utilizado en el backend para abstraer la
+            representación interna de los datos.
+            \vspace{0.2cm}
+
+            \includegraphics[width=\textwidth]{pre/imgs/solu/dao.png}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \centering
+            \textbf{Inyección de dependencias}: Utilizado en el backend para
+            gestionar las dependencias entre clases.
+            \vspace{0.2cm}
+
+            \includegraphics[width=\textwidth]{pre/imgs/solu/DepIny.pdf}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\normalsize
 
 % Proceso de detección de posturas
 \begin{frame}
