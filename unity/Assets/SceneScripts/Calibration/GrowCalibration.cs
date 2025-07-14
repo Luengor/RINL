@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GrowCalibration : StateMachineBehaviour
 {
+    public float maxNonGrowthTime = 5f; // Maximum time allowed without growth before proceeding
+
     private RawLandmarks lastLandmarks;
     private BodyCalibration calibration;
 
@@ -21,7 +23,7 @@ public class GrowCalibration : StateMachineBehaviour
             return;
 
         // Check if the player has already moved the hand outside the bounds
-        if (calibration.GrowBounds(lastLandmarks))
+        if (calibration.GrowBounds(lastLandmarks, maxNonGrowthTime))
         {
             // Update the calibration data
             GameController.CalibrationData = calibration.data;

@@ -33,9 +33,10 @@ public class CalibrationData
         );
 
         // Calculate the world coordinates of the landmarks and check if they are in the bounds
-        for (int i = 0; i < Constants.LANDMARKS; i++) {
+        for (int i = 0; i < Constants.LANDMARKS; i++)
+        {
             landmarks.points[i] = rawLandmarks.world[i].ToVector3();
-            landmarks.inBounds[i] = bounds.Contains(landmarks.points[i] + landmarks.hipPosition); 
+            landmarks.inBounds[i] = bounds.Contains(landmarks.points[i] + landmarks.hipPosition);
         }
 
         return landmarks;
@@ -90,14 +91,20 @@ public class BodyCalibration
     }
 
     private bool leftHandOutside = false;
+    private float lastGrowthTime = -1f;
 
-    public bool GrowBounds(RawLandmarks rawLandmarks)
+    public bool GrowBounds(RawLandmarks rawLandmarks, float maxNonGrowthTime = 5f)
     {
         Landmarks landmarks = data.TransformLandmarks(rawLandmarks);
 
-        // If hand is outside the image or it has already been detected, we don't want to grow the bounds 
+        // If the timer is -1, reset it to the current time
+        if (lastGrowthTime < 0f)
+            lastGrowthTime = Time.time;
+
+        // If hand is outside the image or it has already been detected or the timer has passed, we don't want to grow the bounds
         if (leftHandOutside
-            || Math.Abs(Math.Abs(rawLandmarks.image[(int)LandmarkNames.LeftWrist].x) - (rawLandmarks.image[0].ar * .5f)) < 0.1f)
+            || Math.Abs(Math.Abs(rawLandmarks.image[(int)LandmarkNames.LeftWrist].x) - (rawLandmarks.image[0].ar * .5f)) < 0.1f
+            || Time.time - lastGrowthTime > maxNonGrowthTime)
         {
             leftHandOutside = true;
             return true;
@@ -105,12 +112,20 @@ public class BodyCalibration
 
         // Grow the bounds to both sides
         var point = landmarks.points[(int)LandmarkNames.LeftWrist] + landmarks.hipPosition;
-        data.bounds.Encapsulate(point);
-        data.bounds.Encapsulate(new Vector3(
-            -point.x,
-            point.y,
-            point.z
-        ));
+
+        if (!data.bounds.Contains(point))
+        {
+            // Update the last growth time
+            lastGrowthTime = Time.time;
+
+            // Grow the bounds
+            data.bounds.Encapsulate(point);
+            data.bounds.Encapsulate(new Vector3(
+                -point.x,
+                point.y,
+                point.z
+            ));
+        }
 
         return false;
     }
@@ -122,7 +137,7 @@ public class BodyCalibration
 
     private float CalculateGroundHeight(RawLandmarks landmarks)
     {
-        float initialHeight = (landmarks.image[(int)LandmarkNames.LeftAnkle].y + landmarks.image[(int)LandmarkNames.RightAnkle].y) / 2; 
+        float initialHeight = (landmarks.image[(int)LandmarkNames.LeftAnkle].y + landmarks.image[(int)LandmarkNames.RightAnkle].y) / 2;
         return initialHeight;
     }
 
@@ -145,7 +160,7 @@ public class BodyCalibration
 
         Vector2 initialRatio = new(worldHipDistance / imageHipDistance, (worldShoulderDistance / imageShoulderDistance + worldKneeDistance / imageKneeDistance) / 2);
         // Vector2 initialRatio = new(worldHipDistance / imageHipDistance, worldKneeDistance / imageKneeDistance);
-        return initialRatio; 
+        return initialRatio;
     }
 
     private float CalculateWorldFeetGroundOffset(RawLandmarks landmarks)
@@ -153,7 +168,7 @@ public class BodyCalibration
         /** Compensate the ground height by calculating where the feet are and should be:
          *    1. Get the world ground height.
          *    2. Calculate the feet position in world coordinates using the hips
-         *           (feet.world + hipPosition) 
+         *           (feet.world + hipPosition)
          *    3. The feet position in world coordinates should be the same as the image ground height.
          *    4. Correct the world ground height by the difference to ensure the feet are on the ground.
          */
