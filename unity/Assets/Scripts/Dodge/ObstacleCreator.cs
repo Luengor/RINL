@@ -15,9 +15,10 @@ public class ObstacleCreator : MonoBehaviour
     public DifficultyConfig[] difficultyConfigs;
     public GameObject obstaclePrefab;
     public TMPro.TextMeshProUGUI scoreText;
-    
+
     private float spawnTimer, startTime;
-    public bool Gaming {
+    public bool Gaming
+    {
         get;
         private set;
     } = false;
@@ -37,7 +38,7 @@ public class ObstacleCreator : MonoBehaviour
         difficultyIndex = SceneScript.Instance.Animator.GetInteger("difficulty") - 1;
         if (difficultyIndex < 0 || difficultyIndex >= difficultyConfigs.Length)
             Debug.LogError("Invalid difficulty index: " + difficultyIndex);
-        
+
         SceneScript.Instance.SetInt("difficulty", 0);
 
         // Reset the game state
@@ -59,7 +60,7 @@ public class ObstacleCreator : MonoBehaviour
         float now = Time.time;
         int elpased_seconds = (int)(now - startTime);
 
-        GameController.Instance.SetActivityData("Dodge", elpased_seconds, obstaclesDodged, extra_data);
+        GameController.Instance.SetActivityData("Esquivar", elpased_seconds, obstaclesDodged, extra_data);
 
         if (!Application.isEditor)
         {
@@ -72,7 +73,7 @@ public class ObstacleCreator : MonoBehaviour
     {
         if (!Gaming)
             return;
-        
+
         spawnTimer -= Time.deltaTime;
         if (spawnTimer <= 0)
         {
@@ -82,7 +83,7 @@ public class ObstacleCreator : MonoBehaviour
             // Reset the spawn timer
             spawnTimer = difficulty.spawnCurve.Evaluate(elapsed);
 
-            // Choose a random obstacle type, ensuring it's not the same as the last one 
+            // Choose a random obstacle type, ensuring it's not the same as the last one
             int type = Random.Range(0, difficulty.obstacleTypes.Length);
             while (type == lastSpawned)
             { type = Random.Range(0, difficulty.obstacleTypes.Length); }
@@ -91,7 +92,7 @@ public class ObstacleCreator : MonoBehaviour
             // Spawn the obstacle
             GameObject obstacle = Instantiate(obstaclePrefab, transform.position, Quaternion.identity);
 
-            // Set things on the obstacle 
+            // Set things on the obstacle
             var obstacleComponent = obstacle.GetComponent<Obstacle>();
             obstacleComponent.type = difficulty.obstacleTypes[type];
             obstacleComponent.warningTime = difficulty.warningCurve.Evaluate(elapsed);

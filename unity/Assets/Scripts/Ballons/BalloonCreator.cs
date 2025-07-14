@@ -54,11 +54,10 @@ public class BalloonCreator : MonoBehaviour
         gaming = false;
 
         string extra_data = "{\"score\": " + balloonsPopped + "}";
-        GameController.Instance.SetActivityData("Balloons", 60, balloonsPopped, extra_data);
+        GameController.Instance.SetActivityData("Globos", 60, balloonsPopped, extra_data);
 
         if (!Application.isEditor)
         {
-            RINLBody body = GameController.Instance.Body;
             Debug.Log("Creating activity");
             GameController.Instance.CreateActivity();
         }
@@ -92,10 +91,10 @@ public class BalloonCreator : MonoBehaviour
 
             for (int i = 0; i < farEnoughAttempts; i++)
             {
-                type = GetBalloonType(); 
+                type = GetBalloonType();
                 if (type > 1)
                 {
-                    // Check distance to both poppers 
+                    // Check distance to both poppers
                     if (Vector3.SqrMagnitude(pos - balloonTypes[0].popper.transform.position) > minDistance * minDistance &&
                         Vector3.SqrMagnitude(pos - balloonTypes[1].popper.transform.position) > minDistance * minDistance)
                         break;
@@ -135,22 +134,22 @@ public class BalloonCreator : MonoBehaviour
                     for (int i = 0; i < copyAmmount; i++)
                         toCreateTypes.Add(3);
                     break;
-                
+
                 case 2:
                     for (int i = 0; i < copyAmmount; i++)
                         for (int j = 0; j < 2; j++)
                             toCreateTypes.Add(j);
                     break;
-                
+
                 case 3:
                     for (int i = 0; i < copyAmmount; i++)
                         for (int j = 0; j < 3; j++)
                             toCreateTypes.Add(j);
                     break;
-                
+
                 default:
                     Debug.LogError("Difficulty not set");
-                    return 3; 
+                    return 3;
             }
 
         // Get a random type from the list
