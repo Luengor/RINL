@@ -21,7 +21,7 @@ node "Servidor\n(rinl.soymilk.lueng.org)" <<Device>> as Servidor {
         node "Frontend" <<Container>> {
             artifact "Dockerfile" <<Deployment spec>> as FrontendDockerfile
 
-            node "Vite" <<Execution environment>> {
+            node "WebApp" <<Execution environment>> {
                 artifact "App.ts" <<Artifact>> as VApp
             }
         }
