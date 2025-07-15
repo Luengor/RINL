@@ -148,4 +148,24 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{Mediapipe Blazepose}
+    \begin{block}{BlazePose GHUM 3D}
+        BlazePose GHUM 3D es una red neuronal convolucional similar a
+        MobileNetV2 adaptada para la detección de posturas en tiempo real.
+    \end{block}
+
+    \small
+    Se escogió este modelo frente a otros como OpenPose o PoseNet por las siguientes razones:
+    \begin{itemize}
+        \item Es más ligero y rápido que otros modelos, permitiendo ser
+        utilizado sin muchas restricciones en una aplicación web.
+
+        \item Es lo suficientemente preciso para detectar las posturas
+        requeridas en el videojuego.
+
+        \item Proporciona una representación tridimensional de la postura
+        detectada, lo que facilita su posterior uso y calibración.
+    \end{itemize}
+\end{frame}
+
 
