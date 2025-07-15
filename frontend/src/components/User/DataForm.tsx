@@ -4,7 +4,7 @@ import {
   updateMeUserMePut,
   UserBase,
   sendVerificationEmailUserVerifyEmailPost,
-  deleteMeUserMeDelete
+  deleteMeUserMeDelete,
 } from "../../client";
 import { useClient } from "../../hooks/useClient";
 import { Form, hasLength, useForm } from "@mantine/form";
@@ -20,7 +20,11 @@ import {
   Modal,
 } from "@mantine/core";
 import { TbUser, TbCalendar, TbMail } from "react-icons/tb";
-import { OkNotification, ErrorNotification, WarningNotification } from "../../utils/notifications";
+import {
+  OkNotification,
+  ErrorNotification,
+  WarningNotification,
+} from "../../utils/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -38,21 +42,27 @@ export default function DataForm({ user }: { user: UserBase }) {
   console.log("User data in DataForm:", user);
 
   // Delete things
-  const [deleteModalOpened, {open, close}] = useDisclosure(false);
+  const [deleteModalOpened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
   const handleDelete = async () => {
     try {
       await deleteMeUserMeDelete({ client: client });
-      OkNotification("Cuenta eliminada", "Tu cuenta ha sido eliminada correctamente.");
+      OkNotification(
+        "Cuenta eliminada",
+        "Tu cuenta ha sido eliminada correctamente."
+      );
       queryClient.invalidateQueries({ queryKey: ["user-data"] });
       logout();
       navigate("/");
     } catch (error) {
-      ErrorNotification("Error al eliminar la cuenta", "No hemos podido eliminar tu cuenta. Por favor, inténtalo de nuevo más tarde.");
+      ErrorNotification(
+        "Error al eliminar la cuenta",
+        "No hemos podido eliminar tu cuenta. Por favor, inténtalo de nuevo más tarde."
+      );
     } finally {
       close();
     }
-  }
+  };
 
   // Send email mutation
   const sendEmailMutation = useMutation({
@@ -87,7 +97,7 @@ export default function DataForm({ user }: { user: UserBase }) {
       name: hasLength({ min: 1, max: 255 }, "Nombre no puede estar vacío"),
       email: hasLength({ min: 1, max: 255 }, "Correo no puede estar vacío"),
       year_of_birth: (value: number) =>
-        value < 1900 || value > Date.now()
+        value < 1900 || value >= new Date().getFullYear()
           ? "Año de nacimiento inválido"
           : null,
     },
@@ -115,7 +125,6 @@ export default function DataForm({ user }: { user: UserBase }) {
     dataForm.setValues(newValues);
     dataForm.setInitialValues(newValues);
     dataForm.resetDirty();
-
   }, [dataForm, user]);
 
   // Update user data
@@ -158,7 +167,10 @@ export default function DataForm({ user }: { user: UserBase }) {
           "Error al modificar el correo electrónico"
         );
 
-        dataForm.setFieldError("email", "El correo electrónico ya está en uso por otra cuenta.");
+        dataForm.setFieldError(
+          "email",
+          "El correo electrónico ya está en uso por otra cuenta."
+        );
       }
     },
 
@@ -228,19 +240,19 @@ export default function DataForm({ user }: { user: UserBase }) {
           </Stack>
           <Collapse in={dataForm.isDirty()}>
             <Center>
-              <Button loading={updateUserMutation.isPending} type="submit">
+              <Button
+                loading={updateUserMutation.isPending}
+                type="submit"
+                w="100%"
+              >
                 Modificar datos
               </Button>
             </Center>
           </Collapse>
 
-        <Button
-          variant="light"
-          color="red"
-          onClick={() => open()}
-          >
+          <Button variant="light" color="red" onClick={() => open()}>
             Eliminar mi cuenta
-        </Button>
+          </Button>
         </Stack>
       </Form>
       <Modal
@@ -256,14 +268,11 @@ export default function DataForm({ user }: { user: UserBase }) {
             irreversible y eliminará todos tus datos de forma permanente.
           </Text>
           <Text c="red">
-            Esta acción no se puede deshacer. Asegúrate de que realmente
-            quieres eliminar tu cuenta antes de continuar.
+            Esta acción no se puede deshacer. Asegúrate de que realmente quieres
+            eliminar tu cuenta antes de continuar.
           </Text>
           <Center>
-            <Button
-              color="red"
-              onClick={handleDelete}
-            >
+            <Button color="red" onClick={handleDelete}>
               Eliminar cuenta
             </Button>
           </Center>

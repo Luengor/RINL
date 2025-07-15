@@ -43,6 +43,11 @@ export function LoginForm() {
         { min: 6 },
         "La contraseña debe tener al menos 6 caracteres"
       ),
+      birthYear: (value: number) => {
+        return value < 1900 || value > new Date().getFullYear()
+          ? "Año de nacimiento inválido"
+          : null;
+      },
     },
     initialValues: {
       email: "",
@@ -161,8 +166,6 @@ export function LoginForm() {
                   key={form.key("birthYear")}
                   label="Año de nacimiento"
                   placeholder="2000"
-                  min={1900}
-                  max={new Date().getFullYear()}
                   required
                   disabled={!register}
                   {...form.getInputProps("birthYear")}
