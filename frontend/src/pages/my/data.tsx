@@ -56,7 +56,7 @@ export default function Data() {
     page_contents = (
       <Stack align="stretch">
         <Title order={1} style={{ marginBottom: 0, lineHeight: 1 }}>
-          Mis datos
+          Tus datos
         </Title>
         <Text>Aquí puedes ver y modificar tus datos.</Text>
         <DataForm user={user} />
